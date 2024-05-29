@@ -1,6 +1,6 @@
 ## Plantmaintenance
 
-Equipment tracking and Maintenance
+Equipment Tracking and Maintenance
 
 #### License
 

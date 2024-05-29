@@ -1,7 +1,7 @@
 app_name = "plantmaintenance"
 app_title = "Plantmaintenance"
 app_publisher = "LogicalDNA"
-app_description = "Equipment tracking and Maintenance"
+app_description = "Equipment Tracking and Maintenance"
 app_email = "shreyas.n@logicaldna.com"
 app_license = "mit"
 # required_apps = []

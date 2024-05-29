@@ -3,7 +3,7 @@ name = "plantmaintenance"
 authors = [
     { name = "LogicalDNA", email = "shreyas.n@logicaldna.com"}
 ]
-description = "Equipment tracking and Maintenance"
+description = "Equipment Tracking and Maintenance"
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
