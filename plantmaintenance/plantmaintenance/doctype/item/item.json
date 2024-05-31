@@ -1,0 +1,182 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "Item Name:[item_name]",
+ "creation": "2024-05-30 10:49:09.117773",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item_details_section",
+  "item_code",
+  "item_name",
+  "item_group",
+  "column_break_bfyn",
+  "weight_per_unit_uom",
+  "weight_uom",
+  "manufacturer_data_section",
+  "manufacturer_data",
+  "manufacturer_serial_no",
+  "column_break_zgul",
+  "manufacturer_part_no",
+  "model_number",
+  "plant_tab",
+  "plant_number",
+  "plant_section",
+  "warranty_tab",
+  "customer_warranty_section",
+  "begin_guarantee",
+  "warranty_end",
+  "column_break_oowl",
+  "master_warranty",
+  "vendor__manufacturer_warranty"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code"
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "column_break_bfyn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weight_per_unit_uom",
+   "fieldtype": "Float",
+   "label": "Weight per unit Uom"
+  },
+  {
+   "fieldname": "weight_uom",
+   "fieldtype": "Link",
+   "label": "Weight UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "manufacturer_data_section",
+   "fieldtype": "Section Break",
+   "label": "Manufacturer Data"
+  },
+  {
+   "fieldname": "manufacturer_data",
+   "fieldtype": "Link",
+   "label": "Manufacturer Data",
+   "options": "Item Manufacturer"
+  },
+  {
+   "fieldname": "manufacturer_serial_no",
+   "fieldtype": "Data",
+   "label": "Manufacturer Serial No"
+  },
+  {
+   "fieldname": "column_break_zgul",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "manufacturer_part_no",
+   "fieldtype": "Data",
+   "label": "Manufacturer Part No"
+  },
+  {
+   "fieldname": "model_number",
+   "fieldtype": "Data",
+   "label": "Model Number"
+  },
+  {
+   "fieldname": "plant_tab",
+   "fieldtype": "Tab Break",
+   "label": "Plant"
+  },
+  {
+   "fieldname": "plant_number",
+   "fieldtype": "Data",
+   "label": "Plant Number"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Data",
+   "label": "Plant Section"
+  },
+  {
+   "fieldname": "warranty_tab",
+   "fieldtype": "Tab Break",
+   "label": "Warranty"
+  },
+  {
+   "fieldname": "customer_warranty_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Warranty"
+  },
+  {
+   "fieldname": "begin_guarantee",
+   "fieldtype": "Date",
+   "label": "Begin Guarantee"
+  },
+  {
+   "fieldname": "warranty_end",
+   "fieldtype": "Date",
+   "label": "Warranty End"
+  },
+  {
+   "fieldname": "column_break_oowl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "master_warranty",
+   "fieldtype": "Date",
+   "label": "Master Warranty"
+  },
+  {
+   "fieldname": "vendor__manufacturer_warranty",
+   "fieldtype": "Date",
+   "label": "Vendor / Manufacturer Warranty"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-31 15:06:49.763964",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Item",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "item_name"
+}
