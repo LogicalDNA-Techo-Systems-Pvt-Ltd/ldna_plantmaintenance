@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "autoname": "format:MPG-{parameter_group}",
+ "creation": "2024-05-30 10:52:26.263354",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "parameter_group_section",
+  "parameter_group",
+  "column_break_njus",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "parameter_group_section",
+   "fieldtype": "Section Break",
+   "label": "Parameter Group"
+  },
+  {
+   "fieldname": "parameter_group",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parameter Group"
+  },
+  {
+   "fieldname": "column_break_njus",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Active"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-31 15:08:43.695374",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Maintenance Parameter Group",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "parameter_group"
+}

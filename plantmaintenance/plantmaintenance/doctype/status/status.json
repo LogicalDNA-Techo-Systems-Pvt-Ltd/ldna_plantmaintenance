@@ -1,34 +1,33 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{section}-{#####}",
- "creation": "2024-05-30 11:53:01.309269",
-
- "autoname": "format:{section}",
- "creation": "2024-05-30 11:15:43.166264",
+ "autoname": " ",
+ "creation": "2024-05-30 11:04:04.479234",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section"
+  "status_details_section",
+  "status"
  ],
  "fields": [
   {
-   "fieldname": "section",
+   "fieldname": "status_details_section",
+   "fieldtype": "Section Break",
+   "label": "Status Details"
+  },
+  {
+   "fieldname": "status",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Section",
-   "reqd": 1
-   "label": "Section"
+   "label": "Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
-=======
- "modified": "2024-05-31 15:12:31.526022",
+ "modified": "2024-05-31 15:08:52.316629",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Section",
- "naming_rule": "Expression",
+ "name": "Status",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {

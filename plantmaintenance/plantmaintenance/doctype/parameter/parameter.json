@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-05-30 10:52:34.309359",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_kbws",
+  "parameter",
+  "numeric",
+  "minimum_value",
+  "column_break_huva",
+  "maximum_value",
+  "acceptance_criteria"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_kbws",
+   "fieldtype": "Section Break",
+   "label": "Parameter"
+  },
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Parameter"
+  },
+  {
+   "default": "0",
+   "fieldname": "numeric",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Numeric"
+  },
+  {
+   "fieldname": "minimum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Minimum value"
+  },
+  {
+   "fieldname": "column_break_huva",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "maximum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Maximum value"
+  },
+  {
+   "fieldname": "acceptance_criteria",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Acceptance Criteria"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-05-31 15:08:34.532360",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Parameter",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

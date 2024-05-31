@@ -1,33 +1,26 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{section}-{#####}",
- "creation": "2024-05-30 11:53:01.309269",
-
- "autoname": "format:{section}",
- "creation": "2024-05-30 11:15:43.166264",
+ "autoname": "format:{breakdown_reason}",
+ "creation": "2024-05-31 11:40:27.135858",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section"
+  "breakdown_reason"
  ],
  "fields": [
   {
-   "fieldname": "section",
+   "fieldname": "breakdown_reason",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Section",
-   "reqd": 1
-   "label": "Section"
+   "label": "Breakdown Reason"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
-=======
- "modified": "2024-05-31 15:12:31.526022",
+ "modified": "2024-05-31 15:12:20.915678",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Section",
+ "name": "Breakdown Reason",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

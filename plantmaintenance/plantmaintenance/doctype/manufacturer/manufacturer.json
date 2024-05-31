@@ -1,33 +1,42 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{section}-{#####}",
- "creation": "2024-05-30 11:53:01.309269",
-
- "autoname": "format:{section}",
- "creation": "2024-05-30 11:15:43.166264",
+ "autoname": "format:MN-{##}",
+ "creation": "2024-05-30 12:08:23.168058",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section"
+  "short_name",
+  "full_name",
+  "country"
  ],
  "fields": [
   {
-   "fieldname": "section",
+   "fieldname": "short_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Section",
-   "reqd": 1
-   "label": "Section"
+   "label": "Short Name"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Country",
+   "options": "Country"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
-=======
- "modified": "2024-05-31 15:12:31.526022",
+ "modified": "2024-05-31 15:07:20.066420",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Section",
+ "name": "Manufacturer",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

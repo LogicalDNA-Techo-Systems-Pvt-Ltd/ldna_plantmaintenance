@@ -1,0 +1,206 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{plant}",
+ "creation": "2024-05-30 15:10:06.134507",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_section",
+  "plant",
+  "section",
+  "equipment",
+  "assigned_to",
+  "column_break_pjio",
+  "logged_by",
+  "priority",
+  "status",
+  "type",
+  "breakdown_section",
+  "breakdown_reason",
+  "service_contact_no",
+  "column_break_akyd",
+  "remark",
+  "schedule_section",
+  "excepted_start_date",
+  "excepted_end_date",
+  "column_break_anuc",
+  "excepted_time_in_hour",
+  "_progress",
+  "section_break_ngun",
+  "maintenance_parameter",
+  "inventory_tab",
+  "material_issue",
+  "material_remark"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Plant"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Section",
+   "options": "Section"
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Data",
+   "label": "Equipment"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Assigned To",
+   "options": "User"
+  },
+  {
+   "fieldname": "column_break_pjio",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "logged_by",
+   "fieldtype": "Link",
+   "label": "Logged By",
+   "options": "User"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Link",
+   "label": "Priority",
+   "options": "Priority"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "\nSchedule\nBreakdown"
+  },
+  {
+   "depends_on": "eval: doc.type == \"Breakdown\"",
+   "fieldname": "breakdown_section",
+   "fieldtype": "Section Break",
+   "label": "Breakdown"
+  },
+  {
+   "fieldname": "breakdown_reason",
+   "fieldtype": "Link",
+   "label": "Breakdown Reason",
+   "options": "Breakdown Reason"
+  },
+  {
+   "fieldname": "service_contact_no",
+   "fieldtype": "Data",
+   "label": "Service Contact No"
+  },
+  {
+   "fieldname": "column_break_akyd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Small Text",
+   "label": "Remark"
+  },
+  {
+   "depends_on": "eval: doc.type == \"Schedule\"",
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Schedule"
+  },
+  {
+   "fieldname": "excepted_start_date",
+   "fieldtype": "Date",
+   "label": "Excepted Start Date"
+  },
+  {
+   "fieldname": "excepted_end_date",
+   "fieldtype": "Date",
+   "label": "Excepted End Date"
+  },
+  {
+   "fieldname": "column_break_anuc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "excepted_time_in_hour",
+   "fieldtype": "Float",
+   "label": "Excepted Time In Hour"
+  },
+  {
+   "fieldname": "_progress",
+   "fieldtype": "Percent",
+   "label": "% Progress"
+  },
+  {
+   "fieldname": "section_break_ngun",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "maintenance_parameter",
+   "fieldtype": "Table",
+   "label": "Maintenance Parameter",
+   "options": "Maintenance Parameter"
+  },
+  {
+   "fieldname": "inventory_tab",
+   "fieldtype": "Tab Break",
+   "label": "Inventory"
+  },
+  {
+   "fieldname": "material_issue",
+   "fieldtype": "Table",
+   "label": "Material Issue",
+   "options": "Material Issue"
+  },
+  {
+   "fieldname": "material_remark",
+   "fieldtype": "Table",
+   "label": "Material Remark",
+   "options": "Material Remark"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-31 15:11:33.403000",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Task Allocation",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

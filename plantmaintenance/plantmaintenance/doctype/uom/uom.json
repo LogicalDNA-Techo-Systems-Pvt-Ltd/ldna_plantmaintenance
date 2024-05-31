@@ -1,33 +1,26 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{section}-{#####}",
- "creation": "2024-05-30 11:53:01.309269",
-
- "autoname": "format:{section}",
- "creation": "2024-05-30 11:15:43.166264",
+ "autoname": "format:uom-{##}",
+ "creation": "2024-05-30 15:25:53.096114",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section"
+  "uom"
  ],
  "fields": [
   {
-   "fieldname": "section",
+   "fieldname": "uom",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Section",
-   "reqd": 1
-   "label": "Section"
+   "label": "UOM"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
-=======
- "modified": "2024-05-31 15:12:31.526022",
+ "modified": "2024-05-31 15:07:00.639539",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Section",
+ "name": "UOM",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
@@ -44,7 +37,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "uom"
 }
