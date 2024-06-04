@@ -6,22 +6,24 @@
  "engine": "InnoDB",
  "field_order": [
   "parameter_group_section",
-  "parameter_group",
   "column_break_njus",
-  "is_active"
+  "parameter_group",
+  "is_active",
+  "parameter"
  ],
  "fields": [
   {
    "fieldname": "parameter_group_section",
    "fieldtype": "Section Break",
-   "label": "Parameter Group"
+   "label": " "
   },
   {
    "fieldname": "parameter_group",
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Parameter Group"
+   "label": "Parameter Group",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_njus",
@@ -33,11 +35,17 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Is Active"
+  },
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Table",
+   "label": "Parameter",
+   "options": "Parameter"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:08:43.695374",
+ "modified": "2024-06-04 12:53:32.634232",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Maintenance Parameter Group",
@@ -59,6 +67,5 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "parameter_group"
+ "states": []
 }
