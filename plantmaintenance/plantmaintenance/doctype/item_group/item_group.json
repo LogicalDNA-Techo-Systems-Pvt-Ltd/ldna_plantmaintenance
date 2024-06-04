@@ -6,9 +6,10 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "item_group_details_section",
   "item_group_name",
-  "parent_item_group",
-  "is_group"
+  "is_group",
+  "parent_item_group"
  ],
  "fields": [
   {
@@ -19,11 +20,13 @@
    "label": "Item Group Name"
   },
   {
+   "depends_on": "eval:doc.is_group==\"1\"",
    "fieldname": "parent_item_group",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Parent Item Group"
+   "label": "Parent Item Group",
+   "options": "Item Group"
   },
   {
    "default": "0",
@@ -32,11 +35,15 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Is Group"
+  },
+  {
+   "fieldname": "item_group_details_section",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:07:10.087195",
+ "modified": "2024-06-04 14:33:31.116830",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Item Group",
@@ -56,9 +63,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "item_group_name"
+ "states": []
 }
