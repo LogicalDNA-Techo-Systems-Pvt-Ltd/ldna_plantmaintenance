@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": " ",
+ "autoname": "field:status",
  "creation": "2024-05-30 11:04:04.479234",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -12,22 +12,22 @@
  "fields": [
   {
    "fieldname": "status_details_section",
-   "fieldtype": "Section Break",
-   "label": "Status Details"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "status",
    "fieldtype": "Data",
-   "label": "Status"
+   "label": "Status",
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:08:52.316629",
+ "modified": "2024-06-04 16:17:17.721365",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Status",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

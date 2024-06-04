@@ -6,15 +6,3 @@
 
 // 	},
 // });
-
-frappe.ui.form.on('Maintenance Parameter', {
-    onload: function(frm) {
-        frm.set_query('parameter_group', function() {
-            return {
-                filters: {
-                    'is_active': 1
-                }
-            };
-        });
-    }
-});
