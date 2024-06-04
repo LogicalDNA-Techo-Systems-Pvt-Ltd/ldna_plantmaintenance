@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "Item Name:[item_name]",
+ "autoname": "format:{item_name}-{##}",
  "creation": "2024-05-30 10:49:09.117773",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -20,8 +20,10 @@
   "manufacturer_part_no",
   "model_number",
   "plant_tab",
+  "plant_details_section",
   "plant_number",
   "plant_section",
+  "location",
   "warranty_tab",
   "customer_warranty_section",
   "begin_guarantee",
@@ -33,13 +35,14 @@
  "fields": [
   {
    "fieldname": "item_details_section",
-   "fieldtype": "Section Break",
-   "label": "Item Details"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "item_code",
    "fieldtype": "Data",
-   "label": "Item Code"
+   "label": "Item Code",
+   "length": 50,
+   "reqd": 1
   },
   {
    "fetch_from": "item_code.item_name",
@@ -47,7 +50,9 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Item Name"
+   "label": "Item Name",
+   "length": 50,
+   "reqd": 1
   },
   {
    "fieldname": "item_group",
@@ -55,7 +60,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Item Group",
-   "options": "Item Group"
+   "options": "Item Group",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_bfyn",
@@ -64,7 +70,8 @@
   {
    "fieldname": "weight_per_unit_uom",
    "fieldtype": "Float",
-   "label": "Weight per unit Uom"
+   "label": "Weight Per Unit UOM",
+   "non_negative": 1
   },
   {
    "fieldname": "weight_uom",
@@ -81,12 +88,15 @@
    "fieldname": "manufacturer_data",
    "fieldtype": "Link",
    "label": "Manufacturer Data",
-   "options": "Item Manufacturer"
+   "options": "Item Manufacturer",
+   "reqd": 1
   },
   {
    "fieldname": "manufacturer_serial_no",
    "fieldtype": "Data",
-   "label": "Manufacturer Serial No"
+   "label": "Manufacturer Serial No",
+   "length": 50,
+   "reqd": 1
   },
   {
    "fieldname": "column_break_zgul",
@@ -95,12 +105,16 @@
   {
    "fieldname": "manufacturer_part_no",
    "fieldtype": "Data",
-   "label": "Manufacturer Part No"
+   "label": "Manufacturer Part No",
+   "length": 50,
+   "reqd": 1
   },
   {
    "fieldname": "model_number",
    "fieldtype": "Data",
-   "label": "Model Number"
+   "label": "Model Number",
+   "length": 50,
+   "reqd": 1
   },
   {
    "fieldname": "plant_tab",
@@ -109,13 +123,17 @@
   },
   {
    "fieldname": "plant_number",
-   "fieldtype": "Data",
-   "label": "Plant Number"
+   "fieldtype": "Link",
+   "label": "Name",
+   "options": "Plant",
+   "reqd": 1
   },
   {
    "fieldname": "plant_section",
-   "fieldtype": "Data",
-   "label": "Plant Section"
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "Section",
+   "reqd": 1
   },
   {
    "fieldname": "warranty_tab",
@@ -124,8 +142,7 @@
   },
   {
    "fieldname": "customer_warranty_section",
-   "fieldtype": "Section Break",
-   "label": "Customer Warranty"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "begin_guarantee",
@@ -150,15 +167,26 @@
    "fieldname": "vendor__manufacturer_warranty",
    "fieldtype": "Date",
    "label": "Vendor / Manufacturer Warranty"
+  },
+  {
+   "fieldname": "plant_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:06:49.763964",
+ "modified": "2024-06-04 15:22:07.834195",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Item",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -174,9 +202,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "item_name"
+ "states": []
 }

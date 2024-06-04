@@ -6,6 +6,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "manufacturer_details_section",
   "short_name",
   "full_name",
   "country"
@@ -15,25 +16,32 @@
    "fieldname": "short_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Short Name"
+   "label": "Short Name",
+   "reqd": 1
   },
   {
    "fieldname": "full_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Full Name"
+   "label": "Full Name",
+   "reqd": 1
   },
   {
    "fieldname": "country",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Country",
-   "options": "Country"
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "manufacturer_details_section",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:07:20.066420",
+ "modified": "2024-06-04 10:47:54.746386",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Manufacturer",
