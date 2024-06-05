@@ -15,7 +15,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "UOM"
+   "label": "UOM",
+   "length": 50
   },
   {
    "fieldname": "uom_section",
@@ -24,7 +25,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-04 10:49:37.695183",
+ "modified": "2024-06-04 16:46:12.892287",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "UOM",
