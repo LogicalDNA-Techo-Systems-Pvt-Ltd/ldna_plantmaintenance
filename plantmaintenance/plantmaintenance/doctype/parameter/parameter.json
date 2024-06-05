@@ -21,18 +21,21 @@
   },
   {
    "fieldname": "parameter",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Parameter"
+   "label": "Parameter",
+   "options": "Maintenance Parameter"
   },
   {
    "default": "0",
+   "fetch_from": "parameter.numeric",
    "fieldname": "numeric",
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Numeric"
   },
   {
+   "fetch_from": "parameter.minimum_value",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -43,12 +46,14 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "parameter.maximum_value",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Maximum value"
   },
   {
+   "fetch_from": "parameter.acceptance_criteria",
    "fieldname": "acceptance_criteria",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -58,7 +63,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-04 17:48:17.034397",
+ "modified": "2024-06-05 11:17:55.564121",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",

@@ -9,11 +9,9 @@
   "schedule_details_section",
   "plant",
   "section",
-  "resource",
   "column_break_lqzx",
-  "parameter",
-  "frequency",
-  "no_of_visit"
+  "maintenance_date",
+  "status"
  ],
  "fields": [
   {
@@ -37,39 +35,28 @@
    "options": "Section"
   },
   {
-   "fieldname": "resource",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Resource"
-  },
-  {
    "fieldname": "column_break_lqzx",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "parameter",
-   "fieldtype": "Data",
+   "fieldname": "maintenance_date",
+   "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Parameter"
+   "label": "Maintenance Date"
   },
   {
-   "fieldname": "frequency",
-   "fieldtype": "Select",
+   "fieldname": "status",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Frequency",
-   "options": "Daily\nWeekly\nMonthly\nYearly\nRandom"
-  },
-  {
-   "fieldname": "no_of_visit",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "No of Visit"
+   "label": "Status",
+   "options": "Status",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-05-31 15:16:05.618105",
+ "modified": "2024-06-05 11:34:11.646073",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule Details",

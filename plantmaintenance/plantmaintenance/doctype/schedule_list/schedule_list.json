@@ -1,51 +1,48 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{schedule_no}-{##}",
+ "autoname": "format:{SCH}-{###}",
  "creation": "2024-05-30 11:16:50.079711",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "schedule_no",
+  "item_code",
+  "item_name",
+  "column_break_oxsj",
   "plant",
   "section",
-  "type",
-  "column_break_oxsj",
+  "location",
+  "section_break_ztlw",
   "plan_date",
+  "column_break_inbu",
   "start_date",
   "end_date",
-  "status",
+  "section_break_qgbt",
+  "priority",
+  "frequency",
+  "column_break_zuzo",
+  "number_of_visits",
   "section_break_kfuw",
-  "maintenance_schedule_detail"
+  "maintenance_schedule_detail",
+  "section_break_ggef",
+  "parameter_group",
+  "parameter"
  ],
  "fields": [
   {
-   "fieldname": "schedule_no",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Schedule No"
-  },
-  {
+   "fetch_from": "item_code.plant_number",
    "fieldname": "plant",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Plant",
-   "options": "Plant",
-   "reqd": 1
+   "label": "Plant"
   },
   {
+   "fetch_from": "item_code.plant_section",
    "fieldname": "section",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Section",
-   "options": "Section",
-   "reqd": 1
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "label": "Type",
-   "options": "\nResource Wise\nParameter Wise"
+   "options": "Section"
   },
   {
    "fieldname": "column_break_oxsj",
@@ -61,38 +58,103 @@
   {
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Start Date",
-   "reqd": 1
+   "label": "Start Date"
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "End Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Status"
+   "label": "End Date"
   },
   {
    "fieldname": "section_break_kfuw",
-   "fieldtype": "Section Break",
-   "label": "Schedule Details"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "maintenance_schedule_detail",
    "fieldtype": "Table",
-   "label": "Maintenance Schedule Detail ",
+   "label": "Schedule Detail ",
    "options": "Schedule Details"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Link",
+   "label": "Priority",
+   "options": "Priority",
+   "reqd": 1
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Frequency",
+   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandom",
+   "reqd": 1
+  },
+  {
+   "fieldname": "number_of_visits",
+   "fieldtype": "Int",
+   "label": "Number Of Visits",
+   "length": 50,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_ztlw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_inbu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_qgbt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_zuzo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ggef",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "parameter_group",
+   "fieldtype": "Link",
+   "label": "Parameter Group",
+   "options": "Maintenance Parameter Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Table",
+   "label": "Parameter",
+   "options": "Parameter"
+  },
+  {
+   "fetch_from": "item_code.location",
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Location"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:15:57.405576",
+ "modified": "2024-06-05 12:08:49.729676",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule List",
@@ -112,9 +174,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "schedule_no"
+ "states": []
 }
