@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:location",
  "creation": "2024-06-04 13:02:53.957153",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -11,15 +12,17 @@
   {
    "fieldname": "location",
    "fieldtype": "Data",
-   "label": "Location"
+   "label": "Location",
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-04 13:03:12.677490",
+ "modified": "2024-06-05 11:18:28.814583",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Location",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
