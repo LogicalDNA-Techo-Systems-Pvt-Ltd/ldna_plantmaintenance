@@ -1,0 +1,179 @@
+{
+ "charts": [
+  {
+   "chart_name": "Weekly Breakdown",
+   "label": "Weekly Breakdown"
+  }
+ ],
+ "content": "[{\"id\":\"wERn3L0VHS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Weekly Breakdown\",\"col\":12}},{\"id\":\"2vFgW95L2T\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Open Tasks\",\"col\":6}},{\"id\":\"TdPS8wunm_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users without Tasks\",\"col\":6}},{\"id\":\"4FLSek_jTF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Overdue Tasks\",\"col\":6}},{\"id\":\"QYHSwY62f5\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users with Tasks\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}}]",
+ "creation": "2024-05-30 14:42:49.121278",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "unhide",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Plant Maintenance Dashboard",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Masters",
+   "link_count": 6,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item",
+   "link_count": 0,
+   "link_to": "Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Group",
+   "link_count": 0,
+   "link_to": "Item Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Priority",
+   "link_count": 0,
+   "link_to": "Priority",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Maintenance Parameter Group",
+   "link_count": 0,
+   "link_to": "Maintenance Parameter Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Plant",
+   "link_count": 0,
+   "link_to": "Plant",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breakdown Reason",
+   "link_count": 0,
+   "link_to": "Breakdown Reason",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "User Management",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "User",
+   "link_count": 0,
+   "link_to": "User",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Role",
+   "link_count": 0,
+   "link_to": "Role",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transactions",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Schedule List",
+   "link_count": 0,
+   "link_to": "Schedule List",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Allocation",
+   "link_count": 0,
+   "link_to": "Task Allocation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-06-05 10:40:02.043812",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Plant Maintenance Dashboard",
+ "number_cards": [
+  {
+   "label": "Monthly Overdue Tasks",
+   "number_card_name": "Monthly Overdue Tasks"
+  },
+  {
+   "label": "Monthly Open Tasks",
+   "number_card_name": "Monthly Open Tasks"
+  },
+  {
+   "label": "Users without Tasks",
+   "number_card_name": "Users without Tasks"
+  },
+  {
+   "label": "Users with Tasks",
+   "number_card_name": "Users with Tasks"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 28.0,
+ "shortcuts": [],
+ "title": "Plant Maintenance Dashboard"
+}
