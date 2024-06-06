@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{section}-{#####}",
+ "autoname": "format:{section}",
  "creation": "2024-05-30 11:53:01.309269",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -13,13 +13,14 @@
    "fieldname": "section",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Section",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 16:07:53.312065",
+ "modified": "2024-06-06 17:10:35.836599",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Section",

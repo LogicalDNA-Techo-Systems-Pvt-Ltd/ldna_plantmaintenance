@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{plant}-{###}",
+ "autoname": "format:{name1}",
  "creation": "2024-05-30 11:52:03.395108",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -20,6 +20,7 @@
    "fieldname": "name1",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Name",
    "reqd": 1
   },
@@ -28,12 +29,13 @@
    "fieldname": "is_active",
    "fieldtype": "Check",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Is Active"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:15:41.049285",
+ "modified": "2024-06-06 17:04:25.322380",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Plant",
@@ -53,9 +55,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "name1"
+ "states": []
 }
