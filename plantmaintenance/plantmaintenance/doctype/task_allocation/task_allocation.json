@@ -158,7 +158,7 @@
    "fieldname": "maintenance_parameter",
    "fieldtype": "Table",
    "label": "Maintenance Parameter",
-   "options": "Maintenance Parameter"
+   "options": "Parameter"
   },
   {
    "fieldname": "inventory_tab",
@@ -180,7 +180,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-05-31 15:11:33.403000",
+ "modified": "2024-06-06 15:57:14.945097",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",

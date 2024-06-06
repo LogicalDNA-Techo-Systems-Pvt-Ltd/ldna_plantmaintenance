@@ -2,17 +2,46 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:parameter",
- "creation": "2024-06-04 15:44:02.859299",
+ "creation": "2024-06-06 16:00:10.099472",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "parameter",
   "numeric",
-  "maximum_value",
   "minimum_value",
+  "maximum_value",
   "acceptance_criteria"
  ],
  "fields": [
+  {
+   "default": "0",
+   "fieldname": "numeric",
+   "fieldtype": "Check",
+   "label": "Numeric"
+  },
+  {
+   "depends_on": "eval:doc.numeric==1",
+   "fieldname": "minimum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Minimum Value",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.numeric==1",
+   "fieldname": "maximum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Maximum Value"
+  },
+  {
+   "depends_on": "eval:doc.status==0",
+   "fieldname": "acceptance_criteria",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Acceptance Criteria",
+   "length": 50
+  },
   {
    "fieldname": "parameter",
    "fieldtype": "Data",
@@ -21,41 +50,11 @@
    "length": 50,
    "reqd": 1,
    "unique": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "numeric",
-   "fieldtype": "Check",
-   "label": "Numeric"
-  },
-  {
-   "depends_on": "eval:doc.numeric==\"1\"",
-   "fieldname": "maximum_value",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Maximum Value",
-   "non_negative": 1
-  },
-  {
-   "depends_on": "eval:doc.numeric==\"1\"",
-   "fieldname": "minimum_value",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Minimum Value",
-   "non_negative": 1
-  },
-  {
-   "depends_on": "eval:doc.numeric==\"0\"",
-   "fieldname": "acceptance_criteria",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Acceptance Criteria",
-   "length": 50
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 12:11:56.816127",
+ "modified": "2024-06-06 16:04:47.986207",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Maintenance Parameter",
