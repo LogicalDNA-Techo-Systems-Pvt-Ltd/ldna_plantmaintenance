@@ -1,23 +1,26 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:MP-{###}",
- "creation": "2024-06-04 15:44:02.859299",
+ "autoname": "field:parameter",
+ "creation": "2024-06-06 16:38:51.221070",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "parameter",
   "numeric",
-  "maximum_value",
   "minimum_value",
+  "maximum_value",
   "acceptance_criteria"
  ],
  "fields": [
   {
    "fieldname": "parameter",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Parameter",
-   "reqd": 1
+   "length": 50,
+   "reqd": 1,
+   "unique": 1
   },
   {
    "default": "0",
@@ -26,34 +29,37 @@
    "label": "Numeric"
   },
   {
-   "depends_on": "eval:doc.numeric==\"1\"",
-   "fieldname": "maximum_value",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Maximum Value"
-  },
-  {
-   "depends_on": "eval:doc.numeric==\"1\"",
+   "depends_on": "eval:doc.numeric==1",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Minimum Value"
+   "label": "Minimum Value",
+   "non_negative": 1
   },
   {
-   "depends_on": "eval:doc.numeric==\"0\"",
+   "depends_on": "eval:doc.numeric==1",
+   "fieldname": "maximum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Maximum Value",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.numeric==0",
    "fieldname": "acceptance_criteria",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Acceptance Criteria"
+   "label": "Acceptance Criteria",
+   "length": 50
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-04 16:13:06.894754",
+ "modified": "2024-06-06 16:48:44.064641",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Maintenance Parameter",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -69,9 +75,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "title_field": "parameter"
+ "states": []
 }
