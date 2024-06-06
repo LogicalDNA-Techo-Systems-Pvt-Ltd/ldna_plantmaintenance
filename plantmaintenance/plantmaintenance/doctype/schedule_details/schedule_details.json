@@ -11,7 +11,7 @@
   "section",
   "column_break_lqzx",
   "maintenance_date",
-  "status"
+  "progress"
  ],
  "fields": [
   {
@@ -45,18 +45,16 @@
    "label": "Maintenance Date"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Link",
+   "fieldname": "progress",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Status",
-   "options": "Status",
-   "reqd": 1
+   "label": "Progress"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-05 11:34:11.646073",
+ "modified": "2024-06-06 16:57:41.981368",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule Details",
