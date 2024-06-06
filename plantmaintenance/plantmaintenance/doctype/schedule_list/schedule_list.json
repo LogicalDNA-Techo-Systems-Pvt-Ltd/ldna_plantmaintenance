@@ -128,7 +128,7 @@
    "fieldname": "parameter_group",
    "fieldtype": "Link",
    "label": "Parameter Group",
-   "options": "Maintenance Parameter Group",
+   "options": "Parameter Group",
    "reqd": 1
   },
   {
@@ -164,7 +164,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 17:08:10.532938",
+ "modified": "2024-06-06 17:47:39.468235",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule List",
