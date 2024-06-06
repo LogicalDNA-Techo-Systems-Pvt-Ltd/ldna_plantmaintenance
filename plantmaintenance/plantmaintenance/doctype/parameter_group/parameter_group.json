@@ -30,12 +30,12 @@
    "fieldname": "table_nxvg",
    "fieldtype": "Table",
    "label": "Parameter",
-   "options": "Paramater"
+   "options": "Parameter"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 16:58:42.957400",
+ "modified": "2024-06-06 17:01:20.771958",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter Group",
