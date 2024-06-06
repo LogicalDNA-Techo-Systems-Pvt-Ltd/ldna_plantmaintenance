@@ -1,27 +1,29 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{SCH}-{###}",
+ "autoname": "format:{SCH}-{##}",
  "creation": "2024-05-30 11:16:50.079711",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "item_code",
   "item_name",
-  "column_break_oxsj",
   "plant",
+  "column_break_oxsj",
   "section",
   "location",
+  "status",
   "section_break_ztlw",
   "plan_date",
-  "column_break_inbu",
   "start_date",
+  "column_break_svfe",
   "end_date",
   "section_break_qgbt",
   "priority",
   "frequency",
-  "column_break_zuzo",
+  "column_break_oiim",
   "number_of_visits",
+  "generate_schedule",
   "section_break_kfuw",
   "maintenance_schedule_detail",
   "section_break_ggef",
@@ -34,13 +36,13 @@
    "fieldname": "plant",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Plant"
   },
   {
    "fetch_from": "item_code.plant_section",
    "fieldname": "section",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Section",
    "options": "Section"
   },
@@ -51,7 +53,6 @@
   {
    "fieldname": "plan_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
    "label": "Plan Date",
    "reqd": 1
   },
@@ -70,6 +71,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval: doc.generate_schedule=='1'",
    "fieldname": "maintenance_schedule_detail",
    "fieldtype": "Table",
    "label": "Schedule Detail ",
@@ -91,6 +93,7 @@
   {
    "fieldname": "priority",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Priority",
    "options": "Priority",
    "reqd": 1
@@ -99,6 +102,7 @@
    "fieldname": "frequency",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Frequency",
    "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandom",
    "reqd": 1
@@ -107,7 +111,9 @@
    "fieldname": "number_of_visits",
    "fieldtype": "Int",
    "label": "Number Of Visits",
-   "length": 50,
+   "length": 20,
+   "non_negative": 1,
+   "options": ">0",
    "reqd": 1
   },
   {
@@ -115,16 +121,8 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "column_break_inbu",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "section_break_qgbt",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_zuzo",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "section_break_ggef",
@@ -147,14 +145,35 @@
    "fetch_from": "item_code.location",
    "fieldname": "location",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Location",
    "options": "Location"
+  },
+  {
+   "fieldname": "column_break_oiim",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "generate_schedule",
+   "fieldtype": "Button",
+   "label": "Generate Schedule"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "\nOpen\nWorking\nOverdue\nComplete\nPartial Complete\nCancel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_svfe",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-05 12:08:49.729676",
+ "modified": "2024-06-06 15:37:02.443790",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule List",
@@ -176,5 +195,30 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [
+  {
+   "color": "Green",
+   "title": "Complete"
+  },
+  {
+   "color": "Pink",
+   "title": "Open"
+  },
+  {
+   "color": "Purple",
+   "title": "Working"
+  },
+  {
+   "color": "Orange",
+   "title": "Overdue"
+  },
+  {
+   "color": "Yellow",
+   "title": "Partial Complete"
+  },
+  {
+   "color": "Red",
+   "title": "Cancel"
+  }
+ ]
 }
