@@ -12,11 +12,11 @@
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "unhide",
+ "icon": "getting-started",
  "idx": 0,
- "indicator_color": "green",
+ "indicator_color": "",
  "is_hidden": 0,
- "label": "Plant Maintenance Dashboard",
+ "label": "Home",
  "links": [
   {
    "hidden": 0,
@@ -186,10 +186,10 @@
    "type": "Link"
   }
  ],
- "modified": "2024-06-06 12:12:54.009483",
+ "modified": "2024-06-06 14:36:50.029463",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Plant Maintenance Dashboard",
+ "name": "Home",
  "number_cards": [
   {
    "label": "Monthly Overdue Tasks",
@@ -215,5 +215,5 @@
  "roles": [],
  "sequence_id": 28.0,
  "shortcuts": [],
- "title": "Plant Maintenance Dashboard"
+ "title": "Home"
 }
