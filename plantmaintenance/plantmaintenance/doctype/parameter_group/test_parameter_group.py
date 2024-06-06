@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestMaintenanceParameterGroup(FrappeTestCase):
+class TestParameterGroup(FrappeTestCase):
 	pass
