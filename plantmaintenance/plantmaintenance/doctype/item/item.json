@@ -40,6 +40,8 @@
   {
    "fieldname": "item_code",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Item Code",
    "length": 50,
    "reqd": 1
@@ -47,7 +49,10 @@
   {
    "fieldname": "item_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Item Name",
+   "length": 50,
    "reqd": 1
   },
   {
@@ -174,7 +179,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-04 17:39:05.156469",
+ "modified": "2024-06-06 15:38:33.016455",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Item",
