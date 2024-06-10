@@ -82,10 +82,10 @@
   },
   {
    "fieldname": "status",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Status"
+   "options": "\nOpen\nWorking\nOverdue\nComplete\nPartial Complete\nCancel"
   },
   {
    "fieldname": "type",
@@ -200,7 +200,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-05 10:23:38.185037",
+ "modified": "2024-06-06 17:49:47.285038",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
