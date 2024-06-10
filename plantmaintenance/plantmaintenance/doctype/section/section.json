@@ -15,12 +15,13 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Section",
+   "length": 50,
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 17:10:35.836599",
+ "modified": "2024-06-06 17:51:53.435066",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Section",
