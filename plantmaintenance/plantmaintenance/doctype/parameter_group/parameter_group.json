@@ -8,7 +8,7 @@
  "field_order": [
   "parameter_group",
   "is_active",
-  "table_nxvg"
+  "parameter"
  ],
  "fields": [
   {
@@ -27,7 +27,7 @@
    "label": "Is Active"
   },
   {
-   "fieldname": "table_nxvg",
+   "fieldname": "parameter",
    "fieldtype": "Table",
    "label": "Parameter",
    "options": "Parameter"
@@ -35,7 +35,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-10 11:14:02.081791",
+ "modified": "2024-06-07 11:27:21.288298",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter Group",
