@@ -24,7 +24,7 @@
   "section_break_qgbt",
   "generate_schedule",
   "section_break_kfuw",
-  "maintenance_schedule_detail",
+  "scheduled_details",
   "section_break_ggef",
   "parameter_group",
   "parameter"
@@ -67,13 +67,8 @@
   },
   {
    "fieldname": "section_break_kfuw",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "maintenance_schedule_detail",
-   "fieldtype": "Table",
-   "label": "Schedule Detail ",
-   "options": "Schedule Details"
+   "fieldtype": "Section Break",
+   "read_only": 1
   },
   {
    "fieldname": "item_code",
@@ -128,7 +123,7 @@
    "fieldname": "parameter_group",
    "fieldtype": "Link",
    "label": "Parameter Group",
-   "options": "Maintenance Parameter Group",
+   "options": "Parameter Group",
    "reqd": 1
   },
   {
@@ -159,12 +154,19 @@
   {
    "fieldname": "generate_schedule",
    "fieldtype": "Button",
-   "label": "Generate Schedule"
+   "label": "Generate Schedule",
+   "read_only": 1
+  },
+  {
+   "fieldname": "scheduled_details",
+   "fieldtype": "Table",
+   "label": "Scheduled Details",
+   "options": "Schedule Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 17:08:10.532938",
+ "modified": "2024-06-07 12:31:33.681025",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule List",
