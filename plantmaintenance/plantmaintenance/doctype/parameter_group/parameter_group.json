@@ -1,21 +1,22 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{parameter_group}",
+ "autoname": "field:parameter_group",
  "creation": "2024-06-06 16:56:31.818966",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "parameter_group",
   "is_active",
-  "table_ynem"
+  "section_break_krqi",
+  "table_hktu"
  ],
  "fields": [
   {
+   "bold": 1,
    "fieldname": "parameter_group",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Parameter Group",
    "length": 50,
    "reqd": 1,
@@ -25,24 +26,25 @@
    "default": "0",
    "fieldname": "is_active",
    "fieldtype": "Check",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Is Active"
   },
   {
-   "fieldname": "table_ynem",
+   "fieldname": "section_break_krqi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "table_hktu",
    "fieldtype": "Table",
-   "label": "Parameter",
-   "options": "Parameter"
+   "options": "Parameter CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-12 10:41:01.239307",
+ "modified": "2024-06-12 16:04:05.019279",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter Group",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
