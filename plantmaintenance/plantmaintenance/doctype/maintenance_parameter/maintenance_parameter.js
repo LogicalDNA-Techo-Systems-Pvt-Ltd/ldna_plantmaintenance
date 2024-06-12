@@ -6,3 +6,21 @@
 
 // 	},
 // });
+
+
+
+frappe.ui.form.on('Maintenance Parameter', {
+    validate: function(frm) {
+        if (!frm.doc.numeric && !frm.doc.binary) {
+            frappe.msgprint(__('Either "Numeric" or "Binary" check field must be checked.'));
+            frappe.validated = false;
+        }
+
+    }
+});
+
+
+
+
+
+ 

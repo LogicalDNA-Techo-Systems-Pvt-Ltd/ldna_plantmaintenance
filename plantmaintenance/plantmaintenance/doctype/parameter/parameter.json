@@ -9,7 +9,8 @@
   "numeric",
   "minimum_value",
   "maximum_value",
-  "acceptance_criteria"
+  "acceptance_criteria",
+  "frequency"
  ],
  "fields": [
   {
@@ -52,12 +53,19 @@
    "in_list_view": 1,
    "label": "Acceptance Criteria",
    "length": 50
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Frequency",
+   "options": "Daily\nWeekly\nMonthly\nYearly"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-06 16:43:07.912920",
+ "modified": "2024-06-12 10:31:33.976635",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",

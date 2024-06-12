@@ -21,21 +21,21 @@ frappe.ui.form.on("Schedule List", {
                 let frequency = frm.doc.frequency;
                 let numberOfVisits = frm.doc.number_of_visits;
 
-                let planDate = frappe.datetime.str_to_obj(frm.doc.plan_date);
+                let startDate = frappe.datetime.str_to_obj(frm.doc.start_date);
                 for (let i = 0; i < numberOfVisits; i++) {
-                    let maintenanceDate = new Date(planDate);
+                    let maintenanceDate = new Date(startDate);
 
                     if (frequency === 'Daily') {
-                        maintenanceDate.setDate(planDate.getDate() + i);
+                        maintenanceDate.setDate(startDate.getDate() + i);
                     } else if (frequency === 'Weekly') {
-                        maintenanceDate.setDate(planDate.getDate() + i * 7);
+                        maintenanceDate.setDate(startDate.getDate() + i * 7);
                     } else if (frequency === 'Monthly') {
-                        maintenanceDate.setMonth(planDate.getMonth() + i);
+                        maintenanceDate.setMonth(startDate.getMonth() + i);
                     } else if (frequency === 'Yearly') {
-                        maintenanceDate.setFullYear(planDate.getFullYear() + i);
+                        maintenanceDate.setFullYear(startDate.getFullYear() + i);
                     } else if (frequency === 'Random') {
                          let randomDays = Math.floor(Math.random() * 365) + 1;
-                        maintenanceDate.setDate(planDate.getDate() + randomDays);
+                        maintenanceDate.setDate(startDate.getDate() + randomDays);
                     }
 
 
