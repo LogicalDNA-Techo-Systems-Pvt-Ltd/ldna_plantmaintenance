@@ -181,14 +181,14 @@
   {
    "fieldname": "maintenance_parameter_group",
    "fieldtype": "Link",
-   "label": "Maintenance Parameter Group",
-   "options": "Maintenance Parameter",
+   "label": "Parameter Group",
+   "options": "Parameter Group",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-12 12:50:54.266903",
+ "modified": "2024-06-12 16:25:12.827716",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Item",
