@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/plantmaintenance/css/plantmaintenance.css"
-# app_include_js = "/assets/plantmaintenance/js/plantmaintenance.js"
+app_include_js = "apps/plantmaintenance/plantmaintenance/public/js/custom_desk.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/plantmaintenance/css/plantmaintenance.css"
@@ -226,4 +226,5 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
 
