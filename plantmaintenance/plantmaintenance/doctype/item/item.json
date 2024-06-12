@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{item_name}-{##}",
+ "autoname": "format:{item_code}",
  "creation": "2024-05-30 10:49:09.117773",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -10,6 +10,7 @@
   "item_code",
   "item_name",
   "item_group",
+  "maintenance_parameter_group",
   "column_break_bfyn",
   "weight_per_unit_uom",
   "weight_uom",
@@ -44,7 +45,8 @@
    "in_standard_filter": 1,
    "label": "Item Code",
    "length": 50,
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "item_name",
@@ -175,11 +177,18 @@
    "label": "Location",
    "options": "Location",
    "reqd": 1
+  },
+  {
+   "fieldname": "maintenance_parameter_group",
+   "fieldtype": "Link",
+   "label": "Maintenance Parameter Group",
+   "options": "Maintenance Parameter",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 15:38:33.016455",
+ "modified": "2024-06-12 12:50:54.266903",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Item",
