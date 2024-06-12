@@ -24,7 +24,7 @@
   "section_break_qgbt",
   "generate_schedule",
   "section_break_kfuw",
-  "scheduled_details",
+  "schedule_details",
   "section_break_ggef",
   "parameter_group",
   "parameter"
@@ -67,8 +67,7 @@
   },
   {
    "fieldname": "section_break_kfuw",
-   "fieldtype": "Section Break",
-   "read_only": 1
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "item_code",
@@ -85,10 +84,10 @@
   },
   {
    "fieldname": "priority",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Priority",
-   "options": "Priority",
+   "options": "Low\nMedium\nHigh",
    "reqd": 1
   },
   {
@@ -105,6 +104,7 @@
    "fieldtype": "Int",
    "label": "Number Of Visits",
    "length": 50,
+   "non_negative": 1,
    "reqd": 1
   },
   {
@@ -154,19 +154,18 @@
   {
    "fieldname": "generate_schedule",
    "fieldtype": "Button",
-   "label": "Generate Schedule",
-   "read_only": 1
+   "label": "Generate Schedule"
   },
   {
-   "fieldname": "scheduled_details",
+   "fieldname": "schedule_details",
    "fieldtype": "Table",
-   "label": "Scheduled Details",
+   "label": "Schedule Details",
    "options": "Schedule Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 17:47:39.468235",
+ "modified": "2024-06-10 12:23:28.246552",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule List",
