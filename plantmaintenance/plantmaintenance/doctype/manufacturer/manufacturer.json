@@ -17,6 +17,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Short Name",
+   "length": 50,
    "reqd": 1
   },
   {
@@ -24,6 +25,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Full Name",
+   "length": 50,
    "reqd": 1
   },
   {
@@ -41,7 +43,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-04 10:47:54.746386",
+ "modified": "2024-06-10 12:10:38.258308",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Manufacturer",

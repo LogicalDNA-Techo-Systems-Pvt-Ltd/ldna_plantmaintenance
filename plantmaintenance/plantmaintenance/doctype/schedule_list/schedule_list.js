@@ -2,7 +2,21 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Schedule List", {
+<<<<<<< Updated upstream
     refresh(frm) {
+=======
+    onload: function(frm) {
+        frm.set_query("parameter_group", function() {
+            return {
+                filters: {
+                    "is_active": 1
+                }
+            };
+        });
+    },
+	refresh(frm) {
+
+>>>>>>> Stashed changes
         frm.add_custom_button(__('Schedule Task'), function() {
             // Handle button click event
             // Redirect to another DocType
