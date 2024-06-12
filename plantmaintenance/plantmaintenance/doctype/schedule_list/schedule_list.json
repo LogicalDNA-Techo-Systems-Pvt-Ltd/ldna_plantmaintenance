@@ -6,54 +6,31 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "item_code",
-  "item_name",
-  "plant",
+  "location",
+  "start_date",
+  "schedule_no",
   "column_break_oxsj",
   "section",
-  "location",
-  "status",
-  "section_break_ztlw",
-  "plan_date",
-  "start_date",
   "end_date",
-  "column_break_xzrv",
-  "priority",
-  "frequency",
-  "number_of_visits",
-  "section_break_qgbt",
+  "section_break_xlbi",
   "generate_schedule",
-  "section_break_kfuw",
-  "schedule_details",
-  "section_break_ggef",
-  "parameter_group",
-  "parameter"
+  "section_break_dspj",
+  "schedule_details"
  ],
  "fields": [
   {
-   "fetch_from": "item_code.plant_number",
-   "fieldname": "plant",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Plant"
-  },
-  {
-   "fetch_from": "item_code.plant_section",
+   "fetch_from": "item_no.plant_section",
    "fieldname": "section",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Section",
-   "options": "Section"
+   "options": "Section",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_oxsj",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "plan_date",
-   "fieldtype": "Date",
-   "label": "Plan Date",
-   "reqd": 1
   },
   {
    "fieldname": "start_date",
@@ -66,95 +43,33 @@
    "label": "End Date"
   },
   {
-   "fieldname": "section_break_kfuw",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "item_code",
-   "fieldtype": "Link",
-   "label": "Item Code",
-   "options": "Item",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "item_code.item_name",
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item Name"
-  },
-  {
-   "fieldname": "priority",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Priority",
-   "options": "Low\nMedium\nHigh",
-   "reqd": 1
-  },
-  {
-   "fieldname": "frequency",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Frequency",
-   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandom",
-   "reqd": 1
-  },
-  {
-   "fieldname": "number_of_visits",
-   "fieldtype": "Int",
-   "label": "Number Of Visits",
-   "length": 50,
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "section_break_ztlw",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_qgbt",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_ggef",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "parameter_group",
-   "fieldtype": "Link",
-   "label": "Parameter Group",
-   "options": "Parameter Group",
-   "reqd": 1
-  },
-  {
-   "fieldname": "parameter",
-   "fieldtype": "Table",
-   "label": "Parameter",
-   "options": "Parameter"
-  },
-  {
-   "fetch_from": "item_code.location",
+   "fetch_from": "item_no.location",
    "fieldname": "location",
    "fieldtype": "Link",
-   "label": "Location",
-   "options": "Location"
-  },
-  {
-   "default": "Open",
-   "fieldname": "status",
-   "fieldtype": "Select",
+   "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Status",
-   "options": "\nOpen\nWorking\nOverdue\nComplete\nPartial Complete\nCancel"
-  },
-  {
-   "fieldname": "column_break_xzrv",
-   "fieldtype": "Column Break"
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
   },
   {
    "fieldname": "generate_schedule",
    "fieldtype": "Button",
    "label": "Generate Schedule"
+  },
+  {
+   "fieldname": "schedule_no",
+   "fieldtype": "Int",
+   "label": "Schedule No",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "section_break_xlbi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_dspj",
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "schedule_details",
@@ -165,7 +80,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-10 12:23:28.246552",
+ "modified": "2024-06-12 14:32:08.041929",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule List",
