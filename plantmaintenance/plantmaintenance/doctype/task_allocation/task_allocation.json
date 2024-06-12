@@ -1,206 +1,94 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{plant}",
+ "autoname": "format:{schedule_no}",
  "creation": "2024-05-30 15:10:06.134507",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "details_section",
-  "item_code",
-  "item_name",
-  "plant",
-  "section",
+  "schedule_no",
+  "section_break_ioxy",
   "location",
-  "column_break_pjio",
-  "assigned_to",
-  "logged_by",
-  "priority",
-  "status",
-  "type",
-  "breakdown_section",
-  "breakdown_reason",
-  "service_contact_no",
-  "column_break_akyd",
-  "remark",
-  "schedule_section",
-  "excepted_start_date",
-  "excepted_end_date",
-  "column_break_anuc",
-  "excepted_time_in_hour",
-  "_progress",
-  "section_break_ngun",
-  "maintenance_parameter",
-  "inventory_tab",
-  "material_issue",
-  "material_remark"
+  "start_date",
+  "frequency",
+  "column_break_ikiv",
+  "section",
+  "end_date",
+  "section_break_erqe",
+  "task_allocation_details"
  ],
  "fields": [
   {
    "fieldname": "details_section",
-   "fieldtype": "Section Break",
-   "label": "Details"
-  },
-  {
-   "fetch_from": "item_code.plant_number",
-   "fieldname": "plant",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Plant",
-   "options": "Plant"
-  },
-  {
-   "fetch_from": "item_code.plant_section",
-   "fieldname": "section",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Section"
-  },
-  {
-   "fieldname": "assigned_to",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Assigned To",
-   "options": "User"
-  },
-  {
-   "fieldname": "column_break_pjio",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "logged_by",
-   "fieldtype": "Link",
-   "label": "Logged By",
-   "options": "User"
-  },
-  {
-   "fieldname": "priority",
-   "fieldtype": "Link",
-   "label": "Priority",
-   "options": "Priority"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Status",
-   "options": "\nOpen\nWorking\nOverdue\nComplete\nPartial Complete\nCancel"
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Type",
-   "options": "\nSchedule\nBreakdown"
-  },
-  {
-   "depends_on": "eval: doc.type == \"Breakdown\"",
-   "fieldname": "breakdown_section",
-   "fieldtype": "Section Break",
-   "label": "Breakdown"
-  },
-  {
-   "fieldname": "breakdown_reason",
-   "fieldtype": "Link",
-   "label": "Breakdown Reason",
-   "options": "Breakdown Reason"
-  },
-  {
-   "fieldname": "service_contact_no",
-   "fieldtype": "Data",
-   "label": "Service Contact No"
-  },
-  {
-   "fieldname": "column_break_akyd",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "remark",
-   "fieldtype": "Small Text",
-   "label": "Remark"
-  },
-  {
-   "depends_on": "eval: doc.type == \"Schedule\"",
-   "fieldname": "schedule_section",
-   "fieldtype": "Section Break",
-   "label": "Schedule"
-  },
-  {
-   "fieldname": "excepted_start_date",
-   "fieldtype": "Date",
-   "label": "Excepted Start Date"
-  },
-  {
-   "fieldname": "excepted_end_date",
-   "fieldtype": "Date",
-   "label": "Excepted End Date"
-  },
-  {
-   "fieldname": "column_break_anuc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "excepted_time_in_hour",
-   "fieldtype": "Float",
-   "label": "Excepted Time In Hour"
-  },
-  {
-   "fieldname": "_progress",
-   "fieldtype": "Percent",
-   "label": "% Progress"
-  },
-  {
-   "fieldname": "section_break_ngun",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "maintenance_parameter",
-   "fieldtype": "Table",
-   "label": "Maintenance Parameter",
-   "options": "Parameter"
-  },
-  {
-   "fieldname": "inventory_tab",
-   "fieldtype": "Tab Break",
-   "label": "Inventory"
-  },
-  {
-   "fieldname": "material_issue",
-   "fieldtype": "Table",
-   "label": "Material Issue",
-   "options": "Material Issue"
-  },
-  {
-   "fieldname": "material_remark",
-   "fieldtype": "Table",
-   "label": "Material Remark",
-   "options": "Material Remark"
   },
   {
    "fetch_from": "item_code.location",
    "fieldname": "location",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Location",
    "options": "Location"
   },
   {
-   "fieldname": "item_code",
-   "fieldtype": "Link",
-   "label": "Item Code",
-   "options": "Item"
+   "fieldname": "schedule_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Schedule No"
   },
   {
-   "fetch_from": "item_code.item_name",
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item Name",
-   "options": "Item"
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "End Date"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Frequency",
+   "options": "Daily\nWeekly\nMonthly"
+  },
+  {
+   "fieldname": "section_break_ioxy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ikiv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_erqe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_allocation_details",
+   "fieldtype": "Table",
+   "label": "Task Allocation Details",
+   "options": "Task Allocation Details"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "Section"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 17:49:47.285038",
+ "modified": "2024-06-12 14:20:08.568954",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
