@@ -68,7 +68,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Parameter",
-   "options": "Maintenance Parameter"
+   "options": "Parameter"
   },
   {
    "fieldname": "employee",
@@ -88,7 +88,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-12 14:24:15.674109",
+ "modified": "2024-06-12 16:29:22.870968",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Schedule Details",

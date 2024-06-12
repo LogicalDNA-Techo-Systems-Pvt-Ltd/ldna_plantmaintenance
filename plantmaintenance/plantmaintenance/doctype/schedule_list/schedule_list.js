@@ -2,9 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Schedule List", {
-<<<<<<< Updated upstream
-    refresh(frm) {
-=======
     onload: function(frm) {
         frm.set_query("parameter_group", function() {
             return {
@@ -16,7 +13,6 @@ frappe.ui.form.on("Schedule List", {
     },
 	refresh(frm) {
 
->>>>>>> Stashed changes
         frm.add_custom_button(__('Schedule Task'), function() {
             // Handle button click event
             // Redirect to another DocType
@@ -57,6 +53,7 @@ frappe.ui.form.on("Schedule List", {
                     child.maintenance_date = maintenanceDate;
                 }
                 frm.refresh_field("schedule_details");
+            }
             });
         }
     },
