@@ -4,17 +4,24 @@
 
 frappe.ui.form.on('Task Allocation', {
     refresh: function(frm) {
-        frm.add_custom_button(__('Load Tasks'), function() {
-            load_tasks(frm);
-        });
+        
+        if (!frm.custom_buttons_created) {
+            
+            const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
 
-        frm.add_custom_button(__('Download Tasks'), function() {
-            download_tasks(frm);
-        });
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function() {
+                load_tasks(frm);
+            });
 
-        frm.add_custom_button(__('Upload Tasks'), function() {
-            upload_tasks(frm);
-        });
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function() {
+                download_tasks_excel(frm);
+            });
+
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function() {
+                upload_assignemnt_excel(frm);
+            });
+
+            frm.custom_buttons_created = true;
+        }
     }
 });
-

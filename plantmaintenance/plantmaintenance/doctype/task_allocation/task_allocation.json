@@ -15,6 +15,7 @@
   "column_break_ikiv",
   "section",
   "end_date",
+  "button_container",
   "section_break_erqe",
   "task_allocation_details"
  ],
@@ -84,11 +85,16 @@
    "fieldtype": "Link",
    "label": "Section",
    "options": "Section"
+  },
+  {
+   "fieldname": "button_container",
+   "fieldtype": "HTML",
+   "label": "Button Container"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-12 14:20:08.568954",
+ "modified": "2024-06-12 17:26:23.052766",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
