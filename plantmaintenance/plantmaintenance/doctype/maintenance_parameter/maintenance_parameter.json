@@ -1,14 +1,21 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:parameter",
- "creation": "2024-06-06 16:38:51.221070",
+ "autoname": "format:{parameter}",
+ "creation": "2024-06-11 10:57:33.181622",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "section_break_ptvd",
   "parameter",
+  "section_break_drnh",
+  "binary",
+  "column_break_mokf",
   "numeric",
+  "parameter_section",
   "minimum_value",
+  "frequency",
+  "column_break_oyff",
   "maximum_value",
   "acceptance_criteria"
  ],
@@ -17,49 +24,93 @@
    "fieldname": "parameter",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Parameter",
    "length": 50,
    "reqd": 1,
    "unique": 1
   },
   {
+   "depends_on": "eval:doc.numeric==\"1\"",
+   "fieldname": "maximum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Maximum Value",
+   "mandatory_depends_on": "eval:doc.numeric=='1'",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.numeric==\"1\"",
+   "fieldname": "minimum_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Minimum Value",
+   "mandatory_depends_on": "eval:doc.numeric=='1'",
+   "non_negative": 1
+  },
+  {
+   "default": "YES",
+   "depends_on": "eval:doc.binary==\"1\"",
+   "fieldname": "acceptance_criteria",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Acceptance Criteria",
+   "options": "YES\nNO"
+  },
+  {
+   "default": "Daily",
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Frequency",
+   "options": "Daily\nWeekly\nMonthly\nYearly",
+   "reqd": 1
+  },
+  {
+   "fieldname": "parameter_section",
+   "fieldtype": "Section Break"
+  },
+  {
    "default": "0",
+   "depends_on": "eval:doc.numeric==\"0\"",
+   "fieldname": "binary",
+   "fieldtype": "Check",
+   "label": "Binary "
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.binary==\"0\"",
    "fieldname": "numeric",
    "fieldtype": "Check",
    "label": "Numeric"
   },
   {
-   "depends_on": "eval:doc.numeric==1",
-   "fieldname": "minimum_value",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Minimum Value",
-   "non_negative": 1
+   "fieldname": "section_break_ptvd",
+   "fieldtype": "Section Break",
+   "label": "Parameter"
   },
   {
-   "depends_on": "eval:doc.numeric==1",
-   "fieldname": "maximum_value",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Maximum Value",
-   "non_negative": 1
+   "fieldname": "section_break_drnh",
+   "fieldtype": "Section Break",
+   "label": "Parameter Type"
   },
   {
-   "depends_on": "eval:doc.numeric==0",
-   "fieldname": "acceptance_criteria",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Acceptance Criteria",
-   "length": 50
+   "fieldname": "column_break_mokf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_oyff",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-06 16:48:44.064641",
+ "modified": "2024-06-12 14:12:58.205429",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Maintenance Parameter",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
