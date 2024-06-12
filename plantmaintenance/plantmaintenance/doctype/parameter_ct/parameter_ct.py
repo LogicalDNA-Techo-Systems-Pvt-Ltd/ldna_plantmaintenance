@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class MaintenanceParameter(Document):
+class ParameterCT(Document):
 	pass

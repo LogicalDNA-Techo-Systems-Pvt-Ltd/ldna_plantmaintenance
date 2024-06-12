@@ -13,7 +13,7 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "getting-started",
- "idx": 0,
+ "idx": 1,
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Home",
@@ -108,16 +108,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Priority",
-   "link_count": 0,
-   "link_to": "Priority",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Plant",
    "link_count": 0,
    "link_to": "Plant",
@@ -148,9 +138,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Maintenance Parameter Group",
+   "label": "Parameter Group",
    "link_count": 0,
-   "link_to": "Maintenance Parameter Group",
+   "link_to": "Parameter Group",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -168,16 +158,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Status",
-   "link_count": 0,
-   "link_to": "Status",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Breakdown Reason",
    "link_count": 0,
    "link_to": "Breakdown Reason",
@@ -186,7 +166,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-06-06 14:36:50.029463",
+ "modified": "2024-06-12 15:54:20.414290",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Home",
