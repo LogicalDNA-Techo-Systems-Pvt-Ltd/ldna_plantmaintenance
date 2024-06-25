@@ -6,11 +6,15 @@
  "engine": "InnoDB",
  "field_order": [
   "parameter",
-  "numeric",
+  "parameter_type",
   "minimum_value",
   "maximum_value",
   "acceptance_criteria",
-  "frequency"
+  "number_of_readings",
+  "frequency",
+  "day",
+  "date",
+  "range"
  ],
  "fields": [
   {
@@ -23,14 +27,7 @@
    "reqd": 1
   },
   {
-   "default": "0",
-   "fetch_from": "parameter.numeric",
-   "fieldname": "numeric",
-   "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Numeric"
-  },
-  {
+   "depends_on": "eval:doc.parameter_type=='Numeric'",
    "fetch_from": "parameter.minimum_value",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
@@ -39,6 +36,7 @@
    "non_negative": 1
   },
   {
+   "depends_on": "eval:doc.parameter_type=='Numeric'",
    "fetch_from": "parameter.maximum_value",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
@@ -47,6 +45,7 @@
    "non_negative": 1
   },
   {
+   "depends_on": "eval:doc.parameter_type==\"Binary\"",
    "fetch_from": "parameter.acceptance_criteria",
    "fieldname": "acceptance_criteria",
    "fieldtype": "Data",
@@ -55,16 +54,52 @@
    "length": 50
   },
   {
+   "fetch_from": "parameter.frequency",
    "fieldname": "frequency",
    "fieldtype": "Select",
    "label": "Frequency",
-   "options": "Daily\nWeekly\nMonthly\nYearly"
+   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandomly"
+  },
+  {
+   "fetch_from": "parameter.parameter_type",
+   "fieldname": "parameter_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Parameter Type"
+  },
+  {
+   "fetch_from": "parameter.num_readings",
+   "fieldname": "number_of_readings",
+   "fieldtype": "Int",
+   "label": "Number Of Readings"
+  },
+  {
+   "depends_on": "eval:doc.frequency==\"Weekly\"",
+   "fetch_from": "parameter.day",
+   "fieldname": "day",
+   "fieldtype": "Select",
+   "label": "Day",
+   "options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
+  },
+  {
+   "depends_on": "eval:doc.frequency==\"Monthly\"||doc.frequency==\"Yearly\"||doc.frequency==\"Five Year\"||doc.frequency==\"Two and Half Year\"||doc.frequency==\"Half Year\"",
+   "fetch_from": "parameter.date",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "depends_on": "eval:doc.frequency==\"Randomly\"",
+   "fetch_from": "parameter.range",
+   "fieldname": "range",
+   "fieldtype": "Int",
+   "label": "Range"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-12 16:01:37.382200",
+ "modified": "2024-06-25 18:01:21.462814",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter CT",

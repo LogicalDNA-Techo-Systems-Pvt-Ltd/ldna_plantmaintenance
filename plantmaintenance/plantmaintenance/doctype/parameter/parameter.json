@@ -8,16 +8,19 @@
  "field_order": [
   "section_break_ptvd",
   "parameter",
-  "section_break_drnh",
-  "binary",
-  "column_break_mokf",
-  "numeric",
+  "parameter_type",
+  "list_parameter",
   "parameter_section",
   "minimum_value",
-  "frequency",
+  "acceptance_criteria",
   "column_break_oyff",
   "maximum_value",
-  "acceptance_criteria"
+  "section_break_thht",
+  "frequency",
+  "column_break_tupb",
+  "day",
+  "date",
+  "range"
  ],
  "fields": [
   {
@@ -27,43 +30,43 @@
    "in_standard_filter": 1,
    "label": "Parameter",
    "length": 50,
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1,
+   "width": "2"
   },
   {
-   "depends_on": "eval:doc.numeric==\"1\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Maximum Value",
-   "mandatory_depends_on": "eval:doc.numeric=='1'",
+   "mandatory_depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "non_negative": 1
   },
   {
-   "depends_on": "eval:doc.numeric==\"1\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Minimum Value",
-   "mandatory_depends_on": "eval:doc.numeric=='1'",
+   "mandatory_depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "non_negative": 1
   },
   {
-   "default": "YES",
-   "depends_on": "eval:doc.binary==\"1\"",
+   "depends_on": "eval:doc.parameter_type==\"Binary\"",
    "fieldname": "acceptance_criteria",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Acceptance Criteria",
-   "options": "YES\nNO"
+   "options": "\nYES\nNO"
   },
   {
-   "default": "Daily",
    "fieldname": "frequency",
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Frequency",
-   "options": "Daily\nWeekly\nMonthly\nYearly",
+   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandomly",
    "reqd": 1
   },
   {
@@ -71,60 +74,72 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "0",
-   "depends_on": "eval:doc.numeric==\"0\"",
-   "fieldname": "binary",
-   "fieldtype": "Check",
-   "label": "Binary "
-  },
-  {
-   "default": "0",
-   "depends_on": "eval:doc.binary==\"0\"",
-   "fieldname": "numeric",
-   "fieldtype": "Check",
-   "label": "Numeric"
-  },
-  {
    "fieldname": "section_break_ptvd",
    "fieldtype": "Section Break",
    "label": "Parameter"
   },
   {
-   "fieldname": "section_break_drnh",
-   "fieldtype": "Section Break",
-   "label": "Parameter Type"
-  },
-  {
-   "fieldname": "column_break_mokf",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_oyff",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parameter_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parameter Type",
+   "options": "Binary\nNumeric\nList"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type=='List'",
+   "fieldname": "list_parameter",
+   "fieldtype": "Small Text",
+   "label": "Text"
+  },
+  {
+   "fieldname": "section_break_thht",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_tupb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.frequency==\"Weekly\"",
+   "fieldname": "day",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Day",
+   "mandatory_depends_on": " ",
+   "options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
+  },
+  {
+   "depends_on": "eval:doc.frequency==\"Monthly\"|| doc.frequency==\"Quarterly\"||doc.frequency==\"Half Year\"||doc.frequency==\"Yearly\"||doc.frequency==\"Two and Half Year\"||doc.frequency==\"Five Year\"",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "mandatory_depends_on": " "
+  },
+  {
+   "depends_on": "eval:doc.frequency==\"Randomly\"",
+   "fieldname": "range",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Range",
+   "mandatory_depends_on": " ",
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-12 16:16:15.696520",
+ "modified": "2024-06-25 18:00:45.166490",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
  "naming_rule": "Expression",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
+ "permissions": [],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
