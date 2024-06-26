@@ -1,0 +1,404 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:Task {####}-{item} Repair",
+ "creation": "2024-06-26 14:57:42.641046",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_bizs",
+  "task_allocation_id",
+  "equipment_id",
+  "equipment_name",
+  "status",
+  "column_break_xlqp",
+  "work_center",
+  "plant_section",
+  "type",
+  "column_break_cemj",
+  "approver",
+  "assigned_to",
+  "priority",
+  "section_break_pnvh",
+  "activity",
+  "parameter",
+  "parameter_type",
+  "readings",
+  "column_break_scrc",
+  "maximum_value",
+  "minimum_value",
+  "acceptance_criteria",
+  "text",
+  "column_break_rnng",
+  "section_break_mpil",
+  "column_break_limp",
+  "reading_1",
+  "reading_5",
+  "reading_9",
+  "column_break_bwer",
+  "reading_2",
+  "reading_6",
+  "reading_10",
+  "column_break_cjxn",
+  "reading_3",
+  "reading_7",
+  "column_break_vomc",
+  "reading_4",
+  "reading_8",
+  "timeline_section",
+  "column_break_kqfz",
+  "expected_start_date",
+  "actual_start_date",
+  "column_break_djip",
+  "expected_end_date",
+  "actual_end_date",
+  "column_break_rwiq",
+  "inventory_tab",
+  "material_issued",
+  "material_returned"
+ ],
+ "fields": [
+  {
+   "fieldname": "timeline_section",
+   "fieldtype": "Section Break",
+   "label": "Timeline"
+  },
+  {
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "label": "Expected Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "actual_start_date",
+   "fieldtype": "Date",
+   "label": "Actual Start Date"
+  },
+  {
+   "fieldname": "column_break_rwiq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expected_end_date",
+   "fieldtype": "Date",
+   "label": "Expected End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "actual_end_date",
+   "fieldtype": "Date",
+   "label": "Actual End Date"
+  },
+  {
+   "fieldname": "inventory_tab",
+   "fieldtype": "Tab Break",
+   "label": "Inventory"
+  },
+  {
+   "fieldname": "material_issued",
+   "fieldtype": "Table",
+   "label": "Material Issued",
+   "options": "Material Issue"
+  },
+  {
+   "fieldname": "material_returned",
+   "fieldtype": "Table",
+   "label": "Material Returned",
+   "options": "Material Remark"
+  },
+  {
+   "depends_on": "eval: doc.type==\"Preemptive\"",
+   "fieldname": "column_break_djip",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_kqfz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_pnvh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Data",
+   "label": "Parameter"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "maximum_value",
+   "fieldtype": "Float",
+   "label": "Maximum Value"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "minimum_value",
+   "fieldtype": "Float",
+   "label": "Minimum value"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Binary\"",
+   "fieldname": "acceptance_criteria",
+   "fieldtype": "Select",
+   "label": "Acceptance Criteria",
+   "options": "Yes\nNo"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"List\"",
+   "fieldname": "text",
+   "fieldtype": "Text",
+   "label": "Text"
+  },
+  {
+   "fieldname": "column_break_scrc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_bizs",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_allocation_id",
+   "fieldtype": "Link",
+   "label": "Task Allocation Id",
+   "options": "Task Allocation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Plant Section ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "work_center",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "  \t Work Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "equipment_id",
+   "fieldtype": "Link",
+   "label": "Equipment ID",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Equipment Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "  \t Priority",
+   "options": "\nLow\nHigh\nCritical",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type ",
+   "options": "\nPreemptive\nBreakdown",
+   "reqd": 1
+  },
+  {
+   "fieldname": "approver",
+   "fieldtype": "Link",
+   "label": "Approver",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Assigned To",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nIn progress\nCompleted\nApproved\nRejected\nOverDue"
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "label": "Activity",
+   "options": "Parameter Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_xlqp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cemj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "readings",
+   "fieldtype": "Int",
+   "label": "Readings"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_1",
+   "fieldtype": "Float",
+   "label": "Reading 1"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_2",
+   "fieldtype": "Float",
+   "label": "Reading 2"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_3",
+   "fieldtype": "Float",
+   "label": "Reading 3"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_4",
+   "fieldtype": "Float",
+   "label": "Reading 4"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_5",
+   "fieldtype": "Float",
+   "label": "Reading 5"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_6",
+   "fieldtype": "Float",
+   "label": "Reading 6"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_7",
+   "fieldtype": "Float",
+   "label": "Reading 7"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_8",
+   "fieldtype": "Float",
+   "label": "Reading 8"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_9",
+   "fieldtype": "Float",
+   "label": "Reading 9"
+  },
+  {
+   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "fieldname": "reading_10",
+   "fieldtype": "Float",
+   "label": "Reading 10"
+  },
+  {
+   "fieldname": "section_break_mpil",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bwer",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cjxn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_limp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_vomc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rnng",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parameter_type",
+   "fieldtype": "Select",
+   "label": "Parameter Type",
+   "options": "\nBinary\nNumeric\nList",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-26 14:57:42.641046",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Task Detail",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Maintenance User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Yellow",
+   "title": "Open"
+  },
+  {
+   "color": "Light Blue",
+   "title": "In Progress"
+  },
+  {
+   "color": "Green",
+   "title": "Completed"
+  },
+  {
+   "color": "Purple",
+   "title": "Approved"
+  },
+  {
+   "color": "Red",
+   "title": "Rejected"
+  }
+ ]
+}
