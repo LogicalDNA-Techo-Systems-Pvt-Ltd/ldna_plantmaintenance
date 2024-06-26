@@ -1,24 +1,66 @@
 // Copyright (c) 2024, LogicalDNA and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Parameter", {
-// 	refresh(frm) {
-
-// 	},
-// });
-
-
 
 frappe.ui.form.on('Parameter', {
-    validate: function(frm) {
-        if (!frm.doc.numeric && !frm.doc.binary) {
-            frappe.msgprint(__('Either "Numeric" or "Binary" check field must be checked.'));
-            frappe.validated = false;
-        }
-
+    onload: function(frm) {
+        render_radio_buttons(frm); 
+    },
+    refresh: function(frm) {
+        render_radio_buttons(frm);  
     }
 });
 
+function render_radio_buttons(frm) {
+    const wrapper = frm.fields_dict['parameter_type'].wrapper;  
+    $(wrapper).empty();  
+
+    const radioContainer = $('<div class="radio-buttons-container"></div>');
+    radioContainer.css('display', 'flex');
+
+    const binaryRadio = $(`
+        <div class="radio-button">
+            <label>
+                <input type="radio" name="parameter_type" value="Binary" ${frm.doc.parameter_type === 'Binary' ? 'checked' : ''}>
+                Binary
+            </label>
+        </div>`);
+    
+    binaryRadio.css('margin-right', '20px');  
+    binaryRadio.find('input').on('change', function() {
+        frm.set_value('parameter_type', 'Binary'); 
+    });
+    radioContainer.append(binaryRadio); 
+
+    const numericRadio = $(`
+        <div class="radio-button">
+            <label>
+                <input type="radio" name="parameter_type" value="Numeric" ${frm.doc.parameter_type === 'Numeric' ? 'checked' : ''}>
+                Numeric
+            </label>
+        </div>`);
+    
+    numericRadio.find('input').on('change', function() {
+        frm.set_value('parameter_type', 'Numeric'); 
+    });
+    radioContainer.append(numericRadio); 
+
+    const listRadio = $(`
+        <div class="radio-button">
+            <label>
+                <input type="radio" name="parameter_type" value="List" ${frm.doc.parameter_type === 'List' ? 'checked' : ''}>
+                List
+            </label>
+        </div>`);
+    listRadio.css('margin-left', '20px');
+
+    listRadio.find('input').on('change', function() {
+        frm.set_value('parameter_type', 'List'); 
+    });
+    radioContainer.append(listRadio);
+
+    $(wrapper).append(radioContainer); 
+}
 
 
 
