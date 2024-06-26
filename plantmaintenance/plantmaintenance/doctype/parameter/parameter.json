@@ -9,7 +9,7 @@
   "section_break_ptvd",
   "parameter",
   "parameter_type",
-  "list_parameter",
+  "text",
   "parameter_section",
   "minimum_value",
   "acceptance_criteria",
@@ -19,7 +19,6 @@
   "frequency",
   "column_break_tupb",
   "day",
-  "date",
   "range"
  ],
  "fields": [
@@ -57,6 +56,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Acceptance Criteria",
+   "mandatory_depends_on": "eval:doc.parameter_type==\"Binary\"",
    "options": "\nYES\nNO"
   },
   {
@@ -74,8 +74,7 @@
   },
   {
    "fieldname": "section_break_ptvd",
-   "fieldtype": "Section Break",
-   "label": "Parameter"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_oyff",
@@ -87,13 +86,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Parameter Type",
-   "options": "Binary\nNumeric\nList"
-  },
-  {
-   "depends_on": "eval:doc.parameter_type=='List'",
-   "fieldname": "list_parameter",
-   "fieldtype": "Small Text",
-   "label": "Text"
+   "options": "\nBinary\nNumeric\nList"
   },
   {
    "fieldname": "section_break_thht",
@@ -113,14 +106,6 @@
    "options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
   },
   {
-   "depends_on": "eval:doc.frequency==\"Monthly\"|| doc.frequency==\"Quarterly\"||doc.frequency==\"Half Year\"||doc.frequency==\"Yearly\"||doc.frequency==\"Two and Half Year\"||doc.frequency==\"Five Year\"",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Date",
-   "mandatory_depends_on": " "
-  },
-  {
    "depends_on": "eval:doc.frequency==\"Randomly\"",
    "fieldname": "range",
    "fieldtype": "Int",
@@ -128,11 +113,18 @@
    "label": "Range",
    "mandatory_depends_on": " ",
    "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.parameter_type=='List'",
+   "fieldname": "text",
+   "fieldtype": "Small Text",
+   "label": "Text",
+   "mandatory_depends_on": "eval:doc.parameter_type=='List'"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 11:06:32.766266",
+ "modified": "2024-06-26 16:35:12.376082",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",

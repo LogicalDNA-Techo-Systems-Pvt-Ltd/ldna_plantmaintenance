@@ -1,13 +1,16 @@
 // Copyright (c) 2024, LogicalDNA and contributors
 // For license information, please see license.txt
 
-
+ 
 frappe.ui.form.on('Parameter', {
     onload: function(frm) {
         render_radio_buttons(frm); 
     },
     refresh: function(frm) {
         render_radio_buttons(frm);  
+    },
+    before_save: function(frm) {
+         handleParameterChange(frm);  
     }
 });
 
@@ -63,6 +66,27 @@ function render_radio_buttons(frm) {
 }
 
 
+function handleParameterChange(frm) {
+    var parameterType = frm.doc.parameter_type;
 
 
- 
+     if (parameterType === 'Binary') {
+         frm.set_value('minimum_value', '');
+        frm.set_value('maximum_value', '');
+        frm.set_value('text', '');
+     } else if (parameterType === 'Numeric') {
+        frm.set_value('acceptance_criteria', '');
+        frm.set_value('text', '');
+          
+    } else if (parameterType === 'List') {
+        frm.set_value('acceptance_criteria', '');
+        frm.set_value('minimum_value', '');
+        frm.set_value('maximum_value', '');
+     }
+}
+
+
+
+
+
+
