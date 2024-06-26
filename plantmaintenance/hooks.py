@@ -10,11 +10,11 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/plantmaintenance/css/plantmaintenance.css"
-app_include_js = "apps/plantmaintenance/plantmaintenance/public/js/custom_desk.js"
+# app_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
+# app_include_js = "apps/plantmaintenance/plantmaintenance/public/js/custom_desk.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/plantmaintenance/css/plantmaintenance.css"
+# web_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
 # web_include_js = "/assets/plantmaintenance/js/plantmaintenance.js"
 
 # include custom scss in every website theme (without file extension ".scss")
@@ -28,8 +28,8 @@ app_include_js = "apps/plantmaintenance/plantmaintenance/public/js/custom_desk.j
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+# doctype_js = {"Task Detail" : "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/js/task_detail_list.js"}
+doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -226,5 +226,7 @@ app_include_js = "apps/plantmaintenance/plantmaintenance/public/js/custom_desk.j
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+
 
 
