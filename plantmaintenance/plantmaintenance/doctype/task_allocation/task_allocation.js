@@ -4,7 +4,12 @@
 
 frappe.ui.form.on('Task Allocation', {
     refresh: function(frm) {
-        
+        frm.add_custom_button(__('Generate Task'), function(){
+        },).css({
+            'background-color': 'black',  
+            'color': 'white'
+        });
+
         if (!frm.custom_buttons_created) {
             
             const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
@@ -23,5 +28,6 @@ frappe.ui.form.on('Task Allocation', {
 
             frm.custom_buttons_created = true;
         }
+        
     }
 });

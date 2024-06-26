@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{schedule_no}",
+ "autoname": "format:{work_central}-{####}",
  "creation": "2024-05-30 15:10:06.134507",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -74,7 +74,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 14:27:21.967894",
+ "modified": "2024-06-26 16:03:13.633610",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
