@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:IM-{##}",
+ "creation": "2024-05-30 12:03:46.057565",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item_manufacturer_details_section",
+  "equipment_code",
+  "equipment_name",
+  "column_break_vmkh",
+  "manufacturer",
+  "manufacturer_part_name",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_manufacturer_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "manufacturer",
+   "fieldtype": "Link",
+   "label": "Manufacturer",
+   "options": "Manufacturer"
+  },
+  {
+   "fieldname": "manufacturer_part_name",
+   "fieldtype": "Data",
+   "label": "Manufacturer Part Name"
+  },
+  {
+   "fieldname": "column_break_vmkh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Equipment Code",
+   "options": "Equipment"
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Equipment Name",
+   "length": 50
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-25 11:14:20.834716",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Equipment Manufacturer",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Item Creator",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

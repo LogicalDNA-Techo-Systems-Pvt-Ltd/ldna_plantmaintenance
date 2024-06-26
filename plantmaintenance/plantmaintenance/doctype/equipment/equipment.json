@@ -1,0 +1,246 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{equipment_code}",
+ "creation": "2024-05-30 10:49:09.117773",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item_details_section",
+  "equipment_code",
+  "equipment_name",
+  "equipment_group",
+  "type_of_technical_object",
+  "on_hold",
+  "column_break_bfyn",
+  "activity_group",
+  "description_of_technical_object",
+  "on_scrap",
+  "manufacturer_data_section",
+  "manufacturer_of_asset",
+  "country_of_manufacturer",
+  "column_break_zgul",
+  "equipment_model_number",
+  "equipment_serial_no",
+  "plant_tab",
+  "plant_details_section",
+  "name1",
+  "location",
+  "column_break_zbco",
+  "plant_section",
+  "work_center",
+  "warranty_tab",
+  "customer_warranty_section",
+  "begin_guarantee",
+  "column_break_plcd",
+  "warranty_end",
+  "damage_and_causes_tab",
+  "damage",
+  "column_break_ikhp",
+  "cause"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bfyn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "manufacturer_data_section",
+   "fieldtype": "Section Break",
+   "label": "Manufacture Details"
+  },
+  {
+   "fieldname": "column_break_zgul",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "plant_tab",
+   "fieldtype": "Tab Break",
+   "label": "Plant"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "mandatory_depends_on": "eval:doc.name1",
+   "options": "Section"
+  },
+  {
+   "fieldname": "warranty_tab",
+   "fieldtype": "Tab Break",
+   "label": "Warranty And Guarantee"
+  },
+  {
+   "fieldname": "customer_warranty_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "begin_guarantee",
+   "fieldtype": "Date",
+   "label": "Guarantee Date"
+  },
+  {
+   "fieldname": "warranty_end",
+   "fieldtype": "Date",
+   "label": "Warranty End Date"
+  },
+  {
+   "fieldname": "plant_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Functional Location",
+   "mandatory_depends_on": "eval:doc.name1",
+   "options": "Location"
+  },
+  {
+   "fieldname": "column_break_zbco",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "label": "Work center",
+   "mandatory_depends_on": "eval:doc.name1",
+   "options": "Work Center"
+  },
+  {
+   "fieldname": "equipment_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Equipment Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Equipment Name",
+   "length": 50
+  },
+  {
+   "fieldname": "equipment_group",
+   "fieldtype": "Link",
+   "label": "Equipment Group",
+   "mandatory_depends_on": "eval:doc.equipment_code",
+   "options": "Equipment  Group"
+  },
+  {
+   "default": "0",
+   "fieldname": "on_hold",
+   "fieldtype": "Check",
+   "label": "On Hold"
+  },
+  {
+   "default": "0",
+   "fieldname": "on_scrap",
+   "fieldtype": "Check",
+   "label": "On Scrap"
+  },
+  {
+   "fieldname": "type_of_technical_object",
+   "fieldtype": "Link",
+   "label": "Type Of Technical Object",
+   "options": "Equipment Type"
+  },
+  {
+   "fieldname": "activity_group",
+   "fieldtype": "Link",
+   "label": "Activity Group",
+   "options": "Activity Group"
+  },
+  {
+   "fieldname": "description_of_technical_object",
+   "fieldtype": "Small Text",
+   "label": "Description Of Technical Object"
+  },
+  {
+   "fieldname": "name1",
+   "fieldtype": "Link",
+   "label": "Name",
+   "options": "Plant"
+  },
+  {
+   "fieldname": "damage_and_causes_tab",
+   "fieldtype": "Tab Break",
+   "label": "Damage And Causes",
+   "options": "da"
+  },
+  {
+   "fieldname": "damage",
+   "fieldtype": "Table MultiSelect",
+   "label": "Damage",
+   "options": "Damage CT"
+  },
+  {
+   "fieldname": "cause",
+   "fieldtype": "Table MultiSelect",
+   "label": "Cause",
+   "options": "Cause CT"
+  },
+  {
+   "fieldname": "equipment_model_number",
+   "fieldtype": "Data",
+   "label": "Equipment Model Number",
+   "length": 50
+  },
+  {
+   "fieldname": "equipment_serial_no",
+   "fieldtype": "Data",
+   "label": "Equipment Serial No",
+   "length": 50
+  },
+  {
+   "fieldname": "column_break_ikhp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_plcd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "manufacturer_of_asset",
+   "fieldtype": "Link",
+   "label": "Manufacturer Of Asset",
+   "options": "Manufacturer"
+  },
+  {
+   "fieldname": "country_of_manufacturer",
+   "fieldtype": "Link",
+   "label": "Country Of Manufacturer",
+   "options": "Country"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-26 10:23:49.471502",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Equipment",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
