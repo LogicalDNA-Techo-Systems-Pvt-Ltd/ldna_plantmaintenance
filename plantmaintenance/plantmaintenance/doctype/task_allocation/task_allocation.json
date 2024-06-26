@@ -6,61 +6,24 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "details_section",
-  "schedule_no",
   "section_break_ioxy",
-  "location",
-  "start_date",
+  "work_central",
   "frequency",
   "column_break_ikiv",
-  "section",
-  "end_date",
+  "plant_section",
+  "status",
   "button_container",
   "section_break_erqe",
   "task_allocation_details"
  ],
  "fields": [
   {
-   "fieldname": "details_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fetch_from": "item_code.location",
-   "fieldname": "location",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Location",
-   "options": "Location"
-  },
-  {
-   "fieldname": "schedule_no",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Schedule No"
-  },
-  {
-   "fieldname": "start_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Start Date"
-  },
-  {
-   "fieldname": "end_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "End Date"
-  },
-  {
    "fieldname": "frequency",
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Frequency",
-   "options": "Daily\nWeekly\nMonthly"
+   "options": "Daily\nWeekly\nMonthly\nYearly"
   },
   {
    "fieldname": "section_break_ioxy",
@@ -81,20 +44,37 @@
    "options": "Task Allocation Details"
   },
   {
-   "fieldname": "section",
-   "fieldtype": "Link",
-   "label": "Section",
-   "options": "Section"
-  },
-  {
    "fieldname": "button_container",
    "fieldtype": "HTML",
    "label": "Button Container"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "In Progress\nCompleted\nOn hold\nOperational"
+  },
+  {
+   "fetch_from": "item_code.location",
+   "fieldname": "work_central",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Work Central",
+   "options": "Work Center"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Link",
+   "label": "Plant Section",
+   "options": "Section"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-12 17:26:23.052766",
+ "modified": "2024-06-26 14:27:21.967894",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
