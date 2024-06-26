@@ -47,12 +47,18 @@
   "reading_8",
   "timeline_section",
   "column_break_kqfz",
-  "expected_start_date",
   "actual_start_date",
-  "column_break_djip",
-  "expected_end_date",
   "actual_end_date",
+  "column_break_djip",
+  "expected_start_date",
   "column_break_rwiq",
+  "section_break_ubjt",
+  "breakdown_reason",
+  "column_break_elub",
+  "service_contact_no",
+  "column_break_qjvu",
+  "section_break_kvqw",
+  "remark",
   "inventory_tab",
   "material_issued",
   "material_returned"
@@ -60,34 +66,30 @@
  "fields": [
   {
    "fieldname": "timeline_section",
-   "fieldtype": "Section Break",
-   "label": "Timeline"
+   "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "expected_start_date",
    "fieldtype": "Date",
    "label": "Expected Start Date",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
   },
   {
    "fieldname": "actual_start_date",
    "fieldtype": "Date",
-   "label": "Actual Start Date"
+   "label": "Actual Start Date",
+   "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
   },
   {
    "fieldname": "column_break_rwiq",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "expected_end_date",
-   "fieldtype": "Date",
-   "label": "Expected End Date",
-   "reqd": 1
-  },
-  {
    "fieldname": "actual_end_date",
    "fieldtype": "Date",
-   "label": "Actual End Date"
+   "label": "Actual End Date",
+   "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
   },
   {
    "fieldname": "inventory_tab",
@@ -120,31 +122,34 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "parameter",
-   "fieldtype": "Data",
-   "label": "Parameter"
+   "fieldtype": "Link",
+   "label": "Parameter",
+   "options": "Parameter",
+   "reqd": 1
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
    "label": "Maximum Value"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
    "label": "Minimum value"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Binary\"",
+   "depends_on": "eval:doc.parameter_type==\"Binary\"",
    "fieldname": "acceptance_criteria",
    "fieldtype": "Select",
    "label": "Acceptance Criteria",
    "options": "Yes\nNo"
   },
   {
-   "depends_on": "eval:doc.parameter==\"List\"",
+   "depends_on": "eval:doc.parameter_type==\"List\"",
    "fieldname": "text",
    "fieldtype": "Text",
    "label": "Text"
@@ -200,15 +205,13 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "  \t Priority",
-   "options": "\nLow\nHigh\nCritical",
-   "reqd": 1
+   "options": "\nLow\nHigh\nCritical"
   },
   {
    "fieldname": "type",
    "fieldtype": "Select",
    "label": "Type ",
-   "options": "\nPreemptive\nBreakdown",
-   "reqd": 1
+   "options": "Preemptive\nBreakdown"
   },
   {
    "fieldname": "approver",
@@ -222,8 +225,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Assigned To",
-   "reqd": 1
+   "label": "Assigned To"
   },
   {
    "fieldname": "status",
@@ -232,10 +234,11 @@
    "options": "Open\nIn progress\nCompleted\nApproved\nRejected\nOverDue"
   },
   {
+   "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "activity",
    "fieldtype": "Link",
    "label": "Activity",
-   "options": "Parameter Group",
+   "options": "Activity",
    "reqd": 1
   },
   {
@@ -247,67 +250,67 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "readings",
    "fieldtype": "Int",
    "label": "Readings"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_1",
    "fieldtype": "Float",
    "label": "Reading 1"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_2",
    "fieldtype": "Float",
    "label": "Reading 2"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_3",
    "fieldtype": "Float",
    "label": "Reading 3"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_4",
    "fieldtype": "Float",
    "label": "Reading 4"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_5",
    "fieldtype": "Float",
    "label": "Reading 5"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_6",
    "fieldtype": "Float",
    "label": "Reading 6"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_7",
    "fieldtype": "Float",
    "label": "Reading 7"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_8",
    "fieldtype": "Float",
    "label": "Reading 8"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_9",
    "fieldtype": "Float",
    "label": "Reading 9"
   },
   {
-   "depends_on": "eval:doc.parameter==\"Numeric\"",
+   "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_10",
    "fieldtype": "Float",
    "label": "Reading 10"
@@ -337,16 +340,52 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "parameter_type",
    "fieldtype": "Select",
    "label": "Parameter Type",
-   "options": "\nBinary\nNumeric\nList",
-   "reqd": 1
+   "options": "\nBinary\nNumeric\nList"
+  },
+  {
+   "fieldname": "section_break_ubjt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Breakdown\"",
+   "fieldname": "breakdown_reason",
+   "fieldtype": "Link",
+   "label": "Breakdown Reason",
+   "options": "Breakdown Reason"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Breakdown\"",
+   "fieldname": "column_break_elub",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Breakdown\"",
+   "fieldname": "service_contact_no",
+   "fieldtype": "Phone",
+   "label": "Service Contact No"
+  },
+  {
+   "fieldname": "column_break_qjvu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_kvqw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Breakdown\"",
+   "fieldname": "remark",
+   "fieldtype": "Long Text",
+   "label": "Remark"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 14:57:42.641046",
+ "modified": "2024-06-26 16:47:46.346135",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
