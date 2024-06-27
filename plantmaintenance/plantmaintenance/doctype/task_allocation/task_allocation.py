@@ -1,6 +1,3 @@
-# Copyright (c) 2024, LogicalDNA and contributors
-# For license information, please see license.txt
-
 import frappe
 from frappe.model.document import Document
 from dateutil.relativedelta import relativedelta
@@ -35,23 +32,22 @@ def load_tasks(work_center, plant_section):
         for activity in activity_group.activity:
             activity_doc = frappe.get_doc('Activity', activity.activity_name)
             for parameter in activity_doc.parameter:
-                    task_dates = get_task_dates(parameter.frequency,parameter.range)
-                    for task_date in task_dates:
-                        tasks_to_add.append({
-                            'equipment_code': equipment.equipment_code,
-                            'equipment_name': equipment.equipment_name,
-                            'date': task_date,
-                            'frequency': parameter.frequency,
-                            'task_status': 'Open',
-                            'activity_name': activity.activity_name,
-                            'parameter': parameter.parameter,
-                            'day':calendar.day_name[task_date.weekday()]
-                        })
-
+                task_dates = get_task_dates(parameter.frequency, parameter.range)
+                for task_date in task_dates:
+                    tasks_to_add.append({
+                        'equipment_code': equipment.equipment_code,
+                        'equipment_name': equipment.equipment_name,
+                        'date': task_date,
+                        'frequency': parameter.frequency,
+                        'task_status': 'Open',
+                        'activity_name': activity.activity_name,
+                        'parameter': parameter.parameter,
+                        'day': calendar.day_name[task_date.weekday()]
+                    })
 
     return tasks_to_add
 
-def get_task_dates(frequency,range_value=None):
+def get_task_dates(frequency, range_value=None):
     start_date = getdate(nowdate())
     dates = []
 
@@ -64,23 +60,19 @@ def get_task_dates(frequency,range_value=None):
     elif frequency == 'Yearly':
         dates = [add_years(start_date, i) for i in range(1)]
     elif frequency == 'Randomly':
-        # import random
-        # range_in_days = 30 
-        # dates = [add_days(start_date, random.randint(0, range_in_days)) for _ in range(range_task)]
-        dates =  [add_days(start_date, i*range_value) for i in range(5)]
+        dates = [add_days(start_date, i * range_value) for i in range(5)]
 
-    
     return dates
 
 @frappe.whitelist()
 def download_tasks_excel_for_task_allocation(tasks):
     tasks = frappe.parse_json(tasks)
-    
+
     wb = Workbook()
     ws = wb.active
     ws.title = "Tasks"
 
-    headers = ['Equipment Code', 'Equipment Name', 'Activity', 'Parameter', 'Frequency', 'Assign TO', 'Date','Day']
+    headers = ['Equipment Code', 'Equipment Name', 'Activity', 'Parameter', 'Frequency', 'Assign TO', 'Date', 'Day']
     ws.append(headers)
 
     for task in tasks:
@@ -88,15 +80,13 @@ def download_tasks_excel_for_task_allocation(tasks):
         row = [
             task.get('equipment_code'),
             task.get('equipment_name'),
-            task.get('activity'), 
+            task.get('activity'),
             task.get('parameter'),
             task.get('frequency'),
-            task.get('assign_to'), 
+            task.get('assign_to'),
             task_date.strftime('%Y-%m-%d') if task_date else None,
             task.get('day')
-
         ]
-
         ws.append(row)
 
     virtual_workbook = BytesIO()
@@ -112,5 +102,68 @@ def download_tasks_excel_for_task_allocation(tasks):
         'is_private': 0
     })
     file_doc.save(ignore_permissions=True)
-    
+
     return file_doc.file_url
+
+class TaskAllocation(Document):
+    def update_task_details(self):
+        for detail in self.task_allocation_details:
+            task_detail_name = self.get_existing_task_detail_name(detail.equipment_code, detail.activity, detail.parameter)
+            
+            if task_detail_name:
+                task_detail = frappe.get_doc("Task Detail", task_detail_name)
+                task_detail.update({
+                    "approver": frappe.session.user,
+                    "equipment_id": detail.equipment_code,
+                    "equipment_name": detail.equipment_name,
+                    "work_center": self.work_center,
+                    "plant_section": self.plant_section,
+                    "priority": detail.priority,
+                    "expected_start_date": detail.date,
+                    "assigned_to": detail.assign_to,
+                    "activity": detail.activity,
+                    "parameter": detail.parameter,
+                })
+                task_detail.save(ignore_permissions=True)
+            else:
+                self.create_task_detail(detail)
+
+    def create_task_detail(self, detail):
+        task_detail = frappe.new_doc("Task Detail")
+        task_detail.update({
+            "task_allocation_id": self.name,
+            "approver": frappe.session.user,
+            "equipment_id": detail.equipment_code,
+            "equipment_name": detail.equipment_name,
+            "work_center": self.work_center,
+            "plant_section": self.plant_section,
+            "expected_start_date": detail.date,
+            "assigned_to": detail.assign_to,
+            "activity": detail.activity,
+            "parameter": detail.parameter,
+            "priority": detail.priority,
+        })
+        task_detail.insert(ignore_permissions=True)
+
+    def get_existing_task_detail_name(self, equipment_code, activity, parameter):
+        return frappe.db.get_value("Task Detail", {
+            "task_allocation_id": self.name,
+            "equipment_id": equipment_code,
+            "activity": activity,
+            "parameter": parameter,
+        }, "name")
+
+@frappe.whitelist()
+def generate_tasks(docname):
+    doc = frappe.get_doc("Task Allocation", docname)
+    if doc:
+        doc.update_task_details()
+        return "Tasks have been generated successfully."
+    else:
+        return "Task Allocation document not found."
+
+@frappe.whitelist()
+def check_tasks_generated(docname):
+    if frappe.db.exists("Task Detail", {"task_allocation_id": docname}):
+        return True
+    return False
