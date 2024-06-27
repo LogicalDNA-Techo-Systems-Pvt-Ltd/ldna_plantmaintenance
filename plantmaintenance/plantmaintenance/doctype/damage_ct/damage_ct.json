@@ -12,14 +12,16 @@
   {
    "fieldname": "damage_type",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Damage Type",
-   "options": "Damage"
+   "options": "Damage",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-25 15:00:04.763515",
+ "modified": "2024-06-26 16:41:01.021977",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Damage CT",

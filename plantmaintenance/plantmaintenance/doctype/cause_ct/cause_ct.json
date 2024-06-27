@@ -12,14 +12,16 @@
   {
    "fieldname": "cause",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Cause",
-   "options": "Cause"
+   "options": "Cause",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-25 14:48:33.786450",
+ "modified": "2024-06-26 16:38:25.013295",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Cause CT",

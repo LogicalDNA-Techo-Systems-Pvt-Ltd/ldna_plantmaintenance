@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:IG-{##}",
+ "autoname": "format:{equipment_group_name}",
  "creation": "2024-05-30 12:06:48.511464",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -44,7 +44,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 11:13:26.722768",
+ "modified": "2024-06-27 12:00:41.081000",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment  Group",

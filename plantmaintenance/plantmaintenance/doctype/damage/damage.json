@@ -1,28 +1,34 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:damage",
+ "autoname": "format:{damage}",
  "creation": "2024-06-25 14:47:03.001804",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "damage_section",
   "damage"
  ],
  "fields": [
   {
    "fieldname": "damage",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Damage",
    "unique": 1
+  },
+  {
+   "fieldname": "damage_section",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 15:06:04.537427",
+ "modified": "2024-06-26 16:56:00.803484",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Damage",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

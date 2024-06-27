@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:MN-{##}",
+ "autoname": "format:{short_name}",
  "creation": "2024-05-30 12:08:23.168058",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -43,7 +43,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-10 12:10:38.258308",
+ "modified": "2024-06-27 11:09:01.511300",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Manufacturer",

@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:work_center",
+ "autoname": "format:{work_center}",
  "creation": "2024-06-25 16:26:08.675412",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -18,11 +18,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 17:49:14.090723",
+ "modified": "2024-06-26 17:06:53.642110",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Work Center",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
