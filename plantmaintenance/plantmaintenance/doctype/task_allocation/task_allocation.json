@@ -1,13 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{schedule_no}",
+ "autoname": "format:{work_center}",
  "creation": "2024-05-30 15:10:06.134507",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_ioxy",
-  "work_central",
+  "work_center",
   "frequency",
   "column_break_ikiv",
   "plant_section",
@@ -57,24 +57,24 @@
    "options": "In Progress\nCompleted\nOn hold\nOperational"
   },
   {
-   "fetch_from": "item_code.location",
-   "fieldname": "work_central",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Work Central",
-   "options": "Work Center"
-  },
-  {
    "fieldname": "plant_section",
    "fieldtype": "Link",
    "label": "Plant Section",
    "options": "Section"
+  },
+  {
+   "fetch_from": "item_code.location",
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Work Center",
+   "options": "Work Center"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 14:27:21.967894",
+ "modified": "2024-06-26 16:40:17.816499",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
