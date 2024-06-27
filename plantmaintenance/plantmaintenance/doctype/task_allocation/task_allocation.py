@@ -134,7 +134,7 @@ class TaskAllocation(Document):
             "task_allocation_id": self.name,
             "approver": frappe.session.user,
             "equipment_code": detail.equipment_code,
-            "equipment_name": detail.equipment__name,
+            "equipment_name": detail.equipment_name,
             "work_center": self.work_center,
             "plant_section": self.plant_section,
             "expected_start_date": detail.date,
@@ -148,7 +148,7 @@ class TaskAllocation(Document):
     def get_existing_task_detail_name(self, equipment_code, activity, parameter):
         return frappe.db.get_value("Task Detail", {
             "task_allocation_id": self.name,
-            "equipment_code": equipment_code,
+            "equipment_id": equipment_code,
             "activity": activity,
             "parameter": parameter,
         }, "name")
