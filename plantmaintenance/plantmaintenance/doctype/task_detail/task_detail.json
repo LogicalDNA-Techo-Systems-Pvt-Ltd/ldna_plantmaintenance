@@ -130,8 +130,7 @@
    "fieldname": "parameter",
    "fieldtype": "Link",
    "label": "Parameter",
-   "options": "Parameter",
-   "reqd": 1
+   "options": "Parameter"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
@@ -170,8 +169,7 @@
    "fieldname": "task_allocation_id",
    "fieldtype": "Link",
    "label": "Task Allocation Id",
-   "options": "Task Allocation",
-   "reqd": 1
+   "options": "Task Allocation"
   },
   {
    "fieldname": "plant_section",
@@ -179,8 +177,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Plant Section ",
-   "options": "Section",
-   "reqd": 1
+   "options": "Section"
   },
   {
    "fieldname": "work_center",
@@ -188,8 +185,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Work Center",
-   "options": "Work Center",
-   "reqd": 1
+   "options": "Work Center"
   },
   {
    "fieldname": "equipment_name",
@@ -197,8 +193,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Equipment Name",
-   "options": "Equipment",
-   "reqd": 1
+   "options": "Equipment"
   },
   {
    "fieldname": "priority",
@@ -217,8 +212,7 @@
    "fieldname": "approver",
    "fieldtype": "Link",
    "label": "Approver",
-   "options": "User",
-   "reqd": 1
+   "options": "User"
   },
   {
    "fieldname": "assigned_to",
@@ -239,8 +233,7 @@
    "fieldname": "activity",
    "fieldtype": "Link",
    "label": "Activity",
-   "options": "Activity",
-   "reqd": 1
+   "options": "Activity"
   },
   {
    "fieldname": "column_break_xlqp",
@@ -407,13 +400,12 @@
    "fieldname": "equipment_code",
    "fieldtype": "Link",
    "label": "Equipment Code",
-   "options": "Equipment",
-   "reqd": 1
+   "options": "Equipment"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-27 14:14:59.848246",
+ "modified": "2024-06-27 14:30:28.708929",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

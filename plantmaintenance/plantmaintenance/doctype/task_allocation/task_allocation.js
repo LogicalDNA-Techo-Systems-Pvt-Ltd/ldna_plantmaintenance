@@ -113,29 +113,48 @@ function download_tasks_excel(tasks) {
         }
     });
 }
-
 function add_generate_task_button(frm) {
     frm.remove_custom_button(__('Generate Task'));
 
     frm.add_custom_button(__('Generate Task'), function() {
         frappe.call({
-            method: "plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.generate_tasks",
+            method: "plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.check_tasks_generated",
             args: {
                 docname: frm.doc.name
             },
             callback: function(response) {
                 if (response.message) {
-                    frappe.msgprint(response.message);
-                    frm.reload_doc();
+                    frappe.msgprint(__('Tasks have been generated successfully.'));
+                } else {
+                    generate_tasks(frm);
                 }
             },
             error: function(err) {
                 console.log(err);
-                frappe.msgprint(__('An error occurred while generating tasks.'));
+                frappe.msgprint(__('An error occurred while checking tasks.'));
             }
         });
     }).css({
         'background-color': 'black',
         'color': 'white'
+    });
+}
+
+function generate_tasks(frm) {
+    frappe.call({
+        method: "plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.generate_tasks",
+        args: {
+            docname: frm.doc.name
+        },
+        callback: function(response) {
+            if (response.message) {
+                frappe.msgprint(response.message);
+                frm.reload_doc();
+            }
+        },
+        error: function(err) {
+            console.log(err);
+            frappe.msgprint(__('An error occurred while generating tasks.'));
+        }
     });
 }
