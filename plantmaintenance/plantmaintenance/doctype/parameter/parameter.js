@@ -10,7 +10,7 @@ frappe.ui.form.on('Parameter', {
         render_radio_buttons(frm);  
     },
     before_save: function(frm) {
-         handleParameterChange(frm);  
+         HandleParameter(frm);  
     }
 });
 
@@ -66,7 +66,7 @@ function render_radio_buttons(frm) {
 }
 
 
-function handleParameterChange(frm) {
+function HandleParameter(frm) {
     var parameterType = frm.doc.parameter_type;
 
 
