@@ -1,14 +1,5 @@
-// Copyright (c) 2024, LogicalDNA and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on('Task Allocation', {
     refresh: function(frm) {
-        frm.add_custom_button(__('Generate Task'), function(){
-        },).css({
-            'background-color': 'black',  
-            'color': 'white'
-        });
-
         if (!frm.custom_buttons_created) {
             const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
 
@@ -26,7 +17,30 @@ frappe.ui.form.on('Task Allocation', {
 
             frm.custom_buttons_created = true;
         }
-        
+
+        if (!frm.is_new()) {
+            add_generate_task_button(frm);
+        }
+    },
+    after_save: function(frm) {
+        add_generate_task_button(frm);
+        if (!frm.custom_buttons_created) {
+            const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
+
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function() {
+                load_tasks(frm);
+            });
+
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function() {
+                download_tasks_excel(frm.doc.task_allocation_details);
+            });
+
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function() {
+                upload_assignment_excel(frm);
+            });
+
+            frm.custom_buttons_created = true;
+        }
     }
 });
 
@@ -67,7 +81,7 @@ function load_tasks(frm) {
                         frappe.model.set_value(child.doctype, child.name, 'task_status', task.task_status);
                         frappe.model.set_value(child.doctype, child.name, 'activity', task.activity_name);
                         frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
-                        frappe.model.set_value(child.doctype,child.name,'day',task.day);
+                        frappe.model.set_value(child.doctype, child.name, 'day', task.day);
                     }
                 });
 
@@ -84,7 +98,7 @@ function download_tasks_excel(tasks) {
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.download_tasks_excel_for_task_allocation',
         args: {
-            tasks: JSON.stringify(tasks) 
+            tasks: JSON.stringify(tasks)
         },
         callback: function(response) {
             const file_url = response.message;
@@ -97,5 +111,31 @@ function download_tasks_excel(tasks) {
         error: function(xhr, textStatus, error) {
             frappe.msgprint(__('Failed to download tasks: {0}', [error]));
         }
+    });
+}
+
+function add_generate_task_button(frm) {
+    frm.remove_custom_button(__('Generate Task'));
+
+    frm.add_custom_button(__('Generate Task'), function() {
+        frappe.call({
+            method: "plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.generate_tasks",
+            args: {
+                docname: frm.doc.name
+            },
+            callback: function(response) {
+                if (response.message) {
+                    frappe.msgprint(response.message);
+                    frm.reload_doc();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                frappe.msgprint(__('An error occurred while generating tasks.'));
+            }
+        });
+    }).css({
+        'background-color': 'black',
+        'color': 'white'
     });
 }
