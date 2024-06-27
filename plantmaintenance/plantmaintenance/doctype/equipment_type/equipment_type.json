@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:equipment",
+ "autoname": "format:{equipment}",
  "creation": "2024-06-25 16:16:13.288162",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -12,17 +12,18 @@
   {
    "fieldname": "equipment",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Equipment",
    "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 17:39:49.676546",
+ "modified": "2024-06-27 12:12:31.736097",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment Type",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:cause",
+ "autoname": "format:{cause}",
  "creation": "2024-06-25 14:45:40.209710",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -12,17 +12,18 @@
   {
    "fieldname": "cause",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Cause",
    "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 14:50:17.998465",
+ "modified": "2024-06-26 17:12:33.459041",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Cause",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
