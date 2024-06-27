@@ -8,7 +8,7 @@
  "field_order": [
   "section_break_bizs",
   "task_allocation_id",
-  "equipment_id",
+  "equipment_code",
   "equipment_name",
   "status",
   "column_break_xlqp",
@@ -21,15 +21,15 @@
   "priority",
   "section_break_pnvh",
   "activity",
-  "parameter",
   "parameter_type",
-  "readings",
-  "column_break_scrc",
-  "maximum_value",
   "minimum_value",
   "acceptance_criteria",
   "text",
   "column_break_rnng",
+  "parameter",
+  "readings",
+  "maximum_value",
+  "column_break_scrc",
   "section_break_mpil",
   "column_break_limp",
   "reading_1",
@@ -59,6 +59,10 @@
   "column_break_qjvu",
   "section_break_kvqw",
   "remark",
+  "section_break_ajip",
+  "damage",
+  "column_break_pkrb",
+  "cause",
   "inventory_tab",
   "material_issued",
   "material_returned"
@@ -171,33 +175,29 @@
   },
   {
    "fieldname": "plant_section",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Plant Section ",
+   "options": "Section",
    "reqd": 1
   },
   {
    "fieldname": "work_center",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "  \t Work Center",
-   "reqd": 1
-  },
-  {
-   "fieldname": "equipment_id",
-   "fieldtype": "Link",
-   "label": "Equipment ID",
-   "options": "Item",
+   "label": "Work Center",
+   "options": "Work Center",
    "reqd": 1
   },
   {
    "fieldname": "equipment_name",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Equipment Name",
+   "options": "Equipment",
    "reqd": 1
   },
   {
@@ -222,10 +222,11 @@
   },
   {
    "fieldname": "assigned_to",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Assigned To"
+   "label": "Assigned To",
+   "options": "User"
   },
   {
    "fieldname": "status",
@@ -381,11 +382,39 @@
    "fieldname": "remark",
    "fieldtype": "Long Text",
    "label": "Remark"
+  },
+  {
+   "fieldname": "section_break_ajip",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "damage",
+   "fieldtype": "Table MultiSelect",
+   "label": "Damage",
+   "options": "Damage CT"
+  },
+  {
+   "fieldname": "cause",
+   "fieldtype": "Table MultiSelect",
+   "label": "Cause",
+   "options": "Cause CT"
+  },
+  {
+   "fieldname": "column_break_pkrb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment_code",
+   "fieldtype": "Link",
+   "label": "Equipment Code",
+   "options": "Equipment",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 23:24:02.545744",
+
+ "modified": "2024-06-27 10:30:00.430287",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
