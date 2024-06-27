@@ -44,7 +44,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Frequency",
-   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandom"
+   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandomly"
   },
   {
    "fieldname": "priority",
@@ -105,7 +105,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-26 16:04:05.420332",
+ "modified": "2024-06-26 16:35:36.844140",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation Details",
