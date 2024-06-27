@@ -35,7 +35,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Equipment Name",
-   "options": "Item",
+   "options": "Equipment",
    "reqd": 1
   },
   {
@@ -110,7 +110,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 11:57:42.358579",
+ "modified": "2024-06-27 14:31:26.634562",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Service Call",
