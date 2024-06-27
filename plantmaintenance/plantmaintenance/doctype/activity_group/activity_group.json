@@ -20,7 +20,6 @@
    "label": "Is Active"
   },
   {
-   "bold": 1,
    "fieldname": "activity_group",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -38,7 +37,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 18:00:56.879413",
+ "modified": "2024-06-26 17:28:26.599676",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Activity Group",

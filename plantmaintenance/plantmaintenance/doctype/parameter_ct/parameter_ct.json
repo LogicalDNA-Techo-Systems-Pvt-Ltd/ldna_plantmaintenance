@@ -10,10 +10,8 @@
   "minimum_value",
   "maximum_value",
   "acceptance_criteria",
-  "number_of_readings",
   "frequency",
   "day",
-  "date",
   "range"
  ],
  "fields": [
@@ -63,15 +61,11 @@
   {
    "fetch_from": "parameter.parameter_type",
    "fieldname": "parameter_type",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Parameter Type"
-  },
-  {
-   "fetch_from": "parameter.num_readings",
-   "fieldname": "number_of_readings",
-   "fieldtype": "Int",
-   "label": "Number Of Readings"
+   "label": "Parameter Type",
+   "options": "\nBinary\nNumeric\nList",
+   "reqd": 1
   },
   {
    "depends_on": "eval:doc.frequency==\"Weekly\"",
@@ -80,13 +74,6 @@
    "fieldtype": "Select",
    "label": "Day",
    "options": "Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday"
-  },
-  {
-   "depends_on": "eval:doc.frequency==\"Monthly\"||doc.frequency==\"Yearly\"||doc.frequency==\"Five Year\"||doc.frequency==\"Two and Half Year\"||doc.frequency==\"Half Year\"",
-   "fetch_from": "parameter.date",
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "Date"
   },
   {
    "depends_on": "eval:doc.frequency==\"Randomly\"",
@@ -99,7 +86,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-25 18:01:21.462814",
+ "modified": "2024-06-27 09:56:27.637322",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter CT",
