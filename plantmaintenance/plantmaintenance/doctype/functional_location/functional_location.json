@@ -1,33 +1,33 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{location}",
- "creation": "2024-06-04 13:02:53.957153",
+ "autoname": "format:{functional_location}",
+ "creation": "2024-07-01 12:37:17.994637",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "location",
-  "table_gkct"
+  "functional_location",
+  "table_rwcr"
  ],
  "fields": [
   {
-   "fieldname": "location",
+   "fieldname": "functional_location",
    "fieldtype": "Data",
-   "label": "Location",
+   "label": "Functional Location",
    "unique": 1
   },
   {
-   "fieldname": "table_gkct",
+   "fieldname": "table_rwcr",
    "fieldtype": "Table",
-   "options": "Functional Location CT"
+   "options": "Section CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-01 12:40:46.311996",
+ "modified": "2024-07-01 13:59:20.033309",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Location",
+ "name": "Functional Location",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
