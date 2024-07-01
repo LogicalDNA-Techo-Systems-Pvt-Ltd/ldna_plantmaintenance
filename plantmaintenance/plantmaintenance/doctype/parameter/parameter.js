@@ -11,7 +11,31 @@ frappe.ui.form.on('Parameter', {
     },
     before_save: function(frm) {
          HandleParameter(frm);  
+    },
+    number_of_readings: function(frm) {
+         const numReadings = frm.doc.number_of_readings;
+        
+         if (numReadings > 10) {
+            frappe.msgprint(__('Number of readings must be less than 10.'));
+            return;
+        }
+        
+         for (let i = 1; i <= 10; i++) {
+            const fieldname = `reading_${i}`;
+            
+             if (i <= numReadings) {
+                frm.set_df_property(fieldname, 'hidden', 0);
+             } else {
+                frm.set_df_property(fieldname, 'hidden', 1);
+            }
+        }
+    },
+    
+     onload: function(frm) {
+        frm.trigger('number_of_readings');
     }
+
+
 });
 
 function render_radio_buttons(frm) {
@@ -68,12 +92,15 @@ function render_radio_buttons(frm) {
 
 function HandleParameter(frm) {
     var parameterType = frm.doc.parameter_type;
+     
 
 
      if (parameterType === 'Binary') {
          frm.set_value('minimum_value', '');
         frm.set_value('maximum_value', '');
         frm.set_value('text', '');
+        frm.set_value('number_of_readings','');
+
      } else if (parameterType === 'Numeric') {
         frm.set_value('acceptance_criteria', '');
         frm.set_value('text', '');
@@ -82,7 +109,9 @@ function HandleParameter(frm) {
         frm.set_value('acceptance_criteria', '');
         frm.set_value('minimum_value', '');
         frm.set_value('maximum_value', '');
-     }
+        frm.set_value('number_of_readings','')
+    }
+    
 }
 
 
