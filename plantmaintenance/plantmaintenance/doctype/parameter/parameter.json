@@ -271,7 +271,7 @@
    "fieldname": "day_of_month",
    "fieldtype": "Int",
    "label": "Day Of Month",
-   "mandatory_depends_on": "eval:doc.frequency==\"Monthly\""
+   "mandatory_depends_on": " "
   },
   {
    "fieldname": "section_break_nopz",
@@ -287,7 +287,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-02 12:07:55.847867",
+ "modified": "2024-07-02 15:08:18.043033",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
