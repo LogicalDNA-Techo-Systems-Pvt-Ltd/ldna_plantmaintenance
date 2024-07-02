@@ -138,7 +138,7 @@
   {
    "fieldname": "description_of_technical_object",
    "fieldtype": "Small Text",
-   "label": "Description Of Technical Object"
+   "label": "Description "
   },
   {
    "fieldname": "name1",
@@ -228,13 +228,8 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [
-  {
-   "link_doctype": "Equipment",
-   "link_fieldname": "Name"
-  }
- ],
- "modified": "2024-07-02 17:01:12.632975",
+ "links": [],
+ "modified": "2024-07-02 18:12:03.891557",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
