@@ -225,6 +225,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.parameter != \"\" && doc.frequency !=\"\"",
    "fetch_from": "parameter.frequency",
    "fieldname": "frequency",
    "fieldtype": "Select",
@@ -232,6 +233,7 @@
    "options": "\nDaily\nWeekly\nMonthly\nYearly"
   },
   {
+   "depends_on": "eval:doc.parameter != \"\" && doc.parameter_type != \"\"",
    "fetch_from": "parameter.parameter_type",
    "fieldname": "parameter_type",
    "fieldtype": "Select",
@@ -249,7 +251,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-02 15:04:43.493512",
+ "modified": "2024-07-02 16:11:35.578252",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter CT",
