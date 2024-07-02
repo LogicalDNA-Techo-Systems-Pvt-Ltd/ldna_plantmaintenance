@@ -7,13 +7,11 @@
  "field_order": [
   "parameter",
   "parameter_type",
-  "minimum_value",
   "maximum_value",
   "acceptance_criteria",
   "text",
   "frequency",
   "day_of_month",
-  "range",
   "number_of_readings",
   "monday",
   "tuesday",
@@ -48,15 +46,6 @@
   },
   {
    "depends_on": "eval:doc.parameter_type=='Numeric'",
-   "fetch_from": "parameter.minimum_value",
-   "fieldname": "minimum_value",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Minimum Value",
-   "non_negative": 1
-  },
-  {
-   "depends_on": "eval:doc.parameter_type=='Numeric'",
    "fetch_from": "parameter.maximum_value",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
@@ -72,29 +61,6 @@
    "in_list_view": 1,
    "label": "Acceptance Criteria",
    "length": 50
-  },
-  {
-   "fetch_from": "parameter.frequency",
-   "fieldname": "frequency",
-   "fieldtype": "Select",
-   "label": "Frequency",
-   "options": "\nDaily\nWeekly\nMonthly\nYearly\nRandomly"
-  },
-  {
-   "fetch_from": "parameter.parameter_type",
-   "fieldname": "parameter_type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Parameter Type",
-   "options": "\nBinary\nNumeric\nList",
-   "reqd": 1
-  },
-  {
-   "depends_on": "eval:doc.frequency==\"Randomly\"",
-   "fetch_from": "parameter.range",
-   "fieldname": "range",
-   "fieldtype": "Int",
-   "label": "Range"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"List\"",
@@ -256,12 +222,26 @@
   {
    "fieldname": "column_break_pzyg",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "parameter.frequency",
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "options": "\nDaily\nWeekly\nMonthly\nYearly"
+  },
+  {
+   "fetch_from": "parameter.parameter_type",
+   "fieldname": "parameter_type",
+   "fieldtype": "Select",
+   "label": "Parameter Type",
+   "options": "\nBinary\nNumeric\nList"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-01 16:32:57.685480",
+ "modified": "2024-07-02 12:32:18.202784",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter CT",

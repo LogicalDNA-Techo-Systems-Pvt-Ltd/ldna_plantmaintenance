@@ -24,12 +24,13 @@
    "fieldname": "parameter",
    "fieldtype": "Table",
    "label": "Parameter",
-   "options": "Parameter CT"
+   "options": "Parameter CT",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-25 18:01:34.755779",
+ "modified": "2024-07-02 11:28:14.933067",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Activity",
