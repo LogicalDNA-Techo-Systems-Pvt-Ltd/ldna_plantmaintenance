@@ -5,3 +5,16 @@ frappe.listview_settings['Task Detail'] = {
         });
     }
 };
+
+
+frappe.views.calendar["Task Detail"] = {
+
+	field_map: {
+		"start": "expected_start_date",
+		"end": "actual_end_date",
+        "title": "parameter",
+		"frequency": "frequency",
+		"allDay": "allDay",
+		// "progress": "progress"
+	}
+};
