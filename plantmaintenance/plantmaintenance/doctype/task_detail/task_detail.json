@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:Task {####}-{item} Repair",
+ "autoname": "format:Task-{####}",
  "creation": "2024-06-26 14:57:42.641046",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -29,6 +29,7 @@
   "parameter",
   "readings",
   "maximum_value",
+  "parameter_dropdown",
   "column_break_scrc",
   "section_break_mpil",
   "column_break_limp",
@@ -65,7 +66,8 @@
   "cause",
   "inventory_tab",
   "material_issued",
-  "material_returned"
+  "material_returned",
+  "attach_image"
  ],
  "fields": [
   {
@@ -129,6 +131,7 @@
    "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "parameter",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Parameter",
    "options": "Parameter"
   },
@@ -155,7 +158,9 @@
    "depends_on": "eval:doc.parameter_type==\"List\"",
    "fieldname": "text",
    "fieldtype": "Text",
-   "label": "Text"
+   "hidden": 1,
+   "label": "Text",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_scrc",
@@ -336,6 +341,7 @@
    "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "parameter_type",
    "fieldtype": "Select",
+   "in_standard_filter": 1,
    "label": "Parameter Type",
    "options": "\nBinary\nNumeric\nList"
   },
@@ -400,11 +406,23 @@
    "fieldtype": "Link",
    "label": "Equipment Code",
    "options": "Equipment"
+  },
+  {
+   "fieldname": "attach_image",
+   "fieldtype": "Attach Image",
+   "label": "Attach Image"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"List\"",
+   "fieldname": "parameter_dropdown",
+   "fieldtype": "Select",
+   "label": "Parameter Dropdown"
   }
  ],
+ "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-27 15:54:04.273406",
+ "modified": "2024-07-03 10:18:38.408277",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
