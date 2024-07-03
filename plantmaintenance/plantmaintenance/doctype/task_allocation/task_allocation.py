@@ -150,10 +150,10 @@ def generate_tasks(docname):
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, end_date=None):
     filters = {
-        "name1": plant,
+        "plant": plant,
         "location": location,
         "functional_location": functional_location,
-        "plant_section": plant_section,
+        "section": plant_section,
         "work_center": work_center
     }
 
