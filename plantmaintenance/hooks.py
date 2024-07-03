@@ -118,6 +118,11 @@ doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
+
+override_doctype_class = {
+	"Role": "plantmaintenance.plantmaintenance.custom.role.Role"
+}
+
 # Document Events
 # ---------------
 # Hook on document methods and events
@@ -167,7 +172,7 @@ doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "plantmaintenance.task.get_dashboard_data"
+# 	"Equipment": "plantmaintenance.plantmaintenance.doctype.equipment.equipment_dashboard.get_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled

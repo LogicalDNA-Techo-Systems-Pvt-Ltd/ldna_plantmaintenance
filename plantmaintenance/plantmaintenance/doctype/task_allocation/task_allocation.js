@@ -109,3 +109,73 @@ function download_tasks_excel(tasks) {
         }
     });
 }
+<<<<<<< Updated upstream
+=======
+
+function upload_assignment_excel(frm) {
+    frappe.prompt([
+        {
+            label: __('Select XLSX File'),
+            fieldname: 'xlsx_file',
+            fieldtype: 'Attach',
+            reqd: 1
+        }
+    ], (values) => {
+        frappe.call({
+            method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.upload_tasks_excel_for_task_allocation',
+            args: {
+                file: values.xlsx_file,
+                task_allocation_name: frm.doc.name
+            },
+            callback: (response) => {
+                if (response.message) {
+                    frappe.show_alert({
+                        message: 'Excel import successful!',
+                        indicator: 'green'
+                    });
+                    frm.reload_doc();
+                } else {
+                    frappe.msgprint(__('Failed to import Excel.'));
+                }
+            }
+        });
+    }, __('Upload XLSX File'));
+}
+
+    
+
+
+function add_generate_task_button(frm) {
+    frm.remove_custom_button(__('Generate Task'));
+>>>>>>> Stashed changes
+
+
+function upload_assignment_excel(frm) {
+    frappe.prompt([
+        {
+            label: __('Select XLSX File'),
+            fieldname: 'xlsx_file',
+            fieldtype: 'Attach',
+            reqd: 1
+        }
+    ], (values) => {
+        frappe.call({
+            method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.upload_tasks_excel_for_task_allocation',
+            args: {
+                file: values.xlsx_file,
+                task_allocation_name: frm.doc.name
+            },
+            callback: (response) => {
+                if (response.message) {
+                    frappe.show_alert({
+                        message: 'Excel import successful!',
+                        indicator: 'green'
+                    });
+                    frm.reload_doc();
+                } else {
+                    frappe.msgprint(__('Failed to import Excel.'));
+                }
+            }
+        });
+    }, __('Upload XLSX File'));
+}

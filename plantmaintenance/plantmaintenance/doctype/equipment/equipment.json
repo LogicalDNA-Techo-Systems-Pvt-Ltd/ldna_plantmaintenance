@@ -23,7 +23,7 @@
   "equipment_serial_no",
   "plant_tab",
   "plant_details_section",
-  "name1",
+  "plant",
   "functional_location",
   "work_center",
   "column_break_zbco",
@@ -77,6 +77,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval: doc.plant",
    "fieldname": "location",
    "fieldtype": "Link",
    "label": "Location",
@@ -88,6 +89,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval: doc.plant",
    "fieldname": "work_center",
    "fieldtype": "Link",
    "label": "Work center",
@@ -141,13 +143,6 @@
    "label": "Description "
   },
   {
-   "fieldname": "name1",
-   "fieldtype": "Link",
-   "label": "Name",
-   "options": "Plant",
-   "reqd": 1
-  },
-  {
    "fieldname": "damage_and_causes_tab",
    "fieldtype": "Tab Break",
    "label": "Damages  And Causes"
@@ -198,6 +193,7 @@
    "label": "Warranty End Date"
   },
   {
+   "depends_on": "eval:doc.plant",
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "label": "Functional Location",
@@ -220,16 +216,37 @@
    "label": "History"
   },
   {
+   "depends_on": "eval: doc.plant",
    "fieldname": "section",
    "fieldtype": "Link",
    "label": "Section",
    "mandatory_depends_on": "eval:doc.name1",
    "options": "Section"
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "label": "Name",
+   "options": "Plant",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
+
+ "links": [
+  {
+   "link_doctype": "Activity Group",
+   "link_fieldname": "name"
+  },
+  {
+   "link_doctype": "Task Allocation",
+   "link_fieldname": "name"
+  }
+ ],
+ "modified": "2024-07-03 10:12:47.660054",
  "links": [],
  "modified": "2024-07-02 18:12:03.891557",
+
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
