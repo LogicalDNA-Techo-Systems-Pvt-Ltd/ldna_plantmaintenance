@@ -185,7 +185,7 @@ def download_tasks_excel_for_task_allocation(tasks):
     ws = wb.active
     ws.title = "Tasks"
 
-    headers = ['Equipment Code', 'Equipment Name', 'Activity', 'Parameter', 'Parameter Type', 'Min Value', 'Max Value', 'List Text', 'Frequency', 'Assign TO', 'Date', 'Day']
+    headers = ['Equipment Code', 'Equipment Name', 'Activity', 'Parameter','Frequency', 'Assign TO', 'Date', 'Day']
     ws.append(headers)
 
     for task in tasks:

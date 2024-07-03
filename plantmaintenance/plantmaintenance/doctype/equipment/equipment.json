@@ -140,7 +140,7 @@
   {
    "fieldname": "description_of_technical_object",
    "fieldtype": "Small Text",
-   "label": "Description Of Technical Object"
+   "label": "Description "
   },
   {
    "fieldname": "damage_and_causes_tab",
@@ -232,6 +232,7 @@
   }
  ],
  "index_web_pages_for_search": 1,
+
  "links": [
   {
    "link_doctype": "Activity Group",
@@ -243,6 +244,9 @@
   }
  ],
  "modified": "2024-07-03 10:12:47.660054",
+ "links": [],
+ "modified": "2024-07-02 18:12:03.891557",
+
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
