@@ -40,7 +40,6 @@ frappe.ui.form.on('Task Allocation', {
     }
 });
 
-
 function load_tasks(frm) {
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.load_tasks',
@@ -55,6 +54,10 @@ function load_tasks(frm) {
         callback: function(r) {
             if (r.message) {
                 frm.clear_table('task_allocation_details');
+                
+                r.message.sort(function(a, b) {
+                    return new Date(a.date) - new Date(b.date);
+                });
                 r.message.forEach(function(task) {
                     var row = frm.add_child('task_allocation_details');
                     row.equipment_code = task.equipment_code;
