@@ -88,13 +88,15 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
+
    "label": "Location",
    "options": "Location"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-03 11:28:50.472928",
+
+ "modified": "2024-07-03 11:46:26.533160",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation",
