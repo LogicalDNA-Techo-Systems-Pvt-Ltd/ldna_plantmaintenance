@@ -86,6 +86,76 @@
 // });
 
 
+// frappe.ui.form.on('Task Detail', {
+//     readings: function(frm) {
+//         const numReadings = frm.doc.readings;
+        
+//         if (numReadings > 10) {
+//             frappe.msgprint(__('Number of readings must be less than or equal to 10.'));
+//             return;
+//         }
+        
+//         for (let i = 1; i <= 10; i++) {
+//             const fieldname = `reading_${i}`;
+            
+//             if (i <= numReadings) {
+//                 frm.set_df_property(fieldname, 'hidden', false);
+//             } else {
+//                 frm.set_df_property(fieldname, 'hidden', true);
+//             }
+//         }
+//     },
+    
+//     onload: function(frm) {
+//         frm.trigger('readings');
+//     },
+    
+//     type: function(frm) {
+//         if (frm.doc.type === 'Breakdown') {
+          
+//             frm.set_value('parameter_type', '');
+//         }
+//     }
+// });
+
+
+// frappe.ui.form.on('Task Detail', {
+//     onload: function(frm) {
+//         // Fetch parameter details if parameter field is set
+//         if (frm.doc.parameter) {
+//             fetch_parameter_details(frm);
+//         }
+//     },
+//     parameter: function(frm) {
+//         // Fetch parameter details whenever parameter field changes
+//         fetch_parameter_details(frm);
+//     }
+// });
+
+// function fetch_parameter_details(frm) {
+//     frappe.call({
+//         method: "frappe.client.get",
+//         args: {
+//             doctype: "Parameter",
+//             name: frm.doc.parameter
+//         },
+//         callback: function(r) {
+//             if (r.message) {
+//                 let parameter = r.message;
+//                 if (parameter.parameter_type === "List" && parameter.text) {
+//                     let options = parameter.text.split(',').map(option => option.trim());
+//                     frm.set_df_property('parameter_dropdown', 'options', options.join('\n'));
+//                     frm.refresh_field('parameter_dropdown');
+//                 } else {
+//                     frm.set_df_property('parameter_dropdown', 'options', '');
+//                     frm.refresh_field('parameter_dropdown');
+//                 }
+//             }
+//         }
+//     });
+// }
+
+
 frappe.ui.form.on('Task Detail', {
     readings: function(frm) {
         const numReadings = frm.doc.readings;
@@ -108,12 +178,44 @@ frappe.ui.form.on('Task Detail', {
     
     onload: function(frm) {
         frm.trigger('readings');
+        
+        // Fetch parameter details if parameter field is set
+        if (frm.doc.parameter) {
+            fetch_parameter_details(frm);
+        }
+    },
+    
+    parameter: function(frm) {
+        // Fetch parameter details whenever parameter field changes
+        fetch_parameter_details(frm);
     },
     
     type: function(frm) {
         if (frm.doc.type === 'Breakdown') {
-          
             frm.set_value('parameter_type', '');
         }
     }
 });
+
+function fetch_parameter_details(frm) {
+    frappe.call({
+        method: "frappe.client.get",
+        args: {
+            doctype: "Parameter",
+            name: frm.doc.parameter
+        },
+        callback: function(r) {
+            if (r.message) {
+                let parameter = r.message;
+                if (parameter.parameter_type === "List" && parameter.text) {
+                    let options = parameter.text.split(',').map(option => option.trim());
+                    frm.set_df_property('parameter_dropdown', 'options', options.join('\n'));
+                    frm.refresh_field('parameter_dropdown');
+                } else {
+                    frm.set_df_property('parameter_dropdown', 'options', '');
+                    frm.refresh_field('parameter_dropdown');
+                }
+            }
+        }
+    });
+}
