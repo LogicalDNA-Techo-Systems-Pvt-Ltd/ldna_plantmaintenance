@@ -12,6 +12,9 @@ frappe.ui.form.on('Parameter', {
     before_save: function(frm) {
          HandleParameter(frm);  
     },
+    before_save: function (frm) {
+        HandleFrequency(frm)
+    },
     number_of_readings: function(frm) {
          const numReadings = frm.doc.number_of_readings;
         
@@ -116,6 +119,12 @@ function HandleParameter(frm) {
 
 
 
+function HandleFrequency(frm) {
+    var frequencyType = frm.doc.frequency;
 
+    if(frequencyType === 'Weekly' || frequencyType === 'Yearly' || frequencyType ==='Daily') {
+        frm.set_value('day_of_month',  1)
+    }
+}
 
 
