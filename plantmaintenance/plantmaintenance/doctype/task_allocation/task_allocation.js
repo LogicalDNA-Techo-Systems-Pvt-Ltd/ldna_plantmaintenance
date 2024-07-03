@@ -41,54 +41,35 @@ frappe.ui.form.on('Task Allocation', {
 });
 
 function load_tasks(frm) {
-    if (!frm.doc.work_center || !frm.doc.plant_section) {
-        frappe.msgprint(__('Please select Work Center and Plant Section before loading tasks.'));
-        return;
-    }
-
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.load_tasks',
         args: {
+            plant: frm.doc.plant,
+            location: frm.doc.location,
+            functional_location: frm.doc.functional_location,
+            plant_section: frm.doc.plant_section,
             work_center: frm.doc.work_center,
-            plant_section: frm.doc.plant_section
+            end_date: frm.doc.end_date
         },
-        callback: function(response) {
-            let tasks_to_add = response.message;
-            if (tasks_to_add && tasks_to_add.length > 0) {
-                let existing_tasks = frm.doc.task_allocation_details.map(d => {
-                    return {
-                        parameter: d.parameter,
-                        date: d.date
-                    };
+        callback: function(r) {
+            if (r.message) {
+                frm.clear_table('task_allocation_details');
+                r.message.forEach(function(task) {
+                    var row = frm.add_child('task_allocation_details');
+                    row.equipment_code = task.equipment_code;
+                    row.equipment_name = task.equipment_name;
+                    row.activity = task.activity;
+                    row.parameter = task.parameter;
+                    row.frequency = task.frequency;
+                    row.date = task.date;
+                    row.day = task.day;
                 });
-
-                tasks_to_add.forEach(task => {
-                    let exists = existing_tasks.some(existing_task =>
-                        existing_task.parameter === task.parameter &&
-                        existing_task.date === task.date
-                    );
-
-                    if (!exists) {
-                        let child = frm.add_child('task_allocation_details');
-                        frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
-                        frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
-                        frappe.model.set_value(child.doctype, child.name, 'date', task.date);
-                        frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
-                        frappe.model.set_value(child.doctype, child.name, 'task_status', task.task_status);
-                        frappe.model.set_value(child.doctype, child.name, 'activity', task.activity_name);
-                        frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
-                        frappe.model.set_value(child.doctype, child.name, 'day', task.day);
-                    }
-                });
-
                 frm.refresh_field('task_allocation_details');
-                frappe.msgprint(__('Tasks have been loaded successfully.'));
-            } else {
-                frappe.msgprint(__('No tasks found for the selected criteria.'));
             }
         }
     });
 }
+
 
 function download_tasks_excel(tasks) {
     frappe.call({
@@ -109,46 +90,6 @@ function download_tasks_excel(tasks) {
         }
     });
 }
-<<<<<<< Updated upstream
-=======
-
-function upload_assignment_excel(frm) {
-    frappe.prompt([
-        {
-            label: __('Select XLSX File'),
-            fieldname: 'xlsx_file',
-            fieldtype: 'Attach',
-            reqd: 1
-        }
-    ], (values) => {
-        frappe.call({
-            method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.upload_tasks_excel_for_task_allocation',
-            args: {
-                file: values.xlsx_file,
-                task_allocation_name: frm.doc.name
-            },
-            callback: (response) => {
-                if (response.message) {
-                    frappe.show_alert({
-                        message: 'Excel import successful!',
-                        indicator: 'green'
-                    });
-                    frm.reload_doc();
-                } else {
-                    frappe.msgprint(__('Failed to import Excel.'));
-                }
-            }
-        });
-    }, __('Upload XLSX File'));
-}
-
-    
-
-
-function add_generate_task_button(frm) {
-    frm.remove_custom_button(__('Generate Task'));
->>>>>>> Stashed changes
-
 
 function upload_assignment_excel(frm) {
     frappe.prompt([
