@@ -10,17 +10,118 @@
 
 
 frappe.ui.form.on('Equipment', {
-    on_hold: function(frm) {
-        if (frm.doc.on_hold) {
-            frm.set_value('on_scrap', 0);
+    plant: function(frm){
+        if (frm.doc.plant){
+            frm.set_value('location', ''); 
+            frappe.call({
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_location_list_based_on_plant',
+                args: {
+                    plant: frm.doc.plant,
+                },
+                callback: function(response){
+                    if (response.message){
+                        console.log(response.message)
+                        var Location = response.message
+                        frm.set_query('location', () => {
+                            return {
+                                filters: {
+                                    location: ['in', Location]
+                                }
+                            }
+                        })
+                    }
+                }
+            })
         }
     },
-    on_scrap: function(frm) {
-        if (frm.doc.on_scrap) {
-            frm.set_value('on_hold', 0);
+    location: function(frm){
+        if (frm.doc.location){
+            frm.set_value('functional_location','');
+            frappe.call({
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_functional_location_list_based_on_location',
+                args: {
+                    location: frm.doc.location,
+                },
+                callback: function(response){
+                    if (response.message){
+                        console.log(response.message)
+                        var FunctionalLocation = response.message
+                        frm.set_query('functional_location', () => {
+                            return {
+                                filters: {
+                                    functional_location: ['in', FunctionalLocation]
+                                }
+                            }
+                        })
+                    }
+                }
+            })
         }
-    }
+    },
+    functional_location: function(frm){
+        if (frm.doc.functional_location){
+            frm.set_value('section','')
+            frappe.call({
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_func_location',
+                args: {
+                    func_loc: frm.doc.functional_location,
+                },
+                callback: function(response){
+                    if (response.message){
+                        
+                        var Section = response.message
+                        console.log(Section)
+
+                        frm.set_query('section', () => {
+                            return {
+                                filters: {
+                                    section: ['in', Section]
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+        }
+    },
+    section: function(frm){
+        if (frm.doc.section){
+            frm.set_value('work_center','')
+            frappe.call({
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_work_center_based_on_section',
+                args: {
+                    section: frm.doc.section,
+                },
+                callback: function(response){
+                    if (response.message){
+                        console.log(response.message)
+                        var WorkCenter = response.message
+                        frm.set_query('work_center', () => {
+                            return {
+                                filters: {
+                                    work_center: ['in', WorkCenter]
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+
+        }
+    },
 });
+
+// function filterChildFields(frm, tableName, fieldTrigger, fieldName, fieldFiltered) {
+//     frm.fields_dict[tableName].grid.get_field(fieldFiltered).get_query = function(doc, cdt, cdn) {
+//         var child = locals[cdt][cdn];
+//         return {    
+//             filters:[
+//                 [fieldName, '=', child[fieldTrigger]]
+//             ]
+//         }
+//     }
+// }
 
 
 

@@ -5,7 +5,7 @@
    "label": "Weekly Breakdown"
   }
  ],
- "content": "[{\"id\":\"wERn3L0VHS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Weekly Breakdown\",\"col\":12}},{\"id\":\"2vFgW95L2T\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Open Tasks\",\"col\":6}},{\"id\":\"TdPS8wunm_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users without Tasks\",\"col\":6}},{\"id\":\"4FLSek_jTF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Overdue Tasks\",\"col\":6}},{\"id\":\"QYHSwY62f5\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users with Tasks\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}}]",
+ "content": "[{\"id\":\"wERn3L0VHS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Weekly Breakdown\",\"col\":12}},{\"id\":\"2vFgW95L2T\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Open Tasks\",\"col\":6}},{\"id\":\"TdPS8wunm_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users without Tasks\",\"col\":6}},{\"id\":\"4FLSek_jTF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Overdue Tasks\",\"col\":6}},{\"id\":\"QYHSwY62f5\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users with Tasks\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}},{\"id\":\"ZX1NEy25Za\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":3}}]",
  "creation": "2024-05-30 14:42:49.121278",
  "custom_blocks": [],
  "docstatus": 0,
@@ -59,9 +59,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Schedule List",
+   "label": "Task Allocation",
    "link_count": 0,
-   "link_to": "Schedule List",
+   "link_to": "Task Allocation",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -69,9 +69,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Task Allocation",
+   "label": "Task Details",
    "link_count": 0,
-   "link_to": "Task Allocation",
+   "link_to": "Task Detail",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -86,11 +86,12 @@
    "type": "Card Break"
   },
   {
+   "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Item",
+   "label": "Equipment",
    "link_count": 0,
-   "link_to": "Item",
+   "link_to": "Equipment",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -98,9 +99,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Item Group",
+   "label": "Equipment Group",
    "link_count": 0,
-   "link_to": "Item Group",
+   "link_to": "Equipment  Group",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -138,9 +139,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Parameter Group",
+   "label": "Activity Group",
    "link_count": 0,
-   "link_to": "Parameter Group",
+   "link_to": "Activity Group",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -148,9 +149,19 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Maintenance Parameter",
+   "label": "Activity",
    "link_count": 0,
-   "link_to": "Maintenance Parameter",
+   "link_to": "Activity",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Parameter",
+   "link_count": 0,
+   "link_to": "Parameter",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -164,35 +175,61 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Details",
+   "link_count": 0,
+   "link_to": "ToDo",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2024-06-12 15:54:20.414290",
+ "modified": "2024-07-03 10:21:30.654568",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Home",
  "number_cards": [
   {
-   "label": "Monthly Overdue Tasks",
-   "number_card_name": "Monthly Overdue Tasks"
+   "label": "Total Task",
+   "number_card_name": "Total Task"
   },
   {
-   "label": "Monthly Open Tasks",
-   "number_card_name": "Monthly Open Tasks"
+   "label": "In Progress",
+   "number_card_name": "In Progress"
   },
   {
-   "label": "Users without Tasks",
-   "number_card_name": "Users without Tasks"
+   "label": "Completed Task",
+   "number_card_name": "Completed Task"
   },
   {
-   "label": "Users with Tasks",
-   "number_card_name": "Users with Tasks"
+   "label": "OverDue",
+   "number_card_name": "OverDue"
   }
  ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "Maintenance Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
  "sequence_id": 28.0,
  "shortcuts": [],
  "title": "Home"

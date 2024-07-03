@@ -164,3 +164,70 @@ def generate_tasks(docname):
         return "Tasks have been generated successfully."
     else:
         return "Task Allocation document not found."
+
+@frappe.whitelist()
+def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
+    task_allocation_doc = frappe.get_doc("Task Allocation",task_allocation_name)    
+   
+    folder_path = ''
+    actual_file_name = ''
+
+    if file.startswith("/private/files/"):
+        actual_file_name = file.replace("/private/files/", '')
+        folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "private", "files")
+    else:
+        actual_file_name = file.replace("/files/", '')
+        folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "public", "files")
+
+    source_file = os.path.join(folder_path, actual_file_name)
+ 
+
+    wb = openpyxl.load_workbook(source_file)
+    sheet = wb.active
+
+    headers = [sheet.cell(row=1, column=i).value for i in range(1, sheet.max_column + 1)]
+    
+    task_allocation_doc.set("task_allocation_details", [])
+
+    for row in range(2, sheet.max_row + 1):
+       
+        row_data = {}
+        is_blank_row = True
+        for col_num in range(1, sheet.max_column + 1):
+            cell_value = sheet.cell(row=row, column=col_num).value
+            if cell_value is not None and cell_value != '':
+                is_blank_row = False
+                break
+
+        if is_blank_row:
+            continue  
+        
+        for col_num in range(1, sheet.max_column + 1):
+            cell_value = sheet.cell(row=row, column=col_num).value
+            row_data[headers[col_num - 1]] = cell_value
+            
+        print(task_allocation_doc.as_dict())
+        task_allocation_doc.append("task_allocation_details", {
+            'equipment_code': row_data.get('Equipment Code'),
+            'equipment_name': row_data.get('Equipment Name'),
+            'activity': row_data.get('Activity'),
+            'parameter': row_data.get('Parameter'),
+            'frequency': row_data.get('Frequency'),
+            'assign_to': row_data.get('Assign TO'),
+            'date': row_data.get('Date'),
+            'day': row_data.get('Day')
+        })
+
+        task_allocation_doc.save()
+        
+   
+        # equipment_code = row_data.get('Equipment Code')
+        # equipment_name = row_data.get('Equipment Name')
+        # activity = row_data.get('Activity')
+        # parameter = row_data.get('Parameter')
+        # frequency = row_data.get('Frequency')
+        # assign_to = row_data.get('Assign TO')
+        # date = row_data.get('Date')
+        # day = row_data.get('Day')
+
+    return True
