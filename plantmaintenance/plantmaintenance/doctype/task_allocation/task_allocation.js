@@ -40,6 +40,7 @@ frappe.ui.form.on('Task Allocation', {
     }
 });
 
+
 function load_tasks(frm) {
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.load_tasks',
@@ -120,3 +121,4 @@ function upload_assignment_excel(frm) {
         });
     }, __('Upload XLSX File'));
 }
+
