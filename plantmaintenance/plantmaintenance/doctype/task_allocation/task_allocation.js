@@ -39,13 +39,13 @@ frappe.ui.form.on('Task Allocation', {
         }
     },
 
-    ///////// for filter /////////////
+    /////////////////////
 
     plant: function(frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
             frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.get_location_list_based_on_plant',
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_location_list_based_on_plant',
                 args: {
                     plant: frm.doc.plant
                 },
@@ -69,7 +69,7 @@ frappe.ui.form.on('Task Allocation', {
         if (frm.doc.location) {
             frm.set_value('functional_location', '');
             frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.get_functional_location_list_based_on_location',
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_functional_location_list_based_on_location',
                 args: {
                     location: frm.doc.location
                 },
@@ -93,7 +93,7 @@ frappe.ui.form.on('Task Allocation', {
         if (frm.doc.functional_location) {
             frm.set_value('plant_section', '');
             frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.get_section_based_on_func_location',
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_func_location',
                 args: {
                     func_loc: frm.doc.functional_location
                 },
@@ -117,9 +117,9 @@ frappe.ui.form.on('Task Allocation', {
         if (frm.doc.plant_section) {
             frm.set_value('work_center', '');
             frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.get_work_center_based_on_section',
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_work_center_based_on_section',
                 args: {
-                    plant_section: frm.doc.plant_section
+                    section: frm.doc.plant_section
                 },
                 callback: function(response) {
                     if (response.message) {
