@@ -44,7 +44,7 @@ class TaskAllocation(Document):
             "parameter_type": parameter_info.get('parameter_type'),
             "minimum_value": parameter_info.get('minimum_value'),
             "maximum_value": parameter_info.get('maximum_value'), 
-            "text": ",".join(parameter_info.get('text', [])) if parameter_info.get('text') else None,
+            "values": ",".join(parameter_info.get('values', [])) if parameter_info.get('values') else None,
             "priority": detail.priority,
         })
         task_detail.insert(ignore_permissions=True)
@@ -55,7 +55,7 @@ class TaskAllocation(Document):
             "parameter_type": parameter_doc.parameter_type,
             "minimum_value": parameter_doc.minimum_value if parameter_doc.parameter_type == "Numeric" else None,
             "maximum_value": parameter_doc.maximum_value if parameter_doc.parameter_type == "Numeric" else None,
-            "text": parameter_doc.text.split(',') if parameter_doc.parameter_type == "List" else None
+            "values": parameter_doc.values.split(',') if parameter_doc.parameter_type == "List" else None
         }
         return parameter_info
 
