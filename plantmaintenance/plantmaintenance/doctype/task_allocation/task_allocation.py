@@ -1,3 +1,4 @@
+
 import frappe
 from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days, add_months, add_years
@@ -36,13 +37,13 @@ class TaskAllocation(Document):
             "equipment_name": detail.equipment_name,
             "work_center": self.work_center,
             "plant_section": self.plant_section,
-            "expected_start_date": detail.date,
+            "plan_start_date": detail.date,
             "assigned_to": detail.assign_to,
             "activity": detail.activity,
             "parameter": detail.parameter,
             "parameter_type": parameter_info.get('parameter_type'),
             "minimum_value": parameter_info.get('minimum_value'),
-            "maximum_value": parameter_info.get('maximum_value'),
+            "maximum_value": parameter_info.get('maximum_value'), 
             "text": ",".join(parameter_info.get('text', [])) if parameter_info.get('text') else None,
             "priority": detail.priority,
         })
@@ -57,9 +58,6 @@ class TaskAllocation(Document):
             "text": parameter_doc.text.split(',') if parameter_doc.parameter_type == "List" else None
         }
         return parameter_info
-
-
-
 
 
 @frappe.whitelist()
