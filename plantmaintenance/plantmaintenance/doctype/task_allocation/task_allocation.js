@@ -39,8 +39,7 @@ frappe.ui.form.on('Task Allocation', {
         }
     },
 
-    /////////////////////
-
+ 
     plant: function(frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
