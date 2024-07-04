@@ -10,34 +10,8 @@ frappe.ui.form.on('Parameter', {
         render_radio_buttons(frm);  
     },
     before_save: function(frm) {
-         HandleParameter(frm);  
-    },
-    before_save: function (frm) {
-        HandleFrequency(frm)
-    },
-    number_of_readings: function(frm) {
-         const numReadings = frm.doc.number_of_readings;
-        
-         if (numReadings > 10) {
-            frappe.msgprint(__('Number of readings must be less than 10.'));
-            return;
-        }
-        
-         for (let i = 1; i <= 10; i++) {
-            const fieldname = `reading_${i}`;
-            
-             if (i <= numReadings) {
-                frm.set_df_property(fieldname, 'hidden', 0);
-             } else {
-                frm.set_df_property(fieldname, 'hidden', 1);
-            }
-        }
-    },
-    
-     onload: function(frm) {
-        frm.trigger('number_of_readings');
+         HandleParameters(frm);  
     }
-
 
 });
 
@@ -93,7 +67,7 @@ function render_radio_buttons(frm) {
 }
 
 
-function HandleParameter(frm) {
+function HandleParameters(frm) {
     var parameterType = frm.doc.parameter_type;
      
 
@@ -101,12 +75,12 @@ function HandleParameter(frm) {
      if (parameterType === 'Binary') {
          frm.set_value('minimum_value', '');
         frm.set_value('maximum_value', '');
-        frm.set_value('text', '');
+        frm.set_value('values', '');
         frm.set_value('number_of_readings','');
 
      } else if (parameterType === 'Numeric') {
         frm.set_value('acceptance_criteria', '');
-        frm.set_value('text', '');
+        frm.set_value('values', '');
           
     } else if (parameterType === 'List') {
         frm.set_value('acceptance_criteria', '');
@@ -118,13 +92,4 @@ function HandleParameter(frm) {
 }
 
 
-
-function HandleFrequency(frm) {
-    var frequencyType = frm.doc.frequency;
-
-    if(frequencyType === 'Weekly' || frequencyType === 'Yearly' || frequencyType ==='Daily') {
-        frm.set_value('day_of_month',  1)
-    }
-}
-
-
+ 
