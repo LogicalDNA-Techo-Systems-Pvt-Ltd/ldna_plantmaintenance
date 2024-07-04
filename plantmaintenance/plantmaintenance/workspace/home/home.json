@@ -13,7 +13,7 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "getting-started",
- "idx": 2,
+ "idx": 3,
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Home",
@@ -196,7 +196,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-03 22:52:18.447537",
+ "modified": "2024-07-04 11:12:51.380058",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Home",
