@@ -55,7 +55,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Priority",
-   "options": "Normal\nLow\nMedium\nHigh"
+   "options": "\nLow\nMedium\nHigh"
   },
   {
    "fieldname": "day",
@@ -111,7 +111,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-03 17:37:49.516146",
+ "modified": "2024-07-04 10:58:44.628087",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation Details",
