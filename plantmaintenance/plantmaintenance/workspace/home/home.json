@@ -5,7 +5,7 @@
    "label": "Weekly Breakdown"
   }
  ],
- "content": "[{\"id\":\"wERn3L0VHS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Weekly Breakdown\",\"col\":12}},{\"id\":\"2vFgW95L2T\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Open Tasks\",\"col\":6}},{\"id\":\"TdPS8wunm_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users without Tasks\",\"col\":6}},{\"id\":\"4FLSek_jTF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Monthly Overdue Tasks\",\"col\":6}},{\"id\":\"QYHSwY62f5\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Users with Tasks\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}},{\"id\":\"ZX1NEy25Za\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":3}}]",
+ "content": "[{\"id\":\"wERn3L0VHS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Weekly Breakdown\",\"col\":12}},{\"id\":\"5RN9pkmt3Y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"nSMUDkfM9n\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"3bHjg2Xavy\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":6}},{\"id\":\"h4cVRvkO2y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Progress\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}},{\"id\":\"ZX1NEy25Za\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":3}}]",
  "creation": "2024-05-30 14:42:49.121278",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "getting-started",
- "idx": 1,
+ "idx": 2,
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Home",
@@ -196,7 +196,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-03 10:21:30.654568",
+ "modified": "2024-07-03 22:52:18.447537",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Home",
@@ -206,16 +206,16 @@
    "number_card_name": "Total Task"
   },
   {
-   "label": "In Progress",
-   "number_card_name": "In Progress"
+   "label": "Open Task",
+   "number_card_name": "Open Task"
   },
   {
    "label": "Completed Task",
    "number_card_name": "Completed Task"
   },
   {
-   "label": "OverDue",
-   "number_card_name": "OverDue"
+   "label": "In Progress",
+   "number_card_name": "In Progress"
   }
  ],
  "owner": "Administrator",
