@@ -24,7 +24,7 @@
   "parameter_type",
   "minimum_value",
   "acceptance_criteria",
-  "text",
+  "values",
   "column_break_rnng",
   "parameter",
   "readings",
@@ -152,14 +152,6 @@
    "fieldtype": "Select",
    "label": "Acceptance Criteria",
    "options": "Yes\nNo"
-  },
-  {
-   "depends_on": "eval:doc.parameter_type==\"List\"",
-   "fieldname": "text",
-   "fieldtype": "Text",
-   "hidden": 1,
-   "label": "Values",
-   "read_only": 1
   },
   {
    "fieldname": "column_break_scrc",
@@ -459,12 +451,20 @@
   {
    "fieldname": "column_break_ruot",
    "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"List\"",
+   "fieldname": "values",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Values",
+   "read_only": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-04 13:58:32.400902",
+ "modified": "2024-07-04 14:25:16.920445",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

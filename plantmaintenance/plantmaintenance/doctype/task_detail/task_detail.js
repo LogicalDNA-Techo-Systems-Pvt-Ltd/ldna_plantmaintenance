@@ -207,8 +207,8 @@ function fetch_parameter_details(frm) {
         callback: function(r) {
             if (r.message) {
                 let parameter = r.message;
-                if (parameter.parameter_type === "List" && parameter.text) {
-                    let options = parameter.text.split(',').map(option => option.trim());
+                if (parameter.parameter_type === "List" && parameter.values) {
+                    let options = parameter.values.split(',').map(option => option.trim());
                     frm.set_df_property('parameter_dropdown', 'options', options.join('\n'));
                     frm.refresh_field('parameter_dropdown');
                 } else {
@@ -219,3 +219,5 @@ function fetch_parameter_details(frm) {
         }
     });
 }
+
+
