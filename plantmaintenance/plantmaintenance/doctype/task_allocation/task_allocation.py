@@ -164,7 +164,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     setting_doc = frappe.get_single('Setting')
     start_date = getdate(setting_doc.start_date)
     today_date = getdate(nowdate())
-    end_date = getdate(end_date) if end_date else today_date + timedelta(days=120)
+    end_date = getdate(end_date) if end_date else start_date + timedelta(days=120)
 
     tasks = []
     for equipment in equipment_list:
@@ -183,7 +183,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                 dates = []
 
                 if frequency == 'Daily':
-                    dates = [add_days(start_date, i) for i in range(15) if today_date <= add_days(start_date, i) <= end_date]
+                    dates = [add_days(start_date, i) for i in range(15) if start_date <= add_days(start_date, i) <= end_date]
 
                 elif frequency == 'Weekly':
                     selected_days = []
@@ -206,12 +206,12 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         current_date = start_date
                         while current_date.weekday() != list(calendar.day_name).index(day):
                             current_date += timedelta(days=1)
-                        if today_date <= current_date <= end_date:
+                        if start_date <= current_date <= end_date:
                             dates.append(current_date)
                         
-                        while current_date <= (start_date + timedelta(days=90)) and (today_date <= current_date <= end_date):
+                        while current_date <= (start_date + timedelta(days=90)) and (start_date <= current_date <= end_date):
                             current_date += timedelta(weeks=1)
-                            if today_date <= current_date <= end_date:
+                            if start_date <= current_date <= end_date:
                                 dates.append(current_date)
 
                 elif frequency == 'Monthly':
@@ -219,10 +219,10 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     current_date = start_date.replace(day=day_of_month)
                     if current_date < start_date:
                         current_date += relativedelta(months=1)
-                    dates = [current_date + relativedelta(months=i) for i in range(6) if today_date <= current_date + relativedelta(months=i) <= end_date]
+                    dates = [current_date + relativedelta(months=i) for i in range(6) if start_date <= current_date + relativedelta(months=i) <= end_date]
 
                 elif frequency == 'Yearly':
-                    dates = [add_years(start_date, i) for i in range(1) if today_date <= add_years(start_date, i) <= end_date]
+                    dates = [add_years(start_date, i) for i in range(1) if start_date <= add_years(start_date, i) <= end_date]
                 
                 for date in dates:
                     date_obj = getdate(date)
@@ -238,7 +238,6 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     tasks.append(task)
                         
     return tasks
-
 
 
 
