@@ -163,7 +163,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "allow_on_submit": 1,
    "fieldname": "task_allocation_id",
    "fieldtype": "Link",
    "label": "Task Allocation Id",
@@ -475,9 +474,8 @@
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2024-07-08 12:05:19.343452",
+ "modified": "2024-07-08 12:24:29.337762",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
