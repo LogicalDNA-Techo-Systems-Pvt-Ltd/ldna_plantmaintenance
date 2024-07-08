@@ -73,7 +73,8 @@
   "inventory_tab",
   "material_issued",
   "material_returned",
-  "attach_image"
+  "attach_image",
+  "amended_from"
  ],
  "fields": [
   {
@@ -162,6 +163,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "task_allocation_id",
    "fieldtype": "Link",
    "label": "Task Allocation Id",
@@ -459,12 +461,23 @@
    "hidden": 1,
    "label": "Values",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Task Detail",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-07-04 14:25:16.920445",
+ "modified": "2024-07-08 11:41:39.945238",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
