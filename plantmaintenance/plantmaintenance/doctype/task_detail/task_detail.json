@@ -74,7 +74,8 @@
   "inventory_tab",
   "material_issued",
   "material_returned",
-  "attach_image"
+  "attach_image",
+  "amended_from"
  ],
  "fields": [
   {
@@ -465,12 +466,20 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Unique Key"
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Task Detail",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-08 09:55:19.912898",
+ "modified": "2024-07-08 12:24:29.337762",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

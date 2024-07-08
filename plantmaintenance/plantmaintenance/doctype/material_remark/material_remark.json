@@ -20,7 +20,7 @@
    "fieldname": "item_code",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Item Code"
+   "label": "Equipment Code"
   },
   {
    "fieldname": "material_name",
@@ -63,7 +63,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-05-31 15:12:11.868403",
+ "modified": "2024-07-03 16:47:52.551973",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material Remark",
