@@ -7,7 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_bizs",
-  "task_allocation_id",
+  "unique_key",
   "equipment_code",
   "equipment_name",
   "status",
@@ -51,8 +51,9 @@
   "column_break_kqfz",
   "plan_start_date",
   "column_break_djip",
-  "require_time",
+  "plan_end_date",
   "column_break_rwiq",
+  "require_time",
   "section_break_oufx",
   "actual_start_date",
   "column_break_wphi",
@@ -161,12 +162,6 @@
   {
    "fieldname": "section_break_bizs",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "task_allocation_id",
-   "fieldtype": "Link",
-   "label": "Task Allocation Id",
-   "options": "Task Allocation"
   },
   {
    "fieldname": "plant_section",
@@ -436,7 +431,6 @@
    "label": "Readings"
   },
   {
-   "fetch_from": "parameter.require_time",
    "fieldname": "require_time",
    "fieldtype": "Float",
    "label": "Required Time (In Hours)"
@@ -462,6 +456,16 @@
    "read_only": 1
   },
   {
+   "fieldname": "plan_end_date",
+   "fieldtype": "Date",
+   "label": "Plan End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "unique_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Unique Key"
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",

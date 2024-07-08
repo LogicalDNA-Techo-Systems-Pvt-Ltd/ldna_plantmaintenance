@@ -18,28 +18,7 @@ frappe.ui.form.on('Task Allocation', {
 
             frm.custom_buttons_created = true;
         }
-
     },
-    after_save: function(frm) {
-        if (!frm.custom_buttons_created) {
-            const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
-
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function() {
-                load_tasks(frm);
-            });
-
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function() {
-                download_tasks_excel(frm.doc.task_allocation_details);
-            });
-
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function() {
-                upload_assignment_excel(frm);
-            });
-
-            frm.custom_buttons_created = true;
-        }
-    },
-
  
     plant: function(frm) {
         if (frm.doc.plant) {
@@ -137,7 +116,7 @@ frappe.ui.form.on('Task Allocation', {
             });
         }
     }
-    
+   
 });
 
 
@@ -168,6 +147,7 @@ function load_tasks(frm) {
                     row.frequency = task.frequency;
                     row.date = task.date;
                     row.day = task.day;
+                    row.unique_key = task.unique_key;
                 });
                 frm.refresh_field('task_allocation_details');
             }
