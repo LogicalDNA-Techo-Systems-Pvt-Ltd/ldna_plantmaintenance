@@ -1,4 +1,3 @@
-
 import frappe
 from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days, add_months, add_years
@@ -9,6 +8,8 @@ import os
 import openpyxl
 from dateutil.relativedelta import relativedelta
 from datetime import timedelta
+from datetime import datetime, timedelta
+import uuid
 
 
 class TaskAllocation(Document):
@@ -16,49 +17,73 @@ class TaskAllocation(Document):
         if self.docstatus == 0:
             if not self.check_tasks_generated():
                 self.create_task_details()
+            else:
+                self.update_task_details()
 
     def check_tasks_generated(self):
-        return frappe.db.exists("Task Detail", {
-            "work_center": self.work_center,
-            "plant_section": self.plant_section,
-        })
+        return frappe.db.exists("Task Detail", {"unique_key": ["in", [detail.unique_key for detail in self.get('task_allocation_details')]]})
 
     def create_task_details(self):
         for detail in self.get('task_allocation_details'):
-            self.create_task_detail(detail)
+            if not frappe.db.exists("Task Detail", {"unique_key": detail.unique_key}):
+                self.create_task_detail(detail)
 
     def create_task_detail(self, detail):
         parameter_info = self.get_parameter_info(detail.parameter)
+        plan_start_date = detail.date
+        require_time_hours = parameter_info.get('require_time')
+        
+        plan_end_date = (datetime.strptime(plan_start_date, '%Y-%m-%d') + timedelta(hours=require_time_hours)).strftime('%Y-%m-%d %H:%M:%S')
+        
         task_detail = frappe.new_doc("Task Detail")
         task_detail.update({
-            "task_allocation_id": self.name,
+            "unique_key": detail.unique_key,  
             "approver": frappe.session.user,
             "equipment_code": detail.equipment_code,
             "equipment_name": detail.equipment_name,
             "work_center": self.work_center,
             "plant_section": self.plant_section,
-            "plan_start_date": detail.date,
+            "plan_start_date": plan_start_date,
+            "plan_end_date": plan_end_date,
             "assigned_to": detail.assign_to,
             "activity": detail.activity,
             "parameter": detail.parameter,
             "parameter_type": parameter_info.get('parameter_type'),
             "minimum_value": parameter_info.get('minimum_value'),
-            "maximum_value": parameter_info.get('maximum_value'), 
+            "maximum_value": parameter_info.get('maximum_value'),
+            "require_time": parameter_info.get('require_time'),
             "values": ",".join(parameter_info.get('values', [])) if parameter_info.get('values') else None,
             "priority": detail.priority,
         })
         task_detail.insert(ignore_permissions=True)
 
+    def update_task_details(self):
+        for detail in self.get('task_allocation_details'):
+            task_details = frappe.get_all("Task Detail", filters={"unique_key": detail.unique_key})
+            for task_detail in task_details:
+                task_detail_doc = frappe.get_doc("Task Detail", task_detail.name)
+                has_changes = False
+            if task_detail_doc.assigned_to != detail.assign_to:
+                task_detail_doc.assigned_to = detail.assign_to
+                has_changes = True
+            if task_detail_doc.priority != detail.priority:
+                task_detail_doc.priority = detail.priority
+                has_changes = True
+            
+            if has_changes:
+                task_detail_doc.save(ignore_permissions=False)
+
+
     def get_parameter_info(self, parameter):
         parameter_doc = frappe.get_doc("Parameter", {"parameter": parameter})
         parameter_info = {
+            "require_time": parameter_doc.require_time,
             "parameter_type": parameter_doc.parameter_type,
             "minimum_value": parameter_doc.minimum_value if parameter_doc.parameter_type == "Numeric" else None,
             "maximum_value": parameter_doc.maximum_value if parameter_doc.parameter_type == "Numeric" else None,
             "values": parameter_doc.values.split(',') if parameter_doc.parameter_type == "List" else None
         }
         return parameter_info
-
 
 @frappe.whitelist()
 def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
@@ -128,26 +153,6 @@ def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
     return True
 
 
-
-@frappe.whitelist()
-def check_tasks_generated(docname):
-    if frappe.db.exists("Task Detail", {"task_allocation_id": docname}):
-        return True
-    return False
-
-@frappe.whitelist()
-def generate_tasks(docname):
-    doc = frappe.get_doc("Task Allocation", docname)
-    if doc:
-        doc.create_task_details()
-        return "Tasks have been generated successfully."
-    else:
-        return "Task Allocation document not found."
-
-
-
-
-
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, end_date=None):
     filters = {
@@ -162,7 +167,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     setting_doc = frappe.get_single('Setting')
     start_date = getdate(setting_doc.start_date)
     today_date = getdate(nowdate())
-    end_date = getdate(end_date) if end_date else start_date + timedelta(days=120)
+    end_date = getdate(end_date) if end_date else start_date + relativedelta(days=120)
 
     tasks = []
     for equipment in equipment_list:
@@ -203,12 +208,12 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     for day in selected_days:
                         current_date = start_date
                         while current_date.weekday() != list(calendar.day_name).index(day):
-                            current_date += timedelta(days=1)
+                            current_date += relativedelta(days=1)
                         if start_date <= current_date <= end_date:
                             dates.append(current_date)
                         
-                        while current_date <= (start_date + timedelta(days=90)) and (start_date <= current_date <= end_date):
-                            current_date += timedelta(weeks=1)
+                        while current_date <= (start_date + relativedelta(days=90)) and (start_date <= current_date <= end_date):
+                            current_date += relativedelta(weeks=1)
                             if start_date <= current_date <= end_date:
                                 dates.append(current_date)
 
@@ -224,6 +229,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                 
                 for date in dates:
                     date_obj = getdate(date)
+                    unique_key = 'lbvrq8' + str(uuid.uuid4())[:8] 
                     task = {
                         'equipment_code': equipment.equipment_code,
                         'equipment_name': equipment.equipment_name,
@@ -231,13 +237,12 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         'parameter': parameter.parameter,
                         'frequency': frequency,
                         'date': date,
-                        'day': calendar.day_name[date_obj.weekday()]
+                        'day': calendar.day_name[date_obj.weekday()],
+                        'unique_key': unique_key[:10]  
                     }
                     tasks.append(task)
                         
     return tasks
-
-
 
 @frappe.whitelist()
 def download_tasks_excel_for_task_allocation(tasks):
@@ -281,4 +286,13 @@ def download_tasks_excel_for_task_allocation(tasks):
     file_doc.save(ignore_permissions=True)
     
     return file_doc.file_url
+
+
+
+
+
+
+
+
+
 
