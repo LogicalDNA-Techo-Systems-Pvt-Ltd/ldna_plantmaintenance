@@ -102,13 +102,16 @@ doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
+permission_query_conditions = {
+	# "Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+    "Task Detail":"plantmaintenance.plantmaintenance.doctype.task_detail.task_detail_permission.task_detail_permission"
+}
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
+
+
 
 # DocType Class
 # ---------------
