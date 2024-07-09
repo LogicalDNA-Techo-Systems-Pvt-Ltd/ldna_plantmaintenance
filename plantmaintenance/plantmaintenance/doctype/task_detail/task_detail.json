@@ -53,7 +53,6 @@
   "column_break_djip",
   "plan_end_date",
   "column_break_rwiq",
-  "require_time",
   "section_break_oufx",
   "actual_start_date",
   "column_break_wphi",
@@ -459,18 +458,12 @@
    "fieldtype": "Date",
    "label": "Plan End Date",
    "read_only": 1
-  },
-  {
-   "fieldname": "require_time",
-   "fieldtype": "Float",
-   "label": "Required Time (In Hours)",
-   "read_only": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-09 11:48:41.621323",
+ "modified": "2024-07-09 15:29:03.316867",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
