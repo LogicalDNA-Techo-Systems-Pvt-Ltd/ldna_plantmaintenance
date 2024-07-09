@@ -122,7 +122,7 @@ frappe.ui.form.on('Task Allocation', {
 
 function load_tasks(frm) {
     frappe.call({
-        method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.load_tasks_and_save',
+        method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.load_tasks',
         args: {
             plant: frm.doc.plant,
             location: frm.doc.location,
