@@ -47,12 +47,6 @@
   "column_break_vomc",
   "reading_4",
   "reading_8",
-  "timeline_section",
-  "column_break_kqfz",
-  "plan_start_date",
-  "column_break_djip",
-  "plan_end_date",
-  "column_break_rwiq",
   "section_break_oufx",
   "actual_start_date",
   "column_break_wphi",
@@ -323,23 +317,6 @@
    "label": "Reading 8"
   },
   {
-   "fieldname": "timeline_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_kqfz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.type==\"Preemptive\"",
-   "fieldname": "column_break_djip",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_rwiq",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "section_break_oufx",
    "fieldtype": "Section Break"
   },
@@ -446,24 +423,12 @@
    "fieldname": "attach_image",
    "fieldtype": "Attach Image",
    "label": "Attach Image"
-  },
-  {
-   "fieldname": "plan_start_date",
-   "fieldtype": "Date",
-   "label": "Plan Start Date",
-   "read_only": 1
-  },
-  {
-   "fieldname": "plan_end_date",
-   "fieldtype": "Date",
-   "label": "Plan End Date",
-   "read_only": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-09 15:29:03.316867",
+ "modified": "2024-07-09 15:37:32.801161",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
