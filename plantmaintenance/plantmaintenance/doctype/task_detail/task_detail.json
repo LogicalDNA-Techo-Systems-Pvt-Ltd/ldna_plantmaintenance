@@ -47,6 +47,12 @@
   "column_break_vomc",
   "reading_4",
   "reading_8",
+  "section_break_tssa",
+  "plan_start_date",
+  "column_break_oaav",
+  "plan_end_date",
+  "column_break_jntw",
+  "require_time",
   "section_break_oufx",
   "actual_start_date",
   "column_break_wphi",
@@ -125,7 +131,7 @@
    "fieldname": "type",
    "fieldtype": "Select",
    "label": "Type ",
-   "options": "Preemptive\nBreakdown"
+   "options": "Preventive\nBreakdown"
   },
   {
    "fieldname": "column_break_cemj",
@@ -423,12 +429,42 @@
    "fieldname": "attach_image",
    "fieldtype": "Attach Image",
    "label": "Attach Image"
+  },
+  {
+   "fieldname": "section_break_tssa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "plan_start_date",
+   "fieldtype": "Date",
+   "label": "Plan Start Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_oaav",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "plan_end_date",
+   "fieldtype": "Date",
+   "label": "Plan End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_jntw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "require_time",
+   "fieldtype": "Float",
+   "label": "Required Time",
+   "read_only": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-09 15:37:32.801161",
+ "modified": "2024-07-09 15:53:51.477292",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
