@@ -7,7 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_bizs",
-  "unique_key",
+  "task_allocation_id",
   "equipment_code",
   "equipment_name",
   "status",
@@ -15,6 +15,7 @@
   "work_center",
   "plant_section",
   "type",
+  "unique_key",
   "column_break_cemj",
   "approver",
   "assigned_to",
@@ -145,7 +146,7 @@
   },
   {
    "fieldname": "assigned_to",
-   "fieldtype": "Text",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Assigned To",
@@ -459,12 +460,17 @@
    "fieldtype": "Float",
    "label": "Required Time",
    "read_only": 1
+  },
+  {
+   "fieldname": "task_allocation_id",
+   "fieldtype": "Data",
+   "label": "Task Allocation Id"
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-03 09:07:52.024913",
+ "modified": "2024-07-10 16:47:50.609701",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
