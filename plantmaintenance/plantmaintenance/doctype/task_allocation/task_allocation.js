@@ -1,26 +1,25 @@
-
 frappe.ui.form.on('Task Allocation', {
-    refresh: function(frm) {
+    refresh: function (frm) {
         if (!frm.custom_buttons_created) {
             const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
 
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function() {
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function () {
                 load_tasks(frm);
             });
 
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function() {
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function () {
                 download_tasks_excel(frm.doc.task_allocation_details);
             });
 
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function() {
+            $('<button class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function () {
                 upload_assignment_excel(frm);
             });
 
             frm.custom_buttons_created = true;
         }
     },
- 
-    plant: function(frm) {
+
+    plant: function (frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
             frappe.call({
@@ -28,7 +27,7 @@ frappe.ui.form.on('Task Allocation', {
                 args: {
                     plant: frm.doc.plant
                 },
-                callback: function(response) {
+                callback: function (response) {
                     if (response.message) {
                         console.log(response.message);
                         var Location = response.message;
@@ -44,7 +43,7 @@ frappe.ui.form.on('Task Allocation', {
             });
         }
     },
-    location: function(frm) {
+    location: function (frm) {
         if (frm.doc.location) {
             frm.set_value('functional_location', '');
             frappe.call({
@@ -52,7 +51,7 @@ frappe.ui.form.on('Task Allocation', {
                 args: {
                     location: frm.doc.location
                 },
-                callback: function(response) {
+                callback: function (response) {
                     if (response.message) {
                         console.log(response.message);
                         var FunctionalLocation = response.message;
@@ -68,7 +67,7 @@ frappe.ui.form.on('Task Allocation', {
             });
         }
     },
-    functional_location: function(frm) {
+    functional_location: function (frm) {
         if (frm.doc.functional_location) {
             frm.set_value('plant_section', '');
             frappe.call({
@@ -76,7 +75,7 @@ frappe.ui.form.on('Task Allocation', {
                 args: {
                     func_loc: frm.doc.functional_location
                 },
-                callback: function(response) {
+                callback: function (response) {
                     if (response.message) {
                         var Section = response.message;
                         console.log(Section);
@@ -92,7 +91,7 @@ frappe.ui.form.on('Task Allocation', {
             });
         }
     },
-    plant_section: function(frm) {
+    plant_section: function (frm) {
         if (frm.doc.plant_section) {
             frm.set_value('work_center', '');
             frappe.call({
@@ -100,7 +99,7 @@ frappe.ui.form.on('Task Allocation', {
                 args: {
                     section: frm.doc.plant_section
                 },
-                callback: function(response) {
+                callback: function (response) {
                     if (response.message) {
                         console.log(response.message);
                         var WorkCenter = response.message;
@@ -116,7 +115,7 @@ frappe.ui.form.on('Task Allocation', {
             });
         }
     }
-   
+
 });
 
 
@@ -131,14 +130,14 @@ function load_tasks(frm) {
             work_center: frm.doc.work_center,
             end_date: frm.doc.end_date
         },
-        callback: function(r) {
+        callback: function (r) {
             if (r.message) {
                 frm.clear_table('task_allocation_details');
-                
-                r.message.sort(function(a, b) {
+
+                r.message.sort(function (a, b) {
                     return new Date(a.date) - new Date(b.date);
                 });
-                r.message.forEach(function(task) {
+                r.message.forEach(function (task) {
                     var row = frm.add_child('task_allocation_details');
                     row.equipment_code = task.equipment_code;
                     row.equipment_name = task.equipment_name;
@@ -161,7 +160,7 @@ function download_tasks_excel(tasks) {
         args: {
             tasks: JSON.stringify(tasks)
         },
-        callback: function(response) {
+        callback: function (response) {
             const file_url = response.message;
             if (file_url) {
                 window.open(file_url);
@@ -169,7 +168,7 @@ function download_tasks_excel(tasks) {
                 frappe.msgprint(__('Failed to generate download link.'));
             }
         },
-        error: function(xhr, textStatus, error) {
+        error: function (xhr, textStatus, error) {
             frappe.msgprint(__('Failed to download tasks: {0}', [error]));
         }
     });
@@ -197,12 +196,59 @@ function upload_assignment_excel(frm) {
                         indicator: 'green'
                     });
                     frm.reload_doc();
-                } else {
-                    frappe.msgprint(__('Failed to import Excel.'));
                 }
+                // else {
+                //     frappe.msgprint(__('Failed to import Excel.'));
+                // }
             }
         });
     }, __('Upload XLSX File'));
-    
+
 }
+
+
+
+
+
+//Pragati Dike//
+frappe.ui.form.on("Task Allocation Details", {
+    add_assignee: function (frm, cdt, cdn) {
+        var child = locals[cdt][cdn];
+        let selectedAssigne = child.assign_to ? child.assign_to.split(', ') : [];
+        frappe.prompt(
+            [
+                {
+                    label: __("First Name"),
+                    fieldname: "first_name",
+                    fieldtype: "Link",
+                    options: "User",
+                    get_query: function () {
+                        return {
+                            filters: [
+                            ]
+                        };
+                    }
+                }
+            ],
+            function (values) {
+                let newassigne = values['first_name'];
+                if (selectedAssigne.includes(newassigne)) {
+                    frappe.msgprint(__("User already selected."));
+                } else {
+                    selectedAssigne.push(newassigne);
+                    updateUser();
+                }
+            },
+            __("Select User")
+        );
+        function updateUser() {
+            let userList = selectedAssigne.join(', ');
+            frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+        }
+    }
+});
+
+
+
+
 
