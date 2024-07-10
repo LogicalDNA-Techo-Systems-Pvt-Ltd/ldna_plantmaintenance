@@ -11,7 +11,6 @@ from datetime import timedelta
 from datetime import datetime, timedelta
 import uuid
 
-
 class TaskAllocation(Document):
     def on_update(self):
         if self.docstatus == 0:
@@ -21,12 +20,15 @@ class TaskAllocation(Document):
                 self.update_task_details()
 
     def check_tasks_generated(self):
+        unique_keys = [detail.unique_key for detail in self.get('task_allocation_details')]
         return frappe.db.exists("Task Detail", {"unique_key": ["in", [detail.unique_key for detail in self.get('task_allocation_details')]]})
+    
 
     def create_task_details(self):
         for detail in self.get('task_allocation_details'):
             if not frappe.db.exists("Task Detail", {"unique_key": detail.unique_key}):
                 self.create_task_detail(detail)
+    
 
     def create_task_detail(self, detail):
         parameter_info = self.get_parameter_info(detail.parameter)
@@ -37,7 +39,8 @@ class TaskAllocation(Document):
         
         task_detail = frappe.new_doc("Task Detail")
         task_detail.update({
-            "unique_key": detail.unique_key,  
+            "unique_key": detail.unique_key,
+            "task_allocation_id": self.name,  
             "approver": frappe.session.user,
             "equipment_code": detail.equipment_code,
             "equipment_name": detail.equipment_name,
@@ -63,15 +66,14 @@ class TaskAllocation(Document):
             for task_detail in task_details:
                 task_detail_doc = frappe.get_doc("Task Detail", task_detail.name)
                 has_changes = False
-            if task_detail_doc.assigned_to != detail.assign_to:
-                task_detail_doc.assigned_to = detail.assign_to
-                has_changes = True
-            if task_detail_doc.priority != detail.priority:
-                task_detail_doc.priority = detail.priority
-                has_changes = True
-            
-            if has_changes:
-                task_detail_doc.save(ignore_permissions=False)
+                if task_detail_doc.assigned_to != detail.assign_to:
+                    task_detail_doc.assigned_to = detail.assign_to
+                    has_changes = True
+                if task_detail_doc.priority != detail.priority:
+                    task_detail_doc.priority = detail.priority
+                    has_changes = True
+                if has_changes:
+                    task_detail_doc.save(ignore_permissions=True)
 
 
     def get_parameter_info(self, parameter):
@@ -84,6 +86,23 @@ class TaskAllocation(Document):
             "values": parameter_doc.values.split(',') if parameter_doc.parameter_type == "List" else None
         }
         return parameter_info
+    
+
+@frappe.whitelist()
+def check_tasks_generated(docname):
+    if frappe.db.exists("Task Detail", {"task_allocation_id": docname}):
+        return True
+    return False
+
+@frappe.whitelist()
+def generate_tasks(docname):
+    doc = frappe.get_doc("Task Allocation", docname)
+    if doc:
+        doc.create_task_details()
+        return "Tasks have been generated successfully."
+    else:
+        return "Task Allocation document not found."
+    
 
 @frappe.whitelist()
 def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
@@ -153,8 +172,11 @@ def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
     return True
 
 
+
+generated_unique_keys = set()
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, end_date=None):
+    global generated_unique_keys
     filters = {
         "plant": plant,
         "location": location,
@@ -225,39 +247,30 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
                 elif frequency == 'Yearly':
                     dates = [add_years(start_date, i) for i in range(1) if start_date <= add_years(start_date, i) <= end_date]
-                
+
                 for date in dates:
                     date_obj = getdate(date)
-                    unique_key = 'lbvrq8' + str(uuid.uuid4())[:8] 
-                    task = {
-                        'equipment_code': equipment.equipment_code,
-                        'equipment_name': equipment.equipment_name,
-                        'activity': activity_details.activity_name,
-                        'parameter': parameter.parameter,
-                        'frequency': frequency,
-                        'date': date,
-                        'day': calendar.day_name[date_obj.weekday()],
-                        'unique_key': unique_key[:10]  
-                    }
-                    tasks.append(task)
+                    key_context = (equipment.equipment_code, activity_details.activity_name, parameter.parameter,date)
+                    existing_key = next((key for key, context in generated_unique_keys if context == key_context), None)
+                    if existing_key is None:
+                        unique_key = 'lbvrq8' + str(uuid.uuid4())[:8] 
+                        generated_unique_keys.add((unique_key, key_context)) 
+                    else:
+                        unique_key = existing_key
+                        task = {
+                            'equipment_code': equipment.equipment_code,
+                            'equipment_name': equipment.equipment_name,
+                            'activity': activity_details.activity_name,
+                            'parameter': parameter.parameter,
+                            'frequency': frequency,
+                            'date': date,
+                            'day': calendar.day_name[date_obj.weekday()],
+                            'unique_key': unique_key[:10]
+                        }
+                        tasks.append(task)
 
-                    task_detail = frappe.new_doc("Task Detail")
-                    task_detail.update({
-                        "approver": frappe.session.user,
-                        "equipment_code": task['equipment_code'],
-                        "equipment_name": task['equipment_name'],
-                        "work_center": work_center,
-                        "plant_section": plant_section,
-                        "plan_start_date": task['date'],
-                        "activity": task['activity'],
-                        "parameter": task['parameter'],
-                        "frequency": task['frequency'],
-                        "day": task['day'],
-                        "date": task['date']
-                    })
-                    task_detail.insert(ignore_permissions=True)
-                        
     return tasks
+
 
 @frappe.whitelist()
 def download_tasks_excel_for_task_allocation(tasks):
@@ -281,9 +294,7 @@ def download_tasks_excel_for_task_allocation(tasks):
             task.get('assign_to'), 
             task_date.strftime('%Y-%m-%d') if task_date else None,
             task.get('day')
-
         ]
-
         ws.append(row)
 
     virtual_workbook = BytesIO()
@@ -301,76 +312,5 @@ def download_tasks_excel_for_task_allocation(tasks):
     file_doc.save(ignore_permissions=True)
     
     return file_doc.file_url
-
-
-
-@frappe.whitelist()
-def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
-    task_allocation_doc = frappe.get_doc("Task Allocation",task_allocation_name)    
-   
-    folder_path = ''
-    actual_file_name = ''
-
-    if file.startswith("/private/files/"):
-        actual_file_name = file.replace("/private/files/", '')
-        folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "private", "files")
-    else:
-        actual_file_name = file.replace("/files/", '')
-        folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "public", "files")
-
-    source_file = os.path.join(folder_path, actual_file_name)
- 
-
-    wb = openpyxl.load_workbook(source_file)
-    sheet = wb.active
-
-    headers = [sheet.cell(row=1, column=i).value for i in range(1, sheet.max_column + 1)]
-    
-    task_allocation_doc.set("task_allocation_details", [])
-
-    for row in range(2, sheet.max_row + 1):
-       
-        row_data = {}
-        is_blank_row = True
-        for col_num in range(1, sheet.max_column + 1):
-            cell_value = sheet.cell(row=row, column=col_num).value
-            if cell_value is not None and cell_value != '':
-                is_blank_row = False
-                break
-
-        if is_blank_row:
-            continue  
-        
-        for col_num in range(1, sheet.max_column + 1):
-            cell_value = sheet.cell(row=row, column=col_num).value
-            row_data[headers[col_num - 1]] = cell_value
-            
-        print(task_allocation_doc.as_dict())
-        task_allocation_doc.append("task_allocation_details", {
-            'equipment_code': row_data.get('Equipment Code'),
-            'equipment_name': row_data.get('Equipment Name'),
-            'activity': row_data.get('Activity'),
-            'parameter': row_data.get('Parameter'),
-            'frequency': row_data.get('Frequency'),
-            'assign_to': row_data.get('Assign TO'),
-            'date': row_data.get('Date'),
-            'day': row_data.get('Day')
-        })
-
-        task_allocation_doc.save()
-        
-   
-        # equipment_code = row_data.get('Equipment Code')
-        # equipment_name = row_data.get('Equipment Name')
-        # activity = row_data.get('Activity')
-        # parameter = row_data.get('Parameter')
-        # frequency = row_data.get('Frequency')
-        # assign_to = row_data.get('Assign TO')
-        # date = row_data.get('Date')
-        # day = row_data.get('Day')
-
-    return True
-
-
 
 

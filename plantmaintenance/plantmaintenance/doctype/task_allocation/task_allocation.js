@@ -155,8 +155,6 @@ function load_tasks(frm) {
     });
 }
 
-
-
 function download_tasks_excel(tasks) {
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.download_tasks_excel_for_task_allocation',
@@ -176,8 +174,6 @@ function download_tasks_excel(tasks) {
         }
     });
 }
-
-
 
 function upload_assignment_excel(frm) {
     frappe.prompt([
