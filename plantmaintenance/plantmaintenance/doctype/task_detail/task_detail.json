@@ -47,12 +47,11 @@
   "column_break_vomc",
   "reading_4",
   "reading_8",
-  "timeline_section",
-  "column_break_kqfz",
+  "section_break_tssa",
   "plan_start_date",
-  "column_break_djip",
+  "column_break_oaav",
   "plan_end_date",
-  "column_break_rwiq",
+  "column_break_jntw",
   "require_time",
   "section_break_oufx",
   "actual_start_date",
@@ -132,7 +131,7 @@
    "fieldname": "type",
    "fieldtype": "Select",
    "label": "Type ",
-   "options": "Preemptive\nBreakdown"
+   "options": "Preventive\nBreakdown"
   },
   {
    "fieldname": "column_break_cemj",
@@ -324,23 +323,6 @@
    "label": "Reading 8"
   },
   {
-   "fieldname": "timeline_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_kqfz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.type==\"Preemptive\"",
-   "fieldname": "column_break_djip",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_rwiq",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "section_break_oufx",
    "fieldtype": "Section Break"
   },
@@ -449,10 +431,18 @@
    "label": "Attach Image"
   },
   {
+   "fieldname": "section_break_tssa",
+   "fieldtype": "Section Break"
+  },
+  {
    "fieldname": "plan_start_date",
    "fieldtype": "Date",
    "label": "Plan Start Date",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_oaav",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "plan_end_date",
@@ -461,16 +451,20 @@
    "read_only": 1
   },
   {
+   "fieldname": "column_break_jntw",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "require_time",
    "fieldtype": "Float",
-   "label": "Required Time (In Hours)",
+   "label": "Required Time",
    "read_only": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-09 17:20:24.039859",
+ "modified": "2023-05-03 09:07:52.024913",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
