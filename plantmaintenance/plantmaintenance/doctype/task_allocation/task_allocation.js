@@ -154,6 +154,8 @@ function load_tasks(frm) {
     });
 }
 
+
+
 function download_tasks_excel(tasks) {
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.download_tasks_excel_for_task_allocation',
@@ -172,9 +174,12 @@ function download_tasks_excel(tasks) {
             frappe.msgprint(__('Failed to download tasks: {0}', [error]));
         }
     });
-}
-
-function upload_assignment_excel(frm) {
+ }
+ 
+ 
+ 
+ 
+ function upload_assignment_excel(frm) {
     frappe.prompt([
         {
             label: __('Select XLSX File'),
@@ -196,21 +201,22 @@ function upload_assignment_excel(frm) {
                         indicator: 'green'
                     });
                     frm.reload_doc();
+                } else {
+                    frappe.msgprint(__('Failed to import Excel.'));
                 }
-                // else {
-                //     frappe.msgprint(__('Failed to import Excel.'));
-                // }
             }
         });
     }, __('Upload XLSX File'));
+ 
+ 
+ }
+ 
+ 
+ 
+ 
+ 
 
-}
 
-
-
-
-
-//Pragati Dike//
 frappe.ui.form.on("Task Allocation Details", {
     add_assignee: function (frm, cdt, cdn) {
         var child = locals[cdt][cdn];
