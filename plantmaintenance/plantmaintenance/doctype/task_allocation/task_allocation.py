@@ -18,33 +18,30 @@ import uuid
 class TaskAllocation(Document):
     def on_update(self):
         if self.docstatus == 0:
-            if not self.check_tasks_generated():
-                self.create_task_details()
-            else:
-                self.update_task_details()
+            self.create_or_update_task_details()
 
     def check_tasks_generated(self):
         unique_keys = [detail.unique_key for detail in self.get('task_allocation_details')]
-        return frappe.db.exists("Task Detail", {"unique_key": ["in", [detail.unique_key for detail in self.get('task_allocation_details')]]})
-    
+        return frappe.db.exists("Task Detail", {"unique_key": ["in", unique_keys]})
 
-    def create_task_details(self):
+    def create_or_update_task_details(self):
         for detail in self.get('task_allocation_details'):
-            if not frappe.db.exists("Task Detail", {"unique_key": detail.unique_key}):
+            existing_task = frappe.db.exists("Task Detail", {"unique_key": detail.unique_key})
+            if not existing_task:
                 self.create_task_detail(detail)
-    
+            else:
+                self.update_task_detail(detail, existing_task)
 
     def create_task_detail(self, detail):
         parameter_info = self.get_parameter_info(detail.parameter)
         plan_start_date = detail.date
         require_time_hours = parameter_info.get('require_time')
-
         plan_end_date = (datetime.strptime(plan_start_date, '%Y-%m-%d') + timedelta(hours=require_time_hours)).strftime('%Y-%m-%d %H:%M:%S')
 
         task_detail = frappe.new_doc("Task Detail")
         task_detail.update({
             "unique_key": detail.unique_key,
-            "task_allocation_id": self.name,  
+            "task_allocation_id": self.name,
             "approver": frappe.session.user,
             "equipment_code": detail.equipment_code,
             "equipment_name": detail.equipment_name,
@@ -64,21 +61,17 @@ class TaskAllocation(Document):
         })
         task_detail.insert(ignore_permissions=True)
 
-    def update_task_details(self):
-        for detail in self.get('task_allocation_details'):
-            task_details = frappe.get_all("Task Detail", filters={"unique_key": detail.unique_key})
-            for task_detail in task_details:
-                task_detail_doc = frappe.get_doc("Task Detail", task_detail.name)
-                has_changes = False
-                if task_detail_doc.assigned_to != detail.assign_to:
-                    task_detail_doc.assigned_to = detail.assign_to
-                    has_changes = True
-                if task_detail_doc.priority != detail.priority:
-                    task_detail_doc.priority = detail.priority
-                    has_changes = True
-                if has_changes:
-                    task_detail_doc.save(ignore_permissions=True)
-
+    def update_task_detail(self, detail, task_name):
+        task_detail_doc = frappe.get_doc("Task Detail", task_name)
+        has_changes = False
+        if task_detail_doc.assigned_to != detail.assign_to:
+            task_detail_doc.assigned_to = detail.assign_to
+            has_changes = True
+        if task_detail_doc.priority != detail.priority:
+            task_detail_doc.priority = detail.priority
+            has_changes = True
+        if has_changes:
+            task_detail_doc.save(ignore_permissions=True)
 
     def get_parameter_info(self, parameter):
         parameter_doc = frappe.get_doc("Parameter", {"parameter": parameter})
@@ -90,7 +83,6 @@ class TaskAllocation(Document):
             "values": parameter_doc.values.split(',') if parameter_doc.parameter_type == "List" else None
         }
         return parameter_info
-    
 
 @frappe.whitelist()
 def check_tasks_generated(docname):
@@ -102,11 +94,11 @@ def check_tasks_generated(docname):
 def generate_tasks(docname):
     doc = frappe.get_doc("Task Allocation", docname)
     if doc:
-        doc.create_task_details()
+        doc.create_or_update_task_details()
         return "Tasks have been generated successfully."
     else:
         return "Task Allocation document not found."
-    
+
 
 @frappe.whitelist()
 def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
@@ -167,8 +159,8 @@ def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
     return True
 
 
-
 generated_unique_keys = set()
+
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, end_date=None):
     global generated_unique_keys
@@ -184,7 +176,10 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     setting_doc = frappe.get_single('Setting')
     start_date = getdate(setting_doc.start_date)
     today_date = getdate(nowdate())
-    end_date = getdate(end_date) if end_date else start_date + timedelta(days=120)
+    end_date = getdate(end_date) if end_date else getdate(setting_doc.end_date)
+
+    if not (start_date <= today_date <= end_date):
+        return frappe.msgprint(("please ensure that today date is between start date and end date"))
 
     tasks = []
     for equipment in equipment_list:
@@ -203,7 +198,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                 dates = []
 
                 if frequency == 'Daily':
-                    dates = [add_days(start_date, i) for i in range(15) if start_date <= add_days(start_date, i) <= end_date]
+                    dates = [add_days(today_date, i) for i in range(15) if today_date <= add_days(today_date, i) <= end_date]
 
                 elif frequency == 'Weekly':
                     selected_days = []
@@ -223,47 +218,48 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         selected_days.append('Sunday')
 
                     for day in selected_days:
-                        current_date = start_date
+                        current_date = today_date
                         while current_date.weekday() != list(calendar.day_name).index(day):
                             current_date += timedelta(days=1)
-                        if start_date <= current_date <= end_date:
+                        if today_date <= current_date <= end_date:
                             dates.append(current_date)
 
-                        while current_date <= (start_date + timedelta(days=90)) and (start_date <= current_date <= end_date):
+                        while current_date <= (today_date + timedelta(days=90)) and (today_date <= current_date <= end_date):
                             current_date += timedelta(weeks=1)
-                            if start_date <= current_date <= end_date:
+                            if today_date <= current_date <= end_date:
                                 dates.append(current_date)
 
                 elif frequency == 'Monthly':
                     day_of_month = parameter.day_of_month or 1
-                    current_date = start_date.replace(day=day_of_month)
-                    if current_date < start_date:
+                    current_date = today_date.replace(day=day_of_month)
+                    if current_date < today_date:
                         current_date += relativedelta(months=1)
-                    dates = [current_date + relativedelta(months=i) for i in range(6) if start_date <= current_date + relativedelta(months=i) <= end_date]
+                    dates = [current_date + relativedelta(months=i) for i in range(6) if today_date <= current_date + relativedelta(months=i) <= end_date]
 
                 elif frequency == 'Yearly':
-                    dates = [add_years(start_date, i) for i in range(1) if start_date <= add_years(start_date, i) <= end_date]
+                    dates = [add_years(today_date, i) for i in range(1) if today_date <= add_years(today_date, i) <= end_date]
 
                 for date in dates:
                     date_obj = getdate(date)
-                    key_context = (equipment.equipment_code, activity_details.activity_name, parameter.parameter,date)
+                    key_context = (equipment.equipment_code, activity_details.activity_name, parameter.parameter, date)
                     existing_key = next((key for key, context in generated_unique_keys if context == key_context), None)
                     if existing_key is None:
-                        unique_key = 'lbvrq8' + str(uuid.uuid4())[:8] 
-                        generated_unique_keys.add((unique_key, key_context)) 
+                        unique_key = 'lbvrq8' + str(uuid.uuid4())[:8]
+                        generated_unique_keys.add((unique_key, key_context))
                     else:
                         unique_key = existing_key
-                        task = {
-                            'equipment_code': equipment.equipment_code,
-                            'equipment_name': equipment.equipment_name,
-                            'activity': activity_details.activity_name,
-                            'parameter': parameter.parameter,
-                            'frequency': frequency,
-                            'date': date,
-                            'day': calendar.day_name[date_obj.weekday()],
-                            'unique_key': unique_key[:10]
-                        }
-                        tasks.append(task)
+
+                    task = {
+                        'equipment_code': equipment.equipment_code,
+                        'equipment_name': equipment.equipment_name,
+                        'activity': activity_details.activity_name,
+                        'parameter': parameter.parameter,
+                        'frequency': frequency,
+                        'date': date,
+                        'day': calendar.day_name[date_obj.weekday()],
+                        'unique_key': unique_key[:10]
+                    }
+                    tasks.append(task)
 
     return tasks
 
