@@ -163,15 +163,6 @@ def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
 
         task_allocation_doc.save()
         
-   
-        # equipment_code = row_data.get('Equipment Code')
-        # equipment_name = row_data.get('Equipment Name')
-        # activity = row_data.get('Activity')
-        # parameter = row_data.get('Parameter')
-        # frequency = row_data.get('Frequency')
-        # assign_to = row_data.get('Assign TO')
-        # date = row_data.get('Date')
-        # day = row_data.get('Day')
 
     return True
 
@@ -275,108 +266,6 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         tasks.append(task)
 
     return tasks
-
-
-# @frappe.whitelist()
-# def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
-#     task_allocation_doc = frappe.get_doc("Task Allocation", task_allocation_name)    
-
-#     folder_path = ''
-#     actual_file_name = ''
-
-#     if file.startswith("/private/files/"):
-#         actual_file_name = file.replace("/private/files/", '')
-#         folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "private", "files")
-#     else:
-#         actual_file_name = file.replace("/files/", '')
-#         folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "public", "files")
-
-#     source_file = os.path.join(folder_path, actual_file_name)
-
-#     wb = load_workbook(source_file)
-#     sheet = wb.active
-
-#     headers = [sheet.cell(row=1, column=i).value for i in range(1, sheet.max_column + 1)]
-
-#     task_allocation_doc.set("task_allocation_details", [])
-
-#     for row in range(2, sheet.max_row + 1):
-#         row_data = {}
-#         is_blank_row = True
-#         for col_num in range(1, sheet.max_column + 1):
-#             cell_value = sheet.cell(row=row, column=col_num).value
-#             if cell_value is not None and cell_value != '':
-#                 is_blank_row = False
-#                 break
-
-#         if is_blank_row:
-#             continue  
-
-#         for col_num in range(1, sheet.max_column + 1):
-#             cell_value = sheet.cell(row=row, column=col_num).value
-#             row_data[headers[col_num - 1]] = cell_value
-
-#         task_allocation_doc.append("task_allocation_details", {
-#             'equipment_code': row_data.get('Equipment Code'),
-#             'equipment_name': row_data.get('Equipment Name'),
-#             'activity': row_data.get('Activity'),
-#             'parameter': row_data.get('Parameter'),
-#             'frequency': row_data.get('Frequency'),
-#             'date': row_data.get('Date'),
-#             'assign_to': row_data.get('Assign To'),
-#             'priority': row_data.get('Priority'),
-#             'unique_key': row_data.get('Unique Key')
-#         })
-
-#     task_allocation_doc.save(ignore_permissions=True)
-
-# @frappe.whitelist()
-# def download_tasks_excel_for_task_allocation(tasks):
-#     tasks = frappe.parse_json(tasks)
-
-#     wb = Workbook()
-#     ws = wb.active
-#     ws.title = "Tasks"
-
-#     headers = ['Equipment Code', 'Equipment Name', 'Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day']
-#     ws.append(headers)
-
-#     for task in tasks:
-#         task_date = getdate(task.get('date'))
-#         row = [
-#             task.get('equipment_code'),
-#             task.get('equipment_name'),
-#             task.get('activity'),
-#             task.get('parameter'),
-#             task.get('frequency'),
-#             task.get('assign_to'),
-#             task_date.strftime('%Y-%m-%d') if task_date else None,
-#             task.get('day')
-#         ]
-#         ws.append(row)
-
-#     virtual_workbook = BytesIO()
-#     wb.save(virtual_workbook)
-#     virtual_workbook.seek(0)
-#     file_data = virtual_workbook.read()
-
-#     file_name = f'Task_Allocation_{nowdate()}.xlsx'
-#     file_doc = frappe.get_doc({
-#         'doctype': 'File',
-#         'file_name': file_name,
-#         'content': file_data,
-#         'is_private': 0
-#     })
-#     file_name = f'Task_Detail_{nowdate()}.xlsx'
-#     file_doc = frappe.get_doc({
-#         'doctype': 'File',
-#         'file_name': file_name,
-#         'content': file_data,
-#         'is_private': 0
-#     })
-#     file_doc.save(ignore_permissions=True)
-
-#     return file_doc.file_url
 
 
 

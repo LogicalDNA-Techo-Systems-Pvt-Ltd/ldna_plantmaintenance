@@ -154,61 +154,6 @@ function load_tasks(frm) {
     });
 }
 
-// function download_tasks_excel(tasks) {
-//     frappe.call({
-//         method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.download_tasks_excel_for_task_allocation',
-//         args: {
-//             tasks: JSON.stringify(tasks)
-//         },
-//         callback: function (response) {
-//             const file_url = response.message;
-//             if (file_url) {
-//                 window.open(file_url);
-//             } else {
-//                 frappe.msgprint(__('Failed to generate download link.'));
-//             }
-//         },
-//         error: function (xhr, textStatus, error) {
-//             frappe.msgprint(__('Failed to download tasks: {0}', [error]));
-//         }
-//     });
-// }
-
-// function upload_assignment_excel(frm) {
-//     frappe.prompt([
-//         {
-//             label: __('Select XLSX File'),
-//             fieldname: 'xlsx_file',
-//             fieldtype: 'Attach',
-//             reqd: 1
-//         }
-//     ], (values) => {
-//         frappe.call({
-//             method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.upload_tasks_excel_for_task_allocation',
-//             args: {
-//                 file: values.xlsx_file,
-//                 task_allocation_name: frm.doc.name
-//             },
-//             callback: (response) => {
-//                 if (response.message) {
-//                     frappe.show_alert({
-//                         message: 'Excel import successful!',
-//                         indicator: 'green'
-//                     });
-//                     frm.reload_doc();
-//                 }
-//                 else {
-//                     frappe.msgprint(__('Failed to import Excel.'));
-//                 }
-//             }
-//         });
-//     }, __('Upload XLSX File'));
-
-// }
-
-
-
-
 
 
 function download_tasks_excel(tasks) {
@@ -272,7 +217,6 @@ function download_tasks_excel(tasks) {
  
 
 
-//Pragati Dike//
 frappe.ui.form.on("Task Allocation Details", {
     add_assignee: function (frm, cdt, cdn) {
         var child = locals[cdt][cdn];
