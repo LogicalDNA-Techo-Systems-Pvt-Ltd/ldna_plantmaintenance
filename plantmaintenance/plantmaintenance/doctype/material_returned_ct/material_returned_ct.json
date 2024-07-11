@@ -37,7 +37,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Material",
-   "options": "Material Issue"
+   "options": "Material"
   },
   {
    "fieldname": "type",
@@ -54,7 +54,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-10 10:55:14.529512",
+ "modified": "2024-07-11 18:09:55.818071",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material Returned CT",

@@ -1,0 +1,75 @@
+{
+ "charts": [
+  {
+   "chart_name": "Task Breakdown",
+   "label": "Task Breakdown"
+  }
+ ],
+ "content": "[{\"id\":\"bOEIuDpVSn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Maintenance User</span>\",\"col\":12}},{\"id\":\"a6KHxjGTFL\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"xkzlDdWQr_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"wYD0Z5Jctp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Progress\",\"col\":6}},{\"id\":\"BoD7f-hfjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"vfsdQutbwu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":6}},{\"id\":\"R9w0r4I09a\",\"type\":\"card\",\"data\":{\"card_name\":\"Task Details\",\"col\":4}}]",
+ "creation": "2024-07-05 12:37:55.972237",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "customer",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Maintenance User",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Details",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Detail",
+   "link_count": 0,
+   "link_to": "Task Detail",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-07-11 17:46:39.378574",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Maintenance User",
+ "number_cards": [
+  {
+   "label": "Open Task",
+   "number_card_name": "Open Task"
+  },
+  {
+   "label": "Completed Task",
+   "number_card_name": "Completed Task"
+  },
+  {
+   "label": "In Progress",
+   "number_card_name": "In Progress"
+  },
+  {
+   "label": "Total Task",
+   "number_card_name": "Total Task"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Maintenance User"
+  }
+ ],
+ "sequence_id": 31.0,
+ "shortcuts": [],
+ "title": "Maintenance User"
+}
