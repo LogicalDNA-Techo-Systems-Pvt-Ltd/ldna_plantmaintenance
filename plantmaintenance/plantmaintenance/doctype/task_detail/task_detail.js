@@ -118,44 +118,6 @@
 //     }
 // });
 
-
-// frappe.ui.form.on('Task Detail', {
-//     onload: function(frm) {
-//         // Fetch parameter details if parameter field is set
-//         if (frm.doc.parameter) {
-//             fetch_parameter_details(frm);
-//         }
-//     },
-//     parameter: function(frm) {
-//         // Fetch parameter details whenever parameter field changes
-//         fetch_parameter_details(frm);
-//     }
-// });
-
-// function fetch_parameter_details(frm) {
-//     frappe.call({
-//         method: "frappe.client.get",
-//         args: {
-//             doctype: "Parameter",
-//             name: frm.doc.parameter
-//         },
-//         callback: function(r) {
-//             if (r.message) {
-//                 let parameter = r.message;
-//                 if (parameter.parameter_type === "List" && parameter.text) {
-//                     let options = parameter.text.split(',').map(option => option.trim());
-//                     frm.set_df_property('parameter_dropdown', 'options', options.join('\n'));
-//                     frm.refresh_field('parameter_dropdown');
-//                 } else {
-//                     frm.set_df_property('parameter_dropdown', 'options', '');
-//                     frm.refresh_field('parameter_dropdown');
-//                 }
-//             }
-//         }
-//     });
-// }
-
-
 frappe.ui.form.on('Task Detail', {
     readings: function(frm) {
         const numReadings = frm.doc.readings;
@@ -194,8 +156,50 @@ frappe.ui.form.on('Task Detail', {
         if (frm.doc.type === 'Breakdown') {
             frm.set_value('parameter_type', '');
         }
+    },
+
+    validate: function(frm) {
+        if (frm.doc.actual_end_date && frm.doc.actual_start_date && frm.doc.actual_end_date < frm.doc.actual_start_date) {
+            frappe.msgprint(__('Actual End Date should be greater than or equal to Actual Start Date'));
+            frappe.validated = false;
+        }
+    },
+
+    before_save: function(frm) {
+        const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5', 'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
+    
+        fields.forEach(field => {
+            if (frm.doc[field] !== undefined && frm.doc[field] !== null) {
+                let value = parseFloat(frm.doc[field]).toFixed(2);
+                let parts = value.split('.'); // Split the number into integer and decimal parts
+                if (parts[0].length > 4) {
+                    let field_label = frm.fields_dict[field].df.label; // Get the field label 
+                    frappe.msgprint(__("The value for {0} exceeds the maximum allowed digits before the decimal point.", [field_label]));
+                    frappe.validated = false; // Prevent form submission
+                } else {
+                    frm.doc[field] = value;
+                }
+            }
+        });
+    },    
+
+    refresh: function(frm) {
+        // Locate the 'Material Issued' child table in the 'Inventory' tab
+        let material_issued = frm.fields_dict.material_issued;
+
+        if (material_issued && !frm.inventory_button_added) {
+            // Ensure the button is added only once
+            frm.inventory_button_added = true;
+
+            // Create the button with adjusted top margin
+            let button = $('<button class="btn btn-primary btn-xs" style="background-color: #eceff1; color: black; margin-top: -40px; margin-left: 90px;">Update Stock</button>')
+            
+            // Append the button after the 'Add Row' button
+            material_issued.grid.wrapper.find('.grid-footer').append(button);
+        }
     }
 });
+
 
 function fetch_parameter_details(frm) {
     frappe.call({
