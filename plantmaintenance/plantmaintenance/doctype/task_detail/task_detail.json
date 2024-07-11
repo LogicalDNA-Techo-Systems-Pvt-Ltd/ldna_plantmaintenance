@@ -419,7 +419,7 @@
    "fieldname": "material_issued",
    "fieldtype": "Table",
    "label": "Material Issued",
-   "options": "Material Issue"
+   "options": "Material Issue CT"
   },
   {
    "fieldname": "material_returned",
@@ -471,7 +471,7 @@
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-11 10:41:11.899163",
+ "modified": "2024-07-11 22:11:38.479435",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
