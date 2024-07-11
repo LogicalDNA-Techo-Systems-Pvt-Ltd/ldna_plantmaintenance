@@ -18,6 +18,7 @@
  ],
  "fields": [
   {
+   "fetch_from": "material_code.material_name",
    "fieldname": "material_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -32,6 +33,7 @@
    "options": "Equipment"
   },
   {
+   "fetch_from": "equipment_code.equipment_name",
    "fieldname": "equipment_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -42,7 +44,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Material Code",
-   "options": "Material Issue"
+   "options": "Material"
   },
   {
    "fieldname": "column_break_olpv",
@@ -70,7 +72,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-11 12:53:50.049500",
+ "modified": "2024-07-11 18:11:21.054167",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material Issue CT",
