@@ -84,7 +84,6 @@
   {
    "fieldname": "unique_key",
    "fieldtype": "Data",
-   "hidden": 1,
    "in_standard_filter": 1,
    "label": "Unique Key"
   },
@@ -147,11 +146,10 @@
   },
   {
    "fieldname": "assigned_to",
-   "fieldtype": "Text",
-   "in_list_view": 1,
+   "fieldtype": "Table MultiSelect",
    "in_standard_filter": 1,
    "label": "Assigned To",
-   "options": "User"
+   "options": "Assigne"
   },
   {
    "default": "Low",
@@ -419,13 +417,13 @@
    "fieldname": "material_issued",
    "fieldtype": "Table",
    "label": "Material Issued",
-   "options": "Material Issue"
+   "options": "Material Issue CT"
   },
   {
    "fieldname": "material_returned",
    "fieldtype": "Table",
    "label": "Material Returned",
-   "options": "Material Remark"
+   "options": "Material Returned CT"
   },
   {
    "fieldname": "attach_image",
@@ -471,7 +469,7 @@
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-11 10:41:11.899163",
+ "modified": "2024-07-12 09:48:09.356621",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
