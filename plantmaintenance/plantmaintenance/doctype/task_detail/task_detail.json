@@ -146,10 +146,9 @@
   },
   {
    "fieldname": "assigned_to",
-   "fieldtype": "Table MultiSelect",
+   "fieldtype": "Text",
    "in_standard_filter": 1,
-   "label": "Assigned To",
-   "options": "Assigne"
+   "label": "Assigned To"
   },
   {
    "default": "Low",
@@ -469,7 +468,7 @@
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-12 09:48:09.356621",
+ "modified": "2024-07-12 09:53:16.186205",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
