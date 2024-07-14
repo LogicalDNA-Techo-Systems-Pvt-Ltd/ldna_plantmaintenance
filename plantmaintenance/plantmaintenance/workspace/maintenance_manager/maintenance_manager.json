@@ -5,7 +5,7 @@
    "label": "Task Breakdown"
   }
  ],
- "content": "[{\"id\":\"bOEIuDpVSn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Maintenance Manager</span>\",\"col\":12}},{\"id\":\"GySDlIR2jU\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"xkzlDdWQr_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"wYD0Z5Jctp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Progress\",\"col\":6}},{\"id\":\"BoD7f-hfjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"vfsdQutbwu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":6}},{\"id\":\"fdgcLMCOD0\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":6}},{\"id\":\"bxT-nrQBFj\",\"type\":\"card\",\"data\":{\"card_name\":\"Report\",\"col\":6}}]",
+ "content": "[{\"id\":\"bOEIuDpVSn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Maintenance Manager</span>\",\"col\":12}},{\"id\":\"GySDlIR2jU\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"BoD7f-hfjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":4}},{\"id\":\"xkzlDdWQr_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":4}},{\"id\":\"wYD0Z5Jctp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Approved Task\",\"col\":4}},{\"id\":\"pDFYOmDla-\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending for Approval\",\"col\":4}},{\"id\":\"9U5DhlTYm_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Task\",\"col\":4}},{\"id\":\"vfsdQutbwu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Task\",\"col\":4}},{\"id\":\"fdgcLMCOD0\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":6}},{\"id\":\"bxT-nrQBFj\",\"type\":\"card\",\"data\":{\"card_name\":\"Report\",\"col\":6}}]",
  "creation": "2024-07-05 11:33:21.548332",
  "custom_blocks": [],
  "docstatus": 0,
@@ -67,7 +67,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-09 15:00:12.625195",
+ "modified": "2024-07-14 15:44:24.289253",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Maintenance Manager",
@@ -77,16 +77,24 @@
    "number_card_name": "Open Task"
   },
   {
-   "label": "In Progress",
-   "number_card_name": "In Progress"
+   "label": "Approved Task",
+   "number_card_name": "Approved Tasks"
+  },
+  {
+   "label": "Pending for Approval",
+   "number_card_name": "Pending for Approval"
   },
   {
    "label": "Total Task",
    "number_card_name": "Total Task"
   },
   {
-   "label": "Completed Task",
-   "number_card_name": "Completed Task"
+   "label": "Rejected Task",
+   "number_card_name": "Rejected Task"
+  },
+  {
+   "label": "Overdue Task",
+   "number_card_name": "Overdue Tasks"
   }
  ],
  "owner": "Administrator",
@@ -96,6 +104,9 @@
  "roles": [
   {
    "role": "Maintenance Manager"
+  },
+  {
+   "role": "Administrator"
   }
  ],
  "sequence_id": 30.0,
