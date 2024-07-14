@@ -40,8 +40,8 @@
   "warranty_end_date",
   "history_tab",
   "task_detail_section",
-  "table_mmir",
-  "material_moment"
+  "task_detail_ct",
+  "material_moment_ct"
  ],
  "fields": [
   {
@@ -234,16 +234,16 @@
   },
   {
    "fieldname": "task_detail_section",
-   "fieldtype": "Section Break",
-   "label": "Task Detail"
+   "fieldtype": "Section Break"
   },
   {
-   "fieldname": "table_mmir",
+   "fieldname": "task_detail_ct",
    "fieldtype": "Table",
+   "label": "Task Detail",
    "options": "Equipment Task Details CT"
   },
   {
-   "fieldname": "material_moment",
+   "fieldname": "material_moment_ct",
    "fieldtype": "Table",
    "label": "Material Moment",
    "options": "Equipment Material Moment CT"
@@ -251,7 +251,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-13 12:47:41.938320",
+ "modified": "2024-07-14 16:02:49.449391",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
