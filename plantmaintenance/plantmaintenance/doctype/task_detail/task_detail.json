@@ -23,12 +23,14 @@
   "section_break_pnvh",
   "activity",
   "minimum_value",
-  "acceptance_criteria",
   "parameter_dropdown",
+  "result",
   "values",
   "column_break_rnng",
   "parameter",
   "maximum_value",
+  "acceptance_criteria_for_list",
+  "acceptance_criteria",
   "column_break_scrc",
   "parameter_type",
   "readings",
@@ -344,7 +346,7 @@
   {
    "fieldname": "actual_time_taken",
    "fieldtype": "Float",
-   "label": "Actual Time Taken",
+   "label": "Actual Time Taken (In Hours)",
    "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
   },
   {
@@ -451,7 +453,7 @@
   {
    "fieldname": "require_time",
    "fieldtype": "Float",
-   "label": "Required Time",
+   "label": "Required Time (In Hours)",
    "read_only": 1
   },
   {
@@ -466,12 +468,24 @@
    "fieldtype": "Select",
    "label": "Priority",
    "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"List\"",
+   "fieldname": "acceptance_criteria_for_list",
+   "fieldtype": "Data",
+   "label": "Acceptance Criteria For List"
+  },
+  {
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "label": "Result",
+   "options": "\nPass\nFail"
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-13 18:45:29.991273",
+ "modified": "2024-07-15 13:41:46.099907",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
