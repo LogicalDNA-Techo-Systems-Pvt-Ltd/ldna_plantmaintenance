@@ -1,0 +1,175 @@
+{
+ "charts": [
+  {
+   "chart_name": "Total Tasks",
+   "label": "Task Created"
+  },
+  {
+   "chart_name": "Completed Task",
+   "label": "Completed Task"
+  },
+  {
+   "chart_name": "Overdue Task",
+   "label": "Overdue Task"
+  }
+ ],
+ "content": "[{\"id\":\"lPszDIiymE\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Created\",\"col\":12}},{\"id\":\"0qZ_EAiLqz\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Completed Task\",\"col\":12}},{\"id\":\"x_k5R7Q1Ey\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Overdue Task\",\"col\":12}},{\"id\":\"HOFdEglaYS\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Task for Approval\",\"col\":6}},{\"id\":\"hsBVsREZK1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Equipment\",\"col\":6}},{\"id\":\"Z_Mvk9dOZK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Task\",\"col\":6}},{\"id\":\"1zMKU2ovyV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Activity\",\"col\":6}},{\"id\":\"ME9-Hq7iVR\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"WtoWBzi2mR\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
+ "creation": "2024-07-12 22:43:02.075733",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "",
+ "idx": 0,
+ "indicator_color": "gray",
+ "is_hidden": 0,
+ "label": "System Workspace",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Masters",
+   "link_count": 7,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Equipment",
+   "link_count": 0,
+   "link_to": "Equipment",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Equipment  Group",
+   "link_count": 0,
+   "link_to": "Equipment  Group",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity Group",
+   "link_count": 0,
+   "link_to": "Activity Group",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Activity",
+   "link_count": 0,
+   "link_to": "Activity",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Parameter",
+   "link_count": 0,
+   "link_to": "Parameter",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breakdown Reason",
+   "link_count": 0,
+   "link_to": "Breakdown Reason",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Plant",
+   "link_count": 0,
+   "link_to": "Plant",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transactions",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 0,
+   "link_to": "Setting",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Workflow",
+   "link_count": 0,
+   "link_to": "Workflow",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-07-15 10:04:35.356192",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "System Workspace",
+ "number_cards": [
+  {
+   "label": "Task for Approval",
+   "number_card_name": "Task for Approval"
+  },
+  {
+   "label": "Equipment without Task",
+   "number_card_name": "Equipment without Task"
+  },
+  {
+   "label": "Equipment without Activity",
+   "number_card_name": "Equipment without Activity"
+  },
+  {
+   "label": "Total Equipment",
+   "number_card_name": "Total Equipment"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Administrator"
+  }
+ ],
+ "sequence_id": 9.0,
+ "shortcuts": [],
+ "title": "System Workspace"
+}

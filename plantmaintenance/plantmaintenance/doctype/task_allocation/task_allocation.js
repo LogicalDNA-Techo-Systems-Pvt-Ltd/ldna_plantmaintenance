@@ -130,30 +130,29 @@ function load_tasks(frm) {
             work_center: frm.doc.work_center,
             end_date: frm.doc.end_date
         },
-        callback: function (r) {
-            if (r.message) {
+        callback: function (response) {
+            if (response.message) {
+                var tasks = response.message;
                 frm.clear_table('task_allocation_details');
-
-                r.message.sort(function (a, b) {
+                response.message.sort(function (a, b) {
                     return new Date(a.date) - new Date(b.date);
                 });
-                r.message.forEach(function (task) {
-                    var row = frm.add_child('task_allocation_details');
-                    row.equipment_code = task.equipment_code;
-                    row.equipment_name = task.equipment_name;
-                    row.activity = task.activity;
-                    row.parameter = task.parameter;
-                    row.frequency = task.frequency;
-                    row.date = task.date;
-                    row.day = task.day;
-                    row.unique_key = task.unique_key;
+                $.each(tasks, function (index, task) {
+                    var child = frm.add_child('task_allocation_details');
+                    frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
+                    frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
+                    frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
+                    frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
+                    frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
+                    frappe.model.set_value(child.doctype, child.name, 'date', task.date);
+                    frappe.model.set_value(child.doctype, child.name, 'day', task.day);
+                    frappe.model.set_value(child.doctype, child.name, 'unique_key', task.unique_key);
                 });
                 frm.refresh_field('task_allocation_details');
             }
         }
     });
 }
-
 
 
 function download_tasks_excel(tasks) {

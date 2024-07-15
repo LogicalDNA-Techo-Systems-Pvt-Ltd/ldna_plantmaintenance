@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+import json
 class Equipment(Document):
     
     def validate(self):
@@ -56,3 +57,18 @@ def get_work_center_based_on_section(section):
         return work_center
     return []
 
+
+@frappe.whitelist()
+def equipment_task_details(task_detail):
+    task_detail = json.loads(task_detail)
+
+    equipment_doc = frappe.get_doc("Equipment",task_detail['equipment_code'])
+
+    if equipment_doc:
+        detail = equipment_doc.append("task_detail_ct",{})
+        detail.task = task_detail['name']
+        detail.parameter = task_detail['parameter']
+        detail.date = task_detail['creation']
+        detail.status = task_detail['status']
+
+    equipment_doc.save()

@@ -11,6 +11,7 @@
   "equipment_code",
   "equipment_name",
   "status",
+  "priority",
   "column_break_xlqp",
   "work_center",
   "plant_section",
@@ -19,19 +20,18 @@
   "column_break_cemj",
   "approver",
   "assigned_to",
-  "priority",
   "section_break_pnvh",
   "activity",
-  "parameter_type",
   "minimum_value",
   "acceptance_criteria",
+  "parameter_dropdown",
   "values",
   "column_break_rnng",
   "parameter",
-  "readings",
   "maximum_value",
-  "parameter_dropdown",
   "column_break_scrc",
+  "parameter_type",
+  "readings",
   "frequency",
   "section_break_mpil",
   "column_break_limp",
@@ -91,9 +91,11 @@
    "fieldname": "equipment_code",
    "fieldtype": "Link",
    "label": "Equipment Code",
-   "options": "Equipment"
+   "options": "Equipment",
+   "reqd": 1
   },
   {
+   "fetch_from": "equipment_code.equipment_name",
    "fieldname": "equipment_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -106,7 +108,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "\nOpen\nIn progress\nCompleted"
+   "options": "\nOpen\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue"
   },
   {
    "fieldname": "column_break_xlqp",
@@ -142,7 +144,8 @@
    "fieldname": "approver",
    "fieldtype": "Link",
    "label": "Approver",
-   "options": "User"
+   "options": "User",
+   "reqd": 1
   },
   {
    "fieldname": "assigned_to",
@@ -151,16 +154,9 @@
    "label": "Assigned To"
   },
   {
-   "default": "Low",
-   "fieldname": "priority",
-   "fieldtype": "Select",
-   "in_standard_filter": 1,
-   "label": "  \t Priority",
-   "options": "\nLow\nMedium\nHigh"
-  },
-  {
    "fieldname": "section_break_pnvh",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Preventive Maintenance"
   },
   {
    "depends_on": "eval:doc.type!=\"Breakdown\"",
@@ -353,7 +349,8 @@
   },
   {
    "fieldname": "section_break_ubjt",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Breakdown Maintenance"
   },
   {
    "depends_on": "eval:doc.type==\"Breakdown\"",
@@ -436,8 +433,7 @@
   {
    "fieldname": "plan_start_date",
    "fieldtype": "Date",
-   "label": "Plan Start Date",
-   "read_only": 1
+   "label": "Plan Start Date"
   },
   {
    "fieldname": "column_break_oaav",
@@ -446,8 +442,7 @@
   {
    "fieldname": "plan_end_date",
    "fieldtype": "Date",
-   "label": "Plan End Date",
-   "read_only": 1
+   "label": "Plan End Date"
   },
   {
    "fieldname": "column_break_jntw",
@@ -462,13 +457,21 @@
   {
    "fieldname": "task_allocation_id",
    "fieldtype": "Data",
-   "label": "Task Allocation Id"
+   "label": "Task Allocation Id",
+   "read_only": 1
+  },
+  {
+   "default": "Low",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "\nLow\nMedium\nHigh"
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-12 10:02:23.719234",
+ "modified": "2024-07-13 18:45:29.991273",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

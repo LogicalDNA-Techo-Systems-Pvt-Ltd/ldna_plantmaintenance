@@ -38,7 +38,10 @@
   "warranty_tab",
   "customer_warranty_section",
   "warranty_end_date",
-  "history_tab"
+  "history_tab",
+  "task_detail_section",
+  "task_detail_ct",
+  "material_moment_ct"
  ],
  "fields": [
   {
@@ -134,8 +137,7 @@
    "fieldname": "activity_group",
    "fieldtype": "Link",
    "label": "Activity Group",
-   "options": "Activity Group",
-   "reqd": 1
+   "options": "Activity Group"
   },
   {
    "fieldname": "description_of_technical_object",
@@ -229,24 +231,27 @@
    "label": "Name",
    "options": "Plant",
    "reqd": 1
+  },
+  {
+   "fieldname": "task_detail_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_detail_ct",
+   "fieldtype": "Table",
+   "label": "Task Detail",
+   "options": "Equipment Task Details CT"
+  },
+  {
+   "fieldname": "material_moment_ct",
+   "fieldtype": "Table",
+   "label": "Material Moment",
+   "options": "Equipment Material Moment CT"
   }
  ],
  "index_web_pages_for_search": 1,
-
- "links": [
-  {
-   "link_doctype": "Activity Group",
-   "link_fieldname": "name"
-  },
-  {
-   "link_doctype": "Task Allocation",
-   "link_fieldname": "name"
-  }
- ],
- "modified": "2024-07-03 10:12:47.660054",
  "links": [],
- "modified": "2024-07-02 18:12:03.891557",
-
+ "modified": "2024-07-14 16:02:49.449391",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
