@@ -464,6 +464,7 @@
   },
   {
    "default": "Low",
+   "depends_on": "eval:doc.type==\"Preventive\"",
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
@@ -476,16 +477,18 @@
    "label": "Acceptance Criteria For List"
   },
   {
+   "depends_on": "eval:doc.type==\"Preventive\"",
    "fieldname": "result",
    "fieldtype": "Select",
    "label": "Result",
-   "options": "\nPass\nFail"
+   "options": "\nPass\nFail",
+   "read_only": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-15 13:41:46.099907",
+ "modified": "2024-07-15 14:42:44.673943",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
