@@ -1,6 +1,3 @@
-// // Copyright (c) 2024, LogicalDNA and contributors
-// // For license information, please see license.txt
-
 frappe.ui.form.on('Task Detail', {
     after_save: function(frm){
         frappe.call({
@@ -63,7 +60,7 @@ frappe.ui.form.on('Task Detail', {
         let validationMessages = []; // Array to store validation messages
         let readingsCount = parseInt(frm.doc.readings); // Number of readings
         
-        if (frm.doc.parameter_type !== 'Binary' && frm.doc.parameter_type !== 'List' && (isNaN(readingsCount) || readingsCount < 1 || readingsCount > 10)) {
+        if (frm.doc.type !== 'Breakdown' && frm.doc.parameter_type !== 'Binary' && frm.doc.parameter_type !== 'List' && (isNaN(readingsCount) || readingsCount < 1 || readingsCount > 10)) {
             frappe.msgprint("Please specify a valid number of readings between 1 and 10.");
             frappe.validated = false; // Prevent form submission
             return;
@@ -135,6 +132,7 @@ frappe.ui.form.on('Task Detail', {
             frm.doc.result = 'Pass';
         }
     },
+    
     parameter_dropdown: function(frm) {
         let parameterDropdownValue = frm.doc.parameter_dropdown;
         let acceptanceCriteriaForList = frm.doc.acceptance_criteria_for_list;
@@ -187,6 +185,3 @@ function fetch_parameter_details(frm) {
         }
     });
 }
-
-
-
