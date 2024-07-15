@@ -132,6 +132,7 @@ frappe.ui.form.on('Task Detail', {
             frm.doc.result = 'Pass';
         }
     },
+    
     parameter_dropdown: function(frm) {
         let parameterDropdownValue = frm.doc.parameter_dropdown;
         let acceptanceCriteriaForList = frm.doc.acceptance_criteria_for_list;
