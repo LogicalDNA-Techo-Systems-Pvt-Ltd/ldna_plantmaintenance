@@ -15,7 +15,7 @@ class Parameter(Document):
                         self.number_of_readings = 0
 
 
-def update_activity_parameters(doc, method):
+def update_activity_parameter(doc, method):
     activities = frappe.get_all("Activity",  fields=['name'])
 
     for activity in activities:
@@ -26,6 +26,6 @@ def update_activity_parameters(doc, method):
             if param.parameter == doc.name:
                 updated = True
         
-        if updated:
+        if updated==True:
             activity_doc.save()
             
