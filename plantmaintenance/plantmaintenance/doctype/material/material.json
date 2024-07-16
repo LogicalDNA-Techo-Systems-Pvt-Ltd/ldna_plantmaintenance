@@ -5,10 +5,12 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "serial_no",
+  "batch_no",
   "material_code",
   "material_name",
-  "company_code",
   "column_break_ntat",
+  "company_code",
   "type_of_technical_object",
   "description_of_technical_object",
   "manufacturer_details_section",
@@ -82,11 +84,21 @@
    "fieldname": "material_serial_no",
    "fieldtype": "Data",
    "label": "Material Serial No"
+  },
+  {
+   "fieldname": "batch_no",
+   "fieldtype": "Data",
+   "label": "Batch No."
+  },
+  {
+   "fieldname": "serial_no",
+   "fieldtype": "Data",
+   "label": "Serial No."
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-11 17:53:36.892865",
+ "modified": "2024-07-15 13:47:20.732036",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",

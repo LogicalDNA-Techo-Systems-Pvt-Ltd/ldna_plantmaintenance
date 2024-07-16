@@ -122,6 +122,17 @@ frappe.ui.form.on('Equipment', {
 
         frm.get_field('task_detail_ct').grid.cannot_add_rows = true;
         frm.get_field('material_moment_ct').grid.cannot_add_rows = true;
-}
+},
+refresh: function(frm) {
+    if (!frm.is_new()) {
+        frm.add_custom_button(__('Activity Group'), function() {
+            frappe.new_doc('Activity Group');
+        }, __("Create"));
+    }
+},
 });
+
+
+
+
 
