@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{material_code}",
  "creation": "2024-07-10 10:09:49.614866",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -86,10 +87,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-11 17:53:36.892865",
+ "modified": "2024-07-15 17:36:58.252240",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
