@@ -7,9 +7,12 @@ def task_detail_permission(user):
     user_doc = frappe.get_doc("User", user)
     user_roles = [role.role for role in user_doc.roles]
 
-    user_work_center = frappe.get_doc("User Work Center", user)
-
-    user_work_centers = [wc.work_center for wc in user_work_center.work_center] if hasattr(user_work_center, 'work_center') else []
+    
+    if frappe.db.exists("User Work Center", user):
+        user_work_center = frappe.get_doc("User Work Center", user)
+        user_work_centers = [wc.work_center for wc in user_work_center.work_center] if hasattr(user_work_center, 'work_center') else []
+    else:
+        user_work_centers = []
 
     if 'Maintenance Manager' in user_roles:
         if user_work_centers:
