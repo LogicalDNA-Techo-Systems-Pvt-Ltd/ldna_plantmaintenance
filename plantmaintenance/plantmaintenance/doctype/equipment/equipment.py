@@ -70,5 +70,6 @@ def equipment_task_details(task_detail):
         detail.parameter = task_detail['parameter']
         detail.date = task_detail['creation']
         detail.status = task_detail['status']
+        detail.passfail = task_detail['result']
 
     equipment_doc.save()

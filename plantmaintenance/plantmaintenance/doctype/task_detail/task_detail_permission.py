@@ -1,8 +1,7 @@
-
-
 import frappe
 
 def task_detail_permission(user):
+
     if not user:
         user = frappe.session.user
 
@@ -17,6 +16,8 @@ def task_detail_permission(user):
         return """
         `tabTask Detail`.`assigned_to` = '{user}'
         """.format(user=user)
+    elif 'System Manager' in user_roles:
+        return "1 = 1"
     else:
         return "1 = 0"   
     

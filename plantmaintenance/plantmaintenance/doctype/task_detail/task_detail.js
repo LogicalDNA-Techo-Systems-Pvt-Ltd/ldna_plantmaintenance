@@ -1,6 +1,3 @@
-// // Copyright (c) 2024, LogicalDNA and contributors
-// // For license information, please see license.txt
-
 frappe.ui.form.on('Task Detail', {
     after_save: function(frm){
         frappe.call({
@@ -57,22 +54,96 @@ frappe.ui.form.on('Task Detail', {
     },
 
     before_save: function(frm) {
-        const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5', 'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
-    
-        fields.forEach(field => {
+        const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5', 
+                        'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
+        
+        let validationMessages = []; // Array to store validation messages
+        let readingsCount = parseInt(frm.doc.readings); // Number of readings
+        
+        if (frm.doc.type !== 'Breakdown' && frm.doc.parameter_type !== 'Binary' && frm.doc.parameter_type !== 'List' && (isNaN(readingsCount) || readingsCount < 1 || readingsCount > 10)) {
+            frappe.msgprint("Please specify a valid number of readings between 1 and 10.");
+            frappe.validated = false; // Prevent form submission
+            return;
+        }
+        
+        let hasValidationErrors = false; // Flag to indicate if there are validation errors
+        
+        // Loop through only the specified number of readings
+        for (let i = 0; i < readingsCount; i++) {
+            let field = fields[i];
+            
             if (frm.doc[field] !== undefined && frm.doc[field] !== null) {
                 let value = parseFloat(frm.doc[field]).toFixed(2);
-                let parts = value.split('.'); // Split the number into integer and decimal parts
-                if (parts[0].length > 4) {
-                    let field_label = frm.fields_dict[field].df.label; // Get the field label 
-                    frappe.msgprint(__("The value for {0} exceeds the maximum allowed digits before the decimal point.", [field_label]));
-                    frappe.validated = false; // Prevent form submission
-                } else {
-                    frm.doc[field] = value;
+                let numericValue = parseFloat(value);
+                let parameterType = frm.doc.parameter_type;
+                
+                if (parameterType === 'Numeric') {
+                    // Check if value falls within specified range
+                    let minRange = parseFloat(frm.doc.minimum_value);
+                    let maxRange = parseFloat(frm.doc.maximum_value);
+                    
+                    if (isNaN(minRange) || isNaN(maxRange)) {
+                        validationMessages.push("Please specify valid minimum and maximum values for numeric parameters.");
+                        hasValidationErrors = true;
+                        break;
+                    }
+                    
+                    if (numericValue < minRange || numericValue > maxRange) {
+                        validationMessages.push(
+                            `The value for ${frm.fields_dict[field].df.label} must be between ${minRange} and ${maxRange}.`
+                        );
+                        hasValidationErrors = true;
+                    }
+                } else if (parameterType === 'Binary') {
+                    if (frm.doc.acceptance_criteria === 'Yes' && numericValue === 0) {
+                        validationMessages.push(
+                            `The value for ${frm.fields_dict[field].df.label} must be 1 as per the acceptance criteria.`
+                        );
+                        hasValidationErrors = true;
+                    } else if (frm.doc.acceptance_criteria === 'No' && numericValue === 1) {
+                        validationMessages.push(
+                            `The value for ${frm.fields_dict[field].df.label} must be 0 as per the acceptance criteria.`
+                        );
+                        hasValidationErrors = true;
+                    }
                 }
             }
-        });
-    },    
+        }
+        
+        if (hasValidationErrors) {
+            // Set the result to 'Fail'
+            frm.doc.result = 'Fail';
+            
+            // Show validation messages
+            frappe.confirm(
+                validationMessages.join("<br>"),
+                function() {
+                    // Continue with form submission
+                    frappe.validated = true;
+                },
+                function() {
+                    // Cancel save action
+                    frappe.validated = false;
+                }
+                
+            );
+        }
+        else{
+            frm.doc.result = 'Pass';
+        }
+    },
+    
+    parameter_dropdown: function(frm) {
+        let parameterDropdownValue = frm.doc.parameter_dropdown;
+        let acceptanceCriteriaForList = frm.doc.acceptance_criteria_for_list;
+
+        if (acceptanceCriteriaForList && parameterDropdownValue !== acceptanceCriteriaForList) {
+            frm.doc.result = 'Fail';
+        }
+        else if (acceptanceCriteriaForList && parameterDropdownValue == acceptanceCriteriaForList) {
+            frm.doc.result = 'Pass';
+        }
+    },
 
     refresh: function(frm) {
         // Locate the 'Material Issued' child table in the 'Inventory' tab
@@ -114,5 +185,3 @@ function fetch_parameter_details(frm) {
         }
     });
 }
-
-
