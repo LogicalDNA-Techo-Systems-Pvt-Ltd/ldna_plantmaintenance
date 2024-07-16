@@ -5,7 +5,7 @@
    "label": "Task Breakdown"
   }
  ],
- "content": "[{\"id\":\"ZKEDdatOl4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"5RN9pkmt3Y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"nSMUDkfM9n\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"3bHjg2Xavy\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":6}},{\"id\":\"h4cVRvkO2y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Progress\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}},{\"id\":\"ZX1NEy25Za\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":3}}]",
+ "content": "[{\"id\":\"ZKEDdatOl4\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"5RN9pkmt3Y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"nSMUDkfM9n\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"3bHjg2Xavy\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":6}},{\"id\":\"h4cVRvkO2y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Progress\",\"col\":6}},{\"id\":\"m9oDFcj3xI\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":3}},{\"id\":\"RzbCnMEPFo\",\"type\":\"card\",\"data\":{\"card_name\":\"User Management\",\"col\":3}},{\"id\":\"7XBJ1xM4St\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}}]",
  "creation": "2024-05-30 14:42:49.121278",
  "custom_blocks": [],
  "docstatus": 0,
@@ -73,6 +73,16 @@
    "link_count": 0,
    "link_to": "Task Detail",
    "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Details",
+   "link_count": 0,
+   "link_to": "ToDo",
+   "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   },
@@ -179,24 +189,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Reports",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Task Details",
+   "label": "Material",
    "link_count": 0,
-   "link_to": "ToDo",
-   "link_type": "Report",
+   "link_to": "Material",
+   "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2024-07-13 22:23:12.547422",
+ "modified": "2024-07-16 17:36:10.314074",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Home",
