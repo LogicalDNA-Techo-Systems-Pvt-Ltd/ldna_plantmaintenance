@@ -154,7 +154,7 @@ frappe.ui.form.on('Task Detail', {
             frm.inventory_button_added = true;
 
             // Create the button with adjusted top margin
-            let button = $('<button class="btn btn-primary btn-xs" style="background-color: #eceff1; color: black; margin-top: -40px; margin-left: 90px;">Update Stock</button>')
+            let button = $('<button class="btn btn-primary btn-xs" style="margin-top: -40px; margin-left: 89%;">Update Stock</button>')
             
             // Append the button after the 'Add Row' button
             material_issued.grid.wrapper.find('.grid-footer').append(button);
