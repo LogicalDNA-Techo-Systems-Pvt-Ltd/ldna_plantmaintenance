@@ -138,6 +138,13 @@ override_doctype_class = {
 # 	}
 # }
 
+doc_events = {
+    "Parameter": {
+        "on_update": "plantmaintenance.plantmaintenance.doctype.parameter.parameter.update_activity_parameter"
+    }
+}
+
+
 # Scheduled Tasks
 # ---------------
 
@@ -158,6 +165,11 @@ override_doctype_class = {
 # 		"plantmaintenance.tasks.monthly"
 # 	],
 # }
+scheduler_events = {
+    "daily": [
+        "plantmaintenance.task_detail.update_task_status"
+    ]
+}
 
 # Testing
 # -------
@@ -234,7 +246,3 @@ override_doctype_class = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
-
-
-

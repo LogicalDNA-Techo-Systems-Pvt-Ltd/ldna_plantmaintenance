@@ -10,6 +10,7 @@
   "section_break_ptvd",
   "parameter",
   "parameter_type",
+  "acceptance_criteria_for_list",
   "values",
   "parameter_section",
   "minimum_value",
@@ -186,7 +187,7 @@
   {
    "fieldname": "require_time",
    "fieldtype": "Float",
-   "label": "Require Time",
+   "label": "Require Time (In Hours)",
    "reqd": 1
   },
   {
@@ -204,17 +205,37 @@
    "fieldtype": "Date",
    "label": "Date Of Year",
    "mandatory_depends_on": "eval:doc.frequency==\"Yearly\""
+  },
+  {
+   "depends_on": "eval:doc.parameter_type=='List'",
+   "fieldname": "acceptance_criteria_for_list",
+   "fieldtype": "Data",
+   "label": "Acceptance Criteria For List"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-04 10:03:07.791128",
+ "modified": "2024-07-16 12:50:28.805469",
+ 
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
  "naming_rule": "Expression",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Maintenance User",
+   "share": 1,
+   "write": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
