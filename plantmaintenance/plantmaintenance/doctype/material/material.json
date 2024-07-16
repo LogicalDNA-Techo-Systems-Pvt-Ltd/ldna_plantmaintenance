@@ -6,13 +6,12 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "serial_no",
-  "batch_no",
   "material_code",
   "material_name",
+  "serial_no",
+  "batch_no",
   "column_break_ntat",
   "company_code",
-  "type_of_technical_object",
   "description_of_technical_object",
   "manufacturer_details_section",
   "manufacturer_of_asset",
@@ -22,6 +21,42 @@
   "material_serial_no"
  ],
  "fields": [
+  {
+   "fieldname": "material_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Material Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "material_name",
+   "fieldtype": "Data",
+   "label": "Material Name"
+  },
+  {
+   "fieldname": "serial_no",
+   "fieldtype": "Data",
+   "label": "Serial No."
+  },
+  {
+   "fieldname": "batch_no",
+   "fieldtype": "Data",
+   "label": "Batch No."
+  },
+  {
+   "fieldname": "column_break_ntat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company_code",
+   "fieldtype": "Data",
+   "label": "Company Code"
+  },
+  {
+   "fieldname": "description_of_technical_object",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
   {
    "fieldname": "manufacturer_details_section",
    "fieldtype": "Section Break",
@@ -44,39 +79,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "material_code",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Material Code",
-   "reqd": 1
-  },
-  {
-   "fieldname": "material_name",
-   "fieldtype": "Data",
-   "label": "Material Name"
-  },
-  {
-   "fieldname": "company_code",
-   "fieldtype": "Data",
-   "label": "Company Code"
-  },
-  {
-   "fieldname": "column_break_ntat",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "type_of_technical_object",
-   "fieldtype": "Link",
-   "label": "Type Of Technical Object",
-   "options": "Equipment Type",
-   "reqd": 1
-  },
-  {
-   "fieldname": "description_of_technical_object",
-   "fieldtype": "Small Text",
-   "label": "Description Of Technical Object"
-  },
-  {
    "fieldname": "material_model_number",
    "fieldtype": "Data",
    "label": "Material Model Number"
@@ -85,21 +87,11 @@
    "fieldname": "material_serial_no",
    "fieldtype": "Data",
    "label": "Material Serial No"
-  },
-  {
-   "fieldname": "batch_no",
-   "fieldtype": "Data",
-   "label": "Batch No."
-  },
-  {
-   "fieldname": "serial_no",
-   "fieldtype": "Data",
-   "label": "Serial No."
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-15 17:36:58.252240",
+ "modified": "2024-07-16 17:58:30.825133",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",
