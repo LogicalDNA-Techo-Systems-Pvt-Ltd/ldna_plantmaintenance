@@ -240,7 +240,8 @@
    "fieldname": "task_detail_ct",
    "fieldtype": "Table",
    "label": "Task Detail",
-   "options": "Equipment Task Details CT"
+   "options": "Equipment Task Details CT",
+   "read_only": 1
   },
   {
    "fieldname": "material_moment_ct",
@@ -251,7 +252,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-14 16:02:49.449391",
+ "modified": "2024-07-16 11:06:50.841260",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
