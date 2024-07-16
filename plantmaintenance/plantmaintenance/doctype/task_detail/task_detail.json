@@ -23,16 +23,19 @@
   "section_break_pnvh",
   "activity",
   "minimum_value",
-  "acceptance_criteria",
   "parameter_dropdown",
+  "result",
   "values",
   "column_break_rnng",
   "parameter",
   "maximum_value",
+  "acceptance_criteria_for_list",
+  "acceptance_criteria",
   "column_break_scrc",
   "parameter_type",
   "readings",
   "frequency",
+  "actual_value",
   "section_break_mpil",
   "column_break_limp",
   "reading_1",
@@ -74,7 +77,8 @@
   "inventory_tab",
   "material_issued",
   "material_returned",
-  "attach_image"
+  "attach_image",
+  "amended_from"
  ],
  "fields": [
   {
@@ -150,10 +154,8 @@
   {
    "fieldname": "assigned_to",
    "fieldtype": "Text",
-   "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Assigned To",
-   "options": "User"
+   "label": "Assigned To"
   },
   {
    "fieldname": "section_break_pnvh",
@@ -186,7 +188,7 @@
    "fieldname": "acceptance_criteria",
    "fieldtype": "Select",
    "label": "Acceptance Criteria",
-   "options": "Yes\nNo"
+   "options": "\nYES\nNO"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"List\"",
@@ -251,19 +253,22 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_1",
    "fieldtype": "Float",
-   "label": "Reading 1"
+   "label": "Reading 1",
+   "precision": "2"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_5",
    "fieldtype": "Float",
-   "label": "Reading 5"
+   "label": "Reading 5",
+   "precision": "2"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_9",
    "fieldtype": "Float",
-   "label": "Reading 9"
+   "label": "Reading 9",
+   "precision": "2"
   },
   {
    "fieldname": "column_break_bwer",
@@ -273,19 +278,22 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_2",
    "fieldtype": "Float",
-   "label": "Reading 2"
+   "label": "Reading 2",
+   "precision": "2"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_6",
    "fieldtype": "Float",
-   "label": "Reading 6"
+   "label": "Reading 6",
+   "precision": "2"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_10",
    "fieldtype": "Float",
-   "label": "Reading 10"
+   "label": "Reading 10",
+   "precision": "2"
   },
   {
    "fieldname": "column_break_cjxn",
@@ -295,13 +303,15 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_3",
    "fieldtype": "Float",
-   "label": "Reading 3"
+   "label": "Reading 3",
+   "precision": "2"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_7",
    "fieldtype": "Float",
-   "label": "Reading 7"
+   "label": "Reading 7",
+   "precision": "2"
   },
   {
    "fieldname": "column_break_vomc",
@@ -311,13 +321,15 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_4",
    "fieldtype": "Float",
-   "label": "Reading 4"
+   "label": "Reading 4",
+   "precision": "2"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "reading_8",
    "fieldtype": "Float",
-   "label": "Reading 8"
+   "label": "Reading 8",
+   "precision": "2"
   },
   {
    "fieldname": "section_break_oufx",
@@ -326,8 +338,7 @@
   {
    "fieldname": "actual_start_date",
    "fieldtype": "Date",
-   "label": "Actual Start Date",
-   "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
+   "label": "Actual Start Date"
   },
   {
    "fieldname": "column_break_wphi",
@@ -336,8 +347,7 @@
   {
    "fieldname": "actual_end_date",
    "fieldtype": "Date",
-   "label": "Actual End Date",
-   "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
+   "label": "Actual End Date"
   },
   {
    "fieldname": "column_break_ruot",
@@ -346,8 +356,7 @@
   {
    "fieldname": "actual_time_taken",
    "fieldtype": "Float",
-   "label": "Actual Time Taken",
-   "mandatory_depends_on": "eval:doc.type!=\"Breakdown\""
+   "label": "Actual Time Taken (In Hours)"
   },
   {
    "fieldname": "section_break_ubjt",
@@ -421,7 +430,7 @@
    "fieldname": "material_returned",
    "fieldtype": "Table",
    "label": "Material Returned",
-   "options": "Material Remark"
+   "options": "Material Returned CT"
   },
   {
    "fieldname": "attach_image",
@@ -453,7 +462,7 @@
   {
    "fieldname": "require_time",
    "fieldtype": "Float",
-   "label": "Required Time",
+   "label": "Required Time (In Hours)",
    "read_only": 1
   },
   {
@@ -464,16 +473,51 @@
   },
   {
    "default": "Low",
+   "depends_on": "eval:doc.type==\"Preventive\"",
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
    "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"List\"",
+   "fieldname": "acceptance_criteria_for_list",
+   "fieldtype": "Data",
+   "label": "Acceptance Criteria For List",
+   "read_only": 1
+  },
+  {
+   "default": "Pass",
+   "depends_on": "eval:doc.type==\"Preventive\"",
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "label": "Result",
+   "options": "\nPass\nFail",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"Binary\"",
+   "fieldname": "actual_value",
+   "fieldtype": "Select",
+   "label": "Actual Value",
+   "options": "\nYES\nNO"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Task Detail",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-07-13 18:45:29.991273",
+ "modified": "2024-07-16 17:18:00.610222",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

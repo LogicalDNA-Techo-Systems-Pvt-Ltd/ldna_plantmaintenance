@@ -11,7 +11,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
-# app_include_js = "apps/plantmaintenance/plantmaintenance/public/js/custom_desk.js"
+app_include_js = "/assets/plantmaintenance/js/workspace.js"
 
 # include js, css files in header of web template
 # web_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
@@ -165,6 +165,11 @@ doc_events = {
 # 		"plantmaintenance.tasks.monthly"
 # 	],
 # }
+scheduler_events = {
+    "daily": [
+        "plantmaintenance.task_detail.update_task_status"
+    ]
+}
 
 # Testing
 # -------
@@ -241,7 +246,3 @@ doc_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
-
-
-

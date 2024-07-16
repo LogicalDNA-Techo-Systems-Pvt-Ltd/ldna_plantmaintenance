@@ -1,10 +1,4 @@
 
-
-  
-
-
-
-
 import frappe
 
 def task_detail_permission(user):
@@ -37,8 +31,5 @@ def task_detail_permission(user):
             return """
             (`tabTask Detail`.`assigned_to` = '{user}' OR `tabTask Detail`.`assigned_to` IS NULL)
             """.format(user=user)
-    
-
-    
-
+ 
  

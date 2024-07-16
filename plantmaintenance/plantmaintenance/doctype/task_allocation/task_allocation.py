@@ -5,15 +5,14 @@ from frappe.utils import nowdate, getdate, add_days, add_years
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from io import BytesIO
-from datetime import timedelta, datetime
+from datetime import date, timedelta, datetime
 from dateutil.relativedelta import relativedelta
 import calendar
 import os
 import openpyxl
 from dateutil.relativedelta import relativedelta
-from datetime import timedelta
 from datetime import datetime, timedelta
-import uuid
+
 
 class TaskAllocation(Document):
     def on_update(self):
@@ -38,6 +37,10 @@ class TaskAllocation(Document):
         require_time_hours = parameter_info.get('require_time')
         plan_end_date = (datetime.strptime(plan_start_date, '%Y-%m-%d') + timedelta(hours=require_time_hours)).strftime('%Y-%m-%d %H:%M:%S')
 
+        status = "Open"
+        if getdate(plan_end_date) < getdate(nowdate()):
+            status = "Overdue"
+
         task_detail = frappe.new_doc("Task Detail")
         task_detail.update({
             "unique_key": detail.unique_key,
@@ -58,6 +61,10 @@ class TaskAllocation(Document):
             "require_time": parameter_info.get('require_time'),
             "values": ",".join(parameter_info.get('values', [])) if parameter_info.get('values') else None,
             "priority": detail.priority,
+            "status": status,
+            "acceptance_criteria_for_list": parameter_info.get('acceptance_criteria_for_list'),
+            "acceptance_criteria": parameter_info.get('acceptance_criteria'),
+
         })
         task_detail.insert(ignore_permissions=True)
 
@@ -70,6 +77,11 @@ class TaskAllocation(Document):
         if task_detail_doc.priority != detail.priority:
             task_detail_doc.priority = detail.priority
             has_changes = True
+
+        if getdate(task_detail_doc.plan_end_date) < getdate(nowdate()):
+            task_detail_doc.status = "Overdue"
+            has_changes = True
+
         if has_changes:
             task_detail_doc.save(ignore_permissions=True)
 
@@ -77,6 +89,8 @@ class TaskAllocation(Document):
         parameter_doc = frappe.get_doc("Parameter", {"parameter": parameter})
         parameter_info = {
             "require_time": parameter_doc.require_time,
+            "acceptance_criteria_for_list": parameter_doc.acceptance_criteria_for_list,            
+            "acceptance_criteria": parameter_doc.acceptance_criteria,
             "parameter_type": parameter_doc.parameter_type,
             "minimum_value": parameter_doc.minimum_value if parameter_doc.parameter_type == "Numeric" else None,
             "maximum_value": parameter_doc.maximum_value if parameter_doc.parameter_type == "Numeric" else None,
@@ -179,7 +193,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     end_date = getdate(end_date) if end_date else getdate(setting_doc.end_date)
 
     if not (start_date <= today_date <= end_date):
-        return frappe.msgprint(("please ensure that today date is between start date and end date"))
+        return frappe.msgprint("Please ensure today's date is between the start date and end date.")
 
     tasks = []
     for equipment in equipment_list:
@@ -190,7 +204,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
             parameters = frappe.get_all('Parameter CT', filters={'parent': activity.activity}, fields=[
                 'parameter', 'frequency', 'day_of_month', 'monday', 'tuesday', 'wednesday',
-                'thursday', 'friday', 'saturday', 'sunday'
+                'thursday', 'friday', 'saturday', 'sunday', 'date_of_year'
             ])
 
             for parameter in parameters:
@@ -237,7 +251,10 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     dates = [current_date + relativedelta(months=i) for i in range(6) if today_date <= current_date + relativedelta(months=i) <= end_date]
 
                 elif frequency == 'Yearly':
-                    dates = [add_years(today_date, i) for i in range(1) if today_date <= add_years(today_date, i) <= end_date]
+                    date_of_year = getdate(parameter.date_of_year)
+                    if start_date <= date_of_year <= end_date:
+                        years_range = range(today_date.year, end_date.year + 1)
+                        dates = [date_of_year.replace(year=year) for year in years_range]
 
                 for date in dates:
                     date_obj = getdate(date)
@@ -262,7 +279,6 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     tasks.append(task)
 
     return tasks
-
 
 
 @frappe.whitelist()

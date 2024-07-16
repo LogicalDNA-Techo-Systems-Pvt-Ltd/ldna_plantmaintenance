@@ -9,7 +9,7 @@
   "item_details_section",
   "equipment_code",
   "equipment_name",
-  "description_of_technical_object",
+  "description",
   "column_break_bfyn",
   "equipment_group",
   "activity_group",
@@ -49,57 +49,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "column_break_bfyn",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "manufacturer_data_section",
-   "fieldtype": "Section Break",
-   "label": "Manufacturer Details"
-  },
-  {
-   "fieldname": "column_break_zgul",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "plant_tab",
-   "fieldtype": "Tab Break",
-   "label": "Plant"
-  },
-  {
-   "fieldname": "warranty_tab",
-   "fieldtype": "Tab Break",
-   "label": "Warranty "
-  },
-  {
-   "fieldname": "customer_warranty_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "plant_details_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval: doc.plant",
-   "fieldname": "location",
-   "fieldtype": "Link",
-   "label": "Location",
-   "mandatory_depends_on": "eval:doc.name1",
-   "options": "Location"
-  },
-  {
-   "fieldname": "column_break_zbco",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.plant",
-   "fieldname": "work_center",
-   "fieldtype": "Link",
-   "label": "Work center",
-   "mandatory_depends_on": "eval:doc.name1",
-   "options": "Work Center"
-  },
-  {
    "fieldname": "equipment_code",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -115,11 +64,26 @@
    "length": 50
   },
   {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description "
+  },
+  {
+   "fieldname": "column_break_bfyn",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "equipment_group",
    "fieldtype": "Link",
    "label": "Equipment Group",
    "mandatory_depends_on": "eval:doc.equipment_code",
    "options": "Equipment  Group"
+  },
+  {
+   "fieldname": "activity_group",
+   "fieldtype": "Link",
+   "label": "Activity Group",
+   "options": "Activity Group"
   },
   {
    "default": "0",
@@ -134,48 +98,9 @@
    "label": "On Scrap"
   },
   {
-   "fieldname": "activity_group",
-   "fieldtype": "Link",
-   "label": "Activity Group",
-   "options": "Activity Group"
-  },
-  {
-   "fieldname": "description_of_technical_object",
-   "fieldtype": "Small Text",
-   "label": "Description "
-  },
-  {
-   "fieldname": "damage_and_causes_tab",
-   "fieldtype": "Tab Break",
-   "label": "Damages  And Causes"
-  },
-  {
-   "fieldname": "damage",
-   "fieldtype": "Table MultiSelect",
-   "label": "Damages",
-   "options": "Damage CT"
-  },
-  {
-   "fieldname": "cause",
-   "fieldtype": "Table MultiSelect",
-   "label": "Causes",
-   "options": "Cause CT"
-  },
-  {
-   "fieldname": "equipment_model_number",
-   "fieldtype": "Data",
-   "label": "Equipment Model Number",
-   "length": 50
-  },
-  {
-   "fieldname": "equipment_serial_no",
-   "fieldtype": "Data",
-   "label": "Equipment Serial No",
-   "length": 50
-  },
-  {
-   "fieldname": "column_break_ikhp",
-   "fieldtype": "Column Break"
+   "fieldname": "manufacturer_data_section",
+   "fieldtype": "Section Break",
+   "label": "Manufacturer Details"
   },
   {
    "fieldname": "manufacturer_of_asset",
@@ -190,9 +115,36 @@
    "options": "Country"
   },
   {
-   "fieldname": "warranty_end_date",
-   "fieldtype": "Date",
-   "label": "Warranty End Date"
+   "fieldname": "column_break_zgul",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment_model_number",
+   "fieldtype": "Data",
+   "label": "Equipment Model Number",
+   "length": 50
+  },
+  {
+   "fieldname": "equipment_serial_no",
+   "fieldtype": "Data",
+   "label": "Equipment Serial No",
+   "length": 50
+  },
+  {
+   "fieldname": "plant_tab",
+   "fieldtype": "Tab Break",
+   "label": "Plant"
+  },
+  {
+   "fieldname": "plant_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "label": "Name",
+   "options": "Plant",
+   "reqd": 1
   },
   {
    "depends_on": "eval:doc.plant",
@@ -201,6 +153,55 @@
    "label": "Functional Location",
    "mandatory_depends_on": "eval:doc.name1",
    "options": "Functional Location"
+  },
+  {
+   "depends_on": "eval: doc.plant",
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "label": "Work center",
+   "mandatory_depends_on": "eval:doc.name1",
+   "options": "Work Center"
+  },
+  {
+   "fieldname": "column_break_zbco",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.plant",
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "mandatory_depends_on": "eval:doc.name1",
+   "options": "Location"
+  },
+  {
+   "depends_on": "eval: doc.plant",
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "mandatory_depends_on": "eval:doc.name1",
+   "options": "Section"
+  },
+  {
+   "fieldname": "damage_and_causes_tab",
+   "fieldtype": "Tab Break",
+   "label": "Damages  And Causes"
+  },
+  {
+   "fieldname": "damage",
+   "fieldtype": "Table MultiSelect",
+   "label": "Damages",
+   "options": "Damage CT"
+  },
+  {
+   "fieldname": "column_break_ikhp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cause",
+   "fieldtype": "Table MultiSelect",
+   "label": "Causes",
+   "options": "Cause CT"
   },
   {
    "fieldname": "guarantee_tab",
@@ -213,24 +214,23 @@
    "label": "Guarantee Date"
   },
   {
+   "fieldname": "warranty_tab",
+   "fieldtype": "Tab Break",
+   "label": "Warranty "
+  },
+  {
+   "fieldname": "customer_warranty_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "warranty_end_date",
+   "fieldtype": "Date",
+   "label": "Warranty End Date"
+  },
+  {
    "fieldname": "history_tab",
    "fieldtype": "Tab Break",
    "label": "History"
-  },
-  {
-   "depends_on": "eval: doc.plant",
-   "fieldname": "section",
-   "fieldtype": "Link",
-   "label": "Section",
-   "mandatory_depends_on": "eval:doc.name1",
-   "options": "Section"
-  },
-  {
-   "fieldname": "plant",
-   "fieldtype": "Link",
-   "label": "Name",
-   "options": "Plant",
-   "reqd": 1
   },
   {
    "fieldname": "task_detail_section",
@@ -240,7 +240,8 @@
    "fieldname": "task_detail_ct",
    "fieldtype": "Table",
    "label": "Task Detail",
-   "options": "Equipment Task Details CT"
+   "options": "Equipment Task Details CT",
+   "read_only": 1
   },
   {
    "fieldname": "material_moment_ct",
@@ -251,7 +252,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-14 16:02:49.449391",
+ "modified": "2024-07-16 11:06:50.841260",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",

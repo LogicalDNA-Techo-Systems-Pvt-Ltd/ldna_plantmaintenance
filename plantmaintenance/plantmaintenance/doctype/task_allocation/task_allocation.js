@@ -18,10 +18,12 @@ frappe.ui.form.on('Task Allocation', {
             frm.custom_buttons_created = true;
         }
     },
-
     plant: function (frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
+            frm.set_value('functional_location', '');
+            frm.set_value('plant_section', '');
+            frm.set_value('work_center', '');
             frappe.call({
                 method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_location_list_based_on_plant',
                 args: {
@@ -41,11 +43,18 @@ frappe.ui.form.on('Task Allocation', {
                     }
                 }
             });
+        } else {
+            frm.set_value('location', '');
+            frm.set_value('functional_location', '');
+            frm.set_value('plant_section', '');
+            frm.set_value('work_center', '');
         }
     },
     location: function (frm) {
         if (frm.doc.location) {
             frm.set_value('functional_location', '');
+            frm.set_value('plant_section', '');
+            frm.set_value('work_center', '');
             frappe.call({
                 method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_functional_location_list_based_on_location',
                 args: {
@@ -65,11 +74,16 @@ frappe.ui.form.on('Task Allocation', {
                     }
                 }
             });
+        } else {
+            frm.set_value('functional_location', '');
+            frm.set_value('plant_section', '');
+            frm.set_value('work_center', '');
         }
     },
     functional_location: function (frm) {
         if (frm.doc.functional_location) {
             frm.set_value('plant_section', '');
+            frm.set_value('work_center', '');
             frappe.call({
                 method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_func_location',
                 args: {
@@ -89,6 +103,9 @@ frappe.ui.form.on('Task Allocation', {
                     }
                 }
             });
+        } else {
+            frm.set_value('plant_section', '');
+            frm.set_value('work_center', '');
         }
     },
     plant_section: function (frm) {
@@ -113,8 +130,11 @@ frappe.ui.form.on('Task Allocation', {
                     }
                 }
             });
+        } else {
+            frm.set_value('work_center', '');
         }
     }
+
 
 });
 
