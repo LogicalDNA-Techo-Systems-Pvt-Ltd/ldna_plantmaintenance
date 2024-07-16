@@ -63,6 +63,8 @@ class TaskAllocation(Document):
             "priority": detail.priority,
             "status": status,
             "acceptance_criteria_for_list": parameter_info.get('acceptance_criteria_for_list'),
+            "acceptance_criteria": parameter_info.get('acceptance_criteria'),
+
         })
         task_detail.insert(ignore_permissions=True)
 
@@ -87,7 +89,8 @@ class TaskAllocation(Document):
         parameter_doc = frappe.get_doc("Parameter", {"parameter": parameter})
         parameter_info = {
             "require_time": parameter_doc.require_time,
-            "acceptance_criteria_for_list": parameter_doc.acceptance_criteria_for_list,
+            "acceptance_criteria_for_list": parameter_doc.acceptance_criteria_for_list,            
+            "acceptance_criteria": parameter_doc.acceptance_criteria,
             "parameter_type": parameter_doc.parameter_type,
             "minimum_value": parameter_doc.minimum_value if parameter_doc.parameter_type == "Numeric" else None,
             "maximum_value": parameter_doc.maximum_value if parameter_doc.parameter_type == "Numeric" else None,
