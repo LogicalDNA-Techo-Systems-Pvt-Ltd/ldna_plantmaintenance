@@ -175,7 +175,8 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Parameter Type",
-   "options": "\nBinary\nNumeric\nList"
+   "options": "\nBinary\nNumeric\nList",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"\neval:doc.type!=\"Breakdown\"",
@@ -519,7 +520,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-17 14:48:59.517636",
+ "modified": "2024-07-17 16:59:56.914193",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
