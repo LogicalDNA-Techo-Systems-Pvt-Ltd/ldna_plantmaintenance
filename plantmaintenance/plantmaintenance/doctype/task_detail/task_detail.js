@@ -95,12 +95,12 @@ frappe.ui.form.on('Task Detail', {
                         hasValidationErrors = true;
                     }
                 } else if (parameterType === 'Binary') {
-                    if (frm.doc.acceptance_criteria === 'Yes' && numericValue === 0) {
+                    if (frm.doc.acceptance_criteria === 'YES' && numericValue === 0) {
                         validationMessages.push(
                             `The value for ${frm.fields_dict[field].df.label} must be 1 as per the acceptance criteria.`
                         );
                         hasValidationErrors = true;
-                    } else if (frm.doc.acceptance_criteria === 'No' && numericValue === 1) {
+                    } else if (frm.doc.acceptance_criteria === 'NO' && numericValue === 1) {
                         validationMessages.push(
                             `The value for ${frm.fields_dict[field].df.label} must be 0 as per the acceptance criteria.`
                         );
@@ -185,3 +185,5 @@ function fetch_parameter_details(frm) {
         }
     });
 }
+
+
