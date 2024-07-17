@@ -57,19 +57,67 @@ def get_work_center_based_on_section(section):
         return work_center
     return []
 
+# @frappe.whitelist()
+# def equipment_task_details(task_detail):
+#     task_detail = json.loads(task_detail)
+
+#     equipment_doc = frappe.get_doc("Equipment",task_detail['equipment_code'])
+#     task_detail_doc = frappe.get_doc("Task Detail", task_detail['name'])
+#     if equipment_doc:
+#         detail = equipment_doc.append("task_detail_ct",{})
+#         detail.task = task_detail['name']
+#         detail.parameter = task_detail['parameter']
+#         detail.date = task_detail['creation']
+#         detail.status = task_detail['status']
+#         detail.passfail = task_detail['result']
+        
+#     if task_detail_doc.material_returned:
+#             material_returned = task_detail_doc.get("material_returned", [])
+#             print("material returned",material_returned)
+#             if material_returned:
+#                 for material_issue in material_returned:
+#                     print(material_issue.material_name)
+#                     print(material_issue.type)
+#                     print(material_issue.issue_quantity)
+#                     detail = equipment_doc.append("material_moment_ct", {})
+#                     detail.material_type = material_issue.type
+#                     detail.material_name = material_issue.material_code
+#                     detail.date = task_detail['creation']
+#                     detail.quantity = material_issue.issue_quantity
+
+#     equipment_doc.save()
+
 
 @frappe.whitelist()
 def equipment_task_details(task_detail):
     task_detail = json.loads(task_detail)
 
-    equipment_doc = frappe.get_doc("Equipment",task_detail['equipment_code'])
-
+    equipment_doc = frappe.get_doc("Equipment", task_detail['equipment_code'])
+    task_detail_doc = frappe.get_doc("Task Detail", task_detail['name'])
+    
     if equipment_doc:
-        detail = equipment_doc.append("task_detail_ct",{})
-        detail.task = task_detail['name']
-        detail.parameter = task_detail['parameter']
-        detail.date = task_detail['creation']
-        detail.status = task_detail['status']
-        detail.passfail = task_detail['result']
+        task_exists = any(d.task == task_detail['name'] for d in equipment_doc.task_detail_ct)
+        
+        if not task_exists:
+            detail = equipment_doc.append("task_detail_ct", {})
+            detail.task = task_detail['name']
+            detail.parameter = task_detail['parameter']
+            detail.date = task_detail['creation']
+            detail.status = task_detail['status']
+            detail.passfail = task_detail['result']
+            
+    if task_detail_doc.material_returned:
+            material_returned = task_detail_doc.get("material_returned", [])
+            print("material returned",material_returned)
+            if material_returned:
+                for material_issue in material_returned:
+                    print(material_issue.material_name)
+                    print(material_issue.type)
+                    print(material_issue.issue_quantity)
+                    detail = equipment_doc.append("material_moment_ct", {})
+                    detail.material_type = material_issue.type
+                    detail.material_name = material_issue.material_code
+                    detail.date = task_detail['creation']
+                    detail.quantity = material_issue.issue_quantity
 
     equipment_doc.save()
