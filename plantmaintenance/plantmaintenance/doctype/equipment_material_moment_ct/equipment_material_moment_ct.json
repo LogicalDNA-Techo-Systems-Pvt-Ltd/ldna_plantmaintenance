@@ -6,9 +6,9 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "material_name",
   "material_type",
   "date",
-  "material",
   "quantity"
  ],
  "fields": [
@@ -17,7 +17,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Material Type",
-   "options": "Request\nIssue\nReturn"
+   "options": "\nScrap\nReusable"
   },
   {
    "fieldname": "date",
@@ -26,23 +26,23 @@
    "label": "Date"
   },
   {
-   "fieldname": "material",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Material",
-   "options": "Material"
-  },
-  {
    "fieldname": "quantity",
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Quantity"
+  },
+  {
+   "fieldname": "material_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Material Name",
+   "options": "Material"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-11 17:53:55.649277",
+ "modified": "2024-07-17 12:30:30.729337",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment Material Moment CT",
