@@ -13,19 +13,48 @@
    "label": "Overdue Task"
   }
  ],
- "content": "[{\"id\":\"lPszDIiymE\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Created\",\"col\":12}},{\"id\":\"0qZ_EAiLqz\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Completed Task\",\"col\":12}},{\"id\":\"x_k5R7Q1Ey\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Overdue Task\",\"col\":12}},{\"id\":\"HOFdEglaYS\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Task for Approval\",\"col\":6}},{\"id\":\"hsBVsREZK1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Equipment\",\"col\":6}},{\"id\":\"Z_Mvk9dOZK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Task\",\"col\":6}},{\"id\":\"1zMKU2ovyV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Activity\",\"col\":6}},{\"id\":\"ME9-Hq7iVR\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"WtoWBzi2mR\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
- "creation": "2024-07-12 22:43:02.075733",
+ "content": "[{\"id\":\"lPszDIiymE\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Created\",\"col\":12}},{\"id\":\"0qZ_EAiLqz\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Completed Task\",\"col\":12}},{\"id\":\"x_k5R7Q1Ey\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Overdue Task\",\"col\":12}},{\"id\":\"HOFdEglaYS\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Task for Approval\",\"col\":6}},{\"id\":\"hsBVsREZK1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Equipment\",\"col\":6}},{\"id\":\"Z_Mvk9dOZK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Task\",\"col\":6}},{\"id\":\"1zMKU2ovyV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Activity\",\"col\":6}},{\"id\":\"d1m_FYvzBQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"b2tkH7XVuc\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
+ "creation": "2024-07-16 11:54:04.298671",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
  "icon": "",
- "idx": 0,
+ "idx": 1,
  "indicator_color": "gray",
  "is_hidden": 0,
  "label": "System Workspace",
  "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transactions",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Setting",
+   "link_count": 0,
+   "link_to": "Setting",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Workflow",
+   "link_count": 0,
+   "link_to": "Workflow",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
   {
    "hidden": 0,
    "is_query_report": 0,
@@ -42,17 +71,17 @@
    "link_count": 0,
    "link_to": "Equipment",
    "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Equipment  Group",
+   "label": "Equipment Group",
    "link_count": 0,
    "link_to": "Equipment  Group",
    "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
@@ -62,7 +91,7 @@
    "link_count": 0,
    "link_to": "Activity Group",
    "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
@@ -72,7 +101,7 @@
    "link_count": 0,
    "link_to": "Activity",
    "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
@@ -82,17 +111,7 @@
    "link_count": 0,
    "link_to": "Parameter",
    "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Breakdown Reason",
-   "link_count": 0,
-   "link_to": "Breakdown Reason",
-   "link_type": "DocType",
-   "onboard": 1,
+   "onboard": 0,
    "type": "Link"
   },
   {
@@ -108,34 +127,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Transactions",
-   "link_count": 2,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Settings",
+   "label": "Material",
    "link_count": 0,
-   "link_to": "Setting",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Workflow",
-   "link_count": 0,
-   "link_to": "Workflow",
+   "link_to": "Material",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2024-07-15 12:34:38.697680",
+ "modified": "2024-07-17 10:04:37.048492",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "System Workspace",
@@ -169,7 +169,7 @@
    "role": "Administrator"
   }
  ],
- "sequence_id": 9.0,
+ "sequence_id": 1.0,
  "shortcuts": [],
  "title": "System Workspace"
 }
