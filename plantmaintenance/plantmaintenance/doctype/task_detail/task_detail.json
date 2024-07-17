@@ -24,18 +24,18 @@
   "activity",
   "minimum_value",
   "parameter_dropdown",
+  "acceptance_criteria",
   "result",
   "values",
   "column_break_rnng",
   "parameter",
   "maximum_value",
   "acceptance_criteria_for_list",
-  "acceptance_criteria",
+  "actual_value",
   "column_break_scrc",
   "parameter_type",
   "readings",
   "frequency",
-  "actual_value",
   "section_break_mpil",
   "column_break_limp",
   "reading_1",
@@ -188,7 +188,8 @@
    "fieldname": "acceptance_criteria",
    "fieldtype": "Select",
    "label": "Acceptance Criteria",
-   "options": "\nYES\nNO"
+   "options": "\nYES\nNO",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.parameter_type==\"List\"",
@@ -498,7 +499,7 @@
    "depends_on": "eval:doc.parameter_type==\"Binary\"",
    "fieldname": "actual_value",
    "fieldtype": "Select",
-   "label": "Actual Value",
+   "label": "Actual Criteria",
    "options": "\nYES\nNO"
   },
   {
@@ -516,7 +517,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-17 10:39:58.932913",
+ "modified": "2024-07-17 14:32:50.461867",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
