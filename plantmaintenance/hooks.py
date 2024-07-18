@@ -165,11 +165,22 @@ doc_events = {
 # 		"plantmaintenance.tasks.monthly"
 # 	],
 # }
-scheduler_events = {
-    "daily": [
-        "plantmaintenance.task_detail.update_task_status"
-    ]
-}
+
+
+# scheduler_events = {
+#     "daily": [
+#         "plantmaintenance.task_detail.update_task_status"
+#     ]
+# }
+
+# scheduler_events = {
+#     "cron": {
+#         "1 * * * *": [
+#             "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_task_status"
+#         ]
+#     }
+# }
+
 
 # Testing
 # -------

@@ -24,10 +24,10 @@ class TaskDetail(Document):
         if self.actual_start_date and getdate(self.actual_start_date) < getdate(nowdate()):
             frappe.throw("Actual Start Date should be greater than or equal to the current date.")
 
-    def update_task_status():
+        self.update_task_status()
+   
+    def update_task_status(self):
         today = getdate(nowdate())
-        overdue_tasks = frappe.get_all("Task Detail", filters={"plan_end_date": ["<", today], "status": ["not in", ["Complete", "Overdue"]]}, fields=["name"])
-        for task in overdue_tasks:
-            frappe.db.set_value("Task Detail", task.name, "status", "Overdue")
-        frappe.db.commit()
+        if self.plan_end_date and getdate(self.plan_end_date) < today:
+            self.status = 'Overdue'
 
