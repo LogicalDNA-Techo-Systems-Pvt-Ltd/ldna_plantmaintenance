@@ -9,23 +9,27 @@
  "dynamic_filters_json": "[]",
  "filters_json": "[[\"Task Detail\",\"status\",\"=\",\"Overdue\",false]]",
  "group_by_type": "Count",
- "idx": 6,
+ "idx": 20,
  "is_public": 0,
  "is_standard": 1,
- "last_synced_on": "2024-07-14 15:43:44.595435",
- "modified": "2024-07-14 15:48:57.856655",
+ "last_synced_on": "2024-07-18 11:14:12.803918",
+ "modified": "2024-07-18 11:17:07.592793",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Overdue Task",
  "number_of_groups": 0,
  "owner": "Administrator",
  "parent_document_type": "",
- "roles": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
  "source": "",
  "time_interval": "Daily",
  "timeseries": 1,
  "timespan": "Last Week",
- "type": "Line",
+ "type": "Bar",
  "use_report_chart": 0,
  "value_based_on": "",
  "y_axis": []
