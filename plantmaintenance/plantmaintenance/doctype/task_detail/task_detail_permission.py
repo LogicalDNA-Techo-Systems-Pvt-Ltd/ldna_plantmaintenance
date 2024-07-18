@@ -18,11 +18,11 @@ def task_detail_permission(user):
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
-            (`tabTask Detail`.`approver` = '{user}') AND (`tabTask Detail`.`work_center` IN ({work_centers_condition}))
+            (`tabTask Detail`.`approver` = '{user}' OR `tabTask Detail`.`approver` IS NULL) AND (`tabTask Detail`.`work_center` IN ({work_centers_condition}))
             """.format(user=user, work_centers_condition=work_centers_condition)
         else:
             return """
-            (`tabTask Detail`.`approver` = '{user}')
+            (`tabTask Detail`.`approver` = '{user}' OR `tabTask Detail`.`approver` IS NULL)
             """.format(user=user)
     elif 'Maintenance User' in user_roles:
         if user_work_centers:
@@ -34,5 +34,8 @@ def task_detail_permission(user):
             return """
             (`tabTask Detail`.`assigned_to` = '{user}' OR `tabTask Detail`.`assigned_to` IS NULL)
             """.format(user=user)
+        
+
+
  
  
