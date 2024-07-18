@@ -135,14 +135,14 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-17 10:04:37.048492",
+ "modified": "2024-07-18 10:55:18.753983",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "System Workspace",
  "number_cards": [
   {
    "label": "Task for Approval",
-   "number_card_name": "Task for Approval"
+   "number_card_name": "Pending for Approval"
   },
   {
    "label": "Equipment without Task",
