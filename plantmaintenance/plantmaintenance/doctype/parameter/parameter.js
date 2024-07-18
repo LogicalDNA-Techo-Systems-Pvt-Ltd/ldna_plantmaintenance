@@ -14,6 +14,9 @@ frappe.ui.form.on('Parameter', {
     },
     refresh: function(frm) {
         if (!frm.is_new() && frm.doc.parameter) {
+            frm.add_custom_button(__('Activity'), function() {
+                frappe.new_doc('Activity');
+            }, __("Create"));
             frm.add_custom_button(__('Equipment List'), function() {
                 frappe.set_route('List', 'Equipment', {
                  
