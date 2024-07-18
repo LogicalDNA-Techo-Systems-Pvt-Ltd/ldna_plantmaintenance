@@ -37,10 +37,6 @@ class TaskAllocation(Document):
         require_time_hours = parameter_info.get('require_time')
         plan_end_date = (datetime.strptime(plan_start_date, '%Y-%m-%d') + timedelta(hours=require_time_hours)).strftime('%Y-%m-%d %H:%M:%S')
 
-        status = "Open"
-        if getdate(plan_end_date) < getdate(nowdate()):
-            status = "Overdue"
-
         task_detail = frappe.new_doc("Task Detail")
         task_detail.update({
             "unique_key": detail.unique_key,
@@ -61,7 +57,6 @@ class TaskAllocation(Document):
             "require_time": parameter_info.get('require_time'),
             "values": ",".join(parameter_info.get('values', [])) if parameter_info.get('values') else None,
             "priority": detail.priority,
-            "status": status,
             "acceptance_criteria_for_list": parameter_info.get('acceptance_criteria_for_list'),
             "acceptance_criteria": parameter_info.get('acceptance_criteria'),
 
@@ -76,10 +71,6 @@ class TaskAllocation(Document):
             has_changes = True
         if task_detail_doc.priority != detail.priority:
             task_detail_doc.priority = detail.priority
-            has_changes = True
-
-        if getdate(task_detail_doc.plan_end_date) < getdate(nowdate()):
-            task_detail_doc.status = "Overdue"
             has_changes = True
 
         if has_changes:
