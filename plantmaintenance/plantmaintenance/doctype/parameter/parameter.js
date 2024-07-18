@@ -11,6 +11,15 @@ frappe.ui.form.on('Parameter', {
     },
     before_save: function(frm) {
          HandleParameters(frm);  
+    },
+    refresh: function(frm) {
+        if (!frm.is_new() && frm.doc.parameter) {
+            frm.add_custom_button(__('Equipment List'), function() {
+                frappe.set_route('List', 'Equipment', {
+                 
+                });
+            }, __("View"));
+        } 
     }
 
 });
@@ -90,16 +99,4 @@ function HandleParameters(frm) {
     }
     
 }
-
-frappe.ui.form.on('Parameter', {
-    refresh: function(frm) {
-        if (!frm.is_new() && frm.doc.parameter) {
-            frm.add_custom_button(__('Equipment List'), function() {
-                frappe.set_route('List', 'Equipment', {
-                   
-                });
-            }, __("View"));
-        } 
-    }
-});  
 
