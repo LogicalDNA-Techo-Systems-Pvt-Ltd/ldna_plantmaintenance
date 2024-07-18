@@ -243,8 +243,8 @@ frappe.ui.form.on("Task Allocation Details", {
         frappe.prompt(
             [
                 {
-                    label: __("First Name"),
-                    fieldname: "first_name",
+                    label: __("User Name"),
+                    fieldname: "user_name",
                     fieldtype: "Link",
                     options: "User",
                     get_query: function () {
