@@ -102,7 +102,7 @@ def equipment_task_details(task_detail):
             detail = equipment_doc.append("task_detail_ct", {})
             detail.task = task_detail['name']
             detail.parameter = task_detail['parameter']
-            detail.date = task_detail['creation']
+            detail.date = task_detail['actual_start_date']
             detail.status = task_detail['status']
             detail.passfail = task_detail['result']
             
@@ -117,7 +117,8 @@ def equipment_task_details(task_detail):
                     detail = equipment_doc.append("material_moment_ct", {})
                     detail.material_type = material_issue.type
                     detail.material_name = material_issue.material_code
-                    detail.date = task_detail['creation']
-                    detail.quantity = material_issue.issue_quantity
+                    detail.date = task_detail['actual_start_date']
+                    detail.quantity = material_issue.issue_quantity,
+                    detail.return_quantity = material_issue.return_quantity
 
     equipment_doc.save()
