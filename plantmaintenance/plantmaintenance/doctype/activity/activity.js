@@ -13,6 +13,9 @@ frappe.ui.form.on('Activity', {
             frm.add_custom_button(__('Parameter'), function() {
                 frappe.new_doc('Parameter');
             }, __("Create"));
+            frm.add_custom_button(__('Activity Group'), function() {
+                frappe.new_doc('Activity Group');
+            }, __("Create"));
             frm.add_custom_button(__('Equipment'), function() {
                 frappe.set_route('List', 'Equipment');
             }, __("View")); 
