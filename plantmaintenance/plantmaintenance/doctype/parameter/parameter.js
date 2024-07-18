@@ -23,7 +23,11 @@ frappe.ui.form.on('Parameter', {
                 });
             }, __("View"));
         } 
+    },
+    values: function(frm) {
+        ConvertValuesInSelect(frm);
     }
+    
 
 });
 
@@ -103,3 +107,15 @@ function HandleParameters(frm) {
     
 }
 
+function ConvertValuesInSelect(frm) {
+    var value = frm.doc.values;
+    var parameterType = frm.doc.parameter_type;  
+    if(parameterType === 'List' && value) {
+        let options = value.split(',').map(option => option.trim());
+        frm.set_df_property('acceptance_criteria_for_list', 'options', options.join('\n'));
+        frm.refresh_field('acceptance_criteria_for_list');
+    } else {
+        frm.set_df_property('acceptance_criteria_for_list', 'options', '');
+        frm.refresh_field('acceptance_criteria_for_list');
+    }
+}
