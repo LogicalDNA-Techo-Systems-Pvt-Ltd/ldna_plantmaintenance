@@ -87,7 +87,6 @@ function HandleParameters(frm) {
     var parameterType = frm.doc.parameter_type;
      
 
-
      if (parameterType === 'Binary') {
          frm.set_value('minimum_value', '');
         frm.set_value('maximum_value', '');
@@ -99,6 +98,7 @@ function HandleParameters(frm) {
         frm.set_value('values', '');
           
     } else if (parameterType === 'List') {
+        
         frm.set_value('acceptance_criteria', '');
         frm.set_value('minimum_value', '');
         frm.set_value('maximum_value', '');
