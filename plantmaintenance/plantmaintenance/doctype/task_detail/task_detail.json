@@ -75,6 +75,11 @@
   "column_break_pkrb",
   "cause",
   "inventory_tab",
+  "section_break_eccq",
+  "material_issued",
+  "section_break_imbn",
+  "material_returned",
+  "section_break_oema",
   "attach_image",
   "amended_from"
  ],
@@ -501,13 +506,37 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "section_break_eccq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "material_issued",
+   "fieldtype": "Table",
+   "label": "Material Issued",
+   "options": "Material Issue"
+  },
+  {
+   "fieldname": "section_break_imbn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "material_returned",
+   "fieldtype": "Table",
+   "label": "Material Returned",
+   "options": "Material Returned CT"
+  },
+  {
+   "fieldname": "section_break_oema",
+   "fieldtype": "Section Break"
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-19 14:34:19.187562",
+ "modified": "2024-07-19 15:06:54.834549",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
