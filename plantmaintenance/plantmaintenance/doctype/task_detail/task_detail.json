@@ -75,8 +75,8 @@
   "column_break_pkrb",
   "cause",
   "inventory_tab",
-  "material_issued",
   "material_returned",
+  "material_issued",
   "attach_image",
   "amended_from"
  ],
@@ -426,12 +426,6 @@
    "label": "Inventory"
   },
   {
-   "fieldname": "material_issued",
-   "fieldtype": "Table",
-   "label": "Material Issued",
-   "options": "Material Issue CT"
-  },
-  {
    "fieldname": "material_returned",
    "fieldtype": "Table",
    "label": "Material Returned",
@@ -515,13 +509,19 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "material_issued",
+   "fieldtype": "Table",
+   "label": "Material Issued",
+   "options": "Material Issue CT"
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-18 14:17:03.154115",
+ "modified": "2024-07-19 11:58:23.586126",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
