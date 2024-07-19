@@ -10,7 +10,8 @@
   "material_name",
   "available_quantity",
   "required_quantity",
-  "shortage"
+  "shortage",
+  "status"
  ],
  "fields": [
   {
@@ -44,12 +45,19 @@
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Shortage"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nPending Approval\nMaterial Issued"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-19 12:48:06.745155",
+ "modified": "2024-07-19 15:04:16.662711",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material Issue",
