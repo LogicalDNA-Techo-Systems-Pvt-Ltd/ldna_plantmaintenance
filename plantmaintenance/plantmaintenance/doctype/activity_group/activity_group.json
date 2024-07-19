@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{activity_group}",
+ "creation": "2024-06-06 16:56:31.818966",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "activity_group",
+  "is_active",
+  "activity"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "activity_group",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Activity Group",
+   "length": 50,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Table",
+   "label": "Activity",
+   "options": "Activity CT",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-02 11:27:18.907476",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Activity Group",
+ "naming_rule": "Expression",
+ "nsm_parent_field": "parent_activity_group",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

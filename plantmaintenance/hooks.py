@@ -10,11 +10,11 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/plantmaintenance/css/plantmaintenance.css"
-# app_include_js = "/assets/plantmaintenance/js/plantmaintenance.js"
+# app_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
+app_include_js = "/assets/plantmaintenance/js/workspace.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/plantmaintenance/css/plantmaintenance.css"
+# web_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
 # web_include_js = "/assets/plantmaintenance/js/plantmaintenance.js"
 
 # include custom scss in every website theme (without file extension ".scss")
@@ -28,8 +28,8 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+# doctype_js = {"Task Detail" : "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/js/task_detail_list.js"}
+doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -102,13 +102,16 @@ app_license = "mit"
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
+permission_query_conditions = {
+	# "Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+    "Task Detail":"plantmaintenance.plantmaintenance.doctype.task_detail.task_detail_permission.task_detail_permission"
+}
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
+
+
 
 # DocType Class
 # ---------------
@@ -117,6 +120,11 @@ app_license = "mit"
 # override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+
+
+override_doctype_class = {
+	"Role": "plantmaintenance.plantmaintenance.custom.role.Role"
+}
 
 # Document Events
 # ---------------
@@ -129,6 +137,13 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
+
+doc_events = {
+    "Parameter": {
+        "on_update": "plantmaintenance.plantmaintenance.doctype.parameter.parameter.update_activity_parameter"
+    }
+}
+
 
 # Scheduled Tasks
 # ---------------
@@ -150,6 +165,11 @@ app_license = "mit"
 # 		"plantmaintenance.tasks.monthly"
 # 	],
 # }
+scheduler_events = {
+    "daily": [
+        "plantmaintenance.task_detail.update_task_status"
+    ]
+}
 
 # Testing
 # -------
@@ -167,7 +187,7 @@ app_license = "mit"
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "plantmaintenance.task.get_dashboard_data"
+# 	"Equipment": "plantmaintenance.plantmaintenance.doctype.equipment.equipment_dashboard.get_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -226,4 +246,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
