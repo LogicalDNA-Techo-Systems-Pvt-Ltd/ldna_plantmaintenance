@@ -45,9 +45,21 @@ doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 # home_page = "login"
 
 # website user home page (by Role)
+# hooks.py
+
+# hooks.py
+
+on_session_creation = [
+    "plantmaintenance.plantmaintenance.custom.role.role_based_home_page"
+]
+
+
 # role_home_page = {
-# 	"Role": "home_page"
+#     "Maintenance Manager": "maintenance-manager",
+#     "Maintenance User": "maintenance-user",
+#     "System Manager": "system-workspace"
 # }
+
 
 # Generators
 # ----------
