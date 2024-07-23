@@ -141,6 +141,10 @@ override_doctype_class = {
 doc_events = {
     "Parameter": {
         "on_update": "plantmaintenance.plantmaintenance.doctype.parameter.parameter.update_activity_parameter"
+    },
+    
+    "Task Detail": {
+        "on_update": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details"
     }
 }
 

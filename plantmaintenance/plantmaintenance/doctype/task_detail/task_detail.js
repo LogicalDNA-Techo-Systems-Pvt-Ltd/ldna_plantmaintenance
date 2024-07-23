@@ -1,26 +1,4 @@
 frappe.ui.form.on('Task Detail', {
-    after_save: function(frm){
-        frappe.call({
-            method: "plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details",
-            args:{
-                task_detail: frm.doc
-            }
-        })
-    },
-    // after_save: function(frm){
-    //     frappe.call({
-    //         method: "plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details",
-    //         args:{
-    //             task_detail: frm.doc
-    //         },
-    //         callback: function(r) {
-    //             if(r.message) {
-    //                 console.log("Task details saved successfully");
-    //             }
-    //         }
-    //     });
-    // },
-
     readings: function(frm) {
         const numReadings = frm.doc.readings;
         
