@@ -95,14 +95,57 @@ frappe.ui.form.on('Task Detail', {
 
     refresh: function(frm) {
         let material_issued = frm.fields_dict.material_issued;
-
         if (material_issued && !frm.inventory_button_added) {
             frm.inventory_button_added = true;
-            let button = $('<button class="btn btn-primary btn-xs" style="margin-top: -40px; margin-left: 89%;">Update Stock</button>')
+
+            let button = $('<button class="btn btn-primary btn-xs" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
+            let button1 = $('<button class="btn btn-primary btn-xs" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
+            button1.on('click', function() {
+                let all_shortages_zero = true;
+                if (all_shortages_zero) {
+                    frappe.call({
+                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
+                        args: {
+                            docname: frm.doc.name
+                        },
+                        callback: function(response) {
+                            if (response.message) {
+                                frappe.msgprint(response.message);
+                                frm.doc.material_issued.forEach(item => {
+                                    item.status = 'Pending Approval';
+                                });
+                                frm.refresh_field('material_issued');
+                            }
+                        }
+                    });
+                } 
+            });
+
             material_issued.grid.wrapper.find('.grid-footer').append(button);
+            material_issued.grid.wrapper.find('.grid-footer').append(button1);
         }
     }
 });
+
+frappe.ui.form.on('Material Issue', {
+    available_quantity: function(frm, cdt, cdn) {
+        calculate_shortage(frm, cdt, cdn);
+    },
+    required_quantity: function(frm, cdt, cdn) {
+        calculate_shortage(frm, cdt, cdn);
+    }
+});
+
+function calculate_shortage(frm, cdt, cdn) {
+    let row = locals[cdt][cdn];
+    if (row.available_quantity >= row.required_quantity) {
+        row.shortage = 0;
+    } 
+    else {
+        row.shortage = row.required_quantity - row.available_quantity;
+    }
+    frm.refresh_field('material_issued');
+}
 
 
 function fetch_parameter_details(frm) {
