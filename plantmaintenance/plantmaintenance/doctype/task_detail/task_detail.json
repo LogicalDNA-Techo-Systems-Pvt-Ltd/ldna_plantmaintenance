@@ -105,7 +105,6 @@
    "fetch_from": "equipment_code.equipment_name",
    "fieldname": "equipment_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Equipment Name"
   },
@@ -132,7 +131,6 @@
   {
    "fieldname": "plant_section",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Plant Section ",
    "options": "Section"
@@ -213,6 +211,7 @@
    "depends_on": "eval:doc.type!=\"Breakdown\"",
    "fieldname": "parameter",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Parameter",
    "options": "Parameter"
@@ -440,6 +439,8 @@
   {
    "fieldname": "plan_start_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Plan Start Date"
   },
   {
@@ -536,7 +537,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-19 15:06:54.834549",
+ "modified": "2024-07-23 12:27:34.893425",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

@@ -31,4 +31,32 @@ class TaskDetail(Document):
         today = getdate(nowdate())
         if self.plan_end_date and getdate(self.plan_end_date) < today:
             self.status = 'Overdue'
-    
+
+  @frappe.whitelist()
+  def send_for_approval(docname):
+      task_detail = frappe.get_doc('Task Detail', docname)
+      all_shortages_zero = True
+      for item in task_detail.material_issued:
+          if item.shortage > 0:
+              all_shortages_zero = False
+              break
+
+      if all_shortages_zero:
+          send_approval_email(task_detail)
+          return {"message": "Email sent to Manager for material approval."}
+      else:
+          return {"message": "Cannot send approval email due to shortages."}
+
+  def send_approval_email(task_detail):
+      subject = "Approval Request for Material required for {}".format(task_detail.name)
+      message = "Please review and issue the material with ID: {}".format(task_detail.name)
+      recipient = task_detail.approver  
+
+      if recipient:
+          frappe.sendmail(
+              recipients=recipient,
+              subject=subject,
+              message=message,
+              now=True
+          )
+
