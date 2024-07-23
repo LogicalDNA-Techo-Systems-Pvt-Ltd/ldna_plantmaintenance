@@ -1,0 +1,39 @@
+{
+ "based_on": "",
+ "chart_name": "Task Summary",
+ "chart_type": "Report",
+ "creation": "2024-07-23 22:28:54.170225",
+ "custom_options": "{\n\"colors\": [\"#2ECC71\"]\n}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Task Detail",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "modified": "2024-07-23 22:30:06.308286",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Task Summary",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "parent_document_type": "",
+ "report_name": "Task Summary",
+ "roles": [],
+ "source": "",
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "x_field": "status",
+ "y_axis": [
+  {
+   "color": "#8939d4",
+   "y_field": "count"
+  }
+ ]
+}
