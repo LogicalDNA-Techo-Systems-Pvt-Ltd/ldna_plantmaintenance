@@ -6,6 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "task",
   "material_name",
   "material_type",
   "date",
@@ -41,15 +42,21 @@
   },
   {
    "fieldname": "quantity",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Issue Quantity"
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Task"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-18 12:26:37.187887",
+ "modified": "2024-07-23 13:39:40.698136",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment Material Moment CT",

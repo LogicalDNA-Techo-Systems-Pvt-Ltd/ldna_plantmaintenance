@@ -38,7 +38,7 @@
   },
   {
    "fieldname": "status",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Status",
    "options": "\nOpen\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue",
@@ -56,7 +56,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-17 10:30:42.805605",
+ "modified": "2024-07-23 12:48:33.889240",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment Task Details CT",

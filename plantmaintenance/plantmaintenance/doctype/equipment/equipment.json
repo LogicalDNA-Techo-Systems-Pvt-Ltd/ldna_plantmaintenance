@@ -41,7 +41,8 @@
   "history_tab",
   "task_detail_section",
   "task_detail_ct",
-  "material_moment_ct"
+  "section_break_rqyc",
+  "material_movement_ct"
  ],
  "fields": [
   {
@@ -244,16 +245,20 @@
    "read_only": 1
   },
   {
-   "fieldname": "material_moment_ct",
+   "fieldname": "section_break_rqyc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "material_movement_ct",
    "fieldtype": "Table",
-   "label": "Material Moment",
+   "label": "Material Movement",
    "options": "Equipment Material Moment CT",
    "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-17 10:00:46.845598",
+ "modified": "2024-07-23 12:27:13.749614",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
