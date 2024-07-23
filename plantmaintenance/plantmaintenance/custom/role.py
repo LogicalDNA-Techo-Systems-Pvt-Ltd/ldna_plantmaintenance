@@ -12,4 +12,25 @@ class Role(Document):
         else:
             self.remove_roles()
 
-    
+
+
+def role_based_home_page():
+    frappe.clear_cache()
+
+    user = frappe.session.user
+    roles = frappe.get_roles(user)
+
+    role_home_pages = {
+        "Maintenance Manager": "/app/maintenance-manager",
+        "Maintenance User": "/app/maintenance-user",
+        "System Manager": "/app/system-workspace"
+    }
+
+    for role in roles:
+        if role in role_home_pages:
+            print("\n\n\n homepageee",role_home_pages[role])
+            return role_home_pages[role]
+   
+    return "/app"
+
+
