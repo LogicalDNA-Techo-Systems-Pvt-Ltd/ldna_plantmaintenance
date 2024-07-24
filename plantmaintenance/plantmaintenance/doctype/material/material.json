@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{material_code}",
  "creation": "2024-07-10 10:09:49.614866",
@@ -91,7 +92,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-16 17:58:30.825133",
+ "modified": "2024-07-24 20:17:35.758147",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",

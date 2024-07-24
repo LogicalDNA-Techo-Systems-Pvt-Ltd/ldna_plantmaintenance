@@ -1,7 +1,7 @@
 {
  "actions": [],
- "allow_rename": 1,
- "autoname": "format:{damage}",
+ "allow_import": 1,
+ "autoname": "field:damage",
  "creation": "2024-06-25 14:47:03.001804",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -24,11 +24,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 16:56:00.803484",
+ "modified": "2024-07-24 20:19:58.897877",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Damage",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

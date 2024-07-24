@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{parameter}",
  "creation": "2024-06-11 10:57:33.181622",
@@ -216,8 +217,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-18 17:36:40.311672",
- 
+ "modified": "2024-07-24 20:20:55.411829",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
