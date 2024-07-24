@@ -11,9 +11,10 @@
   "material_name",
   "serial_no",
   "batch_no",
+  "is_return",
   "column_break_ntat",
   "company_code",
-  "description_of_technical_object",
+  "description",
   "manufacturer_details_section",
   "manufacturer_of_asset",
   "country_of_manufacturer",
@@ -54,11 +55,6 @@
    "label": "Company Code"
   },
   {
-   "fieldname": "description_of_technical_object",
-   "fieldtype": "Small Text",
-   "label": "Description"
-  },
-  {
    "fieldname": "manufacturer_details_section",
    "fieldtype": "Section Break",
    "label": "Manufacturer Details"
@@ -88,11 +84,22 @@
    "fieldname": "material_serial_no",
    "fieldtype": "Data",
    "label": "Material Serial No"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_return",
+   "fieldtype": "Check",
+   "label": "Is Return"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-24 20:17:35.758147",
+ "modified": "2024-07-23 15:49:23.164300",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",
