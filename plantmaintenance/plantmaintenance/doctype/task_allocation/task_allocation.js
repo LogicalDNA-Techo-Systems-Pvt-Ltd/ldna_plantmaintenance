@@ -236,42 +236,42 @@ function download_tasks_excel(tasks) {
  
 
 
-frappe.ui.form.on("Task Allocation Details", {
-    add_assignee: function (frm, cdt, cdn) {
-        var child = locals[cdt][cdn];
-        let selectedAssigne = child.assign_to ? child.assign_to.split(', ') : [];
-        frappe.prompt(
-            [
-                {
-                    label: __("User Name"),
-                    fieldname: "user_name",
-                    fieldtype: "Link",
-                    options: "User",
-                    get_query: function () {
-                        return {
-                            filters: [
-                            ]
-                        };
-                    }
-                }
-            ],
-            function (values) {
-                let newassigne = values['first_name'];
-                if (selectedAssigne.includes(newassigne)) {
-                    frappe.msgprint(__("User already selected."));
-                } else {
-                    selectedAssigne.push(newassigne);
-                    updateUser();
-                }
-            },
-            __("Select User")
-        );
-        function updateUser() {
-            let userList = selectedAssigne.join(', ');
-            frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
-        }
-    }
-});
+// frappe.ui.form.on("Task Allocation Details", {
+//     add_assignee: function (frm, cdt, cdn) {
+//         var child = locals[cdt][cdn];
+//         let selectedAssigne = child.assign_to ? child.assign_to.split(', ') : [];
+//         frappe.prompt(
+//             [
+//                 {
+//                     label: __("User Name"),
+//                     fieldname: "user_name",
+//                     fieldtype: "Link",
+//                     options: "User",
+//                     get_query: function () {
+//                         return {
+//                             filters: [
+//                             ]
+//                         };
+//                     }
+//                 }
+//             ],
+//             function (values) {
+//                 let newassigne = values['first_name'];
+//                 if (selectedAssigne.includes(newassigne)) {
+//                     frappe.msgprint(__("User already selected."));
+//                 } else {
+//                     selectedAssigne.push(newassigne);
+//                     updateUser();
+//                 }
+//             },
+//             __("Select User")
+//         );
+//         function updateUser() {
+//             let userList = selectedAssigne.join(', ');
+//             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+//         }
+//     }
+// });
 
 
 
