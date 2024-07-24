@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{cause}",
  "creation": "2024-06-25 14:45:40.209710",
@@ -19,7 +20,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-26 17:12:33.459041",
+ "modified": "2024-07-24 20:20:15.660129",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Cause",

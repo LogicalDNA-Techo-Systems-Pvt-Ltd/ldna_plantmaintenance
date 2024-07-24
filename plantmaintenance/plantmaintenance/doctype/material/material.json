@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{material_code}",
  "creation": "2024-07-10 10:09:49.614866",
