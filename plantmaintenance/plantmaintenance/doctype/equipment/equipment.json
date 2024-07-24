@@ -241,8 +241,7 @@
    "fieldname": "task_detail_ct",
    "fieldtype": "Table",
    "label": "Task Detail",
-   "options": "Equipment Task Details CT",
-   "read_only": 1
+   "options": "Equipment Task Details CT"
   },
   {
    "fieldname": "section_break_rqyc",
@@ -258,7 +257,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-23 12:27:13.749614",
+ "modified": "2024-07-24 22:48:17.387970",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
