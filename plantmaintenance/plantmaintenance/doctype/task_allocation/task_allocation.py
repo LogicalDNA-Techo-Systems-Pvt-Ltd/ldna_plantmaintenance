@@ -181,7 +181,11 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     setting_doc = frappe.get_single('Setting')
     start_date = getdate(setting_doc.start_date)
     today_date = getdate(nowdate())
+    setting_end_date = getdate(setting_doc.end_date)
     end_date = getdate(end_date) if end_date else getdate(setting_doc.end_date)
+
+    if end_date > setting_end_date:
+        return frappe.msgprint("The end date must be less than the end date in the Setting doctype.")
 
     if not (start_date <= today_date <= end_date):
         return frappe.msgprint("Please ensure today's date is between the start date and end date.")
@@ -243,7 +247,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
                 elif frequency == 'Yearly':
                     date_of_year = getdate(parameter.date_of_year)
-                    if start_date <= date_of_year <= end_date:
+                    if today_date <= date_of_year <= end_date:
                         years_range = range(today_date.year, end_date.year + 1)
                         dates = [date_of_year.replace(year=year) for year in years_range]
 
@@ -268,6 +272,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         'unique_key': unique_key[:10]
                     }
                     tasks.append(task)
+
 
     return tasks
 
