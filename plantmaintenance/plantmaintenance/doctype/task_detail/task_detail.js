@@ -79,7 +79,7 @@ frappe.ui.form.on('Task Detail', {
             let button = $('<button class="btn btn-primary btn-xs" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
             let button1 = $('<button class="btn btn-primary btn-xs" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
             button1.on('click', function() {
-                let all_shortages_zero = true;
+                let all_shortages_zero = frm.doc.material_issued.every(item => item.shortage === 0);
                 if (all_shortages_zero) {
                     frappe.call({
                         method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
@@ -90,15 +90,19 @@ frappe.ui.form.on('Task Detail', {
                             if (response.message) {
                                 frappe.msgprint(response.message);
                                 frm.doc.material_issued.forEach(item => {
-                                    item.status = 'Pending Approval';
+                                    if(item.shortage === 0){
+                                        item.status = 'Pending Approval';
+                                    }
                                 });
                                 frm.refresh_field('material_issued');
                             }
                         }
                     });
+                }
+                else{
+                    frappe.msgprint("Cannot send for approval due to existing shortages.");
                 } 
             });
-
             material_issued.grid.wrapper.find('.grid-footer').append(button);
             material_issued.grid.wrapper.find('.grid-footer').append(button1);
         }
@@ -122,9 +126,11 @@ function calculate_shortage(frm, cdt, cdn) {
     else {
         row.shortage = row.required_quantity - row.available_quantity;
     }
+    if (row.shortage >0 && row.status === 'Pending Approval') {
+        row.status = '';
+    }
     frm.refresh_field('material_issued');
 }
-
 
 function fetch_parameter_details(frm) {
     frappe.call({
@@ -148,5 +154,3 @@ function fetch_parameter_details(frm) {
         }
     });
 }
-
-
