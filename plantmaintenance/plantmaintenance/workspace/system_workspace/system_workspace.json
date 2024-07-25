@@ -1,19 +1,11 @@
 {
  "charts": [
   {
-   "chart_name": "Total Tasks",
-   "label": "Task Created"
-  },
-  {
-   "chart_name": "Completed Task",
-   "label": "Completed Task"
-  },
-  {
-   "chart_name": "Overdue Task",
-   "label": "Overdue Task"
+   "chart_name": "Task Summary",
+   "label": "Task Summary"
   }
  ],
- "content": "[{\"id\":\"lPszDIiymE\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Created\",\"col\":12}},{\"id\":\"0qZ_EAiLqz\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Completed Task\",\"col\":12}},{\"id\":\"x_k5R7Q1Ey\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Overdue Task\",\"col\":12}},{\"id\":\"HOFdEglaYS\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Task for Approval\",\"col\":6}},{\"id\":\"hsBVsREZK1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Equipment\",\"col\":6}},{\"id\":\"Z_Mvk9dOZK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Task\",\"col\":6}},{\"id\":\"1zMKU2ovyV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Activity\",\"col\":6}},{\"id\":\"d1m_FYvzBQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"b2tkH7XVuc\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
+ "content": "[{\"id\":\"3arUqAsXKj\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Summary\",\"col\":12}},{\"id\":\"hsBVsREZK1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Equipment\",\"col\":6}},{\"id\":\"Z_Mvk9dOZK\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Task\",\"col\":6}},{\"id\":\"HOFdEglaYS\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Task for Approval\",\"col\":6}},{\"id\":\"1zMKU2ovyV\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Equipment without Activity\",\"col\":6}},{\"id\":\"d1m_FYvzBQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"b2tkH7XVuc\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}}]",
  "creation": "2024-07-16 11:54:04.298671",
  "custom_blocks": [],
  "docstatus": 0,
@@ -135,7 +127,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-18 10:55:18.753983",
+ "modified": "2024-07-23 22:33:18.638310",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "System Workspace",
