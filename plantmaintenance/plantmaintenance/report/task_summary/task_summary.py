@@ -1,9 +1,6 @@
 # Copyright (c) 2024, LogicalDNA and contributors
 # For license information, please see license.txt
 
-# import frappe
-
-
 import frappe
 from datetime import datetime, timedelta
 
@@ -36,8 +33,6 @@ def execute(filters=None):
 
     columns = ["Date", "Open", "Completed", "Created"]
 
-    print("\n\n\n\n dataaa",data)
-
     chart_data = {
         'data': {
             'labels': [row[0] for row in data], 
@@ -57,15 +52,9 @@ def execute(filters=None):
             ]
         },
         'type': 'bar',
+        "colors": ["#fc4f51", "#78d6ff", "#7575ff"],
+		"barOptions": {"stacked": True},
         
     }
-    # open_total = sum(row[1] for row in data)
-    # completed_total = sum(row[2] for row in data)
-    # created_total = sum(row[3] for row in data)
-    # report_summary = [
-    #     {"label": "Open Tasks", "value": open_total, 'indicator': 'Blue'},
-    #     {"label": "Completed Tasks", "value": completed_total, 'indicator': 'Green'},
-    #     {"label": "Total Tasks Created", "value": created_total, 'indicator': 'Orange'}
-    # ]
-
+    
     return columns, data, None, chart_data
