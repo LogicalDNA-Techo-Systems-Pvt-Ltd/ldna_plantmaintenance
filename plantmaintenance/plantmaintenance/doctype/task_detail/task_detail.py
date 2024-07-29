@@ -52,3 +52,13 @@ def send_approval_email(task_detail):
             now=True
         )
 
+
+@frappe.whitelist()
+def mark_as_issued(docname):
+    doc = frappe.get_doc("Task Detail", docname)
+    for item in doc.material_issued:
+        if item.status == "Pending Approval":
+            item.status = "Material Issued"
+    
+    doc.save()
+    
