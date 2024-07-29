@@ -154,10 +154,10 @@
   },
   {
    "fieldname": "assigned_to",
-   "fieldtype": "Link",
+   "fieldtype": "Small Text",
    "in_standard_filter": 1,
    "label": "Assigned To",
-   "options": "User"
+   "options": "Assigne"
   },
   {
    "fieldname": "section_break_pnvh",
@@ -537,7 +537,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-23 12:27:34.893425",
+ "modified": "2024-07-29 17:20:37.225939",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

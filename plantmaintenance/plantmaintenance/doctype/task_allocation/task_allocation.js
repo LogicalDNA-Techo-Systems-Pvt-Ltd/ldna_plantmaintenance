@@ -275,5 +275,98 @@ function download_tasks_excel(tasks) {
 
 
 
+// frappe.ui.form.on('Task Allocation Details', {
+//     add_assignee: function(frm, cdt, cdn) {
+//         var child = locals[cdt][cdn];
+//         let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
+
+//         frappe.call({
+//             method: 'frappe.client.get_list',
+//             args: {
+//                 doctype: 'User',
+//                 fields: ['name'],
+//             },
+//             callback: function(response) {
+//                 let options = response.message.map(user => user.name);
+
+//                 frappe.prompt(
+//                     [
+//                         {
+//                             label: __("Select Users"),
+//                             fieldname: "users",
+//                             fieldtype: "MultiSelectList",
+//                             options: options,
+//                             reqd: 1
+//                         }
+//                     ],
+//                     function(values) {
+//                         let newAssignees = values['users'] || [];
+//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+                        
+//                         if (duplicates.length > 0) {
+//                             frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
+//                         } else {
+//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+//                             updateAssignees();
+//                         }
+//                     },
+//                     __("Select Users")
+//                 );
+//             }
+//         });
+
+//         function updateAssignees() {
+//             let userList = selectedAssignees.join(', ');
+//             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+//         }
+//     }
+// });
 
 
+frappe.ui.form.on('Task Allocation Details', {
+    add_assignee: function(frm, cdt, cdn) {
+        var child = locals[cdt][cdn];
+        let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
+
+        frappe.call({
+            method: 'frappe.client.get_list',
+            args: {
+                doctype: 'User',
+                fields: ['name'],
+            },
+            callback: function(response) {
+                let options = response.message.map(user => user.name);
+
+                frappe.prompt(
+                    [
+                        {
+                            label: __("Select Users"),
+                            fieldname: "users",
+                            fieldtype: "MultiSelectList",
+                            options: options,
+                            reqd: 1
+                        }
+                    ],
+                    function(values) {
+                        let newAssignees = values['users'] || [];
+                        let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+                        
+                        if (duplicates.length > 0) {
+                            frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
+                        } else {
+                            selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+                            updateAssignees();
+                        }
+                    },
+                    __("Select Users")
+                );
+            }
+        });
+
+        function updateAssignees() {
+            let userList = selectedAssignees.join(', ');
+            frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+            frm.refresh_field('task_allocation_details');
+        }
+    }
+});
