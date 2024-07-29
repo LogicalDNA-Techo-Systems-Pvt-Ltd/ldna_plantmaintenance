@@ -76,11 +76,26 @@ frappe.ui.form.on('Task Detail', {
         if (material_issued && !frm.inventory_button_added) {
             frm.inventory_button_added = true;
 
-            let button = $('<button class="btn btn-primary btn-xs" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
-            let button1 = $('<button class="btn btn-primary btn-xs" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
+            let button = $('<button class="btn btn-primary btn-xs update-qty-btn" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
+            let button1 = $('<button class="btn btn-primary btn-xs send-for-approval-btn" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
             button1.on('click', function() {
-                let all_shortages_zero = frm.doc.material_issued.every(item => item.shortage === 0);
-                if (all_shortages_zero) {
+                let rows_with_zero_shortage = [];
+
+                frm.doc.material_issued.forEach((item, index) => {
+                    if (item.shortage > 0) {
+                        if (index === frm.doc.material_issued.length - 1) {
+                            frappe.msgprint(`Cannot send for approval due to existing shortage in row ${item.idx}.`);
+                        }
+                    } 
+                    else {
+                        rows_with_zero_shortage.push(item);
+                        if (index === frm.doc.material_issued.length - 1) {
+                            frappe.msgprint(`Email sent to Manager for material approval for row ${item.idx}.`);
+                        }
+                    }
+                });
+
+                if (rows_with_zero_shortage.length > 0) {
                     frappe.call({
                         method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
                         args: {
@@ -88,26 +103,23 @@ frappe.ui.form.on('Task Detail', {
                         },
                         callback: function(response) {
                             if (response.message) {
-                                frappe.msgprint(response.message);
-                                frm.doc.material_issued.forEach(item => {
-                                    if(item.shortage === 0){
-                                        item.status = 'Pending Approval';
-                                    }
+                                rows_with_zero_shortage.forEach(item => {
+                                    item.status = 'Pending Approval';
                                 });
                                 frm.refresh_field('material_issued');
                             }
                         }
                     });
                 }
-                else{
-                    frappe.msgprint("Cannot send for approval due to existing shortages.");
-                } 
             });
+
             material_issued.grid.wrapper.find('.grid-footer').append(button);
             material_issued.grid.wrapper.find('.grid-footer').append(button1);
         }
+        material_issued_rows(frm);
     }
 });
+
 
 frappe.ui.form.on('Material Issue', {
     available_quantity: function(frm, cdt, cdn) {
@@ -126,10 +138,14 @@ function calculate_shortage(frm, cdt, cdn) {
     else {
         row.shortage = row.required_quantity - row.available_quantity;
     }
+    if (isNaN(row.shortage)) {
+        row.shortage = '';
+    }
     if (row.shortage >0 && row.status === 'Pending Approval') {
         row.status = '';
     }
     frm.refresh_field('material_issued');
+    material_issued_rows(frm);
 }
 
 function fetch_parameter_details(frm) {
@@ -154,3 +170,23 @@ function fetch_parameter_details(frm) {
         }
     });
 }
+
+function material_issued_rows(frm) {
+    let user = frappe.session.user;
+    let manager_email = frm.doc.approver; 
+
+    if (user === manager_email) {
+        frm.fields_dict.material_issued.grid.data.forEach((row, idx) => {
+            if (row.shortage > 0) {
+                frm.fields_dict.material_issued.grid.grid_rows[idx].wrapper.hide();
+            }
+        });
+        $('.update-qty-btn').hide();
+        $('.send-for-approval-btn').hide();
+        frm.fields_dict.material_issued.grid.wrapper.find('.grid-add-row').hide();
+
+    }
+}
+
+
+
