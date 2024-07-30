@@ -94,7 +94,6 @@ frappe.ui.form.on('Task Detail', {
                                         item.status = 'Material Issued';
                                     }
                                 });
-
                                 frm.refresh_field('material_issued');
                             }
                         }
@@ -144,6 +143,7 @@ frappe.ui.form.on('Task Detail', {
                                 if (response.message) {
                                     new_rows_for_approval.forEach(item => {
                                         item.status = 'Pending Approval';
+                                        item.approval_date = frappe.datetime.nowdate();  
                                     });
 
                                     frm.refresh_field('material_issued');
@@ -210,5 +210,4 @@ function fetch_parameter_details(frm) {
         }
     });
 }
-
 
