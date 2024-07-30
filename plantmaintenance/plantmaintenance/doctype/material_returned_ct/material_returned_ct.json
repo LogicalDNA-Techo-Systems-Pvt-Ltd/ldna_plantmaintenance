@@ -11,7 +11,9 @@
   "issue_quantity",
   "return_quantity",
   "column_break_qurg",
-  "type"
+  "type",
+  "approval_date",
+  "issued_date"
  ],
  "fields": [
   {
@@ -51,12 +53,22 @@
    "in_list_view": 1,
    "label": "Material Name",
    "options": "Material"
+  },
+  {
+   "fieldname": "approval_date",
+   "fieldtype": "Date",
+   "label": "Approval Date"
+  },
+  {
+   "fieldname": "issued_date",
+   "fieldtype": "Date",
+   "label": "Issued Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-17 10:59:33.919159",
+ "modified": "2024-07-30 10:27:51.895997",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material Returned CT",

@@ -59,6 +59,7 @@ def mark_as_issued(docname):
     for item in doc.material_issued:
         if item.status == "Pending Approval":
             item.status = "Material Issued"
-    
+            item.issued_date = getdate(nowdate()) 
+
     doc.save()
     
