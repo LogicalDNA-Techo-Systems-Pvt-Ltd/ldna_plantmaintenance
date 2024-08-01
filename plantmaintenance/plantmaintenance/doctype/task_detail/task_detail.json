@@ -191,6 +191,7 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"\neval:doc.type!=\"Breakdown\"",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Minimum value",
    "read_only": 1
   },
@@ -234,6 +235,7 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Maximum Value",
    "read_only": 1
   },
