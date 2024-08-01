@@ -43,7 +43,7 @@ def task_detail_permission(user):
 
     user_doc = frappe.get_doc("User", user)
     
-    full_name = user_doc.full_name
+    user_full_name = user_doc.full_name
 
     user_roles = [role.role for role in user_doc.roles]
 
@@ -67,12 +67,12 @@ def task_detail_permission(user):
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
-            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL) AND 
+            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL) AND 
             (`tabTask Detail`.`work_center` IN ({work_centers_condition}))
-            """.format(user=user, full_name=full_name, work_centers_condition=work_centers_condition)
+            """.format(user=user, user_full_name=user_full_name, work_centers_condition=work_centers_condition)
         else:
             return """
-            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL)
-            """.format(user=user, full_name=full_name)
+            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL)
+            """.format(user=user, user_full_name=user_full_name)
 
 
