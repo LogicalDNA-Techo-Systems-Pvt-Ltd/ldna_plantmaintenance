@@ -129,10 +129,61 @@ refresh: function(frm) {
             frappe.new_doc('Activity Group');
         }, __("Create"));
     }
-}
+},
+
+//for deleting task in task allocation and task detail when equipment is on scrap. 
+
+validate: function(frm) {
+            if (frm.doc.on_scrap) {
+                frappe.call({
+                    method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.clear_task_allocation_details',
+                    args: {
+                        equipment_code: frm.doc.equipment_code
+                    },
+                    callback: function(clear_response) {
+                        if (clear_response.exc) {
+                            console.error(`Error clearing Task Allocation details`, clear_response.exc);
+                        } else {
+                            console.log(`Cleared Task Allocation details for equipment: ${frm.doc.equipment_code}`);
+                        }
+                    }
+                });
+                
+                frappe.call({
+                    method: 'frappe.client.get_list',
+                    args: {
+                        doctype: 'Task Detail',
+                        filters: {
+                            'equipment_name': frm.doc.equipment_name,
+                            'status': 'Open'
+                        },
+                        fields: ['name']
+                    },
+                    callback: function(response) {
+                        var tasks = response.message;
+                        if (tasks && tasks.length > 0) {
+                            var task_names = tasks.map(task => task.name);
+                            task_names.forEach(task_name => {
+                                frappe.call({
+                                    method: 'frappe.client.delete',
+                                    args: {
+                                        doctype: 'Task Detail',
+                                        name: task_name
+                                    },
+                                    callback: function(delete_response) {
+                                        if (delete_response.exc) {
+                                            console.error(`Error deleting Task: ${task_name}`, delete_response.exc);
+                                        } else {
+                                            console.log(`Deleted Task: ${task_name}`);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    }
+                });
+            }
+        }
 });
-
-
-
 
 
