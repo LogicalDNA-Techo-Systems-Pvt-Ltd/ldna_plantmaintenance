@@ -306,7 +306,7 @@ frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assi
                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
                         
                         if (duplicates.length > 0) {
-                            frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
+                            frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
                         } else {
                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
                             updateAssignees();
