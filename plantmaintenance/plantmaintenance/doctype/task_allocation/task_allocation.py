@@ -391,9 +391,7 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
    return {"message": "Excel import successful!"}
 
 
-################ task will delete in task allocation child table when equipment is on scrap
-
-import frappe
+#task will delete in task allocation child table when equipment is on scrap
 
 @frappe.whitelist()
 def clear_task_allocation_details(equipment_code):
