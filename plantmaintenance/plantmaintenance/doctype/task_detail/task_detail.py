@@ -23,12 +23,27 @@ class TaskDetail(Document):
             else:
                 self.result = 'Pass'
 
+        self.material_issued_to_returned()
+
     def before_save(self):
         if self.plan_start_date:
             today = getdate(nowdate())
             start_date = getdate(self.plan_start_date) 
             if today > start_date:
                 self.status = 'Overdue'
+
+    def material_issued_to_returned(self):
+        self.material_returned = []  
+
+        for item in self.material_issued:
+            if item.status == 'Material Issued':
+                self.append("material_returned", {
+                    "material_code": item.material_code,
+                    "material_name": item.material_name,
+                    "issue_quantity": item.required_quantity,
+                    "approval_date": item.approval_date,
+                    "issued_date": item.issued_date
+                })
 
 @frappe.whitelist()
 def send_for_approval(docname):
