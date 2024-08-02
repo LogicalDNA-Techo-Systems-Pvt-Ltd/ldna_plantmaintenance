@@ -9,11 +9,14 @@
  "field_order": [
   "material_code",
   "material_name",
+
   "unit_of_measure",
   "is_return",
   "column_break_ntat",
   "material_group",
   "description",
+  "consumable",
+  "spare",
   "manufacturer_details_section",
   "manufacturer_of_asset",
   "country_of_manufacturer",
@@ -97,11 +100,23 @@
    "fieldtype": "Link",
    "label": "Material Group",
    "options": "Equipment  Group"
+  },
+  {
+   "default": "0",
+   "fieldname": "consumable",
+   "fieldtype": "Check",
+   "label": "Consumable"
+  },
+  {
+   "default": "0",
+   "fieldname": "spare",
+   "fieldtype": "Check",
+   "label": "Spare"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-29 12:50:09.882745",
+ "modified": "2024-08-02 14:26:30.994984",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",

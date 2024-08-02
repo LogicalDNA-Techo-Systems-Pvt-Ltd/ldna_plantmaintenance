@@ -175,7 +175,6 @@ generated_unique_keys = set()
 
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, end_date=None):
-    global generated_unique_keys
     filters = {
         "plant": plant,
         "location": location,
@@ -183,21 +182,25 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
         "section": plant_section,
         "work_center": work_center
     }
-
-    equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group'])
+    
+    equipment_list = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 0}, fields=['equipment_code', 'equipment_name', 'activity_group'])
+    on_scrap_equipment = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 1}, fields=['equipment_code'])
+    
     setting_doc = frappe.get_single('Setting')
     start_date = getdate(setting_doc.start_date)
     today_date = getdate(nowdate())
     setting_end_date = getdate(setting_doc.end_date)
-    end_date = getdate(end_date) if end_date else getdate(setting_doc.end_date)
+    end_date = getdate(end_date) if end_date else setting_end_date
 
     if end_date > setting_end_date:
-        return frappe.msgprint("The end date must be less than the end date in the Setting doctype.")
+        frappe.throw("The end date must be less than the end date in the Setting doctype.")
 
     if not (start_date <= today_date <= end_date):
-        return frappe.msgprint("Please ensure today's date is between the start date and end date.")
+        frappe.throw("Please ensure today's date is between the start date and end date.")
 
     tasks = []
+    generated_unique_keys = set()
+
     for equipment in equipment_list:
         activities = frappe.get_all('Activity CT', filters={'parent': equipment.activity_group}, fields=['activity'])
 
@@ -217,22 +220,10 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     dates = [add_days(today_date, i) for i in range(15) if today_date <= add_days(today_date, i) <= end_date]
 
                 elif frequency == 'Weekly':
-                    selected_days = []
-                    if parameter.monday:
-                        selected_days.append('Monday')
-                    if parameter.tuesday:
-                        selected_days.append('Tuesday')
-                    if parameter.wednesday:
-                        selected_days.append('Wednesday')
-                    if parameter.thursday:
-                        selected_days.append('Thursday')
-                    if parameter.friday:
-                        selected_days.append('Friday')
-                    if parameter.saturday:
-                        selected_days.append('Saturday')
-                    if parameter.sunday:
-                        selected_days.append('Sunday')
-
+                    selected_days = [day for day, selected in zip(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], [
+                        parameter.monday, parameter.tuesday, parameter.wednesday, parameter.thursday, parameter.friday, parameter.saturday, parameter.sunday
+                    ]) if selected]
+                    
                     for day in selected_days:
                         current_date = today_date
                         while current_date.weekday() != list(calendar.day_name).index(day):
@@ -280,9 +271,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     }
                     tasks.append(task)
 
-
     return tasks
-
 
 @frappe.whitelist() #This code is to download the excel file of task allocation detail ct for bulk assignment of task. PD
 def download_tasks_excel_for_task_allocation(tasks):
@@ -416,4 +405,22 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
     if error_message:
         frappe.msgprint(error_message)
 
+
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!"}
+
+   task_allocation_doc.save(ignore_permissions=True)
+  
+   return {"message": "Excel import successful!"}
+
+
+#task will delete in task allocation child table when equipment is on scrap
+
+@frappe.whitelist()
+def clear_task_allocation_details(equipment_code):
+    task_allocations = frappe.get_all('Task Allocation', filters={'equipment_code': equipment_code}, fields=['name'])
+    for allocation in task_allocations:
+        allocation_doc = frappe.get_doc('Task Allocation', allocation.name)
+        allocation_doc.task_allocation_details = []
+        allocation_doc.save(ignore_permissions=True)
+        
+    

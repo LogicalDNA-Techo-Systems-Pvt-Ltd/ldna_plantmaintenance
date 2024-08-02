@@ -285,10 +285,10 @@ frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assi
             method: 'frappe.client.get_list',
             args: {
                 doctype: 'User',
-                fields: ['name'],
+                fields: ['full_name'],
             },
             callback: function(response) {
-                let options = response.message.map(user => user.name);
+                let options = response.message.map(user => user.full_name);
 
                 frappe.prompt(
                     [
@@ -300,12 +300,13 @@ frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assi
                             reqd: 1
                         }
                     ],
+
                     function(values) {
                         let newAssignees = values['users'] || [];
                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
                         
                         if (duplicates.length > 0) {
-                            frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
+                            frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
                         } else {
                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
                             updateAssignees();
@@ -318,8 +319,12 @@ frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assi
 
         function updateAssignees() {
             let userList = selectedAssignees.join(', ');
+            // console.log(userList);
             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
             frm.refresh_field('task_allocation_details');
         }
     }
 });
+
+
+ 
