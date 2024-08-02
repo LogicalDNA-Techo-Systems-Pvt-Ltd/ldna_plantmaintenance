@@ -9,7 +9,8 @@
  "field_order": [
   "material_code",
   "material_name",
-  "default_unit_of_measure",
+
+  "unit_of_measure",
   "is_return",
   "column_break_ntat",
   "material_group",
@@ -17,7 +18,7 @@
   "manufacturer_details_section",
   "manufacturer_of_asset",
   "country_of_manufacturer",
-  "material_batch_no",
+  "batch_no",
   "column_break_svpr",
   "material_model_number",
   "material_serial_no"
@@ -34,6 +35,11 @@
    "fieldname": "material_name",
    "fieldtype": "Data",
    "label": "Material Name"
+  },
+  {
+   "fieldname": "batch_no",
+   "fieldtype": "Data",
+   "label": "Material Batch Number"
   },
   {
    "fieldname": "column_break_ntat",
@@ -68,7 +74,7 @@
   {
    "fieldname": "material_serial_no",
    "fieldtype": "Data",
-   "label": "Material Serial No."
+   "label": "Material Serial Number"
   },
   {
    "default": "0",
@@ -82,26 +88,21 @@
    "label": "Description"
   },
   {
+   "fieldname": "unit_of_measure",
+   "fieldtype": "Link",
+   "label": "Unit of Measure",
+   "options": "UOM"
+  },
+  {
    "fieldname": "material_group",
    "fieldtype": "Link",
    "label": "Material Group",
    "options": "Equipment  Group"
-  },
-  {
-   "fieldname": "default_unit_of_measure",
-   "fieldtype": "Link",
-   "label": "Default Unit of Measure",
-   "options": "UOM"
-  },
-  {
-   "fieldname": "material_batch_no",
-   "fieldtype": "Data",
-   "label": "Material Batch No."
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-29 12:49:06.112747",
+ "modified": "2024-07-29 12:50:09.882745",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Material",

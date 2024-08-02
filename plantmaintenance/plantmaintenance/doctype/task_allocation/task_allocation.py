@@ -44,10 +44,13 @@ class TaskAllocation(Document):
             "approver": frappe.session.user,
             "equipment_code": detail.equipment_code,
             "equipment_name": detail.equipment_name,
-            "work_center": self.work_center,
+            "plant" : self.plant,
+            "location" : self.location,
+            "functional_location" : self.functional_location,
             "plant_section": self.plant_section,
-            "plan_start_date": plan_start_date,
-            "plan_end_date": plan_end_date,
+            "work_center": self.work_center,
+            # "plan_start_date": plan_start_date,
+            # "plan_end_date": plan_end_date,
             "assigned_to": detail.assign_to,
             "activity": detail.activity,
             "parameter": detail.parameter,
@@ -64,6 +67,8 @@ class TaskAllocation(Document):
         task_detail.insert(ignore_permissions=True)
 
     def update_task_detail(self, detail, task_name):
+        a= []
+        print(a)
         task_detail_doc = frappe.get_doc("Task Detail", task_name)
         has_changes = False
         if task_detail_doc.assigned_to != detail.assign_to:
@@ -72,6 +77,8 @@ class TaskAllocation(Document):
         if task_detail_doc.priority != detail.priority:
             task_detail_doc.priority = detail.priority
             has_changes = True
+           
+            
 
         if has_changes:
             task_detail_doc.save(ignore_permissions=True)
@@ -266,7 +273,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
     return tasks
 
-@frappe.whitelist()
+@frappe.whitelist() #This code is to download the excel file of task allocation detail ct for bulk assignment of task. PD
 def download_tasks_excel_for_task_allocation(tasks):
    tasks = frappe.parse_json(tasks)
 
@@ -323,7 +330,7 @@ def download_tasks_excel_for_task_allocation(tasks):
    return file_doc.file_url
 
 
-@frappe.whitelist()
+@frappe.whitelist()    #// This code is to upload the excel file in task allocation doctype for bulk assignment of task.
 def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
    task_allocation_doc = frappe.get_doc("Task Allocation", task_allocation_name)   
 

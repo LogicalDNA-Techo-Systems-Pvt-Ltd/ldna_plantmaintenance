@@ -13,6 +13,7 @@
   "status",
   "priority",
   "column_break_xlqp",
+  "plant",
   "work_center",
   "plant_section",
   "type",
@@ -22,20 +23,21 @@
   "assigned_to",
   "section_break_pnvh",
   "activity",
-  "minimum_value",
-  "parameter_dropdown",
-  "acceptance_criteria",
   "result",
+  "minimum_value",
   "values",
+  "work_permit_number",
   "column_break_rnng",
   "parameter",
+  "parameter_dropdown",
+  "readings",
+  "acceptance_criteria",
   "maximum_value",
-  "acceptance_criteria_for_list",
-  "actual_value",
   "column_break_scrc",
   "parameter_type",
-  "readings",
   "frequency",
+  "actual_value",
+  "acceptance_criteria_for_list",
   "section_break_mpil",
   "column_break_limp",
   "reading_1",
@@ -154,10 +156,10 @@
   },
   {
    "fieldname": "assigned_to",
-   "fieldtype": "Link",
+   "fieldtype": "Small Text",
    "in_standard_filter": 1,
    "label": "Assigned To",
-   "options": "User"
+   "options": "Assigne"
   },
   {
    "fieldname": "section_break_pnvh",
@@ -184,6 +186,7 @@
    "depends_on": "eval:doc.parameter_type==\"Numeric\"\neval:doc.type!=\"Breakdown\"",
    "fieldname": "minimum_value",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Minimum value",
    "read_only": 1
   },
@@ -221,12 +224,14 @@
    "fetch_from": "parameter.number_of_readings",
    "fieldname": "readings",
    "fieldtype": "Int",
+   "hidden": 1,
    "label": "Readings"
   },
   {
    "depends_on": "eval:doc.parameter_type==\"Numeric\"",
    "fieldname": "maximum_value",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Maximum Value",
    "read_only": 1
   },
@@ -339,33 +344,6 @@
    "precision": "2"
   },
   {
-   "fieldname": "section_break_oufx",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "actual_start_date",
-   "fieldtype": "Date",
-   "label": "Actual Start Date"
-  },
-  {
-   "fieldname": "column_break_wphi",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "actual_end_date",
-   "fieldtype": "Date",
-   "label": "Actual End Date"
-  },
-  {
-   "fieldname": "column_break_ruot",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "actual_time_taken",
-   "fieldtype": "Float",
-   "label": "Actual Time Taken (In Hours)"
-  },
-  {
    "fieldname": "section_break_ubjt",
    "fieldtype": "Section Break",
    "label": "Breakdown Maintenance"
@@ -428,87 +406,6 @@
    "label": "Inventory"
   },
   {
-   "fieldname": "attach_image",
-   "fieldtype": "Attach Image",
-   "label": "Attach Image"
-  },
-  {
-   "fieldname": "section_break_tssa",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "plan_start_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Plan Start Date"
-  },
-  {
-   "fieldname": "column_break_oaav",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "plan_end_date",
-   "fieldtype": "Date",
-   "label": "Plan End Date"
-  },
-  {
-   "fieldname": "column_break_jntw",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "require_time",
-   "fieldtype": "Float",
-   "label": "Required Time (In Hours)",
-   "read_only": 1
-  },
-  {
-   "fieldname": "task_allocation_id",
-   "fieldtype": "Data",
-   "label": "Task Allocation Id",
-   "read_only": 1
-  },
-  {
-   "default": "Low",
-   "depends_on": "eval:doc.type==\"Preventive\"",
-   "fieldname": "priority",
-   "fieldtype": "Select",
-   "label": "Priority",
-   "options": "\nLow\nMedium\nHigh"
-  },
-  {
-   "depends_on": "eval:doc.parameter_type==\"List\"",
-   "fieldname": "acceptance_criteria_for_list",
-   "fieldtype": "Data",
-   "label": "Acceptance Criteria For List",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.type==\"Preventive\"",
-   "fieldname": "result",
-   "fieldtype": "Select",
-   "label": "Result",
-   "options": "\nPass\nFail",
-   "read_only": 1
-  },
-  {
-   "depends_on": "eval:doc.parameter_type==\"Binary\"",
-   "fieldname": "actual_value",
-   "fieldtype": "Select",
-   "label": "Actual Criteria",
-   "options": "\nYES\nNO"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Task Detail",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
-  },
-  {
    "fieldname": "section_break_eccq",
    "fieldtype": "Section Break"
   },
@@ -531,13 +428,131 @@
   {
    "fieldname": "section_break_oema",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attach_image",
+   "fieldtype": "Attach Image",
+   "label": "Attach Image"
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Data",
+   "label": "Plant"
+  },
+  {
+   "fieldname": "task_allocation_id",
+   "fieldtype": "Data",
+   "label": "Task Allocation Id",
+   "read_only": 1
+  },
+  {
+   "default": "Low",
+   "depends_on": "eval:doc.type==\"Preventive\"",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "\nLow\nMedium\nHigh"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Preventive\"",
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "label": "Result",
+   "options": "\nPass\nFail",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"List\"",
+   "fieldname": "acceptance_criteria_for_list",
+   "fieldtype": "Data",
+   "label": "Acceptance Criteria For List",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.parameter_type==\"Binary\"",
+   "fieldname": "actual_value",
+   "fieldtype": "Select",
+   "label": "Actual Criteria",
+   "options": "\nYES\nNO"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Task Detail",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "plan_start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Plan Start Date"
+  },
+  {
+   "fieldname": "work_permit_number",
+   "fieldtype": "Data",
+   "label": "Work Permit Number"
+  },
+  {
+   "fieldname": "section_break_tssa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_oaav",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "plan_end_date",
+   "fieldtype": "Date",
+   "label": "Plan End Date"
+  },
+  {
+   "fieldname": "column_break_jntw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "require_time",
+   "fieldtype": "Float",
+   "label": "Required Time (In Hours)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_oufx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "actual_start_date",
+   "fieldtype": "Date",
+   "label": "Actual Start Date"
+  },
+  {
+   "fieldname": "column_break_wphi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "actual_end_date",
+   "fieldtype": "Date",
+   "label": "Actual End Date"
+  },
+  {
+   "fieldname": "column_break_ruot",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "actual_time_taken",
+   "fieldtype": "Float",
+   "label": "Actual Time Taken (In Hours)"
   }
  ],
  "image_field": "attach_image",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-23 12:27:34.893425",
+ "modified": "2024-08-02 01:09:48.372445",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

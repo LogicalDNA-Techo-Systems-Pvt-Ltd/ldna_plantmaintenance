@@ -1,15 +1,15 @@
 frappe.ui.form.on('Task Detail', {
-    readings: function(frm) {
+    readings: function (frm) {
         const numReadings = frm.doc.readings;
-        
+
         if (numReadings > 10) {
             frappe.msgprint(__('Number of readings must be less than or equal to 10.'));
             return;
         }
-        
+
         for (let i = 1; i <= 10; i++) {
             const fieldname = `reading_${i}`;
-            
+
             if (i <= numReadings) {
                 frm.set_df_property(fieldname, 'hidden', false);
             } else {
@@ -17,45 +17,45 @@ frappe.ui.form.on('Task Detail', {
             }
         }
     },
-    
-    onload: function(frm) {
+
+    onload: function (frm) {
         frm.trigger('readings');
-        
+
         // Fetch parameter details if parameter field is set
         if (frm.doc.parameter) {
             fetch_parameter_details(frm);
         }
     },
-    
-    parameter: function(frm) {
+
+    parameter: function (frm) {
         // Fetch parameter details whenever parameter field changes
         fetch_parameter_details(frm);
     },
-    
-    type: function(frm) {
+
+    type: function (frm) {
         if (frm.doc.type === 'Breakdown') {
             frm.set_value('parameter_type', '');
         }
     },
 
-    validate: function(frm) {
+    validate: function (frm) {
         if (frm.doc.actual_end_date < frm.doc.actual_start_date) {
             frappe.msgprint(__('Actual End Date should be greater than or equal to Actual Start Date'));
             frappe.validated = false;
         }
     },
 
-    before_save: function(frm) {
-        const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5', 
-                        'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
-        
-        let readingsCount = frm.doc.readings; 
-        let hasValidationErrors = false; 
-        
+    before_save: function (frm) {
+        const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5',
+            'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
+
+        let readingsCount = frm.doc.readings;
+        let hasValidationErrors = false;
+
         if (frm.doc.parameter_type === 'Numeric') {
             let minRange = frm.doc.minimum_value;
             let maxRange = frm.doc.maximum_value;
-            
+
             for (let i = 0; i < readingsCount; i++) {
                 let field = fields[i];
                 let numericValue = frm.doc[field];
@@ -71,61 +71,112 @@ frappe.ui.form.on('Task Detail', {
         }
     },
 
-    refresh: function(frm) {
+    refresh: function (frm) {
         let material_issued = frm.fields_dict.material_issued;
-        if (material_issued && !frm.inventory_button_added) {
-            frm.inventory_button_added = true;
-
-            let button = $('<button class="btn btn-primary btn-xs update-qty-btn" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
-            let button1 = $('<button class="btn btn-primary btn-xs send-for-approval-btn" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
-            button1.on('click', function() {
-                let rows_with_zero_shortage = [];
-
-                frm.doc.material_issued.forEach((item, index) => {
-                    if (item.shortage > 0) {
-                        if (index === frm.doc.material_issued.length - 1) {
-                            frappe.msgprint(`Cannot send for approval due to existing shortage in row ${item.idx}.`);
-                        }
-                    } 
-                    else {
-                        rows_with_zero_shortage.push(item);
-                        if (index === frm.doc.material_issued.length - 1) {
-                            frappe.msgprint(`Email sent to Manager for material approval for row ${item.idx}.`);
-                        }
-                    }
-                });
-
-                if (rows_with_zero_shortage.length > 0) {
+        let user = frappe.session.user;
+        let manager_email = frm.doc.approver;
+        if (user === manager_email) {
+            $('.update-qty-btn').hide();
+            $('.send-for-approval-btn').hide();
+            if (!frm.approved_button_added) {
+                frm.approved_button_added = true;
+                let approvedButton = $('<button class="btn btn-primary btn-xs approved-btn" style="margin-top: -10px; margin-left: 92%;">Approve</button>');
+                approvedButton.on('click', function () {
                     frappe.call({
-                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
+                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.mark_as_issued",
                         args: {
                             docname: frm.doc.name
                         },
-                        callback: function(response) {
+                        callback: function (response) {
                             if (response.message) {
-                                rows_with_zero_shortage.forEach(item => {
-                                    item.status = 'Pending Approval';
+                                frm.doc.material_issued.forEach(item => {
+                                    if (item.status === 'Pending Approval') {
+                                        item.status = 'Material Issued';
+                                    }
                                 });
                                 frm.refresh_field('material_issued');
                             }
                         }
                     });
+                });
+                material_issued.grid.wrapper.find('.grid-footer').append(approvedButton);
+            }
+            material_issued.grid.data.forEach((row, idx) => {
+                if (row.shortage > 0) {
+                    frm.fields_dict.material_issued.grid.grid_rows[idx].wrapper.hide();
                 }
             });
+            material_issued.grid.wrapper.find('.grid-add-row').hide();
 
-            material_issued.grid.wrapper.find('.grid-footer').append(button);
-            material_issued.grid.wrapper.find('.grid-footer').append(button1);
+        } else {
+            if (!frm.inventory_button_added) {
+                frm.inventory_button_added = true;
+
+                let button = $('<button class="btn btn-primary btn-xs update-qty-btn" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
+                let button1 = $('<button class="btn btn-primary btn-xs send-for-approval-btn" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
+
+                button1.on('click', function () {
+                    let new_rows_for_approval = [];
+
+                    frm.doc.material_issued.forEach((item, index) => {
+                        if (item.shortage > 0) {
+                            if (index === frm.doc.material_issued.length - 1) {
+                                frappe.msgprint(`Cannot send for approval due to existing shortage`);
+                            }
+                        } else {
+                            if (item.status !== 'Material Issued') {
+                                new_rows_for_approval.push(item);
+                            }
+                            if (index === frm.doc.material_issued.length - 1) {
+                                frappe.msgprint(`Email sent to Manager for material approval`);
+                            }
+                        }
+                    });
+                    if (new_rows_for_approval.length > 0) {
+                        frappe.call({
+                            method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
+                            args: {
+                                docname: frm.doc.name
+                            },
+                            callback: function (response) {
+                                if (response.message) {
+                                    new_rows_for_approval.forEach(item => {
+                                        item.status = 'Pending Approval';
+                                        item.approval_date = frappe.datetime.nowdate();
+                                    });
+
+                                    frm.refresh_field('material_issued');
+                                }
+                            }
+                        });
+                    }
+                });
+                material_issued.grid.wrapper.find('.grid-footer').append(button);
+                material_issued.grid.wrapper.find('.grid-footer').append(button1);
+            }
         }
-        material_issued_rows(frm);
+
+        // Toggle the result field based on attachment
+        toggle_result_field(frm);
+
+        // Toggle the add assignee button based on assigned_to and user roles
+        toggle_add_assignee_button(frm);
+    },
+
+    attachments: function (frm) {
+        toggle_result_field(frm);
+    },
+
+    add_assignee: function (frm) {
+        toggle_add_assignee_button(frm);
     }
 });
 
-
 frappe.ui.form.on('Material Issue', {
-    available_quantity: function(frm, cdt, cdn) {
+    available_quantity: function (frm, cdt, cdn) {
         calculate_shortage(frm, cdt, cdn);
     },
-    required_quantity: function(frm, cdt, cdn) {
+    required_quantity: function (frm, cdt, cdn) {
         calculate_shortage(frm, cdt, cdn);
     }
 });
@@ -134,16 +185,16 @@ function calculate_shortage(frm, cdt, cdn) {
     let row = locals[cdt][cdn];
     if (row.available_quantity >= row.required_quantity) {
         row.shortage = 0;
-    } 
-    else {
+    } else {
         row.shortage = row.required_quantity - row.available_quantity;
     }
     if (isNaN(row.shortage)) {
         row.shortage = '';
     }
-    if (row.shortage >0 && row.status === 'Pending Approval') {
+    if (row.shortage > 0 && row.status === 'Pending Approval' || row.shortage > 0 && row.status === 'Material Issued' || row.shortage === 0 && row.status == "Material Issued") {
         row.status = '';
     }
+
     frm.refresh_field('material_issued');
     material_issued_rows(frm);
 }
@@ -155,7 +206,7 @@ function fetch_parameter_details(frm) {
             doctype: "Parameter",
             name: frm.doc.parameter
         },
-        callback: function(r) {
+        callback: function (r) {
             if (r.message) {
                 let parameter = r.message;
                 if (parameter.parameter_type === "List" && parameter.values) {
@@ -171,22 +222,71 @@ function fetch_parameter_details(frm) {
     });
 }
 
-function material_issued_rows(frm) {
-    let user = frappe.session.user;
-    let manager_email = frm.doc.approver; 
-
-    if (user === manager_email) {
-        frm.fields_dict.material_issued.grid.data.forEach((row, idx) => {
-            if (row.shortage > 0) {
-                frm.fields_dict.material_issued.grid.grid_rows[idx].wrapper.hide();
-            }
-        });
-        $('.update-qty-btn').hide();
-        $('.send-for-approval-btn').hide();
-        frm.fields_dict.material_issued.grid.wrapper.find('.grid-add-row').hide();
-
+function toggle_result_field(frm) {
+    if (frm.doc.attachment) {
+        frm.set_df_property('result', 'hidden', 0);
+    } else {
+        frm.set_df_property('result', 'hidden', 1);
     }
 }
 
+function toggle_add_assignee_button(frm) {
+    const user_roles = frappe.user_roles;
+    const is_maintenance_manager = user_roles.includes('Maintenance Manager');
 
+    if (is_maintenance_manager) {
+        frm.set_df_property('add_assignee', 'hidden', 1);
+        return;
+    }
 
+    if (!frm.doc.assigned_to) {
+        frm.set_df_property('add_assignee', 'hidden', 0);
+    } else {
+        frm.set_df_property('add_assignee', 'hidden', 1);
+    }
+}
+
+frappe.ui.form.on('Task Detail', 'add_assignee', function (frm) {
+    let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()) : [];
+
+    frappe.call({
+        method: 'frappe.client.get_list',
+        args: {
+            doctype: 'User',
+            fields: ['name'],
+        },
+        callback: function (response) {
+            let options = response.message.map(user => user.name);
+
+            frappe.prompt(
+                [
+                    {
+                        label: __("Select Users"),
+                        fieldname: "users",
+                        fieldtype: "MultiSelectList",
+                        options: options,
+                        reqd: 1
+                    }
+                ],
+                function (values) {
+                    let newAssignees = values['users'] || [];
+                    let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+                    if (duplicates.length > 0) {
+                        frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
+                    } else {
+                        selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+                        updateAssignees();
+                    }
+                },
+                __("Select Users")
+            );
+        }
+    });
+
+    function updateAssignees() {
+        let userList = selectedAssignees.join(', ');
+        frm.set_value("assigned_to", userList);
+        frm.refresh_field('assigned_to');
+    }
+});

@@ -62,58 +62,59 @@ def get_work_center_based_on_section(section):
 #This code is to fetch the task detail in equipment's history tab PD.
 @frappe.whitelist()
 def equipment_task_details(doc, method=None):
-    task_detail = doc
-
-    equipment_doc = frappe.get_doc("Equipment", task_detail.equipment_code)
-    task_detail_doc = frappe.get_doc("Task Detail", task_detail.name)
     
-    valid_statuses = ["Completed", "Rejected", "Overdue"]
-    valid_workflow_states = ["Approved", "Rejected"]
+    task_detail = doc
+    if task_detail.equipment_code:
+        equipment_doc = frappe.get_doc("Equipment", task_detail.equipment_code)
+        task_detail_doc = frappe.get_doc("Task Detail", task_detail.name)
+        
+        valid_statuses = ["Completed", "Rejected", "Overdue"]
+        valid_workflow_states = ["Approved", "Rejected"]
 
-    def is_task_detail_existing(child_table, task_name, status):
-        for detail in child_table:
-            if detail.task == task_name and detail.status == status:
-                return True
-        return False
+        def is_task_detail_existing(child_table, task_name, status):
+            for detail in child_table:
+                if detail.task == task_name and detail.status == status:
+                    return True
+            return False
 
-    def should_create_entry(status, workflow_state):
-        if status == "Completed":
-            return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Completed")
-        elif status == "Rejected" and workflow_state == "Rejected":
-            return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Rejected")
-        else:
-            return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, status)
-
-    def is_material_entry_existing(child_table, task_name, material_name):
-        for detail in child_table:
-            if detail.task == task_name and detail.material_name == material_name:
-                return True
-        return False
-
-    if equipment_doc and task_detail.status in valid_statuses:
-        if should_create_entry(task_detail.status, task_detail.workflow_state):
-            detail = equipment_doc.append("task_detail_ct", {})
-            detail.task = task_detail.name
-            detail.parameter = task_detail.parameter
-            detail.date = task_detail.creation
-            
-            if task_detail.status == "Overdue" and task_detail.workflow_state in valid_workflow_states:
-                detail.status = f"{task_detail.workflow_state} / {task_detail.status}"
+        def should_create_entry(status, workflow_state):
+            if status == "Completed":
+                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Completed")
+            elif status == "Rejected" and workflow_state == "Rejected":
+                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Rejected")
             else:
-                detail.status = task_detail.status
-            
-            detail.passfail = task_detail.result
+                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, status)
 
-    if task_detail_doc.material_returned and task_detail.status in valid_statuses:
-        material_returned = task_detail_doc.get("material_returned", [])
-        if material_returned:
-            for material_issue in material_returned:
-                if not is_material_entry_existing(equipment_doc.material_movement_ct, task_detail.name, material_issue.material_code):
-                    detail = equipment_doc.append("material_movement_ct", {})
-                    detail.task = task_detail.name
-                    detail.material_type = material_issue.type
-                    detail.material_name = material_issue.material_code
-                    detail.date = task_detail.creation
-                    detail.quantity = material_issue.issue_quantity
+        def is_material_entry_existing(child_table, task_name, material_name):
+            for detail in child_table:
+                if detail.task == task_name and detail.material_name == material_name:
+                    return True
+            return False
+
+        if equipment_doc and task_detail.status in valid_statuses:
+            if should_create_entry(task_detail.status, task_detail.workflow_state):
+                detail = equipment_doc.append("task_detail_ct", {})
+                detail.task = task_detail.name
+                detail.parameter = task_detail.parameter
+                detail.date = task_detail.creation
                 
-    equipment_doc.save()
+                if task_detail.status == "Overdue" and task_detail.workflow_state in valid_workflow_states:
+                    detail.status = f"{task_detail.workflow_state} / {task_detail.status}"
+                else:
+                    detail.status = task_detail.status
+                
+                detail.passfail = task_detail.result
+
+        if task_detail_doc.material_returned and task_detail.status in valid_statuses:
+            material_returned = task_detail_doc.get("material_returned", [])
+            if material_returned:
+                for material_issue in material_returned:
+                    if not is_material_entry_existing(equipment_doc.material_movement_ct, task_detail.name, material_issue.material_code):
+                        detail = equipment_doc.append("material_movement_ct", {})
+                        detail.task = task_detail.name
+                        detail.material_type = material_issue.type
+                        detail.material_name = material_issue.material_code
+                        detail.date = task_detail.creation
+                        detail.quantity = material_issue.issue_quantity
+                    
+        equipment_doc.save()
