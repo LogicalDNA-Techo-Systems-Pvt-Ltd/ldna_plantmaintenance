@@ -31,8 +31,12 @@
   "attachment_copy",
   "column_break_xuif",
   "assigned_to",
+
   "add_assignee",
-  "column_break_jkvt",
+  "column_break_jkvt,
+  "standard_value",
+  "plan_start_date",
+
   "section_break_pnvh",
   "activity",
   "minimum_value",
@@ -162,7 +166,7 @@
    "fieldtype": "Small Text",
    "in_standard_filter": 1,
    "label": "Assigned To",
-   "options": "Assigne"
+   "options": "User"
   },
   {
    "depends_on": "eval:doc.type===\"Preventive\"",
@@ -412,6 +416,15 @@
    "label": "Attach Image"
   },
   {
+
+   "fieldname": "plan_start_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Plan Start Date"
+  },
+  {
    "fieldname": "task_allocation_id",
    "fieldtype": "Data",
    "label": "Task Allocation Id",
@@ -549,12 +562,17 @@
    "fieldname": "attachment_copy",
    "fieldtype": "Attach Image",
    "label": "Attachment"
+   "fieldname": "standard_value",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Standard Value"
   }
  ],
  "image_field": "attachment",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
+
  "modified": "2024-08-01 17:39:51.510209",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",

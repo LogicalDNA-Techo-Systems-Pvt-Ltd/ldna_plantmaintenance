@@ -13,6 +13,9 @@
   "parameter_type",
   "values",
   "acceptance_criteria_for_list",
+  "column_break_mira",
+  "number_of_maintenance_person",
+  "standard_value",
   "parameter_section",
   "minimum_value",
   "acceptance_criteria",
@@ -213,11 +216,25 @@
    "fieldname": "acceptance_criteria_for_list",
    "fieldtype": "Select",
    "label": "Acceptance Criteria For List"
+  },
+  {
+   "fieldname": "column_break_mira",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "standard_value",
+   "fieldtype": "Int",
+   "label": "Standard Value"
+  },
+  {
+   "fieldname": "number_of_maintenance_person",
+   "fieldtype": "Int",
+   "label": "Number of Maintenance Person"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-24 20:20:55.411829",
+ "modified": "2024-08-01 14:57:39.976698",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",

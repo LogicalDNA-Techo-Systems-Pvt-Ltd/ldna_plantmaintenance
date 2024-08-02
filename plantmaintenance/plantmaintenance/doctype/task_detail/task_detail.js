@@ -94,7 +94,6 @@ frappe.ui.form.on('Task Detail', {
                                         item.status = 'Material Issued';
                                     }
                                 });
-
                                 frm.refresh_field('material_issued');
                             }
                         }
@@ -124,8 +123,7 @@ frappe.ui.form.on('Task Detail', {
                             if (index === frm.doc.material_issued.length - 1) {
                                 frappe.msgprint(`Cannot send for approval due to existing shortage`);
                             }
-                        }
-                        else {
+                        } else {
                             if (item.status !== 'Material Issued') {
                                 new_rows_for_approval.push(item);
                             }
@@ -144,6 +142,7 @@ frappe.ui.form.on('Task Detail', {
                                 if (response.message) {
                                     new_rows_for_approval.forEach(item => {
                                         item.status = 'Pending Approval';
+                                        item.approval_date = frappe.datetime.nowdate();
                                     });
 
                                     frm.refresh_field('material_issued');
@@ -156,6 +155,20 @@ frappe.ui.form.on('Task Detail', {
                 material_issued.grid.wrapper.find('.grid-footer').append(button1);
             }
         }
+
+        // Toggle the result field based on attachment
+        toggle_result_field(frm);
+
+        // Toggle the add assignee button based on assigned_to and user roles
+        toggle_add_assignee_button(frm);
+    },
+
+    attachments: function (frm) {
+        toggle_result_field(frm);
+    },
+
+    add_assignee: function (frm) {
+        toggle_add_assignee_button(frm);
     }
 });
 
@@ -172,8 +185,7 @@ function calculate_shortage(frm, cdt, cdn) {
     let row = locals[cdt][cdn];
     if (row.available_quantity >= row.required_quantity) {
         row.shortage = 0;
-    }
-    else {
+    } else {
         row.shortage = row.required_quantity - row.available_quantity;
     }
     if (isNaN(row.shortage)) {
@@ -182,7 +194,6 @@ function calculate_shortage(frm, cdt, cdn) {
     if (row.shortage > 0 && row.status === 'Pending Approval' || row.shortage > 0 && row.status === 'Material Issued' || row.shortage === 0 && row.status == "Material Issued") {
         row.status = '';
     }
-
 
     frm.refresh_field('material_issued');
     material_issued_rows(frm);
@@ -211,89 +222,13 @@ function fetch_parameter_details(frm) {
     });
 }
 
-
-frappe.ui.form.on('Task Detail', { // if attachment is joined then only result field will be visible to user
-
-    refresh: function (frm) {
-        toggle_result_field(frm);
-    },
-
-    attachments: function (frm) {
-        toggle_result_field(frm);
-    }
-});
-
 function toggle_result_field(frm) {
-
     if (frm.doc.attachment) {
-
         frm.set_df_property('result', 'hidden', 0);
     } else {
-
         frm.set_df_property('result', 'hidden', 1);
     }
 }
-
-
-
-// frappe.ui.form.on('Task Detail', {  
-//     add_assignee: function(frm) {
-//         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()) : [];
-
-//         frappe.call({
-//             method: 'frappe.client.get_list',
-//             args: {
-//                 doctype: 'User',
-//                 fields: ['name'],
-//             },
-//             callback: function(response) {
-//                 let options = response.message.map(user => user.name);
-
-//                 frappe.prompt(
-//                     [
-//                         {
-//                             label: __("Select Users"),
-//                             fieldname: "users",
-//                             fieldtype: "MultiSelectList",
-//                             options: options,
-//                             reqd: 1
-//                         }
-//                     ],
-//                     function(values) {
-//                         let newAssignees = values['users'] || [];
-//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
-                        
-//                         if (duplicates.length > 0) {
-//                             frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
-//                         } else {
-//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-//                             updateAssignees();
-//                         }
-//                     },
-//                     __("Select Users")
-//                 );
-//             }
-//         });
-
-//         function updateAssignees() {
-//             let userList = selectedAssignees.join(', ');
-//             frm.set_value("assigned_to", userList);
-//             frm.refresh_field('assigned_to');
-//         }
-//     }
-// });
-
-
-frappe.ui.form.on('Task Detail', {    // if task is unassigned that time only add assignee button will be visible to user
-
-    refresh: function (frm) {
-        toggle_add_assignee_button(frm);
-    },
-
-    add_assignee: function (frm) {
-        toggle_add_assignee_button(frm);
-    }
-});
 
 function toggle_add_assignee_button(frm) {
     const user_roles = frappe.user_roles;
@@ -311,8 +246,7 @@ function toggle_add_assignee_button(frm) {
     }
 }
 
-
-frappe.ui.form.on('Task Detail', 'add_assignee', function(frm) {
+frappe.ui.form.on('Task Detail', 'add_assignee', function (frm) {
     let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()) : [];
 
     frappe.call({
@@ -321,7 +255,7 @@ frappe.ui.form.on('Task Detail', 'add_assignee', function(frm) {
             doctype: 'User',
             fields: ['name'],
         },
-        callback: function(response) {
+        callback: function (response) {
             let options = response.message.map(user => user.name);
 
             frappe.prompt(
@@ -334,7 +268,7 @@ frappe.ui.form.on('Task Detail', 'add_assignee', function(frm) {
                         reqd: 1
                     }
                 ],
-                function(values) {
+                function (values) {
                     let newAssignees = values['users'] || [];
                     let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
 

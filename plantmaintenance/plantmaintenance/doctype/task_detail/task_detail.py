@@ -1,7 +1,9 @@
 import frappe
 import json
 from frappe.model.document import Document
-# from frappe.utils import nowdate, getdate
+from frappe.utils import nowdate, getdate
+from datetime import datetime, timedelta
+from frappe.utils import nowdate, getdate
 
 class TaskDetail(Document):
     def validate(self):
@@ -21,16 +23,12 @@ class TaskDetail(Document):
             else:
                 self.result = 'Pass'
 
-
-        # if self.actual_start_date and getdate(self.actual_start_date) < getdate(nowdate()):
-        #     frappe.throw("Actual Start Date should be greater than or equal to the current date.")
-
-        # self.update_task_status()
-   
-    # def update_task_status(self):
-    #     today = getdate(nowdate())
-    #     if self.plan_end_date and getdate(self.plan_end_date) < today:
-    #         self.status = 'Overdue'
+    def before_save(self):
+        if self.plan_start_date:
+            today = getdate(nowdate())
+            start_date = getdate(self.plan_start_date) 
+            if today > start_date:
+                self.status = 'Overdue'
 
 @frappe.whitelist()
 def send_for_approval(docname):
@@ -59,6 +57,7 @@ def mark_as_issued(docname):
     for item in doc.material_issued:
         if item.status == "Pending Approval":
             item.status = "Material Issued"
-    
+            item.issued_date = getdate(nowdate()) 
+
     doc.save()
     
