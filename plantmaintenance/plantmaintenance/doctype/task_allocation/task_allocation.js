@@ -16,6 +16,8 @@ frappe.ui.form.on('Task Allocation', {
             });
 
             frm.custom_buttons_created = true;
+            $(".grid-add-row").hide();
+
         }
     },
     plant: function (frm) {
@@ -226,7 +228,7 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
             }
         });
     }, __('Upload XLSX File'));
- 
+    $(".grid-add-row").hide();
  
  }
  
