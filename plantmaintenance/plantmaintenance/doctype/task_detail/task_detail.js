@@ -24,7 +24,8 @@ frappe.ui.form.on('Task Detail', {
         // Fetch parameter details if parameter field is set
         if (frm.doc.parameter) {
             fetch_parameter_details(frm);
-        }
+        };
+        set_existing_rows_read_only(frm);
     },
 
     parameter: function (frm) {
@@ -42,7 +43,8 @@ frappe.ui.form.on('Task Detail', {
         if (frm.doc.actual_end_date < frm.doc.actual_start_date) {
             frappe.msgprint(__('Actual End Date should be greater than or equal to Actual Start Date'));
             frappe.validated = false;
-        }
+        };
+        set_existing_rows_read_only(frm);
     },
 
     before_save: function (frm) {
@@ -68,7 +70,10 @@ frappe.ui.form.on('Task Detail', {
             frm.doc.result = 'Fail';
         } else {
             frm.doc.result = 'Pass';
-        }
+        };
+        frm.fields_dict.material_issued.grid.data.forEach(row => {
+            consumable_fields(frm, row.doctype, row.name, row.consumable);
+        });
     },
 
     refresh: function (frm) {
@@ -102,33 +107,34 @@ frappe.ui.form.on('Task Detail', {
                 material_issued.grid.wrapper.find('.grid-footer').append(approvedButton);
             }
             material_issued.grid.data.forEach((row, idx) => {
-                if (row.shortage > 0) {
+                if (row.shortage > 0 || row.consumable || !row.spare) {
                     frm.fields_dict.material_issued.grid.grid_rows[idx].wrapper.hide();
                 }
             });
             material_issued.grid.wrapper.find('.grid-add-row').hide();
 
-        } else {
+        } 
+        else {
             if (!frm.inventory_button_added) {
                 frm.inventory_button_added = true;
 
                 let button = $('<button class="btn btn-primary btn-xs update-qty-btn" style="margin-top: -40px; margin-left: 72%;">Update Quantity</button>');
                 let button1 = $('<button class="btn btn-primary btn-xs send-for-approval-btn" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
 
-                button1.on('click', function () {
+                button1.on('click', function() {
                     let new_rows_for_approval = [];
-
+                    let message = '';
+    
                     frm.doc.material_issued.forEach((item, index) => {
                         if (item.shortage > 0) {
-                            if (index === frm.doc.material_issued.length - 1) {
-                                frappe.msgprint(`Cannot send for approval due to existing shortage`);
-                            }
+                            message = `Cannot send for approval due to existing shortage`;
+                        } else if (!item.spare) {
+                            message = __('Cannot send for approval.');
+                        } else if (item.shortage != 0) {
+                            message = __('Cannot send for approval.');
                         } else {
-                            if (item.status !== 'Material Issued') {
+                            if (item.spare && item.shortage === 0) {
                                 new_rows_for_approval.push(item);
-                            }
-                            if (index === frm.doc.material_issued.length - 1) {
-                                frappe.msgprint(`Email sent to Manager for material approval`);
                             }
                         }
                     });
@@ -141,6 +147,7 @@ frappe.ui.form.on('Task Detail', {
                             callback: function (response) {
                                 if (response.message) {
                                     new_rows_for_approval.forEach(item => {
+                                        frappe.msgprint ('Email send to Manager for material approval.')
                                         item.status = 'Pending Approval';
                                         item.approval_date = frappe.datetime.nowdate();
                                     });
@@ -150,12 +157,15 @@ frappe.ui.form.on('Task Detail', {
                             }
                         });
                     }
+                    else if (message) {
+                        frappe.msgprint(message);
+                    }
                 });
                 material_issued.grid.wrapper.find('.grid-footer').append(button);
                 material_issued.grid.wrapper.find('.grid-footer').append(button1);
             }
-        }
-
+        };
+        set_existing_rows_read_only(frm);
         // Toggle the result field based on attachment
         toggle_result_field(frm);
 
@@ -178,6 +188,14 @@ frappe.ui.form.on('Material Issue', {
     },
     required_quantity: function (frm, cdt, cdn) {
         calculate_shortage(frm, cdt, cdn);
+    },
+    consumable: function(frm, cdt, cdn) {
+        let row = locals[cdt][cdn];
+        consumable_fields(frm, cdt, cdn, row.consumable);
+    },
+    material_issued_add: function(frm, cdt, cdn) {
+        frappe.model.set_value(cdt, cdn, 'is_new_entry', 1);
+        set_new_row_editable(frm, cdt, cdn);
     }
 });
 
@@ -221,6 +239,46 @@ function fetch_parameter_details(frm) {
         }
     });
 }
+
+function consumable_fields(frm, cdt, cdn, is_consumable) {
+    let row = locals[cdt][cdn];
+    if (is_consumable) {
+        frappe.model.set_value(cdt, cdn, 'status', 'Material Issued');
+        if (row.is_new_entry) {
+            frm.fields_dict['material_issued'].grid.toggle_enable('required_quantity', true, cdn);
+        } 
+        else {
+            frm.fields_dict['material_issued'].grid.toggle_enable('available_quantity', false, cdn);
+        }
+        frm.fields_dict['material_issued'].grid.toggle_enable('available_quantity', false, cdn);
+    } 
+    else {
+        frm.fields_dict['material_issued'].grid.toggle_enable('available_quantity', true, cdn);
+        frm.fields_dict['material_issued'].grid.toggle_enable('required_quantity', true, cdn);
+    }
+    frm.refresh_field('material_issued');
+}
+
+function set_existing_rows_read_only(frm) {
+    frm.fields_dict['material_issued'].grid.get_data().forEach(row => {
+        if (!row.is_new_entry && (row.status === 'Material Issued' || row.status === 'Pending Approval' || row.status ==='')) {
+            console.log(row.name);
+            frm.fields_dict['material_issued'].grid.toggle_enable('material_code', false, row.name);
+            frm.fields_dict['material_issued'].grid.toggle_enable('material_name', false, row.name);
+            frm.fields_dict['material_issued'].grid.toggle_enable('available_quantity', false, row.name);
+            frm.fields_dict['material_issued'].grid.toggle_enable('required_quantity', false, row.name);
+            frm.fields_dict['material_issued'].grid.toggle_enable('approval_date', false, row.name);
+            frm.fields_dict['material_issued'].grid.toggle_enable('issued_date', false, row.name);
+        } 
+    });
+    frm.refresh_field('material_issued');
+}
+
+function set_new_row_editable(frm, cdt, cdn) {
+    let row = locals[cdt][cdn];
+    frm.fields_dict['material_issued'].grid.toggle_enable('material_code', true, row.name);
+}
+
 
 function toggle_result_field(frm) {
     if (frm.doc.attachment) {
