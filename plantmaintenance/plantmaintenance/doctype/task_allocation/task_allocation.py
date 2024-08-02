@@ -2,16 +2,13 @@ import frappe
 import uuid
 from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days, add_years
-from openpyxl import Workbook
-from openpyxl import load_workbook
+from openpyxl import Workbook, load_workbook
 from io import BytesIO
 from datetime import date, timedelta, datetime
 from dateutil.relativedelta import relativedelta
 import calendar
 import os
 import openpyxl
-from dateutil.relativedelta import relativedelta
-from datetime import datetime, timedelta
 
 
 class TaskAllocation(Document):
@@ -55,6 +52,7 @@ class TaskAllocation(Document):
             "activity": detail.activity,
             "parameter": detail.parameter,
             "parameter_type": parameter_info.get('parameter_type'),
+            'standard_value': parameter_info.get('standard_value'),
             "minimum_value": parameter_info.get('minimum_value'),
             "maximum_value": parameter_info.get('maximum_value'),
             "require_time": parameter_info.get('require_time'),
@@ -87,6 +85,7 @@ class TaskAllocation(Document):
         parameter_doc = frappe.get_doc("Parameter", {"parameter": parameter})
         parameter_info = {
             "require_time": parameter_doc.require_time,
+            "standard_value":parameter_doc.standard_value,
             "acceptance_criteria_for_list": parameter_doc.acceptance_criteria_for_list,            
             "acceptance_criteria": parameter_doc.acceptance_criteria,
             "parameter_type": parameter_doc.parameter_type,
@@ -95,6 +94,7 @@ class TaskAllocation(Document):
             "values": parameter_doc.values.split(',') if parameter_doc.parameter_type == "List" else None
         }
         return parameter_info
+
 
 @frappe.whitelist()
 def check_tasks_generated(docname):
@@ -332,66 +332,81 @@ def download_tasks_excel_for_task_allocation(tasks):
 
 @frappe.whitelist()    #// This code is to upload the excel file in task allocation doctype for bulk assignment of task.
 def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
-   task_allocation_doc = frappe.get_doc("Task Allocation", task_allocation_name)   
+    
+    task_allocation_doc = frappe.get_doc("Task Allocation", task_allocation_name)
+
+    folder_path = ''
+    actual_file_name = ''
+
+    if file.startswith("/private/files/"):
+        actual_file_name = file.replace("/private/files/", '')
+        folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "private", "files")
+    else:
+        actual_file_name = file.replace("/files/", '')
+        folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "public", "files")
+
+    source_file = os.path.join(folder_path, actual_file_name)
+
+    wb = load_workbook(source_file)
+    sheet = wb.active
+
+    headers = [sheet.cell(row=1, column=i).value for i in range(1, sheet.max_column + 1)]
+
+    task_allocation_doc.set("task_allocation_details", [])
+
+    missing_assign_to_count = 0
+    mismatch_people_count = 0
+
+    for row in range(2, sheet.max_row + 1):
+        row_data = {}
+        is_blank_row = True
+        for col_num in range(1, sheet.max_column + 1):
+            cell_value = sheet.cell(row=row, column=col_num).value
+            if cell_value is not None and cell_value != '':
+                is_blank_row = False
+                break
+
+        if is_blank_row:
+            continue 
+
+        for col_num in range(1, sheet.max_column + 1):
+            cell_value = sheet.cell(row=row, column=col_num).value
+            row_data[headers[col_num - 1]] = cell_value
+
+        assign_to = row_data.get('Assign To')
+        parameter_doc = frappe.get_doc("Parameter", row_data.get('Parameter'))
+
+        if assign_to is None or assign_to.strip() == '':
+            missing_assign_to_count += 1
+        elif parameter_doc.number_of_people != len(assign_to.split(',')):
+            mismatch_people_count += 1
+            
+        task_allocation_doc.append("task_allocation_details", {
+            'equipment_code': row_data.get('Equipment Code'),
+            'equipment_name': row_data.get('Equipment Name'),
+            'activity': row_data.get('Activity'),
+            'parameter': row_data.get('Parameter'),
+            'frequency': row_data.get('Frequency'),
+            'date': row_data.get('Date'),
+            'assign_to': assign_to,
+            'priority': row_data.get('Priority'),
+            'day': row_data.get('Day'),
+            'unique_key': row_data.get('Unique Key')
+        })
+
+    task_allocation_doc.save(ignore_permissions=True)
+
+    error_message = ""
+    if missing_assign_to_count > 0:
+        error_message += f"{missing_assign_to_count} rows are missing 'Assign To' person. "
+    if mismatch_people_count > 0:
+        error_message += f"{mismatch_people_count} rows have a mismatch in the number of people assigned."
+
+    if error_message:
+        frappe.msgprint(error_message)
 
 
-   folder_path = ''
-   actual_file_name = ''
-
-
-   if file.startswith("/private/files/"):
-       actual_file_name = file.replace("/private/files/", '')
-       folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "private", "files")
-   else:
-       actual_file_name = file.replace("/files/", '')
-       folder_path = os.path.join(os.path.abspath(frappe.get_site_path()), "public", "files")
-
-
-   source_file = os.path.join(folder_path, actual_file_name)
-
-
-   wb = load_workbook(source_file)
-   sheet = wb.active
-
-
-   headers = [sheet.cell(row=1, column=i).value for i in range(1, sheet.max_column + 1)]
-
-
-   task_allocation_doc.set("task_allocation_details", [])
-
-
-   for row in range(2, sheet.max_row + 1):
-       row_data = {}
-       is_blank_row = True
-       for col_num in range(1, sheet.max_column + 1):
-           cell_value = sheet.cell(row=row, column=col_num).value
-           if cell_value is not None and cell_value != '':
-               is_blank_row = False
-               break
-
-
-       if is_blank_row:
-           continue 
-
-
-       for col_num in range(1, sheet.max_column + 1):
-           cell_value = sheet.cell(row=row, column=col_num).value
-           row_data[headers[col_num - 1]] = cell_value
-
-
-       task_allocation_doc.append("task_allocation_details", {
-           'equipment_code': row_data.get('Equipment Code'),
-           'equipment_name': row_data.get('Equipment Name'),
-           'activity': row_data.get('Activity'),
-           'parameter': row_data.get('Parameter'),
-           'frequency': row_data.get('Frequency'),
-           'date': row_data.get('Date'),
-           'assign_to': row_data.get('Assign To'),
-           'priority': row_data.get('Priority'),
-           'day': row_data.get('Day'),
-           'unique_key': row_data.get('Unique Key')
-       })
-
+    return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!"}
 
    task_allocation_doc.save(ignore_permissions=True)
   
