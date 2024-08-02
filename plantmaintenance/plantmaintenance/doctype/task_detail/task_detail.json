@@ -6,22 +6,37 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "type",
+  "column_break_phsx",
+  "column_break_siyw",
+  "section_break_qxmc",
+  "plant",
+  "plant_section",
+  "column_break_amaw",
+  "location",
+  "work_center",
+  "column_break_zfny",
+  "functional_location",
   "section_break_bizs",
   "task_allocation_id",
   "equipment_code",
   "equipment_name",
-  "status",
-  "priority",
   "column_break_xlqp",
-  "work_center",
-  "plant_section",
-  "type",
+  "priority",
+  "status",
   "unique_key",
   "column_break_cemj",
+  "section_break_pbqz",
   "approver",
+  "attachment_copy",
+  "column_break_xuif",
   "assigned_to",
+
+  "add_assignee",
+  "column_break_jkvt,
   "standard_value",
   "plan_start_date",
+
   "section_break_pnvh",
   "activity",
   "minimum_value",
@@ -38,6 +53,7 @@
   "parameter_type",
   "readings",
   "frequency",
+  "attachment",
   "section_break_mpil",
   "column_break_limp",
   "reading_1",
@@ -75,6 +91,7 @@
  ],
  "fields": [
   {
+   "depends_on": "eval:doc.type!==\"General\"",
    "fieldname": "section_break_bizs",
    "fieldtype": "Section Break"
   },
@@ -88,8 +105,8 @@
    "fieldname": "equipment_code",
    "fieldtype": "Link",
    "label": "Equipment Code",
-   "options": "Equipment",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.type != \"General\"",
+   "options": "Equipment"
   },
   {
    "fetch_from": "equipment_code.equipment_name",
@@ -128,8 +145,10 @@
   {
    "fieldname": "type",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Type ",
-   "options": "Preventive\nBreakdown"
+   "options": "Preventive\nBreakdown\nShutdown\nGeneral\nPredictive"
   },
   {
    "fieldname": "column_break_cemj",
@@ -150,6 +169,7 @@
    "options": "User"
   },
   {
+   "depends_on": "eval:doc.type===\"Preventive\"",
    "fieldname": "section_break_pnvh",
    "fieldtype": "Section Break",
    "label": "Preventive Maintenance"
@@ -360,7 +380,7 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.type==\"Breakdown\"",
+   "depends_on": "eval:doc.type!==\"Preventive\"",
    "fieldname": "remark",
    "fieldtype": "Long Text",
    "label": "Remark"
@@ -396,6 +416,7 @@
    "label": "Attach Image"
   },
   {
+
    "fieldname": "plan_start_date",
    "fieldtype": "Date",
    "hidden": 1,
@@ -425,9 +446,11 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.type==\"Preventive\"",
+   "depends_on": "eval:doc.type===\"Preventive\"",
    "fieldname": "result",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Result",
    "options": "\nPass\nFail",
    "read_only": 1
@@ -474,17 +497,83 @@
    "fieldtype": "Section Break"
   },
   {
+   "fieldname": "column_break_phsx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_siyw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_qxmc",
+   "fieldtype": "Section Break",
+   "label": "Plant Details"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "functional_location",
+   "fieldtype": "Link",
+   "label": "Functional Location",
+   "options": "Functional Location"
+  },
+  {
+   "fieldname": "column_break_amaw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zfny",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "label": "Plant",
+   "options": "Plant"
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach Image",
+   "label": "Attachment"
+  },
+  {
+   "fieldname": "add_assignee",
+   "fieldtype": "Button",
+   "label": "Add Assignee"
+  },
+  {
+   "fieldname": "section_break_pbqz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_xuif",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jkvt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.type!==\"Preventive\"",
+   "fieldname": "attachment_copy",
+   "fieldtype": "Attach Image",
+   "label": "Attachment"
    "fieldname": "standard_value",
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Standard Value"
   }
  ],
- "image_field": "attach_image",
+ "image_field": "attachment",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-02 10:47:50.626551",
+
+ "modified": "2024-08-01 17:39:51.510209",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

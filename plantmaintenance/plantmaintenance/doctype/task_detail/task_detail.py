@@ -30,7 +30,6 @@ class TaskDetail(Document):
             if today > start_date:
                 self.status = 'Overdue'
 
-
 @frappe.whitelist()
 def send_for_approval(docname):
     task_detail = frappe.get_doc('Task Detail', docname)
