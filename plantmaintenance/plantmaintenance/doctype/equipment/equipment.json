@@ -241,8 +241,7 @@
    "fieldname": "task_detail_ct",
    "fieldtype": "Table",
    "label": "Task Detail",
-   "options": "Equipment Task Details CT",
-   "read_only": 1
+   "options": "Equipment Task Details CT"
   },
   {
    "fieldname": "section_break_rqyc",
@@ -252,13 +251,12 @@
    "fieldname": "material_movement_ct",
    "fieldtype": "Table",
    "label": "Material Movement",
-   "options": "Equipment Material Moment CT",
-   "read_only": 1
+   "options": "Equipment Material Moment CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-31 15:12:42.140771",
+ "modified": "2024-08-05 12:14:39.733971",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
