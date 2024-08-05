@@ -8,6 +8,7 @@
  "field_order": [
   "type",
   "column_break_akkk",
+  "work_permit_number",
   "column_break_rips",
   "section_break_pqqx",
   "plant",
@@ -18,12 +19,10 @@
   "column_break_xlno",
   "functional_location",
   "section_break_bizs",
-  "task_allocation_id",
   "equipment_code",
   "equipment_name",
   "column_break_xcgn",
   "status",
-  "priority",
   "column_break_xlqp",
   "unique_key",
   "section_break_tlcv",
@@ -34,7 +33,6 @@
   "column_break_eyyx",
   "section_break_pnvh",
   "activity",
-  "work_permit_number",
   "values",
   "column_break_rnng",
   "parameter",
@@ -313,20 +311,6 @@
    "options": "Plant"
   },
   {
-   "fieldname": "task_allocation_id",
-   "fieldtype": "Data",
-   "label": "Task Allocation Id",
-   "read_only": 1
-  },
-  {
-   "default": "Low",
-   "depends_on": "eval:doc.type==\"Preventive\"",
-   "fieldname": "priority",
-   "fieldtype": "Select",
-   "label": "Priority",
-   "options": "\nLow\nMedium\nHigh"
-  },
-  {
    "fieldname": "result",
    "fieldtype": "Select",
    "label": "Result",
@@ -538,7 +522,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-05 15:48:13.522088",
+ "modified": "2024-08-05 17:59:33.819799",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
