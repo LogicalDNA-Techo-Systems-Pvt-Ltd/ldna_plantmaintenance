@@ -46,7 +46,7 @@ class TaskAllocation(Document):
             "functional_location" : self.functional_location,
             "plant_section": self.plant_section,
             "work_center": self.work_center,
-            # "plan_start_date": plan_start_date,
+            "plan_start_date": plan_start_date,
             # "plan_end_date": plan_end_date,
             "assigned_to": detail.assign_to,
             "activity": detail.activity,
@@ -65,8 +65,7 @@ class TaskAllocation(Document):
         task_detail.insert(ignore_permissions=True)
 
     def update_task_detail(self, detail, task_name):
-        a= []
-        print(a)
+       
         task_detail_doc = frappe.get_doc("Task Detail", task_name)
         has_changes = False
         if task_detail_doc.assigned_to != detail.assign_to:
@@ -378,7 +377,7 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
 
         if assign_to is None or assign_to.strip() == '':
             missing_assign_to_count += 1
-        elif parameter_doc.number_of_people != len(assign_to.split(',')):
+        elif parameter_doc.number_of_maintenance_person != len(assign_to.split(',')):
             mismatch_people_count += 1
             
         task_allocation_doc.append("task_allocation_details", {
@@ -407,9 +406,6 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
 
 
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!"}
-
-
-#task will delete in task allocation child table when equipment is on scrap
 
 @frappe.whitelist()
 def clear_task_allocation_details(equipment_code):
