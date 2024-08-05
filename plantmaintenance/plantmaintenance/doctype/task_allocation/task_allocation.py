@@ -408,10 +408,6 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
 
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!"}
 
-   task_allocation_doc.save(ignore_permissions=True)
-  
-   return {"message": "Excel import successful!"}
-
 
 #task will delete in task allocation child table when equipment is on scrap
 
