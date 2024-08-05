@@ -233,55 +233,113 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
  }
  
 
-frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assignee select user dialogue box which will allow to select multiple assignee at one time. PD
+// frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assignee select user dialogue box which will allow to select multiple assignee at one time. PD
+//     add_assignee: function(frm, cdt, cdn) {
+//         var child = locals[cdt][cdn];
+//         let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
+
+//         frappe.call({
+//             method: 'frappe.client.get_list',
+//             args: {
+//                 doctype: 'User',
+//                 fields: ['full_name'],
+//             },
+//             callback: function(response) {
+//                 let options = response.message.map(user => user.full_name);
+
+//                 frappe.prompt(
+//                     [
+//                         {
+//                             label: __("Select Users"),
+//                             fieldname: "users",
+//                             fieldtype: "MultiSelectList",
+//                             options: options,
+//                             reqd: 1
+//                         }
+//                     ],
+
+//                     function(values) {
+//                         let newAssignees = values['users'] || [];
+//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+                        
+//                         if (duplicates.length > 0) {
+//                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
+//                         } else {
+//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+//                             updateAssignees();
+//                         }
+//                     },
+//                     __("Select Users")
+//                 );
+//             }
+//         });
+
+//         function updateAssignees() {
+//             let userList = selectedAssignees.join(', ');
+//             // console.log(userList);
+//             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+//             frm.refresh_field('task_allocation_details');
+//         }
+//     }
+// });
+
+
+frappe.ui.form.on('Task Allocation Details', {  
     add_assignee: function(frm, cdt, cdn) {
-        var child = locals[cdt][cdn];
-        let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
+         var child = locals[cdt][cdn];
+        
+         let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()).filter(Boolean) : [];
 
-        frappe.call({
-            method: 'frappe.client.get_list',
+         frappe.call({
+            method: 'frappe.client.get_list', 
             args: {
-                doctype: 'User',
-                fields: ['full_name'],
+                doctype: 'User',  
+                fields: ['full_name'],  
+                filters: [  
+                    ['User', 'enabled', '=', 1], // User must be enabled
+                    ['Has Role', 'role', '=', 'Maintenance User'] // User must have the Maintenance User role
+                ],
+                limit_page_length: 0  
             },
-            callback: function(response) {
-                let options = response.message.map(user => user.full_name);
+            callback: function(response) {  
+                 let options = response.message.map(user => user.full_name).filter(Boolean);
 
-                frappe.prompt(
+                 frappe.prompt(
                     [
                         {
-                            label: __("Select Users"),
-                            fieldname: "users",
-                            fieldtype: "MultiSelectList",
-                            options: options,
-                            reqd: 1
+                            label: __("Select Users"),  
+                            fieldname: "users", 
+                            fieldtype: "MultiSelectList",  
+                            options: options,  
+                            reqd: 1,  
+                            get_data: function() {
+                                return response.message.map(user => {
+                                     return { value: user.full_name, description: "" };
+                                });
+                            }
                         }
                     ],
-
-                    function(values) {
+                    function(values) {  
                         let newAssignees = values['users'] || [];
-                        let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
                         
-                        if (duplicates.length > 0) {
+                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+                        if (duplicates.length > 0) {  
                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
-                        } else {
+                        } else {  
                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-                            updateAssignees();
+                             updateAssignees();
                         }
                     },
-                    __("Select Users")
+                    __("Select Users")  
                 );
             }
         });
 
-        function updateAssignees() {
-            let userList = selectedAssignees.join(', ');
-            // console.log(userList);
-            frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
-            frm.refresh_field('task_allocation_details');
+         function updateAssignees() {
+             let userList = selectedAssignees.join(', ');
+             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+             frm.refresh_field('task_allocation_details');
         }
     }
 });
-
-
- 
