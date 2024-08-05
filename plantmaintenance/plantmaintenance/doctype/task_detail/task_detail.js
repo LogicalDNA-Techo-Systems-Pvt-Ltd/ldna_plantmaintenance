@@ -173,7 +173,7 @@ frappe.ui.form.on('Task Detail', {
         toggle_add_assignee_button(frm);
     },
 
-    attachments: function (frm) {
+    attachment: function (frm) {
         toggle_result_field(frm);
     },
 
@@ -281,12 +281,13 @@ function set_new_row_editable(frm, cdt, cdn) {
 
 
 function toggle_result_field(frm) {
-    if (frm.doc.attachment) {
+    if (frm.doc.attachment && frm.doc.attachment.length > 0) {
         frm.set_df_property('result', 'hidden', 0);
     } else {
         frm.set_df_property('result', 'hidden', 1);
     }
 }
+
 
 function toggle_add_assignee_button(frm) {
     const user_roles = frappe.user_roles;
