@@ -32,7 +32,6 @@
   "assigned_to",
   "add_assignee",
   "column_break_eyyx",
-  "attachment",
   "section_break_pnvh",
   "activity",
   "work_permit_number",
@@ -191,6 +190,7 @@
    "depends_on": "eval:doc.parameter_type==\"Binary\"",
    "fieldname": "acceptance_criteria",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Acceptance Criteria",
    "options": "\nYES\nNO",
    "read_only": 1
@@ -506,12 +506,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "attachment",
-   "fieldtype": "Table",
-   "label": "Attachment",
-   "options": "Attachment CT"
-  },
-  {
    "fieldname": "section_break_pqqx",
    "fieldtype": "Section Break"
   },
@@ -544,7 +538,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-05 14:41:20.738839",
+ "modified": "2024-08-05 15:48:13.522088",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
