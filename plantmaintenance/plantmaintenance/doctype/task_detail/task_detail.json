@@ -20,7 +20,6 @@
   "equipment_code",
   "equipment_name",
   "column_break_vnoz",
-  "task_allocation_id",
   "status",
   "unique_key",
   "section_break_aaju",
@@ -299,11 +298,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "task_allocation_id",
-   "fieldtype": "Data",
-   "label": "Task Allocation Id"
-  },
-  {
    "fieldname": "column_break_vnoz",
    "fieldtype": "Column Break"
   },
@@ -465,7 +459,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-06 13:05:49.066168",
+ "modified": "2024-08-06 14:14:21.530972",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
