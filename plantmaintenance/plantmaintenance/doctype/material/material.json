@@ -1,0 +1,142 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{material_code}",
+ "creation": "2024-07-10 10:09:49.614866",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "material_code",
+  "material_name",
+
+  "unit_of_measure",
+  "is_return",
+  "column_break_ntat",
+  "material_group",
+  "description",
+  "consumable",
+  "spare",
+  "manufacturer_details_section",
+  "manufacturer_of_asset",
+  "country_of_manufacturer",
+  "batch_no",
+  "column_break_svpr",
+  "material_model_number",
+  "material_serial_no"
+ ],
+ "fields": [
+  {
+   "fieldname": "material_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Material Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "material_name",
+   "fieldtype": "Data",
+   "label": "Material Name"
+  },
+  {
+   "fieldname": "batch_no",
+   "fieldtype": "Data",
+   "label": "Material Batch Number"
+  },
+  {
+   "fieldname": "column_break_ntat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "manufacturer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Manufacturer Details"
+  },
+  {
+   "fieldname": "manufacturer_of_asset",
+   "fieldtype": "Link",
+   "label": "Manufacturer Of Asset",
+   "options": "Manufacturer"
+  },
+  {
+   "fieldname": "country_of_manufacturer",
+   "fieldtype": "Link",
+   "label": "Country Of Manufacturer",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_svpr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "material_model_number",
+   "fieldtype": "Data",
+   "label": "Material Model Number"
+  },
+  {
+   "fieldname": "material_serial_no",
+   "fieldtype": "Data",
+   "label": "Material Serial Number"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_return",
+   "fieldtype": "Check",
+   "label": "Is Return"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "unit_of_measure",
+   "fieldtype": "Link",
+   "label": "Unit of Measure",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "material_group",
+   "fieldtype": "Link",
+   "label": "Material Group",
+   "options": "Equipment  Group"
+  },
+  {
+   "default": "0",
+   "fieldname": "consumable",
+   "fieldtype": "Check",
+   "label": "Consumable"
+  },
+  {
+   "default": "0",
+   "fieldname": "spare",
+   "fieldtype": "Check",
+   "label": "Spare"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-02 14:26:30.994984",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Material",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

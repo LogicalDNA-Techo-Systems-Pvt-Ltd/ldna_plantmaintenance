@@ -1,0 +1,116 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:Task_Allocation-{####}",
+ "creation": "2024-05-30 15:10:06.134507",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ioxy",
+  "plant",
+  "functional_location",
+  "work_center",
+  "end_date",
+  "column_break_ikiv",
+  "location",
+  "plant_section",
+  "button_container",
+  "section_break_erqe",
+  "task_allocation_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ioxy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ikiv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_erqe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_allocation_details",
+   "fieldtype": "Table",
+   "label": "Task Allocation Details",
+   "options": "Task Allocation Details"
+  },
+  {
+   "fieldname": "button_container",
+   "fieldtype": "HTML",
+   "label": "Button Container"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Link",
+   "label": "Plant Section",
+   "options": "Section",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item_code.location",
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Work Center",
+   "options": "Work Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "label": "Plant",
+   "options": "Plant",
+   "reqd": 1
+  },
+  {
+   "fieldname": "functional_location",
+   "fieldtype": "Link",
+   "label": "Functional Location",
+   "options": "Functional Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-31 15:17:34.710819",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Task Allocation",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
