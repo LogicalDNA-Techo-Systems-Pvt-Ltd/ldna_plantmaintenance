@@ -104,7 +104,6 @@
    "fieldname": "location",
    "fieldtype": "Link",
    "hidden": 1,
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Location",
    "options": "Location"
@@ -113,7 +112,6 @@
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "hidden": 1,
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Functional Location",
    "options": "Functional Location"
@@ -134,7 +132,6 @@
   {
    "fieldname": "equipment_code",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Equipment Code",
    "options": "Equipment",
    "reqd": 1
@@ -149,7 +146,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Open\nIn Progress\nPending Approval\nRejected\nApproved\nOverdue"
+   "options": "Open\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue"
   },
   {
    "fieldname": "section_break_aaju",
@@ -310,7 +307,6 @@
   {
    "fieldname": "parameter_type",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Parameter Type",
    "options": "\nBinary\nNumeric\nList"
@@ -459,7 +455,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-06 14:14:21.530972",
+ "modified": "2024-08-06 15:04:18.787649",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
