@@ -1,0 +1,492 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:Task-{####}",
+ "creation": "2024-08-06 11:17:50.467862",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_axcg",
+  "amended_from",
+  "type",
+  "column_break_baxx",
+  "work_permit_number",
+  "section_break_hcgq",
+  "location",
+  "work_center",
+  "column_break_ukaq",
+  "functional_location",
+  "section_break_kjvc",
+  "equipment_code",
+  "equipment_name",
+  "column_break_vnoz",
+  "task_allocation_id",
+  "status",
+  "unique_key",
+  "section_break_aaju",
+  "approver",
+  "column_break_rewz",
+  "assigned_to",
+  "add_assignee",
+  "preventive_maintenence_section",
+  "activity",
+  "parameter_type",
+  "acceptance_criteria_for_list",
+  "frequency",
+  "values",
+  "column_break_xjwl",
+  "parameter",
+  "actual_value",
+  "parameter_dropdown",
+  "result",
+  "minimum_value",
+  "maximum_value",
+  "acceptance_criteria",
+  "readings",
+  "section_break_bkit",
+  "reading_1",
+  "reading_3",
+  "reading_5",
+  "reading_7",
+  "reading_9",
+  "column_break_bqyj",
+  "reading_2",
+  "reading_4",
+  "reading_6",
+  "reading_8",
+  "reading_10",
+  "section_break_bgbk",
+  "breakdown_reason",
+  "column_break_geml",
+  "service_call",
+  "section_break_guze",
+  "remark",
+  "section_break_qron",
+  "damage",
+  "column_break_jxrx",
+  "cause",
+  "section_break_djky",
+  "plan_start_date",
+  "inventory_tab",
+  "material_issued",
+  "section_break_snyi",
+  "material_returned",
+  "section_break_glag",
+  "attachment"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_axcg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Task Detail",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Preventive\nBreakdown\nShutdown\nGeneral\nPredictive"
+  },
+  {
+   "fieldname": "section_break_hcgq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "functional_location",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Functional Location",
+   "options": "Functional Location"
+  },
+  {
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Work Center",
+   "options": "Work Center"
+  },
+  {
+   "depends_on": "eval:doc.type!==\"General\"",
+   "fieldname": "section_break_kjvc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equipment_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment Code",
+   "options": "Equipment",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "equipment_code.equipment_name",
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "label": "Equipment Name"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nIn Progress\nPending Approval\nRejected\nApproved\nOverdue"
+  },
+  {
+   "fieldname": "section_break_aaju",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "approver",
+   "fieldtype": "Link",
+   "label": "Approver",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Small Text",
+   "label": "Assigned To"
+  },
+  {
+   "fieldname": "add_assignee",
+   "fieldtype": "Button",
+   "label": "Add Assignee"
+  },
+  {
+   "depends_on": "eval:doc.type===\"Preventive\"",
+   "fieldname": "preventive_maintenence_section",
+   "fieldtype": "Section Break",
+   "label": "Preventive Maintenence"
+  },
+  {
+   "fieldname": "activity",
+   "fieldtype": "Link",
+   "label": "Activity",
+   "options": "Activity"
+  },
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parameter",
+   "options": "Parameter"
+  },
+  {
+   "fieldname": "work_permit_number",
+   "fieldtype": "Data",
+   "label": "Work Permit Number"
+  },
+  {
+   "depends_on": "eval:doc.type===\"Preventive\"",
+   "fieldname": "section_break_bkit",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reading_1",
+   "fieldtype": "Float",
+   "label": "Reading 1"
+  },
+  {
+   "fieldname": "reading_2",
+   "fieldtype": "Float",
+   "label": "Reading 2"
+  },
+  {
+   "fieldname": "reading_3",
+   "fieldtype": "Float",
+   "label": "Reading 3"
+  },
+  {
+   "fieldname": "reading_4",
+   "fieldtype": "Float",
+   "label": "Reading 4"
+  },
+  {
+   "fieldname": "reading_5",
+   "fieldtype": "Float",
+   "label": "Reading 5"
+  },
+  {
+   "fieldname": "reading_6",
+   "fieldtype": "Float",
+   "label": "Reading 6"
+  },
+  {
+   "fieldname": "reading_7",
+   "fieldtype": "Float",
+   "label": "Reading 7"
+  },
+  {
+   "fieldname": "reading_8",
+   "fieldtype": "Float",
+   "label": "Reading 8"
+  },
+  {
+   "fieldname": "reading_9",
+   "fieldtype": "Float",
+   "label": "Reading 9"
+  },
+  {
+   "fieldname": "reading_10",
+   "fieldtype": "Float",
+   "label": "Reading 10"
+  },
+  {
+   "fieldname": "section_break_qron",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "damage",
+   "fieldtype": "Table MultiSelect",
+   "label": "Damage",
+   "options": "Damage CT"
+  },
+  {
+   "fieldname": "cause",
+   "fieldtype": "Table MultiSelect",
+   "label": "Cause",
+   "options": "Cause CT"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Text",
+   "label": "Remark"
+  },
+  {
+   "depends_on": "eval:doc.type===\"Breakdown\"",
+   "fieldname": "section_break_bgbk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "breakdown_reason",
+   "fieldtype": "Link",
+   "label": "Breakdown Reason",
+   "options": "Breakdown Reason"
+  },
+  {
+   "fieldname": "service_call",
+   "fieldtype": "Phone",
+   "label": "Service Call"
+  },
+  {
+   "fieldname": "column_break_baxx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ukaq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "task_allocation_id",
+   "fieldtype": "Data",
+   "label": "Task Allocation Id"
+  },
+  {
+   "fieldname": "column_break_vnoz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "unique_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Unique Key"
+  },
+  {
+   "fieldname": "parameter_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parameter Type",
+   "options": "\nBinary\nNumeric\nList"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type===\"List\"",
+   "fieldname": "parameter_dropdown",
+   "fieldtype": "Select",
+   "label": "Parameter Dropdown"
+  },
+  {
+   "fetch_from": "parameter.frequency",
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Frequency",
+   "options": "Daily\nWeekly\nMonthly\nYearly"
+  },
+  {
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Result",
+   "options": "\nPass\nFail"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type===\"List\"",
+   "fieldname": "values",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Values",
+   "read_only": 1
+  },
+  {
+   "fieldname": "minimum_value",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Minimum Value",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "maximum_value",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Maximum Value",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.parameter_type===\"List\"",
+   "fieldname": "acceptance_criteria_for_list",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Acceptance Criteria For List"
+  },
+  {
+   "fieldname": "acceptance_criteria",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Acceptance Criteria",
+   "options": "\nYES\nNO"
+  },
+  {
+   "fetch_from": "parameter.number_of_readings",
+   "fieldname": "readings",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Readings"
+  },
+  {
+   "fieldname": "section_break_djky",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "plan_start_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Plan Start Date"
+  },
+  {
+   "fieldname": "inventory_tab",
+   "fieldtype": "Tab Break",
+   "label": "Inventory"
+  },
+  {
+   "fieldname": "material_issued",
+   "fieldtype": "Table",
+   "label": "Material Issued",
+   "options": "Material Issue"
+  },
+  {
+   "fieldname": "section_break_snyi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_glag",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach Image",
+   "label": "Attachment"
+  },
+  {
+   "fieldname": "column_break_rewz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xjwl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_bqyj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_geml",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.type!==\"Preventive\"",
+   "fieldname": "section_break_guze",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jxrx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type===\"Binary\"",
+   "fieldname": "actual_value",
+   "fieldtype": "Select",
+   "label": "Actual Value",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "material_returned",
+   "fieldtype": "Table",
+   "label": "Material Returned",
+   "options": "Material Returned CT"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-08-06 13:05:49.066168",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Task Detail",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
