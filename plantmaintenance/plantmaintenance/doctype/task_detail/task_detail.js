@@ -294,10 +294,10 @@ function toggle_add_assignee_button(frm) {
     const user_roles = frappe.user_roles;
     const is_maintenance_manager = user_roles.includes('Maintenance Manager');
 
-    if (is_maintenance_manager) {
-        frm.set_df_property('add_assignee', 'hidden', 1);
-        return;
-    }
+    // if (is_maintenance_manager) {
+    //     frm.set_df_property('add_assignee', 'hidden', 0);
+    //     return;
+    // }
 
     if (!frm.doc.assigned_to) {
         frm.set_df_property('add_assignee', 'hidden', 0);

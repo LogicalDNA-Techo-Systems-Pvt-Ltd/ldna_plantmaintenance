@@ -73,6 +73,23 @@
  ],
  "fields": [
   {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Preventive\nBreakdown\nShutdown\nGeneral\nPredictive"
+  },
+  {
+   "fieldname": "column_break_ksvx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "work_permit_number",
+   "fieldtype": "Data",
+   "label": "Work Permit Number"
+  },
+  {
    "fieldname": "section_break_hcgq",
    "fieldtype": "Section Break"
   },
@@ -86,6 +103,18 @@
    "options": "Location"
   },
   {
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Work Center",
+   "options": "Work Center"
+  },
+  {
+   "fieldname": "column_break_ukaq",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "hidden": 1,
@@ -95,12 +124,33 @@
    "options": "Functional Location"
   },
   {
-   "fieldname": "work_center",
+   "fieldname": "section_break_ejsr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.type!= \"General\"",
+   "fieldname": "equipment_code",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Work Center",
-   "options": "Work Center"
+   "label": "Equipment Code",
+   "mandatory_depends_on": "eval:doc.type!= \"General\"",
+   "options": "Equipment"
+  },
+  {
+   "depends_on": "eval:doc.type!= \"General\"",
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "label": "Equipment Name"
+  },
+  {
+   "fieldname": "column_break_abyu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.type!= \"General\"",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue"
   },
   {
    "fieldname": "section_break_aaju",
@@ -112,6 +162,10 @@
    "label": "Approver",
    "options": "User",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_rewz",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "assigned_to",
@@ -136,110 +190,6 @@
    "options": "Activity"
   },
   {
-   "fieldname": "parameter",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Parameter",
-   "options": "Parameter"
-  },
-  {
-   "depends_on": "eval:doc.type===\"Preventive\"",
-   "fieldname": "section_break_bkit",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "reading_1",
-   "fieldtype": "Float",
-   "label": "Reading 1"
-  },
-  {
-   "fieldname": "reading_2",
-   "fieldtype": "Float",
-   "label": "Reading 2"
-  },
-  {
-   "fieldname": "reading_3",
-   "fieldtype": "Float",
-   "label": "Reading 3"
-  },
-  {
-   "fieldname": "reading_4",
-   "fieldtype": "Float",
-   "label": "Reading 4"
-  },
-  {
-   "fieldname": "reading_5",
-   "fieldtype": "Float",
-   "label": "Reading 5"
-  },
-  {
-   "fieldname": "reading_6",
-   "fieldtype": "Float",
-   "label": "Reading 6"
-  },
-  {
-   "fieldname": "reading_7",
-   "fieldtype": "Float",
-   "label": "Reading 7"
-  },
-  {
-   "fieldname": "reading_8",
-   "fieldtype": "Float",
-   "label": "Reading 8"
-  },
-  {
-   "fieldname": "reading_9",
-   "fieldtype": "Float",
-   "label": "Reading 9"
-  },
-  {
-   "fieldname": "reading_10",
-   "fieldtype": "Float",
-   "label": "Reading 10"
-  },
-  {
-   "fieldname": "section_break_qron",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "damage",
-   "fieldtype": "Table MultiSelect",
-   "label": "Damage",
-   "options": "Damage CT"
-  },
-  {
-   "fieldname": "cause",
-   "fieldtype": "Table MultiSelect",
-   "label": "Cause",
-   "options": "Cause CT"
-  },
-  {
-   "fieldname": "remark",
-   "fieldtype": "Text",
-   "label": "Remark"
-  },
-  {
-   "depends_on": "eval:doc.type===\"Breakdown\"",
-   "fieldname": "section_break_bgbk",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "breakdown_reason",
-   "fieldtype": "Link",
-   "label": "Breakdown Reason",
-   "options": "Breakdown Reason"
-  },
-  {
-   "fieldname": "service_call",
-   "fieldtype": "Phone",
-   "label": "Service Call"
-  },
-  {
-   "fieldname": "column_break_ukaq",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "parameter_type",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -249,9 +199,10 @@
   },
   {
    "depends_on": "eval:doc.parameter_type===\"List\"",
-   "fieldname": "parameter_dropdown",
-   "fieldtype": "Select",
-   "label": "Parameter Dropdown"
+   "fieldname": "acceptance_criteria_for_list",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Acceptance Criteria For List"
   },
   {
    "fetch_from": "parameter.frequency",
@@ -262,6 +213,39 @@
    "options": "Daily\nWeekly\nMonthly\nYearly"
   },
   {
+   "depends_on": "eval:doc.parameter_type===\"List\"",
+   "fieldname": "values",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Values",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xjwl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "parameter",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parameter",
+   "options": "Parameter"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type===\"Binary\"",
+   "fieldname": "actual_value",
+   "fieldtype": "Select",
+   "label": "Actual Value",
+   "options": "\nYes\nNo"
+  },
+  {
+   "depends_on": "eval:doc.parameter_type===\"List\"",
+   "fieldname": "parameter_dropdown",
+   "fieldtype": "Select",
+   "label": "Parameter Dropdown"
+  },
+  {
    "fieldname": "result",
    "fieldtype": "Select",
    "hidden": 1,
@@ -269,14 +253,6 @@
    "in_standard_filter": 1,
    "label": "Result",
    "options": "\nPass\nFail"
-  },
-  {
-   "depends_on": "eval:doc.parameter_type===\"List\"",
-   "fieldname": "values",
-   "fieldtype": "Text",
-   "hidden": 1,
-   "label": "Values",
-   "read_only": 1
   },
   {
    "fieldname": "minimum_value",
@@ -293,13 +269,6 @@
    "non_negative": 1
   },
   {
-   "depends_on": "eval:doc.parameter_type===\"List\"",
-   "fieldname": "acceptance_criteria_for_list",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Acceptance Criteria For List"
-  },
-  {
    "fieldname": "acceptance_criteria",
    "fieldtype": "Select",
    "hidden": 1,
@@ -312,6 +281,115 @@
    "fieldtype": "Int",
    "hidden": 1,
    "label": "Readings"
+  },
+  {
+   "depends_on": "eval:doc.type===\"Preventive\"",
+   "fieldname": "section_break_bkit",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reading_1",
+   "fieldtype": "Float",
+   "label": "Reading 1"
+  },
+  {
+   "fieldname": "reading_3",
+   "fieldtype": "Float",
+   "label": "Reading 3"
+  },
+  {
+   "fieldname": "reading_5",
+   "fieldtype": "Float",
+   "label": "Reading 5"
+  },
+  {
+   "fieldname": "reading_7",
+   "fieldtype": "Float",
+   "label": "Reading 7"
+  },
+  {
+   "fieldname": "reading_9",
+   "fieldtype": "Float",
+   "label": "Reading 9"
+  },
+  {
+   "fieldname": "column_break_bqyj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reading_2",
+   "fieldtype": "Float",
+   "label": "Reading 2"
+  },
+  {
+   "fieldname": "reading_4",
+   "fieldtype": "Float",
+   "label": "Reading 4"
+  },
+  {
+   "fieldname": "reading_6",
+   "fieldtype": "Float",
+   "label": "Reading 6"
+  },
+  {
+   "fieldname": "reading_8",
+   "fieldtype": "Float",
+   "label": "Reading 8"
+  },
+  {
+   "fieldname": "reading_10",
+   "fieldtype": "Float",
+   "label": "Reading 10"
+  },
+  {
+   "depends_on": "eval:doc.type===\"Breakdown\"",
+   "fieldname": "section_break_bgbk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "breakdown_reason",
+   "fieldtype": "Link",
+   "label": "Breakdown Reason",
+   "options": "Breakdown Reason"
+  },
+  {
+   "fieldname": "column_break_geml",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service_call",
+   "fieldtype": "Phone",
+   "label": "Service Call"
+  },
+  {
+   "depends_on": "eval:doc.type!==\"Preventive\"",
+   "fieldname": "section_break_guze",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Text",
+   "label": "Remark"
+  },
+  {
+   "fieldname": "section_break_qron",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "damage",
+   "fieldtype": "Table MultiSelect",
+   "label": "Damage",
+   "options": "Damage CT"
+  },
+  {
+   "fieldname": "column_break_jxrx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cause",
+   "fieldtype": "Table MultiSelect",
+   "label": "Cause",
+   "options": "Cause CT"
   },
   {
    "fieldname": "section_break_djky",
@@ -341,6 +419,12 @@
    "fieldtype": "Section Break"
   },
   {
+   "fieldname": "material_returned",
+   "fieldtype": "Table",
+   "label": "Material Returned",
+   "options": "Material Returned CT"
+  },
+  {
    "fieldname": "section_break_glag",
    "fieldtype": "Section Break"
   },
@@ -348,61 +432,6 @@
    "fieldname": "attachment",
    "fieldtype": "Attach Image",
    "label": "Attachment"
-  },
-  {
-   "fieldname": "column_break_rewz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_xjwl",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_bqyj",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_geml",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.type!==\"Preventive\"",
-   "fieldname": "section_break_guze",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_jxrx",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.parameter_type===\"Binary\"",
-   "fieldname": "actual_value",
-   "fieldtype": "Select",
-   "label": "Actual Value",
-   "options": "\nYes\nNo"
-  },
-  {
-   "fieldname": "material_returned",
-   "fieldtype": "Table",
-   "label": "Material Returned",
-   "options": "Material Returned CT"
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Type",
-   "options": "Preventive\nBreakdown\nShutdown\nGeneral\nPredictive"
-  },
-  {
-   "fieldname": "column_break_ksvx",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "work_permit_number",
-   "fieldtype": "Data",
-   "label": "Work Permit Number"
   },
   {
    "fieldname": "amended_from",
@@ -413,39 +442,12 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
-  },
-  {
-   "depends_on": "eval:doc.type!= \"General\"",
-   "fieldname": "section_break_ejsr",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "equipment_code",
-   "fieldtype": "Link",
-   "label": "Equipment Code",
-   "mandatory_depends_on": "eval:doc.type!= \"General\"",
-   "options": "Equipment"
-  },
-  {
-   "fieldname": "equipment_name",
-   "fieldtype": "Data",
-   "label": "Equipment Name"
-  },
-  {
-   "fieldname": "column_break_abyu",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Open\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-06 16:57:49.165521",
+ "modified": "2024-08-06 17:27:43.039333",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
