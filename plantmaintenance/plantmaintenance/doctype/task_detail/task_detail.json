@@ -6,22 +6,11 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_axcg",
-  "amended_from",
-  "type",
-  "column_break_baxx",
-  "work_permit_number",
   "section_break_hcgq",
   "location",
   "work_center",
   "column_break_ukaq",
   "functional_location",
-  "section_break_kjvc",
-  "equipment_code",
-  "equipment_name",
-  "column_break_vnoz",
-  "status",
-  "unique_key",
   "section_break_aaju",
   "approver",
   "column_break_rewz",
@@ -75,28 +64,6 @@
  ],
  "fields": [
   {
-   "fieldname": "section_break_axcg",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Task Detail",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Type",
-   "options": "Preventive\nBreakdown\nShutdown\nGeneral\nPredictive"
-  },
-  {
    "fieldname": "section_break_hcgq",
    "fieldtype": "Section Break"
   },
@@ -123,30 +90,6 @@
    "in_standard_filter": 1,
    "label": "Work Center",
    "options": "Work Center"
-  },
-  {
-   "depends_on": "eval:doc.type!==\"General\"",
-   "fieldname": "section_break_kjvc",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "equipment_code",
-   "fieldtype": "Link",
-   "label": "Equipment Code",
-   "options": "Equipment",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "equipment_code.equipment_name",
-   "fieldname": "equipment_name",
-   "fieldtype": "Data",
-   "label": "Equipment Name"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Open\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue"
   },
   {
    "fieldname": "section_break_aaju",
@@ -188,11 +131,6 @@
    "in_standard_filter": 1,
    "label": "Parameter",
    "options": "Parameter"
-  },
-  {
-   "fieldname": "work_permit_number",
-   "fieldtype": "Data",
-   "label": "Work Permit Number"
   },
   {
    "depends_on": "eval:doc.type===\"Preventive\"",
@@ -287,22 +225,8 @@
    "label": "Service Call"
   },
   {
-   "fieldname": "column_break_baxx",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_ukaq",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_vnoz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "unique_key",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Unique Key"
   },
   {
    "fieldname": "parameter_type",
@@ -455,7 +379,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-06 15:04:18.787649",
+ "modified": "2024-08-06 15:32:49.928137",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
