@@ -20,7 +20,6 @@
   "equipment_code",
   "equipment_name",
   "column_break_vnoz",
-  "task_allocation_id",
   "status",
   "unique_key",
   "section_break_aaju",
@@ -294,11 +293,6 @@
   {
    "fieldname": "column_break_ukaq",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "task_allocation_id",
-   "fieldtype": "Data",
-   "label": "Task Allocation Id"
   },
   {
    "fieldname": "column_break_vnoz",
