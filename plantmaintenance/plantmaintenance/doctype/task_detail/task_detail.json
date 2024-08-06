@@ -14,6 +14,11 @@
   "work_center",
   "column_break_ukaq",
   "functional_location",
+  "section_break_ejsr",
+  "equipment_code",
+  "equipment_name",
+  "column_break_abyu",
+  "status",
   "section_break_aaju",
   "approver",
   "column_break_rewz",
@@ -408,12 +413,39 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "depends_on": "eval:doc.type!= \"General\"",
+   "fieldname": "section_break_ejsr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equipment_code",
+   "fieldtype": "Link",
+   "label": "Equipment Code",
+   "mandatory_depends_on": "eval:doc.type!= \"General\"",
+   "options": "Equipment"
+  },
+  {
+   "fieldname": "equipment_name",
+   "fieldtype": "Data",
+   "label": "Equipment Name"
+  },
+  {
+   "fieldname": "column_break_abyu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nIn Progress\nPending Approval\nRejected\nCompleted\nOverdue"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-06 15:53:21.262040",
+ "modified": "2024-08-06 16:57:49.165521",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
