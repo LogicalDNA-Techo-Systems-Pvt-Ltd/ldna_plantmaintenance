@@ -6,6 +6,9 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "type",
+  "column_break_ksvx",
+  "work_permit_number",
   "section_break_hcgq",
   "location",
   "work_center",
@@ -60,7 +63,8 @@
   "section_break_snyi",
   "material_returned",
   "section_break_glag",
-  "attachment"
+  "attachment",
+  "amended_from"
  ],
  "fields": [
   {
@@ -71,6 +75,7 @@
    "fieldname": "location",
    "fieldtype": "Link",
    "hidden": 1,
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Location",
    "options": "Location"
@@ -79,6 +84,7 @@
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "hidden": 1,
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Functional Location",
    "options": "Functional Location"
@@ -231,6 +237,7 @@
   {
    "fieldname": "parameter_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Parameter Type",
    "options": "\nBinary\nNumeric\nList"
@@ -374,12 +381,39 @@
    "fieldtype": "Table",
    "label": "Material Returned",
    "options": "Material Returned CT"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Preventive\nBreakdown\nShutdown\nGeneral\nPredictive"
+  },
+  {
+   "fieldname": "column_break_ksvx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "work_permit_number",
+   "fieldtype": "Data",
+   "label": "Work Permit Number"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Task Detail",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-06 15:32:49.928137",
+ "modified": "2024-08-06 15:53:21.262040",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
