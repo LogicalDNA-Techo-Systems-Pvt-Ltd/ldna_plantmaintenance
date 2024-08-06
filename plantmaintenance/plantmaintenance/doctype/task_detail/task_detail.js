@@ -306,47 +306,106 @@ function toggle_add_assignee_button(frm) {
     }
 }
 
-frappe.ui.form.on('Task Detail', 'add_assignee', function (frm) {
-    let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()) : [];
 
-    frappe.call({
-        method: 'frappe.client.get_list',
-        args: {
-            doctype: 'User',
-            fields: ['name'],
-        },
-        callback: function (response) {
-            let options = response.message.map(user => user.name);
+// frappe.ui.form.on('Task Detail', 'add_assignee', function (frm) {
+//     let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()) : [];
 
-            frappe.prompt(
-                [
-                    {
-                        label: __("Select Users"),
-                        fieldname: "users",
-                        fieldtype: "MultiSelectList",
-                        options: options,
-                        reqd: 1
-                    }
+//     frappe.call({
+//         method: 'frappe.client.get_list',
+//         args: {
+//             doctype: 'User',
+//             fields: ['name'],
+//         },
+//         callback: function (response) {
+//             let options = response.message.map(user => user.name);
+
+//             frappe.prompt(
+//                 [
+//                     {
+//                         label: __("Select Users"),
+//                         fieldname: "users",
+//                         fieldtype: "MultiSelectList",
+//                         options: options,
+//                         reqd: 1
+//                     }
+//                 ],
+//                 function (values) {
+//                     let newAssignees = values['users'] || [];
+//                     let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+//                     if (duplicates.length > 0) {
+//                         frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
+//                     } else {
+//                         selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+//                         updateAssignees();
+//                     }
+//                 },
+//                 __("Select Users")
+//             );
+//         }
+//     });
+
+//     function updateAssignees() {
+//         let userList = selectedAssignees.join(', ');
+//         frm.set_value("assigned_to", userList);
+//         frm.refresh_field('assigned_to');
+//     }
+// });
+
+
+frappe.ui.form.on('Task Detail', {
+    add_assignee: function(frm) {
+        let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
+
+        frappe.call({
+            method: 'frappe.client.get_list',
+            args: {
+                doctype: 'User',
+                fields: ['full_name'],
+                filters: [
+                    ['User', 'enabled', '=', 1],
+                    ['Has Role', 'role', '=', 'Maintenance User']
                 ],
-                function (values) {
-                    let newAssignees = values['users'] || [];
-                    let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+                limit_page_length: 0,
+            },
+            callback: function(response) {
+                let options = response.message.map(user => user.full_name).filter(Boolean); // Ensure no empty values
 
-                    if (duplicates.length > 0) {
-                        frappe.msgprint(__("The following users are already selected: {0}", [duplicates.join(', ')]));
-                    } else {
-                        selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-                        updateAssignees();
-                    }
-                },
-                __("Select Users")
-            );
+                frappe.prompt(
+                    [
+                        {
+                            label: __("Select Users"),
+                            fieldname: "users",
+                            fieldtype: "MultiSelectList",
+                            options: options,
+                            reqd: 1,
+                            get_data: function() {
+                                return response.message.map(user => {
+                                    return { value: user.full_name, description: "" };
+                                });
+                            }
+                        }
+                    ],
+                    function(values) {
+                        let newAssignees = values['users'] || [];
+                        let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+                        if (duplicates.length > 0) {
+                            frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
+                        } else {
+                            selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+                            updateAssignees();
+                        }
+                    },
+                    __("Select Users")
+                );
+            }
+        });
+
+        function updateAssignees() {
+            let userList = selectedAssignees.join(', ');
+            frm.set_value("assigned_to", userList);
+            frm.refresh_field('assigned_to');
         }
-    });
-
-    function updateAssignees() {
-        let userList = selectedAssignees.join(', ');
-        frm.set_value("assigned_to", userList);
-        frm.refresh_field('assigned_to');
     }
 });
