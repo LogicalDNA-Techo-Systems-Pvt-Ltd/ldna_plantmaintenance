@@ -71,7 +71,6 @@
    "fieldname": "location",
    "fieldtype": "Link",
    "hidden": 1,
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Location",
    "options": "Location"
@@ -80,7 +79,6 @@
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "hidden": 1,
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Functional Location",
    "options": "Functional Location"
@@ -233,7 +231,6 @@
   {
    "fieldname": "parameter_type",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Parameter Type",
    "options": "\nBinary\nNumeric\nList"
