@@ -154,10 +154,21 @@ doc_events = {
     "Parameter": {
         "on_update": "plantmaintenance.plantmaintenance.doctype.parameter.parameter.update_activity_parameter"
     },
-    
     "Task Detail": {
         "on_update": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details"
-    }
+    },
+    "Task Allocation": {
+        "before_save": "plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.compare_and_delete_tasks"
+    },
+    "Equipment": {
+        "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks"
+    },
+    "Activity":{
+        "on_update":"plantmaintenance.plantmaintenance.doctype.activity.activity.delete_task_depends_activity"
+    },
+    "Activity Group":{
+        "on_update":"plantmaintenance.plantmaintenance.doctype.activity_group.activity_group.delete_task_depends_activity_group"
+    }    
 }
 
 

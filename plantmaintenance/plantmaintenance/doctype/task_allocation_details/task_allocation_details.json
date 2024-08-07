@@ -9,6 +9,7 @@
   "equipment_code",
   "unique_key",
   "equipment_name",
+  "activity_group",
   "activity",
   "parameter",
   "day",
@@ -117,12 +118,21 @@
    "fieldname": "add_assignee",
    "fieldtype": "Button",
    "label": "Add Assignee"
+  },
+  {
+   "fieldname": "activity_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Activity Group",
+   "options": "Activity Group",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-29 16:30:46.192819",
+ "modified": "2024-08-07 05:38:53.871870",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation Details",

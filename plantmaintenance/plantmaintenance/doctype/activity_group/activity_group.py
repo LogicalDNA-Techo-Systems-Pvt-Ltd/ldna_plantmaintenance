@@ -25,3 +25,26 @@ class ActivityGroup(Document):
 
     def remove(self, act):
          self.get('activity').remove(act)
+
+
+
+ 
+# I we delete the activity from activity group then delete the all the task from task detail of that activity for that particulr activity group.
+
+
+@frappe.whitelist()
+def delete_task_depends_activity_group(doc, method):
+    existing_tasks = frappe.get_all('Task Detail', filters={'activity_group': doc.activity_group, 'status':'Open'}, fields=['name', 'activity'])
+    
+    if not doc.is_active:
+        for task in existing_tasks:
+            frappe.delete_doc('Task Detail', task['name'])
+        return   
+    current_activities = {row.activity for row in doc.activity}  # Assuming 'activity' is the child table containing activities
+    
+    for task in existing_tasks:
+        if task['activity'] not in current_activities:
+            frappe.delete_doc('Task Detail', task['name'])
+
+
+ 

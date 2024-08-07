@@ -29,6 +29,7 @@
   "plan_start_date",
   "preventive_maintenence_section",
   "activity",
+  "activity_group",
   "parameter_type",
   "acceptance_criteria_for_list",
   "frequency",
@@ -444,12 +445,21 @@
   {
    "fieldname": "equipment_section",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "activity_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Activity Group",
+   "options": "Activity Group",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-07 17:56:46.586078",
+ "modified": "2024-08-07 10:27:43.439604",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
