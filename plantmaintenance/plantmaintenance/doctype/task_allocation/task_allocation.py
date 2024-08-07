@@ -185,7 +185,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     equipment_list = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 0}, fields=['equipment_code', 'equipment_name', 'activity_group'])
     on_scrap_equipment = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 1}, fields=['equipment_code'])
     
-    setting_doc = frappe.get_single('Setting')
+    setting_doc = frappe.get_single('Settings')
     start_date = getdate(setting_doc.start_date)
     today_date = getdate(nowdate())
     setting_end_date = getdate(setting_doc.end_date)
