@@ -7,10 +7,15 @@
  "field_order": [
   "start_date",
   "column_break_rytb",
-  "end_date"
+  "end_date",
+  "column_break_qtgr",
+  "section_break_tqya",
+  "back_days_entry",
+  "column_break_puqw"
  ],
  "fields": [
   {
+   "description": "Tasks are loaded into the task allocation starting from this dates.",
    "fieldname": "start_date",
    "fieldtype": "Date",
    "label": "Start Date"
@@ -20,18 +25,37 @@
    "fieldtype": "Column Break"
   },
   {
+   "description": "Tasks are loaded into the task allocation up to this date.",
    "fieldname": "end_date",
    "fieldtype": "Date",
    "label": "End Date"
+  },
+  {
+   "fieldname": "column_break_qtgr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Allows users to enter data for past dates.",
+   "fieldname": "back_days_entry",
+   "fieldtype": "Int",
+   "label": "Allowance Period"
+  },
+  {
+   "fieldname": "section_break_tqya",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_puqw",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-06-26 11:57:32.718390",
+ "modified": "2024-08-07 16:53:02.112938",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
- "name": "Setting",
+ "name": "Settings",
  "owner": "Administrator",
  "permissions": [
   {
