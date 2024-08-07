@@ -407,16 +407,6 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
 
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!"}
 
-<<<<<<< Updated upstream
-=======
-#    task_allocation_doc.save(ignore_permissions=True)
-  
-#    return {"message": "Excel import successful!"}
-
-
-#task will delete in task allocation child table when equipment is on scrap
-
->>>>>>> Stashed changes
 @frappe.whitelist()
 def clear_task_allocation_details(equipment_code):
     task_allocations = frappe.get_all('Task Allocation', filters={'equipment_code': equipment_code}, fields=['name'])
