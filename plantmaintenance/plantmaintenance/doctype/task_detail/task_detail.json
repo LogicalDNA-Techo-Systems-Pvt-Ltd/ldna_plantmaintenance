@@ -6,19 +6,20 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "equipment_name",
-  "equipment_code",
-  "column_break_ksvx",
-  "status",
+  "type_section",
+  "type",
+  "column_break_abyu",
+  "work_permit_number",
   "section_break_hcgq",
   "location",
   "work_center",
   "column_break_ukaq",
   "functional_location",
-  "section_break_ejsr",
-  "type",
-  "column_break_abyu",
-  "work_permit_number",
+  "equipment_section",
+  "equipment_code",
+  "equipment_name",
+  "column_break_ksvx",
+  "status",
   "section_break_aaju",
   "approver",
   "column_break_rewz",
@@ -121,10 +122,6 @@
    "options": "Functional Location"
   },
   {
-   "fieldname": "section_break_ejsr",
-   "fieldtype": "Section Break"
-  },
-  {
    "depends_on": "eval:doc.type!= \"General\"",
    "fieldname": "equipment_code",
    "fieldtype": "Link",
@@ -134,6 +131,7 @@
   },
   {
    "depends_on": "eval:doc.type!= \"General\"",
+   "fetch_from": "equipment_code.equipment_name",
    "fieldname": "equipment_name",
    "fieldtype": "Data",
    "label": "Equipment Name"
@@ -438,12 +436,20 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "type_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equipment_section",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-07 15:12:02.999685",
+ "modified": "2024-08-07 17:56:46.586078",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
