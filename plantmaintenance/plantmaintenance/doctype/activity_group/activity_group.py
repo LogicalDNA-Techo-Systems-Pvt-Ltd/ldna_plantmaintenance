@@ -47,4 +47,3 @@ def delete_task_depends_activity_group(doc, method):
             frappe.delete_doc('Task Detail', task['name'])
 
 
- 

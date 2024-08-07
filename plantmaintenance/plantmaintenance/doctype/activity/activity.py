@@ -40,6 +40,3 @@ def delete_task_depends_activity(doc,method):
             frappe.delete_doc('Task Detail', task['name'])
 
 
-
-    
-
