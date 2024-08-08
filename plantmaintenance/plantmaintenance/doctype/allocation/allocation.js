@@ -1,4 +1,4 @@
-frappe.ui.form.on('Task Allocation', {
+frappe.ui.form.on('Allocation', {
     refresh: function (frm) {
         if (!frm.custom_buttons_created) {
             const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
@@ -17,9 +17,18 @@ frappe.ui.form.on('Task Allocation', {
 
             frm.custom_buttons_created = true;
             $(".grid-add-row").hide();
+            frm.fields_dict['task_allocation_details'].grid.wrapper.find('.grid-add-row').hide();
 
+            frm.disable_save();
+            
         }
+
+        $(frm.page.sidebar).hide();
+        $(frm.page.wrapper).find('.page-title .sidebar-toggle-btn').css('display', 'none');
+        // $(frm.page.wrapper).find(".layout-main-section-wrapper").removeClass("col-md-10").addClass("col-md-12");
+        
     },
+
     plant: function (frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
@@ -137,12 +146,19 @@ frappe.ui.form.on('Task Allocation', {
         }
     }
 
+
 });
 
 
 function load_tasks(frm) {
+    if (!frm.doc.plant || !frm.doc.location || !frm.doc.functional_location || 
+        !frm.doc.plant_section || !frm.doc.work_center) {
+        frappe.msgprint(__('Please fill all the required fields (Plant, Location, Functional Location, Plant Section, Work Center) before loading tasks.'));
+        return;
+    }
+
     frappe.call({
-        method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.load_tasks',
+        method: 'plantmaintenance.plantmaintenance.doctype.allocation.allocation.load_tasks',
         args: {
             plant: frm.doc.plant,
             location: frm.doc.location,
@@ -163,7 +179,6 @@ function load_tasks(frm) {
                     frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
                     frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
                     frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
-                    frappe.model.set_value(child.doctype, child.name, 'activity_group', task.activity_group);
                     frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
                     frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
                     frappe.model.set_value(child.doctype, child.name, 'date', task.date);
@@ -171,15 +186,19 @@ function load_tasks(frm) {
                     frappe.model.set_value(child.doctype, child.name, 'unique_key', task.unique_key);
                 });
                 frm.refresh_field('task_allocation_details');
+                frm.toggle_display('task_allocation_details', true);
             }
         }
     });
 }
 
 
+
+
+
 function download_tasks_excel(tasks) { // This code is to download the excel file of task allocation detail ct for bulk assignment of task. PD
     frappe.call({
-        method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.download_tasks_excel_for_task_allocation',
+        method: 'plantmaintenance.plantmaintenance.doctype.allocation.allocation.download_tasks_excel_for_allocation',
         args: {
             tasks: JSON.stringify(tasks)
         },
@@ -196,11 +215,36 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
         }
     });
  }
- 
- 
- 
- 
- function upload_assignment_excel(frm) { // This code is to upload the excel file in task allocation doctype for bulk assignment of task. PD
+
+
+frappe.ui.form.on("Task Allocation Details", {
+    assign_to: function (frm, cdt, cdn) {
+        const child = locals[cdt][cdn];
+
+        if (child.assign_to) {
+            frappe.call({
+                method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_task_detail",
+                args: {
+                    equipment_code: child.equipment_code,
+                    activity: child.activity,
+                    assign_to: child.assign_to,
+                    date: child.date 
+                },
+                callback: function (r) {
+                    if (r.message) {
+                        // frappe.msgprint(__('Task Detail updated successfully'));
+                        console.log("successfully uploaded excel")
+                    } else {
+                        frappe.msgprint(__('Error updating Task Detail'));
+                    }
+                }
+            });
+        }
+    }
+});
+
+
+function upload_assignment_excel(frm) {
     frappe.prompt([
         {
             label: __('Select XLSX File'),
@@ -210,10 +254,10 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
         }
     ], (values) => {
         frappe.call({
-            method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.upload_tasks_excel_for_task_allocation',
+            method: 'plantmaintenance.plantmaintenance.doctype.allocation.allocation.upload_tasks_excel_for_allocation',
             args: {
                 file: values.xlsx_file,
-                task_allocation_name: frm.doc.name
+                allocation_name: frm.doc.name
             },
             callback: (response) => {
                 if (response.message) {
@@ -221,125 +265,80 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
                         message: 'Excel import successful!',
                         indicator: 'green'
                     });
-                    frm.reload_doc();
+
+                    frm.clear_table('task_allocation_details');
+
+                    response.message.allocation_details.forEach(detail => {
+                        let child = frm.add_child('task_allocation_details');
+                        frappe.model.set_value(child.doctype, child.name, 'equipment_code', detail.equipment_code);
+                        frappe.model.set_value(child.doctype, child.name, 'equipment_name', detail.equipment_name);
+                        frappe.model.set_value(child.doctype, child.name, 'activity', detail.activity);
+                        frappe.model.set_value(child.doctype, child.name, 'parameter', detail.parameter);
+                        frappe.model.set_value(child.doctype, child.name, 'frequency', detail.frequency);
+                        frappe.model.set_value(child.doctype, child.name, 'date', detail.date);
+                        frappe.model.set_value(child.doctype, child.name, 'assign_to', detail.assign_to);
+                        frappe.model.set_value(child.doctype, child.name, 'priority', detail.priority);
+                        frappe.model.set_value(child.doctype, child.name, 'day', detail.day);
+                        frappe.model.set_value(child.doctype, child.name, 'unique_key', detail.unique_key);
+                    });
+
+                    frm.refresh_field('task_allocation_details');
+                    frm.toggle_display('task_allocation_details', true);
                 } else {
                     frappe.msgprint(__('Failed to import Excel.'));
                 }
             }
         });
     }, __('Upload XLSX File'));
-    $(".grid-add-row").hide();
- 
- }
- 
-
-// frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assignee select user dialogue box which will allow to select multiple assignee at one time. PD
-//     add_assignee: function(frm, cdt, cdn) {
-//         var child = locals[cdt][cdn];
-//         let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
-
-//         frappe.call({
-//             method: 'frappe.client.get_list',
-//             args: {
-//                 doctype: 'User',
-//                 fields: ['full_name'],
-//             },
-//             callback: function(response) {
-//                 let options = response.message.map(user => user.full_name);
-
-//                 frappe.prompt(
-//                     [
-//                         {
-//                             label: __("Select Users"),
-//                             fieldname: "users",
-//                             fieldtype: "MultiSelectList",
-//                             options: options,
-//                             reqd: 1
-//                         }
-//                     ],
-
-//                     function(values) {
-//                         let newAssignees = values['users'] || [];
-//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
-                        
-//                         if (duplicates.length > 0) {
-//                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
-//                         } else {
-//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-//                             updateAssignees();
-//                         }
-//                     },
-//                     __("Select Users")
-//                 );
-//             }
-//         });
-
-//         function updateAssignees() {
-//             let userList = selectedAssignees.join(', ');
-//             // console.log(userList);
-//             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
-//             frm.refresh_field('task_allocation_details');
-//         }
-//     }
-// });
+}
 
 
-frappe.ui.form.on('Task Allocation Details', {  
+frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assignee select user dialogue box which will allow to select multiple assignee at one time. PD
     add_assignee: function(frm, cdt, cdn) {
-         var child = locals[cdt][cdn];
-        
-         let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()).filter(Boolean) : [];
+        var child = locals[cdt][cdn];
+        let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
 
-         frappe.call({
-            method: 'frappe.client.get_list', 
+        frappe.call({
+            method: 'frappe.client.get_list',
             args: {
-                doctype: 'User',  
-                fields: ['full_name'],  
-                filters: [  
-                    ['User', 'enabled', '=', 1], // User must be enabled
-                    ['Has Role', 'role', '=', 'Maintenance User'] // User must have the Maintenance User role
-                ],
-                limit_page_length: 0  
+                doctype: 'User',
+                fields: ['full_name'],
             },
-            callback: function(response) {  
-                 let options = response.message.map(user => user.full_name).filter(Boolean);
+            callback: function(response) {
+                let options = response.message.map(user => user.full_name);
 
-                 frappe.prompt(
+                frappe.prompt(
                     [
                         {
-                            label: __("Select Users"),  
-                            fieldname: "users", 
-                            fieldtype: "MultiSelectList",  
-                            options: options,  
-                            reqd: 1,  
-                            get_data: function() {
-                                return response.message.map(user => {
-                                     return { value: user.full_name, description: "" };
-                                });
-                            }
+                            label: __("Select Users"),
+                            fieldname: "users",
+                            fieldtype: "MultiSelectList",
+                            options: options,
+                            reqd: 1
                         }
                     ],
-                    function(values) {  
-                        let newAssignees = values['users'] || [];
-                        
-                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
 
-                        if (duplicates.length > 0) {  
+                    function(values) {
+                        let newAssignees = values['users'] || [];
+                        let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+                        
+                        if (duplicates.length > 0) {
                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
-                        } else {  
+                        } else {
                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-                             updateAssignees();
+                            updateAssignees();
                         }
                     },
-                    __("Select Users")  
+                    __("Select Users")
                 );
             }
         });
 
-         function updateAssignees() {
-             let userList = selectedAssignees.join(', ');
-             frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
-             frm.refresh_field('task_allocation_details');
+        function updateAssignees() {
+            let userList = selectedAssignees.join(', ');
+            // console.log(userList);
+            frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+            frm.refresh_field('task_allocation_details');
         }
     }
 });

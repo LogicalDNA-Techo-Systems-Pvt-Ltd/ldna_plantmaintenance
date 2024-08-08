@@ -92,17 +92,20 @@ function HandleParameters(frm) {
         frm.set_value('maximum_value', '');
         frm.set_value('values', '');
         frm.set_value('number_of_readings','');
+        frm.set_value('standard_value', '');
 
      } else if (parameterType === 'Numeric') {
         frm.set_value('acceptance_criteria', '');
         frm.set_value('values', '');
+         
           
     } else if (parameterType === 'List') {
         
         frm.set_value('acceptance_criteria', '');
         frm.set_value('minimum_value', '');
         frm.set_value('maximum_value', '');
-        frm.set_value('number_of_readings','')
+        frm.set_value('number_of_readings','');
+        frm.set_value('standard_value', '');
     }
     
 }

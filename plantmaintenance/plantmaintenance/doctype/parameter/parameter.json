@@ -15,9 +15,9 @@
   "acceptance_criteria_for_list",
   "column_break_mira",
   "number_of_maintenance_person",
-  "standard_value",
   "parameter_section",
   "minimum_value",
+  "standard_value",
   "acceptance_criteria",
   "column_break_oyff",
   "maximum_value",
@@ -222,6 +222,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.parameter_type=='Numeric'",
    "fieldname": "standard_value",
    "fieldtype": "Int",
    "label": "Standard Value"
@@ -234,7 +235,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-01 14:57:39.976698",
+ "modified": "2024-08-05 16:13:09.664456",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
