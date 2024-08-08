@@ -82,7 +82,7 @@ def equipment_task_details(doc, method=None):
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Completed")
             elif status == "Rejected" and workflow_state == "Rejected":
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Rejected")
-            elif status == "Rejected" and workflow_state == "Cancelled":
+            elif status == "Cancelled" and workflow_state == "Cancelled":
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Cancelled")
             else:
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, status)
