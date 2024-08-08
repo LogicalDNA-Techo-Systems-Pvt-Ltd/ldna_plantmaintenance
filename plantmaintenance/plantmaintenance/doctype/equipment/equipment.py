@@ -114,11 +114,12 @@ def equipment_task_details(doc, method=None):
                         detail.task = task_detail.name
                         detail.material_type = material_issue.type
                         detail.material_name = material_issue.material_code
-                        detail.approval_date = task_detail.issued_date
                         detail.quantity = material_issue.issue_quantity
                         detail.return_quantity = material_issue.return_quantity
                         detail.scrap = material_issue.scrap
                         detail.reusable = material_issue.reusable
+                        detail.approval_date = material_issue.approval_date
+                        detail.issued_date = material_issue.issued_date
                         
                     
         equipment_doc.save()
