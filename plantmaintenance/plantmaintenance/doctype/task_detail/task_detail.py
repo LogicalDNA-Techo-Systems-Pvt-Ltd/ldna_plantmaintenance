@@ -25,7 +25,7 @@ class TaskDetail(Document):
             else:
                 self.result = 'Pass'
 
-        self.material_issued_to_returned()
+    #    / self.material_issued_to_returned()
 
     def before_save(self):
         if self.plan_start_date:
