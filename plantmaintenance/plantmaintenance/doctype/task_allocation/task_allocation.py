@@ -49,6 +49,7 @@ class TaskAllocation(Document):
             "plan_start_date": plan_start_date,
             # "plan_end_date": plan_end_date,
             "assigned_to": detail.assign_to,
+            "activity_group":detail.activity_group,
             "activity": detail.activity,
             "parameter": detail.parameter,
             "parameter_type": parameter_info.get('parameter_type'),
@@ -156,6 +157,7 @@ def upload_tasks_excel_for_task_allocation(file,task_allocation_name):
         task_allocation_doc.append("task_allocation_details", {
             'equipment_code': row_data.get('Equipment Code'),
             'equipment_name': row_data.get('Equipment Name'),
+            'activity_group':row_data.get('Activity Group'),
             'activity': row_data.get('Activity'),
             'parameter': row_data.get('Parameter'),
             'frequency': row_data.get('Frequency'),
@@ -261,6 +263,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     task = {
                         'equipment_code': equipment.equipment_code,
                         'equipment_name': equipment.equipment_name,
+                        'activity_group':equipment.activity_group,
                         'activity': activity_details.activity_name,
                         'parameter': parameter.parameter,
                         'frequency': frequency,
@@ -269,6 +272,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         'unique_key': unique_key[:10]
                     }
                     tasks.append(task)
+                    print("\n\n\n\n\\n\n\n",equipment.activity_group)
 
     return tasks
 
@@ -282,7 +286,7 @@ def download_tasks_excel_for_task_allocation(tasks):
    ws.title = "Tasks"
 
 
-   headers = ['Unique Key','Equipment Code', 'Equipment Name', 'Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day','Priority']
+   headers = ['Unique Key','Equipment Code', 'Equipment Name', 'Activity Group','Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day','Priority']
    ws.append(headers)
 
 
@@ -292,13 +296,15 @@ def download_tasks_excel_for_task_allocation(tasks):
            task.get('unique_key'),
            task.get('equipment_code'),
            task.get('equipment_name'),
+           task.get('activity_group'),
+           task.get('activity'),
            task.get('activity'),
            task.get('parameter'),
            task.get('frequency'),
            task.get('assign_to'),
            task_date.strftime('%Y-%m-%d') if task_date else None,
            task.get('day'),
-            task.get('priority')
+           task.get('priority')
        ]
        ws.append(row)
 
@@ -383,6 +389,7 @@ def upload_tasks_excel_for_task_allocation(file, task_allocation_name):
         task_allocation_doc.append("task_allocation_details", {
             'equipment_code': row_data.get('Equipment Code'),
             'equipment_name': row_data.get('Equipment Name'),
+            'activity_group': row_data.get('Activity Group'),
             'activity': row_data.get('Activity'),
             'parameter': row_data.get('Parameter'),
             'frequency': row_data.get('Frequency'),
@@ -414,5 +421,56 @@ def clear_task_allocation_details(equipment_code):
         allocation_doc = frappe.get_doc('Task Allocation', allocation.name)
         allocation_doc.task_allocation_details = []
         allocation_doc.save(ignore_permissions=True)
+
+
         
+
+def compare_and_delete_tasks(doc, method):
+    # task_allocation_details = doc.get('task_allocation_details')
     
+    # child_table_data = [
+    #     {
+    #         'equipment_code': detail.get('equipment_code'),
+    #         'parameter': detail.get('parameter'),
+    #         'activity': detail.get('activity'),
+    #         'parameter_type': detail.get('parameter_type'),
+    #         'frequency': detail.get('frequency'),
+    #         'unique_key': detail.get('unique_key')   
+    #     }
+    #     for detail in task_allocation_details
+    # ]
+    
+    # task_details = frappe.get_all('Task Detail', filters={'status': 'Open'}, fields=['name', 'equipment_code', 'parameter', 'activity', 'parameter_type', 'frequency', 'unique_key'])
+    
+    # for task_detail in task_details:
+    #     match_found = all(
+    #         task_detail['parameter'] == detail['parameter'] and
+    #         task_detail['activity'] == detail['activity'] and
+    #         task_detail['parameter_type'] == detail['parameter_type'] and
+    #         task_detail['frequency'] == detail['frequency'] and
+    #         task_detail['equipment_code'] == detail['equipment_code'] and
+    #         task_detail['unique_key'] == detail['unique_key']
+    #         for detail in child_table_data
+    #     )
+        
+    #     if not match_found:
+    #         frappe.delete_doc('Task Detail', task_detail['name'])
+    pass
+
+
+# @frappe.whitelist()
+# def compare_and_delete_tasks(doc, method):
+#     task_allocation_details = doc.get('task_allocation_details')
+    
+#     # Extract unique keys from child table
+#     child_table_data = {detail.get('unique_key') for detail in task_allocation_details}
+    
+#     # Fetch open tasks from Task Detail
+#     task_details = frappe.get_all('Task Detail', filters={'status': 'Open'}, fields=['name', 'unique_key'])
+    
+#     for task_detail in task_details:
+#         if task_detail['unique_key'] not in child_table_data:
+#             frappe.delete_doc('Task Detail', task_detail['name'])
+
+#     pass
+

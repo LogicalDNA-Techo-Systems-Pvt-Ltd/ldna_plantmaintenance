@@ -121,3 +121,61 @@ def equipment_task_details(doc, method=None):
                         detail.return_quantity = material_issue.return_quantity
                     
         equipment_doc.save()
+
+
+ 
+
+# If change the activity group from equipment then delete the task of that activity group for that equipment.
+
+
+
+@frappe.whitelist()
+def update_activity_group_and_delete_tasks(doc, method):
+    old_activity_group = frappe.get_value('Equipment', doc.name, 'activity_group')
+    new_activity_group = doc.activity_group
+
+    if old_activity_group != new_activity_group:
+        task_details = frappe.get_all('Task Detail',
+                                      filters={'equipment_code': doc.name,
+                                               'activity_group': old_activity_group,
+                                               'status': 'Open'},
+                                      fields=['name'])
+        
+        for task_detail in task_details:
+            frappe.delete_doc('Task Detail', task_detail['name'])
+
+        frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

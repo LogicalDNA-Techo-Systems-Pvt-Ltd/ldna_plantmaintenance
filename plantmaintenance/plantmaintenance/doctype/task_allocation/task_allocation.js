@@ -164,6 +164,7 @@ function load_tasks(frm) {
                     frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
                     frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
                     frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
+                    frappe.model.set_value(child.doctype, child.name, 'activity_group', task.activity_group);
                     frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
                     frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
                     frappe.model.set_value(child.doctype, child.name, 'date', task.date);
