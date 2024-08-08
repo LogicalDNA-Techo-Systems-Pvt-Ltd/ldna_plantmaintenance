@@ -112,9 +112,12 @@ def equipment_task_details(doc, method=None):
                     if not is_material_entry_existing(equipment_doc.material_movement_ct, task_detail.name, material_issue.material_code):
                         detail = equipment_doc.append("material_movement_ct", {})
                         detail.task = task_detail.name
+                        detail.scrap = task_detail.scrap
+                        detail.reusable = task_detail.reusable
                         detail.material_type = material_issue.type
                         detail.material_name = material_issue.material_code
-                        detail.date = task_detail.creation
+                        detail.approval_date = task_detail.issued_date
                         detail.quantity = material_issue.issue_quantity
+                        detail.return_quantity = material_issue.return_quantity
                     
         equipment_doc.save()
