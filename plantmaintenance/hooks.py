@@ -157,9 +157,6 @@ doc_events = {
     "Task Detail": {
         "on_update": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details"
     },
-    "Task Allocation": {
-        "before_save": "plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.compare_and_delete_tasks"
-    },
     "Equipment": {
         "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks"
     },

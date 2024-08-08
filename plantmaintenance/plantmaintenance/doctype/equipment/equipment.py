@@ -147,37 +147,3 @@ def update_activity_group_and_delete_tasks(doc, method):
             frappe.delete_doc('Task Detail', task_detail['name'])
 
         frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
