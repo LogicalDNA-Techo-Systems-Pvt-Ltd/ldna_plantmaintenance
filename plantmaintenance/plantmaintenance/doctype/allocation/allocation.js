@@ -228,6 +228,7 @@ frappe.ui.form.on("Task Allocation Details", {
                     equipment_code: child.equipment_code,
                     activity: child.activity,
                     assign_to: child.assign_to,
+                    parameter:child.parameter,
                     date: child.date 
                 },
                 callback: function (r) {
