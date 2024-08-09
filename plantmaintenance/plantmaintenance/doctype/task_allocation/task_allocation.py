@@ -298,7 +298,6 @@ def download_tasks_excel_for_task_allocation(tasks):
            task.get('equipment_name'),
            task.get('activity_group'),
            task.get('activity'),
-           task.get('activity'),
            task.get('parameter'),
            task.get('frequency'),
            task.get('assign_to'),
