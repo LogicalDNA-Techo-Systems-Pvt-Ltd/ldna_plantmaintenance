@@ -74,11 +74,11 @@ def mark_as_issued(docname):
 
     
 @frappe.whitelist()
-def update_task_detail(equipment_code, activity, assign_to, date):
+def update_task_detail(equipment_code, parameter,activity, assign_to, date):
 
     task_details = frappe.get_all('Task Detail', filters={
         'equipment_code': equipment_code,
-        
+        'parameter':parameter,
         'activity': activity,
         'plan_start_date': date 
     })
