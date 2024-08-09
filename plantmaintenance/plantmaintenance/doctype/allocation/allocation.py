@@ -31,10 +31,10 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     on_scrap_equipment = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 1}, fields=['equipment_code'])
     
     #equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group'])
-    setting_doc = frappe.get_single('Setting')
-    start_date = getdate(setting_doc.start_date)
+    settings_doc = frappe.get_single('Settings')
+    start_date = getdate(settings_doc.start_date)
     today_date = getdate(nowdate())
-    end_date = getdate(end_date) if end_date else getdate(setting_doc.end_date)
+    end_date = getdate(end_date) if end_date else getdate(settings_doc.end_date)
 
     if not (start_date <= today_date <= end_date):
         return frappe.msgprint("Please ensure today's date is between the start date and end date.")
