@@ -25,8 +25,6 @@ class TaskDetail(Document):
             else:
                 self.result = 'Pass'
 
-        self.material_issued_to_returned()
-
     def before_save(self):
         if self.plan_start_date:
             today = getdate(nowdate())
@@ -34,24 +32,13 @@ class TaskDetail(Document):
             if today > start_date:
                 self.status = 'Overdue'
 
-    def material_issued_to_returned(self):
-        self.material_returned = []  
-
-        for item in self.material_issued:
-            if item.status == 'Material Issued':
-                self.append("material_returned", {
-                    "material_code": item.material_code,
-                    "material_name": item.material_name,
-                    "issue_quantity": item.required_quantity,
-                    "approval_date": item.approval_date,
-                    "issued_date": item.issued_date
-                })
+   
 
 @frappe.whitelist()
 def send_for_approval(docname):
     task_detail = frappe.get_doc('Task Detail', docname)
     send_approval_email(task_detail)
-    return {"message": "Email sent to Manager for Material Approval."}
+    return {"message": "Email sent to Manager for material approval."}
     
 def send_approval_email(task_detail):
     url = frappe.utils.get_url_to_form('Task Detail', task_detail.name)
@@ -66,23 +53,32 @@ def send_approval_email(task_detail):
             message=message,
             now=True
         )
-
-
 @frappe.whitelist()
 def mark_as_issued(docname):
     doc = frappe.get_doc("Task Detail", docname)
+    
     for item in doc.material_issued:
         if item.status == "Pending Approval":
             item.status = "Material Issued"
-            item.issued_date = getdate(nowdate()) 
-
+            item.issued_date = getdate(nowdate())
+            
+            doc.append("material_returned", {
+                "material_code": item.material_code,
+                "material_name": item.material_name,
+                "issue_quantity": item.required_quantity,
+                "approval_date": item.approval_date,
+                "issued_date": item.issued_date
+            })
+    
     doc.save()
+
     
 @frappe.whitelist()
 def update_task_detail(equipment_code, activity,parameter, assign_to, date):
 
     task_details = frappe.get_all('Task Detail', filters={
         'equipment_code': equipment_code,
+        
         'activity': activity,
         'parameter':parameter,
         'plan_start_date': date 
@@ -94,3 +90,5 @@ def update_task_detail(equipment_code, activity,parameter, assign_to, date):
         doc.save()
         
     return True
+
+
