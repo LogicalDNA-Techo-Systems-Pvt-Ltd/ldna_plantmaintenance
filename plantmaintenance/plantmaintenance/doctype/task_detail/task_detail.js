@@ -81,7 +81,10 @@ frappe.ui.form.on('Task Detail', {
                     let message = '';
 
                     frm.doc.material_issued.forEach((item, index) => {
-                        if (item.shortage > 0) {
+                        if (item.status === 'Material Issued') {
+                            // Skip materials that are already issued
+                            return;
+                        } else if (item.shortage > 0) {
                             message = `Cannot send for approval due to existing shortage`;
                         } else if (!item.spare) {
                             message = __('Cannot send for approval.');
@@ -246,6 +249,7 @@ function calculate_shortage(frm, cdt, cdn) {
     frm.refresh_field('material_issued');
 
 }
+
 
 function fetch_parameter_details(frm) {
     frappe.call({
