@@ -1,0 +1,105 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-16 12:18:18.063827",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "plant",
+  "functional_location",
+  "work_center",
+  "button_container",
+  "column_break_zymn",
+  "location",
+  "plant_section",
+  "end_date",
+  "section_break_uxsx",
+  "task_allocation_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Plant",
+   "options": "Plant",
+   "reqd": 1
+  },
+  {
+   "fieldname": "functional_location",
+   "fieldtype": "Link",
+   "label": "Functional Location",
+   "options": "Functional Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "label": "Work Center",
+   "options": "Work Center",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "column_break_zymn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Link",
+   "label": "Plant Section",
+   "options": "Section",
+   "reqd": 1
+  },
+  {
+   "fieldname": "button_container",
+   "fieldtype": "HTML",
+   "label": "Button Container"
+  },
+  {
+   "fieldname": "section_break_uxsx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_allocation_details",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Task Allocation Details",
+   "options": "Task Allocation Details"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-08-07 15:36:53.415785",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Allocation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

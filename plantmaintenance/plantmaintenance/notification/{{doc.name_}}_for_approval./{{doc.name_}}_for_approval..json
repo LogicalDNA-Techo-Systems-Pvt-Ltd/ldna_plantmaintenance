@@ -1,0 +1,30 @@
+{
+ "attach_print": 0,
+ "channel": "System Notification",
+ "condition": "doc.workflow_state == \"Send for Approval\"",
+ "creation": "2024-07-15 16:02:03.965524",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Task Detail",
+ "enabled": 1,
+ "event": "Save",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "Hii Team,\n<br>\n<br>\nI hope this message finds you well. I wanted to inform you that a task has been send for approval by maintenance person. \nKindly review the details and proceed with the activity as outlined.\n<br>\n<br>\nThanks\n<br>\n<br>\n{{doc.modified_by}}",
+ "message_type": "Markdown",
+ "modified": "2024-07-15 17:16:31.966147",
+ "modified_by": "pragati.d@logicaldna.com",
+ "module": "Plantmaintenance",
+ "name": "{{doc.name }} for Approval.",
+ "owner": "pragati.d@logicaldna.com",
+ "recipients": [
+  {
+   "receiver_by_document_field": "owner",
+   "receiver_by_role": "Maintenance Manager"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "{{doc.name }} for Approval."
+}

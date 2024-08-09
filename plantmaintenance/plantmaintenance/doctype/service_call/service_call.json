@@ -1,0 +1,136 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{SC}-{####}",
+ "creation": "2024-06-26 11:57:42.358579",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "plant",
+  "equipment_name",
+  "priority",
+  "breakdown_reason",
+  "column_break_carw",
+  "location",
+  "assignment_to",
+  "status",
+  "service_contract_no",
+  "column_break_pbud",
+  "section",
+  "logged_by",
+  "type",
+  "remark"
+ ],
+ "fields": [
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Plant",
+   "options": "Plant",
+   "reqd": 1
+  },
+  {
+   "fieldname": "equipment_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Equipment Name",
+   "options": "Equipment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Priority",
+   "options": "\nHigh\nMedium\nLow",
+   "reqd": 1
+  },
+  {
+   "fieldname": "breakdown_reason",
+   "fieldtype": "Link",
+   "label": "Breakdown Reason",
+   "options": "Breakdown Reason"
+  },
+  {
+   "fieldname": "column_break_carw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "assignment_to",
+   "fieldtype": "Data",
+   "label": "Assignment To"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Open\nComplete\nIn Progress"
+  },
+  {
+   "fieldname": "service_contract_no",
+   "fieldtype": "Data",
+   "label": "Service Contract No"
+  },
+  {
+   "fieldname": "column_break_pbud",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "Section",
+   "reqd": 1
+  },
+  {
+   "fieldname": "logged_by",
+   "fieldtype": "Data",
+   "label": "Logged By"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Scheduled\nBreakdown"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Small Text",
+   "label": "Remark"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-27 14:31:26.634562",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Service Call",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
