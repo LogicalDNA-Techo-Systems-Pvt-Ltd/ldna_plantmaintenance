@@ -68,8 +68,8 @@ def equipment_task_details(doc, method=None):
         equipment_doc = frappe.get_doc("Equipment", task_detail.equipment_code)
         task_detail_doc = frappe.get_doc("Task Detail", task_detail.name)
         
-        valid_statuses = ["Completed", "Rejected", "Overdue"]
-        valid_workflow_states = ["Approved", "Rejected"]
+        valid_statuses = ["Completed", "Rejected", "Overdue","Cancelled"]
+        valid_workflow_states = ["Approved", "Rejected","Cancelled"]
 
         def is_task_detail_existing(child_table, task_name, status):
             for detail in child_table:
@@ -82,6 +82,8 @@ def equipment_task_details(doc, method=None):
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Completed")
             elif status == "Rejected" and workflow_state == "Rejected":
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Rejected")
+            elif status == "Cancelled" and workflow_state == "Cancelled":
+                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Cancelled")
             else:
                 return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, status)
 

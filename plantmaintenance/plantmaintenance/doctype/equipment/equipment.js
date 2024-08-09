@@ -183,24 +183,5 @@ validate: function(frm) {
                     }
                 });
             }
-        },
-        refresh: function(frm) {
-            // Filter for Activity Group field
-            frm.set_query("activity_group", function() {
-                return {
-                    filters: {
-                        is_active: 1
-                    }
-                };
-            });
-    
-            // Filter For Plant Field
-            frm.set_query("plant", function() {
-                return {
-                    filters: {
-                        is_active: 1
-                    }
-                };
-            });
         }
 });
