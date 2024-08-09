@@ -1,5 +1,5 @@
-// // Copyright (c) 2024, LogicalDNA and contributors
-// // For license information, please see license.txt
+// Copyright (c) 2024, LogicalDNA and contributors
+// For license information, please see license.txt
 
 frappe.ui.form.on('Task Detail', {
     refresh: function (frm) {
@@ -41,6 +41,7 @@ frappe.ui.form.on('Task Detail', {
             $('.update-qty-btn').hide();
             $('.send-for-approval-btn').hide();
             if (!frm.approved_button_added) {
+    
                 frm.approved_button_added = true;
                 let approvedButton = $('<button class="btn btn-primary btn-xs approved-btn" style="margin-top: -10px; margin-left: 92%;">Approve</button>');
                 approvedButton.on('click', function () {
@@ -122,6 +123,7 @@ frappe.ui.form.on('Task Detail', {
         set_existing_rows_read_only(frm);
         toggle_result_field(frm);
         toggle_add_assignee_button(frm);
+
     },
 
     readings: function (frm) {
@@ -242,7 +244,7 @@ function calculate_shortage(frm, cdt, cdn) {
     }
 
     frm.refresh_field('material_issued');
-    material_issued_rows(frm);
+
 }
 
 function fetch_parameter_details(frm) {
@@ -316,14 +318,7 @@ function toggle_result_field(frm) {
 }
 
 function toggle_add_assignee_button(frm) {
-    // const user_roles = frappe.user_roles;
-    // const is_maintenance_manager = user_roles.includes('Maintenance Manager');
-
-    //  if (is_maintenance_manager) {
-    //     frm.set_df_property('add_assignee', 'hidden', 0);
-    //     return;
-    // }
-
+  
     if (!frm.doc.assigned_to) {
         frm.set_df_property('add_assignee', 'hidden', 0);
     } else {
