@@ -231,6 +231,7 @@ frappe.ui.form.on("Task Allocation Details", {
                     parameter:child.parameter,
                     date: child.date 
                 },
+                
                 callback: function (r) {
                     if (r.message) {
                         // frappe.msgprint(__('Task Detail updated successfully'));

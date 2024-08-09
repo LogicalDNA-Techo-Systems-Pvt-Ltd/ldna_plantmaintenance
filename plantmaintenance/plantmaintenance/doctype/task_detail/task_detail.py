@@ -82,7 +82,6 @@ def update_task_detail(equipment_code, parameter,activity, assign_to, date):
         'activity': activity,
         'plan_start_date': date 
     })
-
     for task in task_details:
         doc = frappe.get_doc('Task Detail', task.name)
         doc.assigned_to = assign_to 
