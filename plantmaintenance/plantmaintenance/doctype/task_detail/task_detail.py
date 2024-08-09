@@ -25,7 +25,7 @@ class TaskDetail(Document):
             else:
                 self.result = 'Pass'
 
-    #    / self.material_issued_to_returned()
+        self.material_issued_to_returned()
 
     def before_save(self):
         if self.plan_start_date:
@@ -51,7 +51,7 @@ class TaskDetail(Document):
 def send_for_approval(docname):
     task_detail = frappe.get_doc('Task Detail', docname)
     send_approval_email(task_detail)
-    return {"message": "Email sent to Manager for material approval."}
+    return {"message": "Email sent to Manager for Material Approval."}
     
 def send_approval_email(task_detail):
     url = frappe.utils.get_url_to_form('Task Detail', task_detail.name)
