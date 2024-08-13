@@ -6,6 +6,7 @@ from frappe.model.document import Document
 from frappe.utils import nowdate, getdate
 from datetime import datetime, timedelta
 from frappe.utils import nowdate, getdate
+from frappe import _
 
 class TaskDetail(Document):
     def validate(self):
@@ -89,4 +90,10 @@ def update_task_detail(equipment_code, parameter,activity, assign_to, date):
         
     return True
 
+@frappe.whitelist()
+def before_workflow_action(docname):
+    doc = frappe.get_doc('Task Detail', docname)
+    pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
+    if pending_approval_exists and (doc.status == "Open" or doc.status == "In Progress"):
+        frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
 
