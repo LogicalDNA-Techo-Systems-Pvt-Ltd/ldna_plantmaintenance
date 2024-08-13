@@ -44,6 +44,22 @@ def delete_task_depends_activity_group(doc, method):
     
     for task in existing_tasks:
         if task['activity'] not in current_activities:
-            frappe.delete_doc('Task Detail', task['name'])
+            frappe.delete_doc('Task Detail', task['name']) 
+
+
+def remove_activity_group_from_equipment(doc,method):
+    existing_tasks = frappe.get_all('Task Detail', filters={'activity_group': doc.activity_group, 'status':'Open'}, fields=['name', 'activity'])
+
+    if not doc.is_active:
+         equipment_with_activity_group = frappe.get_all('Equipment', filters={'activity_group': doc.activity_group}, fields=['name'])
+         
+         
+         for equipment in equipment_with_activity_group:
+              frappe.set_value('Equipment', equipment['name'], 'activity_group', None)
+
+    
+
+
+    
 
 
