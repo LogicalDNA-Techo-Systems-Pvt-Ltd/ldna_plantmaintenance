@@ -41,11 +41,11 @@ def task_detail_permission(user):
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
-            (`tabTask Detail`.`status` = 'Completed' AND 
+            (`tabTask Detail`.`status` = 'Approved' AND 
             `tabTask Detail`.`work_center` IN ({work_centers_condition}))
             """.format(work_centers_condition=work_centers_condition)
         else:
             return """
-            `tabTask Detail`.`status` = 'Completed'
+            `tabTask Detail`.`status` = 'Approved'
             """
 
