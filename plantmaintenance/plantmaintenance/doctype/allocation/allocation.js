@@ -26,6 +26,12 @@ frappe.ui.form.on('Allocation', {
         $(frm.page.sidebar).hide();
         $(frm.page.wrapper).find('.page-title .sidebar-toggle-btn').css('display', 'none');
         // $(frm.page.wrapper).find(".layout-main-section-wrapper").removeClass("col-md-10").addClass("col-md-12");
+
+        frm.page.wrapper.find('.page-actions .btn-primary.primary-action[data-label="Save"]').hide();
+
+        // Hide the "Not Saved" indicator
+        frm.page.wrapper.find('.indicator-pill:contains("Not Saved")').hide();
+        frm.page.wrapper.find('span:contains("Not Saved")').hide(); 
         
     },
 

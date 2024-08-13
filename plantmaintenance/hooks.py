@@ -164,7 +164,9 @@ doc_events = {
         "on_update":"plantmaintenance.plantmaintenance.doctype.activity.activity.delete_task_depends_activity"
     },
     "Activity Group":{
-        "on_update":"plantmaintenance.plantmaintenance.doctype.activity_group.activity_group.delete_task_depends_activity_group"
+        "on_update":"plantmaintenance.plantmaintenance.doctype.activity_group.activity_group.delete_task_depends_activity_group",
+        "on_update":"plantmaintenance.plantmaintenance.doctype.activity_group.activity_group.remove_activity_group_from_equipment"
+
     }    
 }
 

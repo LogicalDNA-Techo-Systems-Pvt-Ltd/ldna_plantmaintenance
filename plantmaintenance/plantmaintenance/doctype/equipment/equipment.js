@@ -2,6 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Equipment', {
+
     plant: function(frm){
         if (frm.doc.plant){
             frm.set_value('location', ''); 
@@ -129,8 +130,15 @@ refresh: function(frm) {
             frappe.new_doc('Activity Group');
         }, __("Create"));
     }
+    frm.set_query("activity_group", function() {
+        return {
+            filters: [
+                ["is_active", "=", "1"]
+            ]
+        };
+    });
 },
-
+ 
 //for deleting task in task allocation and task detail when equipment is on scrap. 
 
 validate: function(frm) {
@@ -185,3 +193,4 @@ validate: function(frm) {
             }
         }
 });
+
