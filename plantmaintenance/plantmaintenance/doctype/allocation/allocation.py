@@ -302,11 +302,3 @@ def upload_tasks_excel_for_allocation(file, allocation_name):
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!", "allocation_details": allocation_details}
 
 
-@frappe.whitelist()
-def clear_task_allocation_details(equipment_code):
-    task_allocations = frappe.get_all('Task Allocation', filters={'equipment_code': equipment_code}, fields=['name'])
-    for allocation in task_allocations:
-        allocation_doc = frappe.get_doc('Task Allocation', allocation.name)
-        allocation_doc.task_allocation_details = []
-        allocation_doc.save(ignore_permissions=True)
-        

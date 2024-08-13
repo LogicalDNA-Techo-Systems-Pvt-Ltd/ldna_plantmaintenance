@@ -5,19 +5,48 @@
    "label": "Task Breakdown"
   }
  ],
- "content": "[{\"id\":\"bOEIuDpVSn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Manager</span>\",\"col\":12}},{\"id\":\"GySDlIR2jU\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"BoD7f-hfjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"xkzlDdWQr_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"wYD0Z5Jctp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Approved Task\",\"col\":6}},{\"id\":\"pDFYOmDla-\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending for Approval\",\"col\":6}},{\"id\":\"k_JIs30GhG\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"UnAssigned Task\",\"col\":6}},{\"id\":\"hI_X8FhtC5\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Assigned Task\",\"col\":6}},{\"id\":\"9U5DhlTYm_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Task\",\"col\":6}},{\"id\":\"vfsdQutbwu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Task\",\"col\":6}},{\"id\":\"fdgcLMCOD0\",\"type\":\"card\",\"data\":{\"card_name\":\"Transaction\",\"col\":6}},{\"id\":\"bxT-nrQBFj\",\"type\":\"card\",\"data\":{\"card_name\":\"Report\",\"col\":6}},{\"id\":\"UNhcLasG_X\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create Task Detail\",\"col\":3}}]",
- "creation": "2024-07-16 12:05:20.696861",
+ "content": "[{\"id\":\"MxGxLWPLrl\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Manager</span>\",\"col\":12}},{\"id\":\"nJZrIyLv73\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"uRVjVUQv0G\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"olgjvSH9yF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"gCan81xZc9\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Approved Tasks\",\"col\":6}},{\"id\":\"rnCL_KtCEW\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending for Approval\",\"col\":6}},{\"id\":\"RbdYNKUTHL\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"UnAssigned Task\",\"col\":6}},{\"id\":\"wPqA1Y3VBE\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Assigned Task\",\"col\":6}},{\"id\":\"rDhIOoskfH\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Task\",\"col\":6}},{\"id\":\"zzWBs9eiyd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Tasks\",\"col\":6}},{\"id\":\"rOOXUn1QVQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":4}},{\"id\":\"_3wyWPHous\",\"type\":\"card\",\"data\":{\"card_name\":\"Report\",\"col\":4}},{\"id\":\"eoANhQE2Ps\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create Task Detail\",\"col\":5}}]",
+ "creation": "2024-08-12 23:09:08.206050",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "share",
- "idx": 2,
- "indicator_color": "",
+ "icon": "assign",
+ "idx": 0,
+ "indicator_color": "green",
  "is_hidden": 0,
  "label": "Manager",
  "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transactions",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Allocation",
+   "link_count": 0,
+   "link_to": "Allocation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Detail",
+   "link_count": 0,
+   "link_to": "Task Detail",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
   {
    "hidden": 0,
    "is_query_report": 0,
@@ -33,75 +62,46 @@
    "label": "Task Detail",
    "link_count": 0,
    "link_to": "Task Detail",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Transaction",
-   "link_count": 2,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Task Allocation",
-   "link_count": 0,
-   "link_to": "Task Allocation",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Task Detail",
-   "link_count": 0,
-   "link_to": "Task Detail",
-   "link_type": "DocType",
+   "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2024-08-09 02:29:56.788915",
+ "modified": "2024-08-13 00:10:37.355593",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Manager",
  "number_cards": [
   {
-   "label": "UnAssigned Task",
-   "number_card_name": "UnAssigned Task"
-  },
-  {
-   "label": "Approved Task",
-   "number_card_name": "Approved Tasks"
+   "label": "Total Task",
+   "number_card_name": "Total Task"
   },
   {
    "label": "Open Task",
    "number_card_name": "Open Task"
   },
   {
-   "label": "Assigned Task",
-   "number_card_name": "Assigned Task"
+   "label": "Approved Tasks",
+   "number_card_name": "Approved Tasks"
   },
   {
    "label": "Pending for Approval",
    "number_card_name": "Pending for Approval"
   },
   {
-   "label": "Total Task",
-   "number_card_name": "Total Task"
+   "label": "UnAssigned Task",
+   "number_card_name": "UnAssigned Task"
+  },
+  {
+   "label": "Assigned Task",
+   "number_card_name": "Assigned Task"
   },
   {
    "label": "Rejected Task",
    "number_card_name": "Rejected Task"
   },
   {
-   "label": "Overdue Task",
+   "label": "Overdue Tasks",
    "number_card_name": "Overdue Tasks"
   }
  ],
@@ -111,16 +111,16 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "Maintenance Manager"
+   "role": "Administrator"
   },
   {
-   "role": "Administrator"
+   "role": "Maintenance Manager"
   },
   {
    "role": "Process Manager"
   }
  ],
- "sequence_id": 8.0,
+ "sequence_id": 30.0,
  "shortcuts": [
   {
    "color": "Grey",

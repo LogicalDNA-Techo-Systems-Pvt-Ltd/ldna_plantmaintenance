@@ -139,24 +139,10 @@ refresh: function(frm) {
     });
 },
  
-//for deleting task in task allocation and task detail when equipment is on scrap. 
-
+//for deleting task in task detail when equipment is on scrap. 
+ 
 validate: function(frm) {
             if (frm.doc.on_scrap) {
-                frappe.call({
-                    method: 'plantmaintenance.plantmaintenance.doctype.task_allocation.task_allocation.clear_task_allocation_details',
-                    args: {
-                        equipment_code: frm.doc.equipment_code
-                    },
-                    callback: function(clear_response) {
-                        if (clear_response.exc) {
-                            console.error(`Error clearing Task Allocation details`, clear_response.exc);
-                        } else {
-                            console.log(`Cleared Task Allocation details for equipment: ${frm.doc.equipment_code}`);
-                        }
-                    }
-                });
-                
                 frappe.call({
                     method: 'frappe.client.get_list',
                     args: {
@@ -191,6 +177,7 @@ validate: function(frm) {
                     }
                 });
             }
-        }
+        },
+
 });
 
