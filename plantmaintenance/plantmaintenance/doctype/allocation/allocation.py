@@ -116,6 +116,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     task = {
                         'equipment_code': equipment.equipment_code,
                         'equipment_name': equipment.equipment_name,
+                        'activity_group':equipment.activity_group,
                         'activity': activity_details.activity_name,
                         'parameter': parameter.parameter,
                         'frequency': frequency,
@@ -145,6 +146,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                                 "approver": frappe.session.user,
                                 "equipment_code": task['equipment_code'],
                                 "equipment_name": task['equipment_name'],
+                                "activity_group":task['activity_group'],
                                 "work_center": work_center,
                                 "plant_section": plant_section,
                                 "plan_start_date": task['date'],
@@ -170,7 +172,7 @@ def download_tasks_excel_for_allocation(tasks):
    ws.title = "Tasks"
 
 
-   headers = ['Unique Key','Equipment Code', 'Equipment Name', 'Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day','Priority']
+   headers = ['Unique Key','Equipment Code', 'Equipment Name', 'Activity Group','Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day','Priority']
    ws.append(headers)
 
 
@@ -180,6 +182,7 @@ def download_tasks_excel_for_allocation(tasks):
            task.get('unique_key'),
            task.get('equipment_code'),
            task.get('equipment_name'),
+           task.get('activity_group'),
            task.get('activity'),
            task.get('parameter'),
            task.get('frequency'),
@@ -266,6 +269,7 @@ def upload_tasks_excel_for_allocation(file, allocation_name):
         allocation_details.append({
             'equipment_code': row_data.get('Equipment Code'),
             'equipment_name': row_data.get('Equipment Name'),
+            'activity_group':row_data.get('Activity Group'),
             'activity': row_data.get('Activity'),
             'parameter': row_data.get('Parameter'),
             'frequency': row_data.get('Frequency'),

@@ -178,6 +178,7 @@ function load_tasks(frm) {
                     var child = frm.add_child('task_allocation_details');
                     frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
                     frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
+                    frappe.model.set_value(child.doctype, child.name, 'activity_group', task.activity_group);
                     frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
                     frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
                     frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
@@ -274,6 +275,7 @@ function upload_assignment_excel(frm) {
                         let child = frm.add_child('task_allocation_details');
                         frappe.model.set_value(child.doctype, child.name, 'equipment_code', detail.equipment_code);
                         frappe.model.set_value(child.doctype, child.name, 'equipment_name', detail.equipment_name);
+                        frappe.model.set_value(child.doctype, child.name, 'activity_group', detail.activity_group);
                         frappe.model.set_value(child.doctype, child.name, 'activity', detail.activity);
                         frappe.model.set_value(child.doctype, child.name, 'parameter', detail.parameter);
                         frappe.model.set_value(child.doctype, child.name, 'frequency', detail.frequency);
