@@ -177,6 +177,20 @@ frappe.ui.form.on('Task Detail', {
         set_existing_rows_read_only(frm);
     },
 
+    before_workflow_action: function(frm) {
+        return frappe.call({
+            method: 'plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.before_workflow_action',
+            args: {
+                docname: frm.doc.name
+            },
+            callback: function(response) {
+                if (response.exc) {
+                    frappe.msgprint(response.exc);
+                }
+            }
+        });
+    },
+
     before_save: function (frm) {
         const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5',
             'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
@@ -330,9 +344,6 @@ function toggle_add_assignee_button(frm) {
     }
 }
 
-
-
-
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {
         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
@@ -349,24 +360,28 @@ frappe.ui.form.on('Task Detail', {
                 limit_page_length: 0,
             },
             callback: function (response) {
-                let options = response.message.map(user => user.full_name).filter(Boolean); // Ensure no empty values
+                let options = response.message.map(user => user.full_name).filter(Boolean);
 
-                frappe.prompt(
-                    [
+                const dialog = new frappe.ui.Dialog({
+                    title: __('Select Users'),
+                    fields: [
                         {
                             label: __("Select Users"),
-                            fieldname: "users",
                             fieldtype: "MultiSelectList",
+                            fieldname: "users",
+                            placeholder:"Add User",
                             options: options,
                             reqd: 1,
                             get_data: function () {
-                                return response.message.map(user => {
-                                    return { value: user.full_name, description: "" };
-                                });
+                                return response.message.map(user => ({
+                                    value: user.full_name,
+                                    description: ""
+                                }));
                             }
                         }
                     ],
-                    function (values) {
+                    primary_action_label: __('Submit'),
+                    primary_action: function (values) {
                         let newAssignees = values['users'] || [];
                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
 
@@ -374,18 +389,26 @@ frappe.ui.form.on('Task Detail', {
                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
                         } else {
                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-                            updateAssignees();
+                            frm.set_value("assigned_to", selectedAssignees.join(', '));
+                            frm.refresh_field('assigned_to');
                         }
-                    },
-                    __("Select Users")
-                );
+
+                        dialog.hide();
+                        $('body').removeClass('modal-open'); 
+                    }
+                });
+
+                dialog.show();
+
+                $('body').addClass('modal-open'); 
+
+                dialog.$wrapper.find('.modal-body').css({
+                    "overflow-y": "auto",
+                    "height": "16vh"
+                });
             }
         });
-
-        function updateAssignees() {
-            let userList = selectedAssignees.join(', ');
-            frm.set_value("assigned_to", userList);
-            frm.refresh_field('assigned_to');
-        }
     }
 });
+
+

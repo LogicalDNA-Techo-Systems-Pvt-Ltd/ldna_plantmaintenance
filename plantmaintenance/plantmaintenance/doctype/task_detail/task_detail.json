@@ -128,7 +128,6 @@
    "fieldname": "equipment_code",
    "fieldtype": "Link",
    "label": "Equipment Code",
-   "mandatory_depends_on": "eval:doc.type!= \"General\"",
    "options": "Equipment"
   },
   {
@@ -233,7 +232,7 @@
    "fieldname": "actual_value",
    "fieldtype": "Select",
    "label": "Actual Value",
-   "options": "\nYes\nNo"
+   "options": "\nYES\nNO"
   },
   {
    "depends_on": "eval:doc.parameter_type===\"List\"",

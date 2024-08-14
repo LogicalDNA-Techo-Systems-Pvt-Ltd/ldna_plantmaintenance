@@ -22,22 +22,19 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Plant",
-   "options": "Plant",
-   "reqd": 1
+   "options": "Plant"
   },
   {
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "label": "Functional Location",
-   "options": "Functional Location",
-   "reqd": 1
+   "options": "Functional Location"
   },
   {
    "fieldname": "work_center",
    "fieldtype": "Link",
    "label": "Work Center",
-   "options": "Work Center",
-   "reqd": 1
+   "options": "Work Center"
   },
   {
    "fieldname": "end_date",
@@ -52,15 +49,13 @@
    "fieldname": "location",
    "fieldtype": "Link",
    "label": "Location",
-   "options": "Location",
-   "reqd": 1
+   "options": "Location"
   },
   {
    "fieldname": "plant_section",
    "fieldtype": "Link",
    "label": "Plant Section",
-   "options": "Section",
-   "reqd": 1
+   "options": "Section"
   },
   {
    "fieldname": "button_container",

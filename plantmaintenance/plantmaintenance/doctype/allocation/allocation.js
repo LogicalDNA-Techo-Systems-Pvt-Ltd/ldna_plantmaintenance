@@ -16,10 +16,9 @@ frappe.ui.form.on('Allocation', {
             });
 
             frm.custom_buttons_created = true;
+
             $(".grid-add-row").hide();
             frm.fields_dict['task_allocation_details'].grid.wrapper.find('.grid-add-row').hide();
-
-            frm.disable_save();
             
         }
 
@@ -178,6 +177,7 @@ function load_tasks(frm) {
                     var child = frm.add_child('task_allocation_details');
                     frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
                     frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
+                    frappe.model.set_value(child.doctype, child.name, 'activity_group', task.activity_group);
                     frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
                     frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
                     frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
@@ -191,9 +191,6 @@ function load_tasks(frm) {
         }
     });
 }
-
-
-
 
 
 function download_tasks_excel(tasks) { // This code is to download the excel file of task allocation detail ct for bulk assignment of task. PD
@@ -215,6 +212,7 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
         }
     });
  }
+
 
 
 frappe.ui.form.on("Task Allocation Details", {
@@ -274,6 +272,7 @@ function upload_assignment_excel(frm) {
                         let child = frm.add_child('task_allocation_details');
                         frappe.model.set_value(child.doctype, child.name, 'equipment_code', detail.equipment_code);
                         frappe.model.set_value(child.doctype, child.name, 'equipment_name', detail.equipment_name);
+                        frappe.model.set_value(child.doctype, child.name, 'activity_group', detail.activity_group);
                         frappe.model.set_value(child.doctype, child.name, 'activity', detail.activity);
                         frappe.model.set_value(child.doctype, child.name, 'parameter', detail.parameter);
                         frappe.model.set_value(child.doctype, child.name, 'frequency', detail.frequency);
@@ -294,53 +293,74 @@ function upload_assignment_excel(frm) {
     }, __('Upload XLSX File'));
 }
 
-
-frappe.ui.form.on('Task Allocation Details', {  // this code is for mutiple assignee select user dialogue box which will allow to select multiple assignee at one time. PD
+frappe.ui.form.on('Task Allocation Details', {
     add_assignee: function(frm, cdt, cdn) {
         var child = locals[cdt][cdn];
-        let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()) : [];
+        let selectedAssignees = child.assign_to ? child.assign_to.split(',').map(a => a.trim()).filter(Boolean) : [];
 
         frappe.call({
             method: 'frappe.client.get_list',
             args: {
                 doctype: 'User',
                 fields: ['full_name'],
+                filters: [
+                    ['User', 'enabled', '=', 1],
+                    ['Has Role', 'role', '=', 'Maintenance User']
+                ],
+                limit_page_length: 0,
             },
             callback: function(response) {
-                let options = response.message.map(user => user.full_name);
+                let options = response.message.map(user => user.full_name).filter(Boolean);
 
-                frappe.prompt(
-                    [
+                const dialog = new frappe.ui.Dialog({
+                    title: __('Select Users'),
+                    fields: [
                         {
                             label: __("Select Users"),
-                            fieldname: "users",
                             fieldtype: "MultiSelectList",
+                            fieldname: "users",
                             options: options,
-                            reqd: 1
+                            reqd: 1,
+                            get_data: function () {
+                                return response.message.map(user => ({
+                                    value: user.full_name,
+                                    description: ""
+                                }));
+                            }
                         }
                     ],
-
-                    function(values) {
+                    primary_action_label: __('Submit'),
+                    primary_action: function(values) {
                         let newAssignees = values['users'] || [];
                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
-                        
+
                         if (duplicates.length > 0) {
                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
                         } else {
                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
                             updateAssignees();
                         }
-                    },
-                    __("Select Users")
-                );
+
+                        dialog.hide();
+                        $('body').removeClass('modal-open');  
+                    }
+                });
+
+                dialog.show();
+
+                $('body').addClass('modal-open');
+
+
+                dialog.$wrapper.find('.modal-body').css({
+                    "overflow-y": "auto",
+                    "height": "15vh"
+                });
+                function updateAssignees() {
+                    let userList = selectedAssignees.join(', ');
+                    frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
+                    frm.refresh_field('task_allocation_details');
+                }
             }
         });
-
-        function updateAssignees() {
-            let userList = selectedAssignees.join(', ');
-            // console.log(userList);
-            frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
-            frm.refresh_field('task_allocation_details');
-        }
     }
 });

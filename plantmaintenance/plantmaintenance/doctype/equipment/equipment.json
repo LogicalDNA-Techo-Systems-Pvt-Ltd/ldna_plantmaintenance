@@ -40,10 +40,9 @@
   "customer_warranty_section",
   "warranty_end_date",
   "history_tab",
-  "task_detail_section",
-  "task_detail_ct",
-  "section_break_rqyc",
-  "material_movement_ct"
+  "equipment_task_details",
+  "section_break_dfow",
+  "equipment_material_moment"
  ],
  "fields": [
   {
@@ -54,8 +53,7 @@
    "fieldname": "equipment_code",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Equipment Code",
-   "reqd": 1
+   "label": "Equipment Code"
   },
   {
    "fieldname": "equipment_name",
@@ -235,23 +233,19 @@
    "label": "History"
   },
   {
-   "fieldname": "task_detail_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "task_detail_ct",
+   "fieldname": "equipment_task_details",
    "fieldtype": "Table",
-   "label": "Task Detail",
+   "label": "Equipment Task Details",
    "options": "Equipment Task Details CT"
   },
   {
-   "fieldname": "section_break_rqyc",
+   "fieldname": "section_break_dfow",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "material_movement_ct",
+   "fieldname": "equipment_material_moment",
    "fieldtype": "Table",
-   "label": "Material Movement",
+   "label": "Equipment Material Moment",
    "options": "Equipment Material Moment CT"
   }
  ],
