@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{plant}",
  "creation": "2024-05-30 12:07:30.603254",
@@ -19,7 +18,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-14 13:01:53.531273",
+ "modified": "2024-08-14 14:14:54.252979",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Priority",
