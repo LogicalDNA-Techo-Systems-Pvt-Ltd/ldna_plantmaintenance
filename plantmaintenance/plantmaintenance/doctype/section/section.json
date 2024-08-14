@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{section}",
  "creation": "2024-05-30 11:53:01.309269",
@@ -16,8 +17,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Section",
-   "length": 50,
-   "reqd": 1
+   "length": 50
   },
   {
    "fieldname": "table_mxdd",
@@ -27,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-01 12:55:35.268839",
+ "modified": "2024-08-14 14:13:23.535350",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Section",
