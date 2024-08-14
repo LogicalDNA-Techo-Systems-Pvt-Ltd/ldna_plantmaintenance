@@ -38,7 +38,10 @@
   "warranty_tab",
   "customer_warranty_section",
   "warranty_end_date",
-  "history_tab"
+  "history_tab",
+  "equipment_task_details",
+  "section_break_dfow",
+  "equipment_material_moment"
  ],
  "fields": [
   {
@@ -227,11 +230,27 @@
    "fieldname": "history_tab",
    "fieldtype": "Tab Break",
    "label": "History"
+  },
+  {
+   "fieldname": "equipment_task_details",
+   "fieldtype": "Table",
+   "label": "Equipment Task Details",
+   "options": "Equipment Task Details CT"
+  },
+  {
+   "fieldname": "section_break_dfow",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equipment_material_moment",
+   "fieldtype": "Table",
+   "label": "Equipment Material Moment",
+   "options": "Equipment Material Moment CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-14 10:58:05.084978",
+ "modified": "2024-08-14 11:53:14.012374",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
