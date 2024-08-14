@@ -33,13 +33,12 @@
    "fieldname": "activity",
    "fieldtype": "Table",
    "label": "Activity",
-   "options": "Activity CT",
-   "reqd": 1
+   "options": "Activity CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-24 20:20:43.557540",
+ "modified": "2024-08-14 14:33:39.478308",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Activity Group",
