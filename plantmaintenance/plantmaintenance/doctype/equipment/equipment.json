@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{equipment_code}",
  "creation": "2024-05-30 10:49:09.117773",
@@ -256,7 +257,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-09 11:13:52.904777",
+ "modified": "2024-08-14 11:23:44.196348",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",

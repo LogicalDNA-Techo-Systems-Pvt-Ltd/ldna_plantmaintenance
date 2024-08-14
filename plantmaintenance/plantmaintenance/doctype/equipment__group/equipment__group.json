@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{equipment_group_name}",
  "creation": "2024-05-30 12:06:48.511464",
@@ -44,7 +45,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-06-27 12:00:41.081000",
+ "modified": "2024-08-14 13:00:52.405988",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment  Group",

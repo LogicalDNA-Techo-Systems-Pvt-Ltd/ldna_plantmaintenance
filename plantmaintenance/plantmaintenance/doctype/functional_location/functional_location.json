@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{functional_location}",
  "creation": "2024-07-01 12:37:17.994637",
@@ -24,7 +25,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-02 20:24:07.610605",
+ "modified": "2024-08-14 12:55:54.926298",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Functional Location",

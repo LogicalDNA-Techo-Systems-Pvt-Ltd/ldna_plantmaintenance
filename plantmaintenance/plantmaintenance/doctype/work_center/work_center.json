@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{work_center}",
  "creation": "2024-06-25 16:26:08.675412",
@@ -18,7 +19,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-16 14:54:17.337804",
+ "modified": "2024-08-14 12:56:16.186925",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Work Center",
