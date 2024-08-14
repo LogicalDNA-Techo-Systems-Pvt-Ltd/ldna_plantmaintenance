@@ -28,8 +28,8 @@
   "section_break_djky",
   "plan_start_date",
   "preventive_maintenence_section",
-  "activity_group",
   "activity",
+  "activity_group",
   "parameter_type",
   "acceptance_criteria_for_list",
   "frequency",
@@ -127,7 +127,6 @@
    "fieldname": "equipment_code",
    "fieldtype": "Link",
    "label": "Equipment Code",
-   "mandatory_depends_on": "eval:doc.type!= \"General\"",
    "options": "Equipment"
   },
   {
@@ -232,7 +231,7 @@
    "fieldname": "actual_value",
    "fieldtype": "Select",
    "label": "Actual Value",
-   "options": "\nYes\nNo"
+   "options": "\nYES\nNO"
   },
   {
    "depends_on": "eval:doc.parameter_type===\"List\"",
@@ -459,7 +458,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-13 12:29:06.889512",
+ "modified": "2024-08-14 10:27:19.894851",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
