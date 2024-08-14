@@ -18,20 +18,12 @@ frappe.ui.form.on('Allocation', {
             frm.custom_buttons_created = true;
             $(".grid-add-row").hide();
             frm.fields_dict['task_allocation_details'].grid.wrapper.find('.grid-add-row').hide();
-
-            frm.disable_save();
             
         }
 
         $(frm.page.sidebar).hide();
         $(frm.page.wrapper).find('.page-title .sidebar-toggle-btn').css('display', 'none');
         // $(frm.page.wrapper).find(".layout-main-section-wrapper").removeClass("col-md-10").addClass("col-md-12");
-
-        frm.page.wrapper.find('.page-actions .btn-primary.primary-action[data-label="Save"]').hide();
-
-        // Hide the "Not Saved" indicator
-        frm.page.wrapper.find('.indicator-pill:contains("Not Saved")').hide();
-        frm.page.wrapper.find('span:contains("Not Saved")').hide(); 
         
     },
 
@@ -200,9 +192,6 @@ function load_tasks(frm) {
 }
 
 
-
-
-
 function download_tasks_excel(tasks) { // This code is to download the excel file of task allocation detail ct for bulk assignment of task. PD
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.allocation.allocation.download_tasks_excel_for_allocation',
@@ -222,6 +211,7 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
         }
     });
  }
+
 
 
 frappe.ui.form.on("Task Allocation Details", {
