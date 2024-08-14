@@ -18,20 +18,18 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Activity Name",
-   "length": 50,
-   "reqd": 1
+   "length": 50
   },
   {
    "fieldname": "parameter",
    "fieldtype": "Table",
    "label": "Parameter",
-   "options": "Parameter CT",
-   "reqd": 1
+   "options": "Parameter CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-24 20:20:33.720452",
+ "modified": "2024-08-14 14:35:47.275556",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Activity",
