@@ -1,0 +1,52 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2024-08-12 11:58:44.065913",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [
+  {
+   "fieldname": "damage",
+   "fieldtype": "Link",
+   "label": "Damages",
+   "mandatory": 0,
+   "options": "Damage",
+   "wildcard_filter": 0
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "label": "Equipment",
+   "mandatory": 0,
+   "options": "Equipment",
+   "wildcard_filter": 0
+  }
+ ],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2024-08-14 10:45:11.017546",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Damages",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Task Detail",
+ "report_name": "Damages",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Maintenance User"
+  },
+  {
+   "role": "Maintenance Manager"
+  },
+  {
+   "role": "All"
+  }
+ ]
+}
