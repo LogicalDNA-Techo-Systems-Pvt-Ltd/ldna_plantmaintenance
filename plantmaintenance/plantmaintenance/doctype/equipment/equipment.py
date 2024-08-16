@@ -79,13 +79,13 @@ def equipment_task_details(doc, method=None):
 
         def should_create_entry(status, workflow_state):
             if status == "Completed":
-                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Completed")
+                return not is_task_detail_existing(equipment_doc.equipment_task_details, task_detail.name, "Completed")
             elif status == "Rejected" and workflow_state == "Rejected":
-                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Rejected")
+                return not is_task_detail_existing(equipment_doc.equipment_task_details, task_detail.name, "Rejected")
             elif status == "Cancelled" and workflow_state == "Cancelled":
-                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, "Cancelled")
+                return not is_task_detail_existing(equipment_doc.equipment_task_details, task_detail.name, "Cancelled")
             else:
-                return not is_task_detail_existing(equipment_doc.task_detail_ct, task_detail.name, status)
+                return not is_task_detail_existing(equipment_doc.equipment_task_details, task_detail.name, status)
 
         def is_material_entry_existing(child_table, task_name, material_name):
             for detail in child_table:
@@ -95,7 +95,7 @@ def equipment_task_details(doc, method=None):
 
         if equipment_doc and task_detail.status in valid_statuses:
             if should_create_entry(task_detail.status, task_detail.workflow_state):
-                detail = equipment_doc.append("task_detail_ct", {})
+                detail = equipment_doc.append("equipment_task_details", {})
                 detail.task = task_detail.name
                 detail.parameter = task_detail.parameter
                 detail.date = task_detail.creation
@@ -111,8 +111,8 @@ def equipment_task_details(doc, method=None):
             material_returned = task_detail_doc.get("material_returned", [])
             if material_returned:
                 for material_issue in material_returned:
-                    if not is_material_entry_existing(equipment_doc.material_movement_ct, task_detail.name, material_issue.material_code):
-                        detail = equipment_doc.append("material_movement_ct", {})
+                    if not is_material_entry_existing(equipment_doc.equipment_material_moment, task_detail.name, material_issue.material_code):
+                        detail = equipment_doc.append("equipment_material_moment", {})
                         detail.task = task_detail.name
                         detail.material_type = material_issue.type
                         detail.material_name = material_issue.material_code
