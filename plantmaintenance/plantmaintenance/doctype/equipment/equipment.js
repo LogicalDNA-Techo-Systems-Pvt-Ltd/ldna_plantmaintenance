@@ -121,8 +121,8 @@ frappe.ui.form.on('Equipment', {
     }, 
     onload: function(frm) { 
 
-        frm.get_field('task_detail_ct').grid.cannot_add_rows = true;
-        frm.get_field('material_moment_ct').grid.cannot_add_rows = true;
+        frm.get_field('equipment_task_details').grid.cannot_add_rows = true;
+        frm.get_field('equipment_material_moment').grid.cannot_add_rows = true;
 },
 refresh: function(frm) {
     if (!frm.is_new() && frappe.user.has_role('System Manager')) {
