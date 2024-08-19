@@ -5,7 +5,7 @@
    "label": "Task Breakdown"
   }
  ],
- "content": "[{\"id\":\"bOEIuDpVSn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Maintenance User</span>\",\"col\":12}},{\"id\":\"a6KHxjGTFL\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"BoD7f-hfjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":6}},{\"id\":\"xkzlDdWQr_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":6}},{\"id\":\"bIQE0HTzwi\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Assigned Task\",\"col\":6}},{\"id\":\"4sJ-7_mnF8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"UnAssigned Task\",\"col\":6}},{\"id\":\"3bGnsEG8dP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending for Approval\",\"col\":6}},{\"id\":\"vfsdQutbwu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":6}},{\"id\":\"wYD0Z5Jctp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Task\",\"col\":6}},{\"id\":\"xwg7930cXm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Task\",\"col\":6}},{\"id\":\"m_cAFXRT02\",\"type\":\"card\",\"data\":{\"card_name\":\"Task Detail\",\"col\":4}}]",
+ "content": "[{\"id\":\"bOEIuDpVSn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Maintenance User</span>\",\"col\":12}},{\"id\":\"a6KHxjGTFL\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"BoD7f-hfjm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":3}},{\"id\":\"xkzlDdWQr_\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":3}},{\"id\":\"4sJ-7_mnF8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"UnAssigned Task\",\"col\":3}},{\"id\":\"bIQE0HTzwi\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Assigned Task\",\"col\":3}},{\"id\":\"3bGnsEG8dP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending for Approval\",\"col\":3}},{\"id\":\"vfsdQutbwu\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Approved Task\",\"col\":3}},{\"id\":\"AdXfYz92Wf\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":3}},{\"id\":\"y3iPxe5fum\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending For Completion\",\"col\":3}},{\"id\":\"wYD0Z5Jctp\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Task\",\"col\":6}},{\"id\":\"xwg7930cXm\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Task\",\"col\":6}},{\"id\":\"m_cAFXRT02\",\"type\":\"card\",\"data\":{\"card_name\":\"Task Detail\",\"col\":4}}]",
  "creation": "2024-07-15 16:09:05.196139",
  "custom_blocks": [],
  "docstatus": 0,
@@ -38,7 +38,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-07-18 11:14:05.186762",
+ "modified": "2024-08-16 12:48:46.370485",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Maintenance User",
@@ -46,6 +46,18 @@
   {
    "label": "Rejected Task",
    "number_card_name": "Rejected Task"
+  },
+  {
+   "label": "Approved Task",
+   "number_card_name": "Completed Task"
+  },
+  {
+   "label": "Completed Task",
+   "number_card_name": "Completed Task-1"
+  },
+  {
+   "label": "Pending For Completion",
+   "number_card_name": "Pending For Completion"
   },
   {
    "label": "Open Task",
@@ -70,10 +82,6 @@
   {
    "label": "Total Task",
    "number_card_name": "Total Task"
-  },
-  {
-   "label": "Completed Task",
-   "number_card_name": "Completed Task"
   }
  ],
  "owner": "Administrator",
