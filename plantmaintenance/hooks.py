@@ -209,11 +209,9 @@ doc_events = {
 # }
 
 scheduler_events = {
-    "cron": {
-        "1 * * * *": [
-            "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_overdue_status"
-        ]
-    }
+    "daily": [
+        "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_overdue_status"
+    ]
 }
 
 # Testing
