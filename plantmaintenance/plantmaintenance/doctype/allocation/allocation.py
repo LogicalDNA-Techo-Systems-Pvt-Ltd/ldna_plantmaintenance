@@ -9,7 +9,8 @@ from datetime import date, timedelta, datetime
 from dateutil.relativedelta import relativedelta
 import os
 import openpyxl
-
+import base64
+import io
 
 class Allocation(Document):
     pass
@@ -124,8 +125,9 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         'day': calendar.day_name[date_obj.weekday()],
                         'unique_key': unique_key[:10]
                     }
+
                     tasks.append(task)
-                    # Check if the task exists before appending it to the tasks list
+
                     task_exists = frappe.db.exists(
                         'Task Detail',
                         {
@@ -164,61 +166,61 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
 @frappe.whitelist()
 def download_tasks_excel_for_allocation(tasks):
-   tasks = frappe.parse_json(tasks)
+    doc = frappe.get_doc("Allocation")
+    tasks = frappe.parse_json(tasks)
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Tasks"
 
 
-   wb = Workbook()
-   ws = wb.active
-   ws.title = "Tasks"
+    headers = ['Unique Key','Equipment Code', 'Equipment Name', 'Activity Group','Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day','Priority']
+    ws.append(headers)
 
 
-   headers = ['Unique Key','Equipment Code', 'Equipment Name', 'Activity Group','Activity', 'Parameter', 'Frequency', 'Assign To', 'Date', 'Day','Priority']
-   ws.append(headers)
+    for task in tasks:
+        task_date = getdate(task.get('date'))
+        row = [
+            task.get('unique_key'),
+            task.get('equipment_code'),
+            task.get('equipment_name'),
+            task.get('activity_group'),
+            task.get('activity'),
+            task.get('parameter'),
+            task.get('frequency'),
+            task.get('assign_to'),
+            task_date.strftime('%Y-%m-%d') if task_date else None,
+            task.get('day'),
+            task.get('priority'),
+        ]
+        ws.append(row)
 
 
-   for task in tasks:
-       task_date = getdate(task.get('date'))
-       row = [
-           task.get('unique_key'),
-           task.get('equipment_code'),
-           task.get('equipment_name'),
-           task.get('activity_group'),
-           task.get('activity'),
-           task.get('parameter'),
-           task.get('frequency'),
-           task.get('assign_to'),
-           task_date.strftime('%Y-%m-%d') if task_date else None,
-           task.get('day'),
-            task.get('priority')
-       ]
-       ws.append(row)
+    virtual_workbook = BytesIO()
+    wb.save(virtual_workbook)
+    virtual_workbook.seek(0)
+    file_data = virtual_workbook.read()
 
 
-   virtual_workbook = BytesIO()
-   wb.save(virtual_workbook)
-   virtual_workbook.seek(0)
-   file_data = virtual_workbook.read()
+    file_name = f'Task_Allocation_{nowdate()}.xlsx'
+    file_doc = frappe.get_doc({
+        'doctype': 'File',
+        'file_name': file_name,
+        'content': file_data,
+        'is_private': 0
+    })
+    file_name = f'Task_Detail_{nowdate()}.xlsx'
+    file_doc = frappe.get_doc({
+        'doctype': 'File',
+        'file_name': file_name,
+        'content': file_data,
+        'is_private': 0
+    })
+    file_doc.save(ignore_permissions=True)
 
 
-   file_name = f'Task_Allocation_{nowdate()}.xlsx'
-   file_doc = frappe.get_doc({
-       'doctype': 'File',
-       'file_name': file_name,
-       'content': file_data,
-       'is_private': 0
-   })
-   file_name = f'Task_Detail_{nowdate()}.xlsx'
-   file_doc = frappe.get_doc({
-       'doctype': 'File',
-       'file_name': file_name,
-       'content': file_data,
-       'is_private': 0
-   })
-   file_doc.save(ignore_permissions=True)
-
-
-   return file_doc.file_url
-
+    return file_doc.file_url
+ 
 
 @frappe.whitelist()
 def upload_tasks_excel_for_allocation(file, allocation_name):
@@ -269,26 +271,39 @@ def upload_tasks_excel_for_allocation(file, allocation_name):
         allocation_details.append({
             'equipment_code': row_data.get('Equipment Code'),
             'equipment_name': row_data.get('Equipment Name'),
-            'activity_group':row_data.get('Activity Group'),
+            'activity_group': row_data.get('Activity Group'),
             'activity': row_data.get('Activity'),
             'parameter': row_data.get('Parameter'),
             'frequency': row_data.get('Frequency'),
             'date': getdate(row_data.get('Date')),
             'assign_to': assign_to,
             'priority': row_data.get('Priority'),
-            'day': row_data.get('Day'),
-            'unique_key': row_data.get('Unique Key')
+            'day': row_data.get('Day')
         })
 
+    
     for detail in allocation_details:
-        unique_key = detail['unique_key']
-        task_exists = frappe.db.exists('Task Detail', {'unique_key': unique_key})
+        filters = {
+            'equipment_code': detail['equipment_code'],
+            'activity': detail['activity'],
+            'parameter': detail['parameter'],
+            'plan_start_date': detail['date']
+        }
 
-        if task_exists:
-            task_detail = frappe.get_doc('Task Detail', task_exists)
-            task_detail.assign_to = detail['assign_to']
-            task_detail.priority = detail['priority']
-            task_detail.save(ignore_permissions=True)
+        task_details = frappe.get_all('Task Detail', filters=filters, fields=['name'])
+
+        if not task_details:
+            frappe.log_error(f"No tasks found for filters: {filters}", "Task Update Error")
+            continue
+
+        for task in task_details:
+            try:
+                task_detail = frappe.get_doc('Task Detail', task.name)
+                task_detail.assigned_to = detail['assign_to']
+                task_detail.priority = detail['priority']
+                task_detail.save(ignore_permissions=True)
+            except Exception as e:
+                frappe.log_error(f"Error updating task {task.name}: {str(e)}", "Task Update Error")
 
     error_message = ""
     if missing_assign_to_count > 0:
@@ -300,5 +315,3 @@ def upload_tasks_excel_for_allocation(file, allocation_name):
         frappe.msgprint(error_message)
 
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!", "allocation_details": allocation_details}
-
-

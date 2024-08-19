@@ -208,6 +208,11 @@ doc_events = {
 #     }
 # }
 
+scheduler_events = {
+    "daily": [
+        "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_overdue_status"
+    ]
+}
 
 # Testing
 # -------
