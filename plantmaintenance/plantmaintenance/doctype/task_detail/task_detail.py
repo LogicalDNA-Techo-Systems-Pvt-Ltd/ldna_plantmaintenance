@@ -7,6 +7,7 @@ from frappe.utils import nowdate, getdate
 from datetime import datetime, timedelta
 from frappe.utils import nowdate, getdate
 from frappe import _
+from frappe.utils.background_jobs import enqueue
 
 class TaskDetail(Document):
     def validate(self):
@@ -97,3 +98,30 @@ def before_workflow_action(docname):
     if pending_approval_exists and (doc.status == "Open" or doc.status == "In Progress"):
         frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
 
+
+
+def update_overdue_status():
+    try:
+        today = nowdate()
+        
+        overdue_tasks = frappe.get_all('Task Detail', filters={
+            'plan_start_date': ['<', today],
+            'status': ['!=', 'Overdue']
+        })
+
+        # Update status in smaller batches to avoid long transactions
+        batch_size = 50
+        for i in range(0, len(overdue_tasks), batch_size):
+            tasks_batch = overdue_tasks[i:i + batch_size]
+            for task in tasks_batch:
+                try:
+                    doc = frappe.get_doc('Task Detail', task.name)
+                    doc.status = 'Overdue'
+                    doc.save(ignore_permissions=True)
+                    frappe.db.commit()
+                except Exception as e:
+                    frappe.log_error(f"Error updating task {task.name}: {str(e)}", "Update Overdue Status")
+                    continue  
+
+    except Exception as e:
+        frappe.log_error(f"Scheduler event failed: {str(e)}", "Update Overdue Status")

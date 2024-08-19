@@ -3,29 +3,36 @@ frappe.ui.form.on('Allocation', {
         if (!frm.custom_buttons_created) {
             const buttonContainer = $('<div class="custom-button-container"></div>').appendTo(frm.fields_dict['button_container'].wrapper);
 
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function () {
+            $('<button id="load-tasks-btn" class="btn btn-primary" style="margin-right: 10px;">Load Tasks</button>').appendTo(buttonContainer).click(function () {
                 load_tasks(frm);
             });
 
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function () {
+            $('<button id="download-tasks-excel-btn" class="btn btn-primary" style="margin-right: 10px;">Download Tasks Excel</button>').appendTo(buttonContainer).click(function () {
                 download_tasks_excel(frm.doc.task_allocation_details);
             });
 
-            $('<button class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function () {
+            $('<button id="upload-assignment-excel-btn" class="btn btn-primary" style="margin-right: 10px;">Upload Assignment Excel</button>').appendTo(buttonContainer).click(function () {
                 upload_assignment_excel(frm);
             });
 
+            document.getElementById('download-tasks-excel-btn').style.display = 'none';
+            document.getElementById('upload-assignment-excel-btn').style.display = 'none';
+
             frm.custom_buttons_created = true;
+            frm.disable_save(); 
 
             $(".grid-add-row").hide();
             frm.fields_dict['task_allocation_details'].grid.wrapper.find('.grid-add-row').hide();
-            
         }
 
         $(frm.page.sidebar).hide();
         $(frm.page.wrapper).find('.page-title .sidebar-toggle-btn').css('display', 'none');
-        // $(frm.page.wrapper).find(".layout-main-section-wrapper").removeClass("col-md-10").addClass("col-md-12");
-        
+
+        frm.page.wrapper.find('.page-actions .btn-primary.primary-action[data-label="Save"]').hide(); 
+
+        // Hide the "Not Saved" indicator 
+        frm.page.wrapper.find('.indicator-pill:contains("Not Saved")').hide(); 
+        frm.page.wrapper.find('span:contains("Not Saved")').hide(); 
     },
 
     plant: function (frm) {
@@ -144,10 +151,7 @@ frappe.ui.form.on('Allocation', {
             frm.set_value('work_center', '');
         }
     }
-
-
 });
-
 
 function load_tasks(frm) {
     if (!frm.doc.plant || !frm.doc.location || !frm.doc.functional_location || 
@@ -187,13 +191,15 @@ function load_tasks(frm) {
                 });
                 frm.refresh_field('task_allocation_details');
                 frm.toggle_display('task_allocation_details', true);
+
+                document.getElementById('download-tasks-excel-btn').style.display = 'inline-block';
+                document.getElementById('upload-assignment-excel-btn').style.display = 'inline-block';
             }
         }
     });
 }
 
-
-function download_tasks_excel(tasks) { // This code is to download the excel file of task allocation detail ct for bulk assignment of task. PD
+function download_tasks_excel(tasks) {
     frappe.call({
         method: 'plantmaintenance.plantmaintenance.doctype.allocation.allocation.download_tasks_excel_for_allocation',
         args: {
@@ -211,8 +217,7 @@ function download_tasks_excel(tasks) { // This code is to download the excel fil
             frappe.msgprint(__('Failed to download tasks: {0}', [error]));
         }
     });
- }
-
+}
 
 
 frappe.ui.form.on("Task Allocation Details", {
@@ -293,6 +298,7 @@ function upload_assignment_excel(frm) {
     }, __('Upload XLSX File'));
 }
 
+
 frappe.ui.form.on('Task Allocation Details', {
     add_assignee: function(frm, cdt, cdn) {
         var child = locals[cdt][cdn];
@@ -364,3 +370,4 @@ frappe.ui.form.on('Task Allocation Details', {
         });
     }
 });
+
