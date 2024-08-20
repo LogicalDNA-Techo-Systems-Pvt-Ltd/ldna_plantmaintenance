@@ -69,7 +69,8 @@ frappe.ui.form.on('Task Detail', {
             });
             material_issued.grid.wrapper.find('.grid-add-row').hide();
             $(".form-assignments").hide(); // for hiding assign to in sidebar
-        } else {
+        } 
+        else {
             if (!frm.inventory_button_added) {
                 frm.inventory_button_added = true;
 
@@ -78,26 +79,23 @@ frappe.ui.form.on('Task Detail', {
 
                 button1.on('click', function () {
                     let new_rows_for_approval = [];
-                    let message = '';
+                    let currentRow = true;
 
-                    frm.doc.material_issued.forEach((item, index) => {
+                    frm.doc.material_issued.forEach(item => {
                         if (item.status === 'Material Issued') {
                             // Skip materials that are already issued
                             return;
-                        } else if (item.shortage > 0) {
-                            message = `Cannot send for approval due to existing shortage`;
-                        } else if (!item.spare) {
-                            message = __('Cannot send for approval.');
-                        } else if (item.shortage != 0) {
-                            message = __('Cannot send for approval.');
-                        } else {
-                            if (item.spare && item.shortage === 0) {
+                        } 
+                        if (item.is_new_entry) {
+                            if (item.shortage > 0 || !item.spare) {
+                                currentRow = false;
+                            } else if (item.spare && item.shortage === 0) {
                                 new_rows_for_approval.push(item);
                             }
                         }
                     });
 
-                    if (new_rows_for_approval.length > 0) {
+                    if (currentRow && new_rows_for_approval.length > 0) {
                         frappe.call({
                             method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
                             args: { docname: frm.doc.name },
@@ -113,8 +111,9 @@ frappe.ui.form.on('Task Detail', {
                                 }
                             }
                         });
-                    } else if (message) {
-                        frappe.msgprint(message);
+                    } 
+                    else {
+                        frappe.msgprint('Cannot send for approval.');
                     }
                 });
 
@@ -199,22 +198,35 @@ frappe.ui.form.on('Task Detail', {
         let hasValidationErrors = false;
 
         if (frm.doc.parameter_type === 'Numeric') {
-            let minRange = frm.doc.minimum_value;
-            let maxRange = frm.doc.maximum_value;
+            frappe.call({
+                method: 'frappe.client.get',
+                args: {
+                    doctype: 'Parameter',
+                    name: frm.doc.parameter 
+                },
+                callback: function (response) {
+                    if (response.message) {
+                        let parameter = response.message;
+                        let minRange = parameter.minimum_value;
+                        let maxRange = parameter.maximum_value;
 
-            for (let i = 0; i < readingsCount; i++) {
-                let field = fields[i];
-                let numericValue = frm.doc[field];
-                if (numericValue < minRange || numericValue > maxRange) {
-                    hasValidationErrors = true;
+                        for (let i = 0; i < readingsCount; i++) {
+                            let field = fields[i];
+                            let numericValue = frm.doc[field];
+                            if (numericValue < minRange || numericValue > maxRange) {
+                                hasValidationErrors = true;
+                                break;
+                            }
+                        }
+                        if (hasValidationErrors) {
+                            frm.set_value('result', 'Fail');
+                        } else {
+                            frm.set_value('result', 'Pass');
+                        }
+                    }
                 }
-            }
+            });
         }
-        if (hasValidationErrors) {
-            frm.doc.result = 'Fail';
-        } else {
-            frm.doc.result = 'Pass';
-        };
         frm.fields_dict.material_issued.grid.data.forEach(row => {
             consumable_fields(frm, row.doctype, row.name, row.consumable);
         });
