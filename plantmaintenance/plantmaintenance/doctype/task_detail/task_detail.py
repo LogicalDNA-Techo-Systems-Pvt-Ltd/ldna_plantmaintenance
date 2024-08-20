@@ -11,6 +11,11 @@ from frappe.utils.background_jobs import enqueue
 
 class TaskDetail(Document):
     def validate(self):
+        if self.parameter:
+            parameter_doc = frappe.get_doc('Parameter', self.parameter)
+            self.acceptance_criteria = parameter_doc.acceptance_criteria
+            self.acceptance_criteria_for_list = parameter_doc.acceptance_criteria_for_list
+
         if self.parameter_type == 'Binary':
             if not self.actual_value:
                 self.result = ''
@@ -34,7 +39,6 @@ class TaskDetail(Document):
             if today > start_date:
                 self.status = 'Overdue'
 
-   
 
 @frappe.whitelist()
 def send_for_approval(docname):
@@ -95,8 +99,11 @@ def update_task_detail(equipment_code, parameter,activity, assign_to, date):
 def before_workflow_action(docname):
     doc = frappe.get_doc('Task Detail', docname)
     pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
-    if pending_approval_exists and (doc.status == "Open" or doc.status == "In Progress"):
+    if pending_approval_exists and (doc.workflow_state == "Work In Progress"):
         frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
+    elif pending_approval_exists and (doc.status =="Overdue" and doc.workflow_state == "Work In Progress"):
+         frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
+
 
 
 
