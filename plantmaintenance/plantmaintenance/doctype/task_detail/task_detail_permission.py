@@ -35,7 +35,7 @@ def task_detail_permission(user):
             """.format(user=user, user_full_name=user_full_name, work_centers_condition=work_centers_condition)
         else:
             return """
-            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL)
+            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%')
             """.format(user=user, user_full_name=user_full_name)
 
     elif 'Process Manager' in user_roles:
