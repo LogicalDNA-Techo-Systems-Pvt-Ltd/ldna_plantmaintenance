@@ -11,6 +11,7 @@ import os
 import openpyxl
 import base64
 import io
+from frappe.exceptions import TimestampMismatchError
 
 class Allocation(Document):
     pass
@@ -315,3 +316,4 @@ def upload_tasks_excel_for_allocation(file, allocation_name):
         frappe.msgprint(error_message)
 
     return {"message": "Excel import successful with warnings!" if error_message else "Excel import successful!", "allocation_details": allocation_details}
+

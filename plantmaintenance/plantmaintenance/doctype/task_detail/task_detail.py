@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from frappe.utils import nowdate, getdate
 from frappe import _
 from frappe.utils.background_jobs import enqueue
+import time
 
 class TaskDetail(Document):
     def validate(self):
@@ -31,13 +32,6 @@ class TaskDetail(Document):
                 self.result = 'Fail'
             else:
                 self.result = 'Pass'
-
-    def before_save(self):
-        if self.plan_start_date:
-            today = getdate(nowdate())
-            start_date = getdate(self.plan_start_date) 
-            if today > start_date:
-                self.status = 'Overdue'
 
 
 @frappe.whitelist()
@@ -80,20 +74,28 @@ def mark_as_issued(docname):
 
     
 @frappe.whitelist()
-def update_task_detail(equipment_code, parameter,activity, assign_to, date):
+def update_task_detail(equipment_code, parameter, activity, assign_to, date):
+    retries = 3
+    for _ in range(retries):
+        try:
+            task_details = frappe.get_all('Task Detail', filters={
+                'equipment_code': equipment_code,
+                'parameter': parameter,
+                'activity': activity,
+                'plan_start_date': date 
+            })
+            for task in task_details:
+                frappe.db.set_value('Task Detail', task.name, 'assigned_to', assign_to)
+            return True
+        except frappe.exceptions.TimestampMismatchError:
+            time.sleep(1)  # Introduce a small delay before retrying
+        except Exception as e:
+            frappe.log_error(str(e), "Task Update Error")
+            frappe.throw(f"Error updating tasks: {str(e)}")
 
-    task_details = frappe.get_all('Task Detail', filters={
-        'equipment_code': equipment_code,
-        'parameter':parameter,
-        'activity': activity,
-        'plan_start_date': date 
-    })
-    for task in task_details:
-        doc = frappe.get_doc('Task Detail', task.name)
-        doc.assigned_to = assign_to 
-        doc.save()
-        
-    return True
+
+
+
 
 @frappe.whitelist()
 def before_workflow_action(docname):
