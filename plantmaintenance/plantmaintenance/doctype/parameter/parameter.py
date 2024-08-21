@@ -31,23 +31,6 @@ def update_activity_parameter(doc, method):
 
 
 
-def delete_tasks_on_frequency_change(doc, method):
-      previous_doc = frappe.get_doc(doc.doctype, doc.name)
-      
-      if previous_doc.frequency != doc.frequency:
-        tasks_to_delete = frappe.get_all(
-            'Task Detail',
-            filters={
-                'parameter': doc.name,
-                'frequency': previous_doc.frequency,
-                'status':"Open"
-            },
-            fields=['name']
-        )
-        
-        for task in tasks_to_delete:
-              frappe.delete_doc('Task Detail', task['name'])
 
-              
 
             
