@@ -33,6 +33,14 @@ frappe.ui.form.on('Allocation', {
         // Hide the "Not Saved" indicator 
         frm.page.wrapper.find('.indicator-pill:contains("Not Saved")').hide(); 
         frm.page.wrapper.find('span:contains("Not Saved")').hide(); 
+
+        frm.page.wrapper.find('.indicator-pill:contains("Not Saved")').hide(); 
+        frm.page.wrapper.find('span:contains("Not Saved")').hide(); 
+
+        // Additional selectors to target the exact elements
+        frm.page.wrapper.find('.indicator-pill.orange:contains("Not Saved")').hide();
+        frm.page.wrapper.find('.form-message').hide();
+
     },
 
     plant: function (frm) {
@@ -297,6 +305,7 @@ function upload_assignment_excel(frm) {
         });
     }, __('Upload XLSX File'));
 }
+
 
 
 frappe.ui.form.on('Task Allocation Details', {

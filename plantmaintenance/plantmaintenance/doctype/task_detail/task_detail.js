@@ -424,3 +424,42 @@ frappe.ui.form.on('Task Detail', {
 });
 
 
+
+
+// frappe.breadcrumbs.update = function() {
+//     frappe.call({
+//         method: 'frappe.client.get',
+//         args: {
+//             doctype: 'User',
+//             name: frappe.session.user
+//         },
+//         callback: function(r) {
+//             if (r.message) {
+//                 let roles = r.message.roles.map(role => role.role);
+                
+//                 if (roles.includes('Manager')) {
+//                     frappe.breadcrumbs.clear();
+//                     frappe.breadcrumbs.add('Manager', '/app/manager');
+//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
+//                 }
+//                 else if (roles.includes('System User')) {
+//                     frappe.breadcrumbs.clear();
+//                     frappe.breadcrumbs.add('System User', '/app/system-user');
+//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
+//                 }
+//                 else if  (roles.includes('Maintenance Manager')) {
+//                     frappe.breadcrumbs.clear();
+//                     frappe.breadcrumbs.add('Maintenance Manager', '/app/Maintenance Manager');
+//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
+//                 }
+//                 else {
+//                     frappe.breadcrumbs.clear();
+//                     frappe.breadcrumbs.add('Other Role', '/app/other-role');
+//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
+//                 }
+//             }
+//         }
+//     });
+// };
+
+
