@@ -1,15 +1,8 @@
-# Copyright (c) 2024, LogicalDNA and contributors
-# For license information, please see license.txt
 import frappe
-import json
-from frappe.model.document import Document
-from frappe.utils import nowdate, getdate
-from datetime import datetime, timedelta
 from frappe.utils import nowdate, getdate
 from frappe import _
-from frappe.utils.background_jobs import enqueue
 
-class TaskDetail(Document):
+class TaskDetail(frappe.website.website_generator.WebsiteGenerator):
     def validate(self):
         if self.parameter:
             parameter_doc = frappe.get_doc('Parameter', self.parameter)
@@ -39,7 +32,6 @@ class TaskDetail(Document):
             if today > start_date:
                 self.status = 'Overdue'
 
-
 @frappe.whitelist()
 def send_for_approval(docname):
     task_detail = frappe.get_doc('Task Detail', docname)
@@ -49,7 +41,7 @@ def send_for_approval(docname):
 def send_approval_email(task_detail):
     url = frappe.utils.get_url_to_form('Task Detail', task_detail.name)
     subject = "Approval Request for Material required for {}".format(task_detail.name)
-    message = """Please review and approve the material with ID: {}.<br> <a href="{}"> Click here to view the task</a>""".format(task_detail.name, url)    
+    message = """Please review and approve the material with ID: {}.<br> <a href="{}">Click here to view the task</a>""".format(task_detail.name, url)    
     recipient = task_detail.approver  
 
     if recipient:
@@ -59,6 +51,7 @@ def send_approval_email(task_detail):
             message=message,
             now=True
         )
+
 @frappe.whitelist()
 def mark_as_issued(docname):
     doc = frappe.get_doc("Task Detail", docname)
@@ -78,13 +71,11 @@ def mark_as_issued(docname):
     
     doc.save()
 
-    
 @frappe.whitelist()
-def update_task_detail(equipment_code, parameter,activity, assign_to, date):
-
+def update_task_detail(equipment_code, parameter, activity, assign_to, date):
     task_details = frappe.get_all('Task Detail', filters={
         'equipment_code': equipment_code,
-        'parameter':parameter,
+        'parameter': parameter,
         'activity': activity,
         'plan_start_date': date 
     })
@@ -101,11 +92,8 @@ def before_workflow_action(docname):
     pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
     if pending_approval_exists and (doc.workflow_state == "Work In Progress"):
         frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
-    elif pending_approval_exists and (doc.status =="Overdue" and doc.workflow_state == "Work In Progress"):
+    elif pending_approval_exists and (doc.status == "Overdue" and doc.workflow_state == "Work In Progress"):
          frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
-
-
-
 
 def update_overdue_status():
     try:
@@ -132,3 +120,42 @@ def update_overdue_status():
 
     except Exception as e:
         frappe.log_error(f"Scheduler event failed: {str(e)}", "Update Overdue Status")
+
+import frappe
+
+def get_material_issued_data():
+    # Fetch Material Issue records with status 'Pending Approval'
+    material_issues = frappe.get_all('Material Issue', filters={
+        'status': 'Pending Approval'
+    }, fields=['parent', 'parenttype', 'material_code', 'material_name', 'available_quantity', 'required_quantity', 'shortage', 'status', 'approval_date', 'issued_date'])
+    
+    # Group by parent Task Detail
+    task_material_data = {}
+    for issue in material_issues:
+        parent_task = issue.parent
+        if parent_task not in task_material_data:
+            task_material_data[parent_task] = []
+        task_material_data[parent_task].append(issue)
+    
+    # Prepare list for frontend
+    tasks_data = []
+    for parent_task, issues in task_material_data.items():
+        task_doc = frappe.get_doc('Task Detail', parent_task)
+        for issue in issues:
+            tasks_data.append({
+                'task_name': task_doc.name,
+                'material_code': issue.material_code,
+                'material_name': issue.material_name,
+                'available_quantity': issue.available_quantity,
+                'required_quantity': issue.required_quantity,
+                'shortage': issue.shortage,
+                'status': issue.status,
+                'approval_date': issue.approval_date,
+                'issued_date': issue.issued_date,
+            })
+    
+    return tasks_data
+
+@frappe.whitelist(allow_guest=True)
+def get_material_issued_records():
+    return get_material_issued_data()

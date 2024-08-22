@@ -1,0 +1,40 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<b>{{ _("Task Name") }}</b>: {{ doc.name }}<br>
+
+{% if doc.material_issued %}
+<h2>{{ _("Material Issued") }}</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{ _("Material Code") }}</th>
+            <th>{{ _("Material Name") }}</th>
+            <th>{{ _("Available Quantity") }}</th>
+            <th>{{ _("Required Quantity") }}</th>
+            <th>{{ _("Shortage") }}</th>
+            <th>{{ _("Status") }}</th>
+            <th>{{ _("Approval Date") }}</th>
+            <th>{{ _("Issued Date") }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in doc.material_issued %}
+        <tr>
+            <td>{{ row.material_code }}</td>
+            <td>{{ row.material_name }}</td>
+            <td>{{ row.available_quantity }}</td>
+            <td>{{ row.required_quantity }}</td>
+            <td>{{ row.shortage }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ frappe.utils.format_date(row.approval_date, "d MMMM, YYYY") }}</td>
+            <td>{{ frappe.utils.format_date(row.issued_date, "d MMMM, YYYY") }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>{{ _("No material issued information available.") }}</p>
+{% endif %}
+
+{% endblock %}
