@@ -41,8 +41,11 @@ frappe.ui.form.on('Allocation', {
         frm.page.wrapper.find('.indicator-pill.orange:contains("Not Saved")').hide();
         frm.page.wrapper.find('.form-message').hide();
 
-    },
+        frm.disable_save();
+	    frm.saving = false;
 
+    },
+    
     plant: function (frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
@@ -160,6 +163,7 @@ frappe.ui.form.on('Allocation', {
         }
     }
 });
+
 
 function load_tasks(frm) {
     if (!frm.doc.plant || !frm.doc.location || !frm.doc.functional_location || 
