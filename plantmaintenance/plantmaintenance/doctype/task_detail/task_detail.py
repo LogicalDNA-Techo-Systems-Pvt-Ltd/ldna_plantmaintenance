@@ -104,16 +104,11 @@ def update_task_detail(equipment_code, parameter, activity, assign_to, date):
 
 
 @frappe.whitelist()
-def before_workflow_action(docname):
-    doc = frappe.get_doc('Task Detail', docname)
-    pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
-    if pending_approval_exists and (doc.workflow_state == "Work In Progress"):
-        frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
-    elif pending_approval_exists and (doc.status =="Overdue" and doc.workflow_state == "Work In Progress"):
-         frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue. Please refresh the page."))
-
-
-
+def validate_before_workflow_action(doc,method):
+    if doc.material_issued:
+        pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
+        if pending_approval_exists and (doc.workflow_state == "Approval Pending"):
+            frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue."))
 
 def update_overdue_status():
     try:

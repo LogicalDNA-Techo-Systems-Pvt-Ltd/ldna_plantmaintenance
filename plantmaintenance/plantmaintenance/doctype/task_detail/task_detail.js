@@ -213,20 +213,6 @@ frappe.ui.form.on('Task Detail', {
         set_existing_rows_read_only(frm);
     },
 
-    before_workflow_action: function(frm) {
-        return frappe.call({
-            method: 'plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.before_workflow_action',
-            args: {
-                docname: frm.doc.name
-            },
-            callback: function(response) {
-                if (response.exc) {
-                    frappe.msgprint(response.exc);
-                }
-            }
-        });
-    },
-
     before_save: function (frm) {
         const fields = ['reading_1', 'reading_2', 'reading_3', 'reading_4', 'reading_5',
             'reading_6', 'reading_7', 'reading_8', 'reading_9', 'reading_10'];
