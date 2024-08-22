@@ -78,11 +78,15 @@ frappe.ui.form.on('Task Detail', {
                 let button1 = $('<button class="btn btn-primary btn-xs send-for-approval-btn" style="margin-top: -80px; margin-left: 87%;">Send for Approval</button>');
 
                 button1.on('click', function () {
+                    if (frm.doc.__unsaved) {
+                        frappe.msgprint("Please save the document.");
+                        return false; 
+                    }
                     let valid_rows = [];
                     let canSendForApproval = false;
 
                     frm.doc.material_issued.forEach(item => {
-                        if (item.status === 'Material Issued') {
+                        if (item.status === 'Material Issued' || item.status === 'Pending Approval') {
                             // Skip materials that are already issued
                             return;
                         } 
@@ -125,44 +129,6 @@ frappe.ui.form.on('Task Detail', {
         toggle_result_field(frm);
         toggle_add_assignee_button(frm);
 
-    },
-
-    after_save: function(frm) {
-        frm.fields_dict.material_issued.grid.wrapper.find('.send-for-approval-btn').off('click').on('click', function() {
-            let valid_rows = [];
-            let canSendForApproval = false;
-
-            frm.doc.material_issued.forEach(item => {
-                if (item.status === 'Material Issued') {
-                    return;
-                }
-                if (item.spare && item.shortage <= 0 && !item.consumable) {
-                    valid_rows.push(item);
-                    canSendForApproval = true;
-                } else {
-                    canSendForApproval = false;
-                }
-            });
-
-            if (canSendForApproval && valid_rows.length > 0) {
-                frappe.call({
-                    method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_for_approval",
-                    args: { docname: frm.doc.name },
-                    callback: function(response) {
-                        if (response.message) {
-                            valid_rows.forEach(item => {
-                                item.status = 'Pending Approval';
-                                item.approval_date = frappe.datetime.nowdate();
-                            });
-                            frm.refresh_field('material_issued');
-                            frappe.msgprint('Email sent to Manager for material approval.');
-                        }
-                    }
-                });
-            } else {
-                frappe.msgprint('Cannot send for approval.');
-            }
-        });
     },
 
     readings: function (frm) {
