@@ -32,14 +32,20 @@ class TaskDetail(Document):
                 self.result = 'Fail'
             else:
                 self.result = 'Pass'
-
-
+    
 @frappe.whitelist()
 def send_for_approval(docname):
     task_detail = frappe.get_doc('Task Detail', docname)
+    
+    for item in task_detail.material_issued:
+        if item.status != 'Material Issued' and item.shortage == 0 and item.spare:
+            frappe.db.set_value('Material Issue', item.name, 'status', 'Pending Approval')
+            frappe.db.set_value('Material Issue', item.name, 'approval_date', frappe.utils.nowdate())
+
     send_approval_email(task_detail)
     return {"message": "Email sent to Manager for material approval."}
-    
+
+
 def send_approval_email(task_detail):
     url = frappe.utils.get_url_to_form('Task Detail', task_detail.name)
     subject = "Approval Request for Material required for {}".format(task_detail.name)
