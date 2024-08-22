@@ -155,7 +155,8 @@ doc_events = {
         "on_update": "plantmaintenance.plantmaintenance.doctype.parameter.parameter.update_activity_parameter"
     },
     "Task Detail": {
-        "on_update": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details"
+        "on_update": ["plantmaintenance.plantmaintenance.doctype.equipment.equipment.equipment_task_details",
+                    "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.validate_before_workflow_action"]
     },
     "Equipment": {
         "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks"
