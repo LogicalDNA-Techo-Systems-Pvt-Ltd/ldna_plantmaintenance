@@ -11,7 +11,8 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
-app_include_js = "/assets/plantmaintenance/js/workspace.js"
+app_include_js ="/assets/plantmaintenance/js/workspace.js"
+                 
 
 # include js, css files in header of web template
 # web_include_css = "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/css/custom.css"
@@ -289,4 +290,6 @@ scheduler_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-app_include_css = "/assets/plantmaintenance/css/notification.css"
+#app_include_css = "/assets/plantmaintenance/css/notification.css"
+app_include_css =[ "/assets/plantmaintenance/css/Desk.css",
+                 "/assets/plantmaintenance/css/notification.css" ]

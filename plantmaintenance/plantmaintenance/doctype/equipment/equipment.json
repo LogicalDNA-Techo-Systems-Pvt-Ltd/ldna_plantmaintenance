@@ -14,7 +14,6 @@
   "column_break_bfyn",
   "equipment_group",
   "activity_group",
-  "on_hold",
   "on_scrap",
   "manufacturer_data_section",
   "manufacturer_of_asset",
@@ -84,12 +83,6 @@
    "fieldtype": "Link",
    "label": "Activity Group",
    "options": "Activity Group"
-  },
-  {
-   "default": "0",
-   "fieldname": "on_hold",
-   "fieldtype": "Check",
-   "label": "On Hold"
   },
   {
    "default": "0",
@@ -251,7 +244,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-14 13:08:12.574742",
+ "modified": "2024-08-22 09:48:02.704066",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
