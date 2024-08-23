@@ -32,6 +32,28 @@ frappe.ui.form.on('Task Detail', {
                 }
             }
         });
+        let fields = [
+            'type', 'work_permit_number', 'work_center', 'equipment_code',
+            'status', 'equipment_name', 'approver', 'assigned_to',
+            'add_assignee', 'activity', 'parameter', 'parameter_type',
+            'actual_value', 'parameter_dropdown', 'reading_1', 'reading_2',
+            'reading_3', 'reading_4', 'reading_5', 'reading_6',
+            'reading_7', 'reading_8', 'reading_9', 'reading_10',
+            'damage', 'cause', 'remark', 'breakdown_reason',
+            'service_call', 'material_issued', 'material_returned', 'attachment'
+        ];
+        if(frm.doc.workflow_state === "Open") {
+            fields.forEach(fieldname => {
+                frm.fields_dict[fieldname].df.read_only = 1;
+                frm.refresh_field(fieldname);
+            });
+        }
+        if (frm.doc.workflow_state === "Work In Progress") {
+            fields.forEach(fieldname => {
+                frm.fields_dict[fieldname].df.read_only = 0;
+                frm.refresh_field(fieldname);
+            });
+        }
 
         let material_issued = frm.fields_dict.material_issued;
         let user = frappe.session.user;
