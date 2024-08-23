@@ -17,7 +17,6 @@
   "work_center",
   "column_break_ukaq",
   "functional_location",
-  "route",
   "equipment_section",
   "equipment_code",
   "equipment_name",
@@ -457,18 +456,12 @@
    "label": "Activity Group",
    "options": "Activity Group",
    "read_only": 1
-  },
-  {
-   "fieldname": "route",
-   "fieldtype": "Data",
-   "label": "Route"
   }
  ],
- "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-23 10:09:37.759942",
+ "modified": "2024-08-23 11:39:48.599296",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
@@ -489,7 +482,6 @@
    "write": 1
   }
  ],
- "route": "tasks",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": []
