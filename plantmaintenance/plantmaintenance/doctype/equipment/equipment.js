@@ -130,13 +130,6 @@ refresh: function(frm) {
             frappe.new_doc('Activity Group');
         }, __("Create"));
     }
-    frm.set_query("activity_group", function() {
-        return {
-            filters: [
-                ["is_active", "=", "1"]
-            ]
-        };
-    });
 },
  
 //for deleting task in task detail when equipment is on scrap. 
@@ -177,7 +170,8 @@ validate: function(frm) {
                     }
                 });
             }
-        },
-
+        } 
 });
 
+
+ 

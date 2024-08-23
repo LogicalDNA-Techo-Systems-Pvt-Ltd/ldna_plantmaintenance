@@ -37,20 +37,13 @@ class ActivityGroup(Document):
 def delete_tasks_and_update_equipment(doc, method):
     existing_tasks = frappe.get_all('Task Detail', filters={'activity_group': doc.activity_group, 'status': 'Open'}, fields=['name', 'activity'])
 
-    if not doc.is_active:
-        for task in existing_tasks:
-             frappe.delete_doc('Task Detail', task['name'])
-             
-        equipment_with_activity_group = frappe.get_all('Equipment', filters={'activity_group': doc.activity_group}, fields=['name'])
-        
-        for equipment in equipment_with_activity_group:
-             frappe.set_value('Equipment', equipment['name'], 'activity_group', None)
-    else:
-        current_activities = {row.activity for row in doc.activity}
-        
-        for task in existing_tasks:
-            if task['activity'] not in current_activities:
-                frappe.delete_doc('Task Detail', task['name'])
+    current_activities = {row.activity for row in doc.activity}
+    
+    for task in existing_tasks:
+         if task['activity'] not in current_activities:
+              frappe.delete_doc('Task Detail', task['name'])
+
+
 
 
     

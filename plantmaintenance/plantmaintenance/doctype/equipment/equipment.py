@@ -149,3 +149,30 @@ def update_activity_group_and_delete_tasks(doc, method):
             frappe.delete_doc('Task Detail', task_detail['name'])
 
         frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
+
+
+
+@frappe.whitelist()
+def delete_tasks_if_inactive(doc, method):
+    if not doc.is_active:
+        existing_tasks = frappe.get_all(
+            'Task Detail', 
+            filters={
+                'equipment_name': doc.equipment_name,   
+                'status': 'Open'         
+            }, 
+            fields=['name']
+        )
+
+        frappe.db.set_value('Equipment', doc.name, 'activity_group', None)
+        
+        for task in existing_tasks:
+            frappe.delete_doc('Task Detail', task['name'])
+
+ 
+    
+    
+
+    
+
+    
