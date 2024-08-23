@@ -125,7 +125,6 @@ def update_overdue_status():
             'status': ['in', ['Open', 'In Progress']]
         })
 
-        # Update status in smaller batches  
         batch_size = 50
         for i in range(0, len(overdue_tasks), batch_size):
             tasks_batch = overdue_tasks[i:i + batch_size]
@@ -142,43 +141,3 @@ def update_overdue_status():
     except Exception as e:
         frappe.log_error(f"Scheduler event failed: {str(e)}", "Update Overdue Status")
         
-        
-        
-
-def get_material_issued_data():
-    # Fetch Material Issue records with status 'Pending Approval'
-    material_issues = frappe.get_all('Material Issue', filters={
-        'status': 'Pending Approval'
-    }, fields=['parent', 'parenttype', 'material_code', 'material_name', 'available_quantity', 'required_quantity', 'shortage', 'status', 'approval_date', 'issued_date'])
-    
-    # Group by parent Task Detail
-    task_material_data = {}
-    for issue in material_issues:
-        parent_task = issue.parent
-        if parent_task not in task_material_data:
-            task_material_data[parent_task] = []
-        task_material_data[parent_task].append(issue)
-    
-    # Prepare list for frontend
-    tasks_data = []
-    for parent_task, issues in task_material_data.items():
-        task_doc = frappe.get_doc('Task Detail', parent_task)
-        for issue in issues:
-            tasks_data.append({
-                'task_name': task_doc.name,
-                'material_code': issue.material_code,
-                'material_name': issue.material_name,
-                'available_quantity': issue.available_quantity,
-                'required_quantity': issue.required_quantity,
-                'shortage': issue.shortage,
-                'status': issue.status,
-                'approval_date': issue.approval_date,
-                'issued_date': issue.issued_date,
-            })
-    
-    return tasks_data
-
-@frappe.whitelist(allow_guest=True)
-def get_material_issued_records():
-    return get_material_issued_data()
-

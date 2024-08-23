@@ -304,7 +304,7 @@ frappe.ready(function () {
     }
 
 
-    localStorage.setItem("last_visited", "https://plantmaintenance.frappe.cloud/app");
+    localStorage.setItem("last_visited","https://plantmaintenance.frappe.cloud/app/");
 
     $(".form-signup, .form-forgot, .form-login-with-email-link").removeClass("hide");
     $(document).trigger('login_rendered');
