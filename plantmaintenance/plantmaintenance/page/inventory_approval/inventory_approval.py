@@ -2,23 +2,27 @@ import frappe
 import json
 from datetime import datetime
 
-
 @frappe.whitelist()
 def get_task_details():
     user = frappe.session.user
-    tasks = frappe.get_all('Task Detail', filters={'approver': user}, fields=['task_name', 'materials'])
+    tasks = frappe.get_all('Task Detail', filters={'approver': user}, fields=['name'])
 
     task_details = []
+    
     for task in tasks:
-        task_materials = frappe.get_all('Material Issue', filters={'task_name': task.task_name}, fields=[
-            'material_code', 'material_name', 'available_quantity', 'required_quantity', 'shortage', 'status', 'approval_date', 'issued_date'])
-        task_details.append({
-            'task_name': task.task_name,
-            'materials': task_materials
-        })
+        task_materials = frappe.get_all('Material Issue', filters={
+            'parent': task.name, 
+            'status': 'Pending Approval'
+        }, fields=[
+            'material_code', 'material_name', 'available_quantity', 'required_quantity', 'shortage', 'status', 'approval_date'
+        ])
+        if task_materials:
+            task_details.append({
+                'task_name': task.name,
+                'materials': task_materials
+            })
 
     return task_details
-
 
 
 @frappe.whitelist()
@@ -47,7 +51,6 @@ def approve_materials(materials):
                     material.status = "Material Issued"
                     material.issued_date = today
                     
-                   
                     task_doc.append("material_returned", {
                         "material_code": material.material_code,
                         "material_name": material.material_name,
@@ -60,6 +63,3 @@ def approve_materials(materials):
                     break  
 
     return "Selected materials successfully approved."
-
-
-

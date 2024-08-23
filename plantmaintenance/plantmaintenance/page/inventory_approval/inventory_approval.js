@@ -21,7 +21,6 @@ frappe.pages['inventory-approval'].on_page_load = function(wrapper) {
                 <th>Shortage</th>
                 <th>Status</th>
                 <th>Approval Date</th>
-                <th>Issued Date</th>
             </tr>
         </thead>
         <tbody></tbody>
