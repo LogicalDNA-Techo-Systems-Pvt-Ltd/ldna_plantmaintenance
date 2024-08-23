@@ -30,7 +30,19 @@ app_include_js ="/assets/plantmaintenance/js/workspace.js"
 
 # include js in doctype views
 # doctype_js = {"Task Detail" : "/home/pragati/frappe-bench/apps/plantmaintenance/plantmaintenance/public/js/task_detail_list.js"}
-doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
+# doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
+
+doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js",
+                   "Task Detail" : "public/js/breadcrumbs.js",
+                   "Activity Group": "public/js/breadcrumbs.js",
+                   "Activity" : "public/js/breadcrumbs.js",
+                   "Parameter": "public/js/breadcrumbs.js",
+                   "Equipment" : "public/js/breadcrumbs.js"}
+
+
+
+
+
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -162,7 +174,8 @@ doc_events = {
                     "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.validate_before_workflow_action"]
     },
     "Equipment": {
-        "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks"
+        "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks",
+        "on_update" : "plantmaintenance.plantmaintenance.doctype.equipment.equipment.delete_tasks_if_inactive"
     },
     "Activity":{
         "on_update":"plantmaintenance.plantmaintenance.doctype.activity.activity.delete_task_depends_activity"
