@@ -115,23 +115,24 @@ def validate_before_workflow_action(doc,method):
         if pending_approval_exists and (doc.workflow_state == "Approval Pending"):
             frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue."))
 
+
 def update_overdue_status():
     try:
         today = nowdate()
-        
+
         overdue_tasks = frappe.get_all('Task Detail', filters={
             'plan_start_date': ['<', today],
-            'status': ['!=', 'Overdue']
+            'status': ['in', ['Open', 'In Progress']]
         })
 
-        # Update status in smaller batches to avoid long transactions
+        # Update status in smaller batches  
         batch_size = 50
         for i in range(0, len(overdue_tasks), batch_size):
             tasks_batch = overdue_tasks[i:i + batch_size]
             for task in tasks_batch:
                 try:
                     doc = frappe.get_doc('Task Detail', task.name)
-                    doc.status = 'Overdue'
+                    doc.status = 'Overdue' 
                     doc.save(ignore_permissions=True)
                     frappe.db.commit()
                 except Exception as e:
