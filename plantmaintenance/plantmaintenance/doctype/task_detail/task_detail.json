@@ -18,7 +18,6 @@
   "column_break_ukaq",
   "functional_location",
   "route",
-  "is_published",
   "equipment_section",
   "equipment_code",
   "equipment_name",
@@ -463,19 +462,13 @@
    "fieldname": "route",
    "fieldtype": "Data",
    "label": "Route"
-  },
-  {
-   "default": "0",
-   "fieldname": "is_published",
-   "fieldtype": "Check",
-   "label": "Is Published"
   }
  ],
  "has_web_view": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-22 09:58:17.740947",
+ "modified": "2024-08-23 10:09:37.759942",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
