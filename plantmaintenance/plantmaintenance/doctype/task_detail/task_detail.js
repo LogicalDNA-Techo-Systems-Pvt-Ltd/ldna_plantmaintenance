@@ -42,7 +42,7 @@ frappe.ui.form.on('Task Detail', {
             'damage', 'cause', 'remark', 'breakdown_reason',
             'service_call', 'material_issued', 'material_returned', 'attachment'
         ];
-        if(frm.doc.workflow_state === "Open") {
+        if(!frm.is_new() && frm.doc.workflow_state === "Open") {
             fields.forEach(fieldname => {
                 frm.fields_dict[fieldname].df.read_only = 1;
                 frm.refresh_field(fieldname);
