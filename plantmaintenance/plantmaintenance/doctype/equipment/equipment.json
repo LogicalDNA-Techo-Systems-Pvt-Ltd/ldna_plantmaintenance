@@ -14,6 +14,7 @@
   "column_break_bfyn",
   "equipment_group",
   "activity_group",
+  "is_active",
   "on_scrap",
   "manufacturer_data_section",
   "manufacturer_of_asset",
@@ -240,11 +241,17 @@
    "fieldtype": "Table",
    "label": "Equipment Material Moment",
    "options": "Equipment Material Moment CT"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-22 09:48:02.704066",
+ "modified": "2024-08-23 15:49:41.433660",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
