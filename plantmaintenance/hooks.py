@@ -176,7 +176,6 @@ doc_events = {
     },
     "Equipment": {
         "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks",
-        "on_update" : "plantmaintenance.plantmaintenance.doctype.equipment.equipment.delete_tasks_if_inactive"
     },
     "Activity":{
         "on_update":"plantmaintenance.plantmaintenance.doctype.activity.activity.delete_task_depends_activity"

@@ -26,10 +26,10 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
         "location": location,
         "functional_location": functional_location,
         "section": plant_section,
-        "work_center": work_center
+        "work_center": work_center,
     }
 
-    equipment_list = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 0}, fields=['equipment_code', 'equipment_name', 'activity_group'])
+    equipment_list = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 0,'activity_group_active':1}, fields=['equipment_code', 'equipment_name', 'activity_group'])
     on_scrap_equipment = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 1}, fields=['equipment_code'])
     
     #equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group'])
