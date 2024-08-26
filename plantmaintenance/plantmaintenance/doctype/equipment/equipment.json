@@ -53,7 +53,8 @@
    "fieldname": "equipment_code",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Equipment Code"
+   "label": "Equipment Code",
+   "reqd": 1
   },
   {
    "fieldname": "equipment_name",
@@ -251,7 +252,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-23 15:49:41.433660",
+ "modified": "2024-08-26 12:33:09.376141",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",

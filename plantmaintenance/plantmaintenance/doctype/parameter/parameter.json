@@ -7,7 +7,6 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "workflow_state",
   "section_break_ptvd",
   "parameter",
   "parameter_type",
@@ -106,15 +105,6 @@
    "fieldtype": "Int",
    "label": "Number Of Readings",
    "non_negative": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "workflow_state",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Workflow State",
-   "no_copy": 1,
-   "options": "Workflow State"
   },
   {
    "default": "0",
@@ -235,7 +225,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-05 16:13:09.664456",
+ "modified": "2024-08-26 15:42:34.701757",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
