@@ -37,6 +37,15 @@ class TaskDetail(Document):
                 self.result = 'Fail'
             else:
                 self.result = 'Pass'
+        
+        if self.status == "Pending Approval":
+            self.send_for_approval_date = nowdate()
+        elif self.status == "Approved":
+            self.approved_date = nowdate()
+        elif self.status == "Completed":
+            self.completion_date = nowdate()
+        
+
     
 @frappe.whitelist()
 def send_for_approval(docname):
