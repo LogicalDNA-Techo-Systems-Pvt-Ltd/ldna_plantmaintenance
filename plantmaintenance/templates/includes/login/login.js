@@ -296,15 +296,15 @@ login.login_handlers = (function () {
 
     return login_handlers;
 })();
-
 frappe.ready(function () {
     login.bind_events();
     if (window.show_footer_on_login) {
         $("body .web-footer").show();
     }
 
-
-    localStorage.setItem("last_visited","https://plantmaintenance.frappe.cloud/app/");
+    
+    var baseUrl = window.location.origin;
+    localStorage.setItem("last_visited", baseUrl + "/app"); 
 
     $(".form-signup, .form-forgot, .form-login-with-email-link").removeClass("hide");
     $(document).trigger('login_rendered');
@@ -388,3 +388,5 @@ var continue_email = function (setup, prompt) {
         $('#otp_div').prepend(email_div);
     }
 };
+
+
