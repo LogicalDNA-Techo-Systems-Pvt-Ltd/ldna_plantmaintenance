@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Equipment', {
-
+     
     plant: function(frm){
         if (frm.doc.plant){
             frm.set_value('location', ''); 
@@ -170,7 +170,14 @@ validate: function(frm) {
                     }
                 });
             }
-        } 
+        } ,
+
+        activity_group_active: function(frm) {
+            if (!frm.doc.activity_group_active) {  // Check if activity_group_active is unchecked (false)
+                frm.set_value('activity_group', '');  // Clear activity_group field
+            }
+        },
+    
 });
 
 
