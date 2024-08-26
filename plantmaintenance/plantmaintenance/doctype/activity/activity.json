@@ -18,7 +18,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Activity Name",
-   "length": 50
+   "length": 50,
+   "reqd": 1
   },
   {
    "fieldname": "parameter",
@@ -29,7 +30,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-14 14:35:47.275556",
+ "modified": "2024-08-26 15:39:51.482531",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Activity",
