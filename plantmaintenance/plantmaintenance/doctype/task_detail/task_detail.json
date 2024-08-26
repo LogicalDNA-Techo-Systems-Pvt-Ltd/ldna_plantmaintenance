@@ -22,6 +22,11 @@
   "equipment_name",
   "column_break_ksvx",
   "status",
+  "section_break_ifxy",
+  "send_for_approval_date",
+  "completion_date",
+  "column_break_ujwn",
+  "approved_date",
   "section_break_aaju",
   "approver",
   "column_break_rewz",
@@ -457,12 +462,38 @@
    "label": "Activity Group",
    "options": "Activity Group",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ifxy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "send_for_approval_date",
+   "fieldtype": "Date",
+   "label": "Send for Approval Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approved_date",
+   "fieldtype": "Date",
+   "label": "Approved Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "completion_date",
+   "fieldtype": "Date",
+   "label": "Completion Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ujwn",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-26 15:44:17.824242",
+ "modified": "2024-08-26 16:24:23.131196",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

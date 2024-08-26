@@ -150,7 +150,20 @@ frappe.ui.form.on('Task Detail', {
         set_existing_rows_read_only(frm);
         toggle_result_field(frm);
         toggle_add_assignee_button(frm);
+        frm.trigger('toggle_send_for_approval_date');
 
+    },
+    status: function(frm) {
+        frm.trigger('toggle_send_for_approval_date');
+    },
+    toggle_send_for_approval_date: function(frm) {
+        if (frm.doc.status === "Pending Approval" || frm.doc.status === "Approved" || frm.doc.status === "Completed" || frm.doc.status == "Cancelled") {
+            frm.set_df_property('send_for_approval_date', 'hidden', false);
+        } else if (frm.doc.status === "Rejected" || frm.doc.status === "In Progress") {
+            frm.set_df_property('send_for_approval_date', 'hidden', true);
+        } else {
+            frm.set_df_property('send_for_approval_date', 'hidden', true);
+        }
     },
 
     readings: function (frm) {
@@ -472,5 +485,4 @@ frappe.ui.form.on('Task Detail', {
 //         }
 //     });
 // };
-
 
