@@ -56,6 +56,8 @@ def send_for_approval(docname):
             frappe.db.set_value('Material Issue', item.name, 'status', 'Pending Approval')
             if not item.approval_date:  
                 frappe.db.set_value('Material Issue', item.name, 'approval_date', frappe.utils.nowdate())
+            if item.status == 'Material Rejected':
+                frappe.db.set_value('Material Issue', item.name, 'status', 'Material Rejected')
 
     send_approval_email(task_detail)
     return {"message": "Email sent to Manager for material approval."}
