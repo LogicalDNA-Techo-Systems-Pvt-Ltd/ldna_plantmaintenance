@@ -145,8 +145,7 @@ frappe.ui.form.on('Task Detail', {
                 let canSendForApproval = false;
 
                 frm.doc.material_issued.forEach(item => {
-                    if (item.status === 'Material Issued' || item.status === 'Pending Approval') {
-                    
+                    if (item.status === 'Material Issued' || item.status === 'Pending Approval' || item.status === 'Material Rejected') {
                         return;
                     }
                     if (item.spare && item.shortage === 0 && !item.consumable) {
@@ -189,7 +188,7 @@ frappe.ui.form.on('Task Detail', {
 
     },
     after_workflow_action: function (frm) {
-        if (frm.doc.workflow_state === "Work In Progress") {
+        if (frm.doc.workflow_state === "Work in Progress") {
             console.log("Hii");
             fields.forEach(fieldname => {
                 console.log("Hello");
