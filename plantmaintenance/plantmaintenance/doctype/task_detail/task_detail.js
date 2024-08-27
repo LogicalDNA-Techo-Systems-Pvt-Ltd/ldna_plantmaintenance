@@ -1,6 +1,16 @@
 // Copyright (c) 2024, LogicalDNA and contributors
 // For license information, please see license.txt
 
+let fields = [
+    'type', 'work_permit_number', 'work_center', 'equipment_code',
+    'status', 'equipment_name', 'approver', 'assigned_to',
+    'add_assignee', 'activity', 'parameter', 'parameter_type',
+    'actual_value', 'parameter_dropdown', 'reading_1', 'reading_2',
+    'reading_3', 'reading_4', 'reading_5', 'reading_6',
+    'reading_7', 'reading_8', 'reading_9', 'reading_10',
+    'damage', 'cause', 'remark', 'breakdown_reason',
+    'service_call', 'material_issued', 'material_returned', 'attachment'
+];
 frappe.ui.form.on('Task Detail', {
     refresh: function (frm) {
         frappe.db.get_single_value('Settings', 'back_days_entry').then(back_days_entry => {
@@ -13,17 +23,6 @@ frappe.ui.form.on('Task Detail', {
 
                     if (critical_date < today) {
                         frm.disable_save();
-                        let fields = [
-                            'type', 'work_permit_number', 'work_center', 'equipment_code',
-                            'status', 'equipment_name', 'approver', 'assigned_to',
-                            'add_assignee', 'activity', 'parameter', 'parameter_type',
-                            'actual_value', 'parameter_dropdown', 'reading_1', 'reading_2',
-                            'reading_3', 'reading_4', 'reading_5', 'reading_6',
-                            'reading_7', 'reading_8', 'reading_9', 'reading_10',
-                            'damage', 'cause', 'remark', 'breakdown_reason',
-                            'service_call', 'material_issued', 'material_returned', 'attachment'
-                        ];
-
                         fields.forEach(fieldname => {
                             frm.fields_dict[fieldname].df.read_only = 1;
                             frm.refresh_field(fieldname);
@@ -32,25 +31,10 @@ frappe.ui.form.on('Task Detail', {
                 }
             }
         });
-        let fields = [
-            'type', 'work_permit_number', 'work_center', 'equipment_code',
-            'status', 'equipment_name', 'approver', 'assigned_to',
-            'add_assignee', 'activity', 'parameter', 'parameter_type',
-            'actual_value', 'parameter_dropdown', 'reading_1', 'reading_2',
-            'reading_3', 'reading_4', 'reading_5', 'reading_6',
-            'reading_7', 'reading_8', 'reading_9', 'reading_10',
-            'damage', 'cause', 'remark', 'breakdown_reason',
-            'service_call', 'material_issued', 'material_returned', 'attachment'
-        ];
+
         if(!frm.is_new() && frm.doc.workflow_state === "Open") {
             fields.forEach(fieldname => {
                 frm.fields_dict[fieldname].df.read_only = 1;
-                frm.refresh_field(fieldname);
-            });
-        }
-        if (frm.doc.workflow_state === "Work In Progress") {
-            fields.forEach(fieldname => {
-                frm.fields_dict[fieldname].df.read_only = 0;
                 frm.refresh_field(fieldname);
             });
         }
@@ -203,6 +187,16 @@ frappe.ui.form.on('Task Detail', {
         toggle_add_assignee_button(frm);
         frm.trigger('toggle_send_for_approval_date');
 
+    },
+    after_workflow_action: function (frm) {
+        if (frm.doc.workflow_state === "Work In Progress") {
+            console.log("Hii");
+            fields.forEach(fieldname => {
+                console.log("Hello");
+                frm.fields_dict[fieldname].df.read_only = 0;
+                frm.refresh_field(fieldname);
+            });
+        }
     },
     status: function(frm) {
         frm.trigger('toggle_send_for_approval_date');
