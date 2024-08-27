@@ -24,7 +24,6 @@ def get_task_details():
 
     return task_details
 
-
 @frappe.whitelist()
 def approve_materials(materials):
     if not isinstance(materials, list):
@@ -63,3 +62,31 @@ def approve_materials(materials):
                     break  
 
     return "Selected materials successfully approved."
+
+@frappe.whitelist()
+def reject_materials(materials):
+    if not isinstance(materials, list):
+        materials = json.loads(materials)
+    
+    for item in materials:
+        task_name = item.get('task_name')
+        material_code = item.get('material_code')
+
+        task_doc = frappe.get_all(
+            "Task Detail",
+            filters={"name": task_name},
+            fields=["name"]
+        )
+        
+        if task_doc:
+            task_doc = frappe.get_doc("Task Detail", task_name)
+            
+            for material in task_doc.material_issued:
+                if (material.material_code == material_code and
+                    material.status == "Pending Approval"):
+                    material.status = "Material Rejected"
+                    
+                    task_doc.save()
+                    break  
+
+    return "Selected materials successfully rejected."

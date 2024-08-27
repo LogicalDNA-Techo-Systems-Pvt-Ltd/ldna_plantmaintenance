@@ -11,7 +11,7 @@ frappe.pages['inventory-approval'].on_page_load = function(wrapper) {
     $table.append(`
         <thead>
             <tr>
-                <th><input type="checkbox" id="select-all"></th> <!-- Master checkbox -->
+                <th><input type="checkbox" id="select-all">
                 <th>No</th> 
                 <th>Task Name</th>
                 <th>Material Code</th>
@@ -48,7 +48,6 @@ frappe.pages['inventory-approval'].on_page_load = function(wrapper) {
                                     <td>${material.shortage}</td>
                                     <td>${material.status}</td>
                                     <td>${frappe.datetime.str_to_user(material.approval_date)}</td>
-                                    <td>${frappe.datetime.str_to_user(material.issued_date)}</td>
                                 </tr>
                             `);
                         });
@@ -58,7 +57,10 @@ frappe.pages['inventory-approval'].on_page_load = function(wrapper) {
         }
     });
 
-    let $approve_button = $('<button class="btn btn-primary">Approve</button>').appendTo($task_container);
+    let $button_container = $('<div class="button-container">').appendTo($task_container);
+    
+    let $approve_button = $('<button class="btn btn-primary">Approve</button>').appendTo($button_container);
+    let $reject_button = $('<button class="btn btn-danger">Reject</button>').appendTo($button_container);
 
     $approve_button.on('click', function() {
         let selectedMaterials = [];
@@ -89,9 +91,37 @@ frappe.pages['inventory-approval'].on_page_load = function(wrapper) {
         }
     });
 
+    $reject_button.on('click', function() {
+        let selectedMaterials = [];
+        $task_container.find('.material-checkbox:checked').each(function() {
+            let row = $(this).closest('tr');
+            selectedMaterials.push({
+                task_name: row.find('td:eq(2)').text(),
+                material_code: row.find('td:eq(3)').text(),
+                available_quantity: row.find('td:eq(5)').text(),
+                required_quantity: row.find('td:eq(6)').text()
+            });
+        });
+
+        if (selectedMaterials.length > 0) {
+            frappe.call({
+                method: 'plantmaintenance.plantmaintenance.page.inventory_approval.inventory_approval.reject_materials',
+                args: {
+                    materials: selectedMaterials
+                },
+                callback: function(response) {
+                    if (response.message) {
+                        frappe.msgprint(response.message);
+                    }
+                }
+            });
+        } else {
+            frappe.msgprint('No materials selected.');
+        }
+    });
+
     $task_container.on('change', '#select-all', function() {
         let isChecked = $(this).prop('checked');
         $task_container.find('.material-checkbox').prop('checked', isChecked);
     });
 };
-
