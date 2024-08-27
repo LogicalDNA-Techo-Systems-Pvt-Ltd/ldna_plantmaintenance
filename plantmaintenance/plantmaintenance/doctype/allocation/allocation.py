@@ -42,8 +42,17 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
         return frappe.msgprint("Please ensure today's date is between the start date and end date.")
 
     tasks = []
+    if not equipment_list:
+        return frappe.msgprint("No equipment found for the provided filters.")
+
     for equipment in equipment_list:
+
+        if not equipment.activity_group:
+            continue
         activities = frappe.get_all('Activity CT', filters={'parent': equipment.activity_group}, fields=['activity'])
+
+        if not activities:
+            continue
 
         for activity in activities:
             activity_details = frappe.get_doc('Activity', activity.activity)
@@ -52,6 +61,9 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                 'parameter', 'frequency', 'day_of_month', 'monday', 'tuesday', 'wednesday',
                 'thursday', 'friday', 'saturday', 'sunday', 'date_of_year'
             ])
+
+            if not parameters:
+                continue
 
             for parameter in parameters:
                 frequency = parameter.frequency
@@ -162,6 +174,9 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                                 "parameter_type": parameter_type 
                             })
                             task_detail.insert(ignore_permissions=True)
+
+    if not tasks:
+        return frappe.msgprint("No tasks found for the provided filters.")
                             
     return tasks
 

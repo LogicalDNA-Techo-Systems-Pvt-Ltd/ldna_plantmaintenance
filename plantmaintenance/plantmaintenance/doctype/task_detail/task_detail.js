@@ -55,44 +55,97 @@ frappe.ui.form.on('Task Detail', {
             });
         }
 
-      
-    let material_issued = frm.fields_dict.material_issued;
-    let user = frappe.session.user;
-    let manager_email = frm.doc.approver;
+        let selectedRows = [];
 
-    if (user === manager_email) {
-        $('.update-qty-btn').hide();
-        $('.send-for-approval-btn').hide();
-        if (!frm.approved_button_added) {
+        frm.fields_dict['material_issued'].grid.wrapper.on('click', '.grid-row', function (e) {
+            const selectedIndex = $(this).data('idx') - 1;
+            
+            const row = frm.doc.material_issued[selectedIndex];
+            if (row) {
+                if (selectedRows.includes(row.name)) {
+                    selectedRows = selectedRows.filter(r => r !== row.name); // Deselect
+                } else {
+                    selectedRows.push(row.name); 
+                }
 
-            frm.approved_button_added = true;
-            let approvedButton = $('<button class="btn btn-primary btn-xs approved-btn" style="margin-top: -10px; margin-left: 92%;">Approve</button>');
-            approvedButton.on('click', function () {
-                frappe.call({
-                    method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.mark_as_issued",
-                    args: { docname: frm.doc.name },
-                    callback: function (response) {
-                        if (response.message) {
-                            frm.doc.material_issued.forEach(item => {
-                                if (item.status === 'Pending Approval') {
-                                    item.status = 'Material Issued';
-                                }
-                            });
-                            frm.refresh_field('material_issued');
-                        }
-                    }
-                });
-            });
-            material_issued.grid.wrapper.find('.grid-footer').append(approvedButton);
-        }
-        material_issued.grid.data.forEach((row, idx) => {
-            if (row.shortage > 0 || row.consumable || !row.spare) {
-                frm.fields_dict.material_issued.grid.grid_rows[idx].wrapper.hide();
+                $(this).toggleClass('row-selected');
+            } else {
+                console.error("Row is not defined.");
             }
         });
-        material_issued.grid.wrapper.find('.grid-add-row').hide();
-        $(".form-assignments").hide(); 
-    } else {
+
+        let material_issued = frm.fields_dict.material_issued;
+        let user = frappe.session.user;
+        let manager_email = frm.doc.approver;
+
+        if (user === manager_email) {
+            $('.update-qty-btn').hide();
+            $('.send-for-approval-btn').hide();
+
+            if (!frm.buttons_added) {
+                frm.buttons_added = true;
+
+                let approvedButton = $('<button class="btn btn-primary btn-xs approved-btn" style="margin-top: -10px; margin-right: 10px;">Approve</button>');
+                approvedButton.on('click', function () {
+                    frappe.call({
+                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.mark_as_issued",
+                        args: { 
+                            docname: frm.doc.name, 
+                            selected_rows: selectedRows 
+                        },
+                        callback: function (response) {
+                            if (response.message) {
+                                frm.doc.material_issued.forEach(item => {
+                                    if (item.status === 'Pending Approval' && (selectedRows.length === 0 || selectedRows.includes(item.name))) {
+                                        item.status = 'Material Issued';
+                                    }
+                                });
+                                frm.refresh_field('material_issued');
+                                selectedRows = [];
+                            }
+                        }
+                    });
+                });
+
+                let rejectButton = $('<button class="btn btn-danger btn-xs reject-btn" style="margin-top: -10px;">Reject</button>');
+                rejectButton.on('click', function () {
+                    frappe.call({
+                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.mark_as_rejected",
+                        args: { 
+                            docname: frm.doc.name, 
+                            selected_rows: selectedRows 
+                        },
+                        callback: function (response) {
+                            if (response.message) {
+                                frm.doc.material_issued.forEach(item => {
+                                    if (item.status === 'Pending Approval' && (selectedRows.length === 0 || selectedRows.includes(item.name))) {
+                                        item.status = 'Material Rejected';
+                                    }
+                                });
+                                frm.refresh_field('material_issued');
+                                selectedRows = [];
+                            }
+                        }
+                    });
+                });
+
+                let buttonContainer = $('<div style="text-align: right;"></div>');
+                buttonContainer.append(approvedButton).append(rejectButton);
+                material_issued.grid.wrapper.find('.grid-footer').append(buttonContainer);
+            }
+
+            material_issued.grid.data.forEach((row, idx) => {
+                if (row.shortage > 0 || row.consumable || !row.spare) {
+                    frm.fields_dict.material_issued.grid.grid_rows[idx].wrapper.hide();
+                }
+            });
+
+            material_issued.grid.wrapper.find('.grid-add-row').hide();
+            $(".form-assignments").hide();
+        }
+
+
+     else {
         if (!frm.inventory_button_added) {
             frm.inventory_button_added = true;
 

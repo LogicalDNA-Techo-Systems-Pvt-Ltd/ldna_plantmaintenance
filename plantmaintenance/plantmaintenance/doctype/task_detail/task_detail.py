@@ -74,12 +74,15 @@ def send_approval_email(task_detail):
             message=message,
             now=True
         )
+
+
 @frappe.whitelist()
-def mark_as_issued(docname):
+def mark_as_issued(docname, selected_rows=None):
     doc = frappe.get_doc("Task Detail", docname)
-    
+    selected_rows = frappe.parse_json(selected_rows) if selected_rows else []
+
     for item in doc.material_issued:
-        if item.status == "Pending Approval":
+        if item.status == "Pending Approval" and (not selected_rows or item.name in selected_rows):
             item.status = "Material Issued"
             item.issued_date = getdate(nowdate())
             
@@ -92,6 +95,20 @@ def mark_as_issued(docname):
             })
     
     doc.save()
+    return True
+
+@frappe.whitelist()
+def mark_as_rejected(docname, selected_rows=None):
+    doc = frappe.get_doc('Task Detail', docname)
+    selected_rows = frappe.parse_json(selected_rows) if selected_rows else []
+
+    for item in doc.material_issued:
+        if item.status == "Pending Approval" and (not selected_rows or item.name in selected_rows):
+            item.status = "Material Rejected"
+
+    doc.save()
+    return True
+
 
     
 @frappe.whitelist()
