@@ -18,3 +18,4 @@ frappe.views.calendar["Task Detail"] = {
 		// "progress": "progress"
 	}
 };
+
