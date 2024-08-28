@@ -1,3 +1,5 @@
+#Copyright (c) 2024, LogicalDNA and contributors
+#For license information, please see license.txt
 
 import frappe
 from datetime import datetime, timedelta
@@ -13,7 +15,8 @@ def execute(filters=None):
     elif date_filter == 'monthly':
         date_range = [datetime(today.year, month, 1) for month in range(1, 13)]
     elif date_filter == 'yearly':
-        date_range = [today.replace(month=1, day=1) - timedelta(days=365*i) for i in range(5)]
+        today = datetime.today()
+        date_range = [today.replace(month=1, day=1)]
     else:
         frappe.throw(f"Unsupported date filter: {date_filter}")
 
@@ -51,8 +54,6 @@ def execute(filters=None):
         })
 
         data.append([label, open_count, completed_count, created_count])
-
-    # Sorting based on filter type
     if date_filter == 'daily':
         data.sort(key=lambda x: datetime.strptime(x[0], '%Y-%m-%d'))
     elif date_filter == 'monthly':
