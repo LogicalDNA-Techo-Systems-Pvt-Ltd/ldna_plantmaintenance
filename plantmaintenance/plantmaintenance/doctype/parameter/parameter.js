@@ -24,11 +24,10 @@ frappe.ui.form.on('Parameter', {
             }, __("View"));
         } 
     },
-    values: function(frm) {
+    refresh: function(frm) {
         ConvertValuesInSelect(frm);
     }
     
-
 });
 
 function render_radio_buttons(frm) {
