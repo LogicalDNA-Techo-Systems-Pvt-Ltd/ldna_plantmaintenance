@@ -5,6 +5,7 @@
 frappe.ui.form.on('Parameter', {
     onload: function(frm) {
         render_radio_buttons(frm); 
+        ConvertValuesInSelect(frm);
     },
     refresh: function(frm) {
         render_radio_buttons(frm);  
@@ -23,11 +24,8 @@ frappe.ui.form.on('Parameter', {
                 });
             }, __("View"));
         } 
-    },
-    refresh: function(frm) {
-        ConvertValuesInSelect(frm);
     }
-    
+
 });
 
 function render_radio_buttons(frm) {
