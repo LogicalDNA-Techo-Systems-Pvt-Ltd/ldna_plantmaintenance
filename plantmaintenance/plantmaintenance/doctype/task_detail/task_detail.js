@@ -183,8 +183,6 @@ frappe.ui.form.on('Task Detail', {
 
 
         set_existing_rows_read_only(frm);
-        toggle_result_field(frm);
-        toggle_add_assignee_button(frm);
         frm.trigger('toggle_send_for_approval_date');
 
     },
@@ -300,14 +298,6 @@ frappe.ui.form.on('Task Detail', {
             consumable_fields(frm, row.doctype, row.name, row.consumable);
         });
     },
-
-    attachment: function (frm) {
-        toggle_result_field(frm);
-    },
-
-    add_assignee: function (frm) {
-        toggle_add_assignee_button(frm);
-    }
 });
 
 frappe.ui.form.on('Material Issue', {
@@ -416,14 +406,14 @@ function toggle_result_field(frm) {
     }
 }
 
-function toggle_add_assignee_button(frm) {
+// function toggle_add_assignee_button(frm) {
   
-    if (!frm.doc.assigned_to) {
-        frm.set_df_property('add_assignee', 'hidden', 0);
-    } else {
-        frm.set_df_property('add_assignee', 'hidden', 1);
-    }
-}
+//     if (!frm.doc.assigned_to) {
+//         frm.set_df_property('add_assignee', 'hidden', 0);
+//     } else {
+//         frm.set_df_property('add_assignee', 'hidden', 1);
+//     }
+// }
 
 function disable_workflow_actions(frm) {
     if (frm.page) {
