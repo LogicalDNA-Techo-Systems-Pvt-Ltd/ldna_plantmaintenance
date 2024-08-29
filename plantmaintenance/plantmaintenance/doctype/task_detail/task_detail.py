@@ -139,6 +139,8 @@ def validate_before_workflow_action(doc,method):
         pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
         if pending_approval_exists and (doc.workflow_state == "Approval Pending"):
             frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue."))
+    if doc.workflow_state != "Open" and not doc.assigned_to:
+        frappe.throw(_("The task cannot proceed without an assigned user. Please ensure the task is assigned before continuing."))
 
 
 def update_overdue_status():
