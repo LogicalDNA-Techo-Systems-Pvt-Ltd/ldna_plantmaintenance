@@ -21,6 +21,16 @@ generated_unique_keys = set()
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, end_date=None):
     global generated_unique_keys
+
+    current_user = frappe.session.user
+
+    user_work_center = frappe.get_value('User Work Center', {'user': current_user}, 'name')
+    
+    assigned_work_centers = frappe.get_all('Work Center CT', filters={'parent': user_work_center}, pluck='work_center')
+    
+    if work_center not in assigned_work_centers or not assigned_work_centers or not user_work_center:
+        return frappe.msgprint(f"You are not assigned to {work_center} work center")
+
     filters = {
         "plant": plant,
         "location": location,
