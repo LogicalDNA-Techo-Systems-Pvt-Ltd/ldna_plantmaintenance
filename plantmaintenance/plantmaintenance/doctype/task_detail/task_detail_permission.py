@@ -20,34 +20,58 @@ def task_detail_permission(user):
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
-            (`tabTask Detail`.`approver` = '{user}' OR `tabTask Detail`.`approver` IS NULL) AND (`tabTask Detail`.`work_center` IN ({work_centers_condition}))
+            (
+                (`tabTask Detail`.`work_center` IN ({work_centers_condition}) AND 
+                `tabTask Detail`.`approver` = '{user}')
+            )
             """.format(user=user, work_centers_condition=work_centers_condition)
         else:
-            return """
-            (`tabTask Detail`.`approver` = '{user}' OR `tabTask Detail`.`approver` IS NULL)
-            """.format(user=user)
+            return "1=0"   
     elif 'Maintenance User' in user_roles:
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
-            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL) AND 
-            (`tabTask Detail`.`work_center` IN ({work_centers_condition}))
+            (
+                (`tabTask Detail`.`work_center` IN ({work_centers_condition}) AND 
+                (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%' OR `tabTask Detail`.`assigned_to` IS NULL)
+                )
+                OR
+                (`tabTask Detail`.`work_center` NOT IN ({work_centers_condition}) AND 
+                (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%')
+                )
+            )
             """.format(user=user, user_full_name=user_full_name, work_centers_condition=work_centers_condition)
         else:
             return """
-            (`tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%')
+            (
+                `tabTask Detail`.`assigned_to` LIKE '%%{user}%%' OR 
+                `tabTask Detail`.`assigned_to` LIKE '%%{user_full_name}%%'
+            )
             """.format(user=user, user_full_name=user_full_name)
 
+    elif 'System Manager' in user_roles:
+        if user_work_centers:
+            work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
+            return """
+            (
+                `tabTask Detail`.`work_center` IN ({work_centers_condition})
+            )
+            """.format(work_centers_condition=work_centers_condition)
+        else:
+            return "1=0"   
     elif 'Process Manager' in user_roles:
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
-            (`tabTask Detail`.`status` IN ('Approved', 'Completed', 'Overdue', 'Rejected') AND 
-            `tabTask Detail`.`work_center` IN ({work_centers_condition}))
+            (
+                `tabTask Detail`.`work_center` IN ({work_centers_condition}) AND
+                `tabTask Detail`.`status` IN ('Approved', 'Completed', 'Overdue', 'Rejected')
+            )
             """.format(work_centers_condition=work_centers_condition)
         else:
-            return """
-            `tabTask Detail`.`status` IN ('Approved', 'Completed', 'Overdue', 'Rejected')
-            """
+            return "1=0"   
 
+        
+
+            
 
