@@ -173,9 +173,11 @@
   {
    "fieldname": "assigned_to",
    "fieldtype": "Small Text",
-   "label": "Assigned To"
+   "label": "Assigned To",
+   "read_only": 1
   },
   {
+   "depends_on": "eval:doc.workflow_state === \"Open\"",
    "fieldname": "add_assignee",
    "fieldtype": "Button",
    "label": "Add Assignee"
@@ -493,7 +495,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-27 12:52:34.321550",
+ "modified": "2024-08-29 14:17:21.523936",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
