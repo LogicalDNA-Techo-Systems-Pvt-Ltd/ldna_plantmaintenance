@@ -1,6 +1,5 @@
 // Copyright (c) 2024, LogicalDNA and contributors
 // For license information, please see license.txt
-
 let fields = [
     'type', 'work_permit_number', 'work_center', 'equipment_code',
     'status', 'equipment_name', 'approver', 'assigned_to',
@@ -11,6 +10,7 @@ let fields = [
     'damage', 'cause', 'remark', 'breakdown_reason',
     'service_call', 'material_issued', 'material_returned', 'attachment'
 ];
+
 frappe.ui.form.on('Task Detail', {
     refresh: function (frm) {
         frappe.db.get_single_value('Settings', 'back_days_entry').then(back_days_entry => {
@@ -24,14 +24,15 @@ frappe.ui.form.on('Task Detail', {
                     if (critical_date < today) {
                         frm.disable_save();
                         fields.forEach(fieldname => {
-                            frm.fields_dict[fieldname].df.read_only = 1;
-                            frm.refresh_field(fieldname);
+                            frm.set_df_property(fieldname, 'read_only', 1);
                         });
+                        disable_workflow_actions(frm);
+                        frm.refresh_fields();
                     }
                 }
             }
         });
-
+    
         if(!frm.is_new() && frm.doc.workflow_state === "Open") {
             fields.forEach(fieldname => {
                 frm.fields_dict[fieldname].df.read_only = 1;
@@ -423,6 +424,15 @@ function toggle_add_assignee_button(frm) {
         frm.set_df_property('add_assignee', 'hidden', 1);
     }
 }
+
+function disable_workflow_actions(frm) {
+    if (frm.page) {
+        frm.page.clear_actions_menu();
+        frm.page.btn_secondary.prop('disabled', true);
+        frm.page.btn_primary.prop('disabled', true);
+    }
+}
+
 
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {

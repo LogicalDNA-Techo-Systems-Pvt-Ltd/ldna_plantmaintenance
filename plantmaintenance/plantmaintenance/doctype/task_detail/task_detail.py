@@ -11,10 +11,6 @@ from frappe.utils.background_jobs import enqueue
 import time
 
 class TaskDetail(Document):
-    
-    website = frappe._dict(
-        condition_field="published" 
-    )
 
     def validate(self):
         if self.parameter:
