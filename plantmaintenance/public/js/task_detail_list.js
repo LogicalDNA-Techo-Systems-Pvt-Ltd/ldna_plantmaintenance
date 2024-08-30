@@ -17,3 +17,23 @@ frappe.listview_settings['Task Detail'] = {
         listview.refresh();
     }
 };
+
+frappe.listview_settings['Task Detail'] = {
+    refresh: function (listview) {
+        setTimeout(function() {
+            $(".list-row-container .list-row").each(function (i, obj) {
+                var row = $(this);
+                
+                var statusField = listview.data[i] ? listview.data[i].status : '';
+                
+                
+                if (statusField === 'Overdue') {
+                    var workflowStateElement = row.find(".indicator-pill");
+                    if (workflowStateElement.length) {
+                        workflowStateElement.css('background-color', 'red'); 
+                    }
+                }
+            });
+        }, 1); 
+    }
+};
