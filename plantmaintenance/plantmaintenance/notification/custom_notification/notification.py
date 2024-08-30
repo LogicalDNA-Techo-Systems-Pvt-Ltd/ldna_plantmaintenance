@@ -9,7 +9,7 @@ def send_onesignal_notification(content,user_external_id):
     
     payload = {
      
-        "app_id": "36e69d56-7847-41a0-bd6c-ea63020a2e19",
+        "app_id": "53a209a0-ad8d-4072-ad67-e1c1919ca14f",
         "contents": {"en": content},
         "headings": {"en": "Notification Title"},
         "include_external_user_ids": user_external_id
@@ -19,7 +19,7 @@ def send_onesignal_notification(content,user_external_id):
         
         "accept": "application/json",   
         "content-type": "application/json",
-        "Authorization": "BASIC OWQ1YjBjZTQtZTFjZC00MDZkLWEwMjktZmVmN2M0MDk3YjM4"
+        "Authorization": "BASIC ZmFiYjJlZjgtOGRiZS00MWUzLWE1ZDktYjMxOWVlZGQ3OTNm"
     }
     
    

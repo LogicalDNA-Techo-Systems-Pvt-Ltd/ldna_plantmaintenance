@@ -34,7 +34,7 @@ app_include_js =["/assets/plantmaintenance/js/workspace.js",
 # doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 
 doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js",
-                   "Task Detail" : "public/js/breadcrumbs.js",
+                #    "Task Detail" : "public/js/breadcrumbs.js",
                    "Activity Group": "public/js/breadcrumbs.js",
                    "Activity" : "public/js/breadcrumbs.js",
                    "Parameter": "public/js/breadcrumbs.js",
