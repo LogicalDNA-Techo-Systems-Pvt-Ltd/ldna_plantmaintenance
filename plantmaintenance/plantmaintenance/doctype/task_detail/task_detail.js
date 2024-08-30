@@ -263,6 +263,7 @@ frappe.ui.form.on('Task Detail', {
 
         let readingsCount = frm.doc.readings;
         let hasValidationErrors = false;
+        let readingsProvided = false;
 
         if (frm.doc.parameter_type === 'Numeric') {
             frappe.call({
@@ -280,16 +281,25 @@ frappe.ui.form.on('Task Detail', {
                         for (let i = 0; i < readingsCount; i++) {
                             let field = fields[i];
                             let numericValue = frm.doc[field];
-                            if (numericValue < minRange || numericValue > maxRange) {
-                                hasValidationErrors = true;
-                                break;
+                            if (numericValue) {
+                                readingsProvided = true;
+                                if (numericValue < minRange || numericValue > maxRange) {
+                                    hasValidationErrors = true;
+                                    break;
+                                }
                             }
                         }
-                        if (hasValidationErrors) {
-                            frm.set_value('result', 'Fail');
-                        } else {
-                            frm.set_value('result', 'Pass');
+                        if (readingsProvided) {
+                            if (hasValidationErrors) {
+                                frm.set_value('result', 'Fail');
+                            } else {
+                                frm.set_value('result', 'Pass');
+                            }
                         }
+                        else {
+                            frm.set_value('result', '');
+                        }
+                        
                     }
                 }
             });
