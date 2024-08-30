@@ -131,17 +131,30 @@ def update_task_detail(equipment_code, parameter, activity, assign_to, date):
 
 
 
-
-
 @frappe.whitelist()
-def validate_before_workflow_action(doc,method):
+def validate_before_workflow_action(doc, method):
     if doc.material_issued:
         pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
         if pending_approval_exists and (doc.workflow_state == "Approval Pending"):
             frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue."))
+
     if doc.workflow_state != "Open" and not doc.assigned_to:
         frappe.throw(_("The task cannot proceed without an assigned user. Please ensure the task is assigned before continuing."))
+    
+    if doc.workflow_state == "Approval Pending":
+        mandatory_fields = {
+            'actual_value': doc.parameter_type == "Binary",
+            'parameter_dropdown': doc.parameter_type == "List",
+            'remark': doc.type != "Preventive",
+            'breakdown_reason': doc.type == "Breakdown",
+            'service_call': doc.type == "Breakdown"
+        }
 
+        for fieldname, condition in mandatory_fields.items():
+            if condition and not getattr(doc, fieldname, None):
+               field_label = frappe.get_meta(doc.doctype).get_field(fieldname).label
+               error_message = _("{0} is a mandatory field.").format(field_label)
+               frappe.throw(error_message)
 
 def update_overdue_status():
     try:
