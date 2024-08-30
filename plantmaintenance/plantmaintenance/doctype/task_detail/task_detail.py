@@ -259,4 +259,4 @@ def send_notification_to_users(doc,method):
                 content = f"{doc.name} has been sent for approval. Please review and Approve"
                 send_onesignal_notification(content, [user_external_id])
             else:
-                frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.")
+            frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.")
