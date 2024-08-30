@@ -249,3 +249,14 @@ def equipment_task_details(doc, method=None):
                         
                     
         equipment_doc.save()
+
+def send_notification_to_users(doc,method):
+    if doc.workflow_state == "Work in Progress":
+        approver = doc.approver
+        if approver:
+            user_external_id = approver
+            if user_external_id:
+                content = f"{doc.name} has been sent for approval. Please review and Approve"
+                send_onesignal_notification(content, [user_external_id])
+            else:
+                frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.")

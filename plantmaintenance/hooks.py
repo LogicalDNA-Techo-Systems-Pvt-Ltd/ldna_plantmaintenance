@@ -34,15 +34,11 @@ app_include_js =["/assets/plantmaintenance/js/workspace.js",
 # doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js"}
 
 doctype_list_js = {"Task Detail" : "public/js/task_detail_list.js",
-                #    "Task Detail" : "public/js/breadcrumbs.js",
+                   "Task Detail" : "public/js/breadcrumbs.js",
                    "Activity Group": "public/js/breadcrumbs.js",
                    "Activity" : "public/js/breadcrumbs.js",
                    "Parameter": "public/js/breadcrumbs.js",
                    "Equipment" : "public/js/breadcrumbs.js"}
-
-# doctype_js = {
-#     "Task Detail": "public/js/task_detail_list.js"
-# }
 
 
 
@@ -176,7 +172,9 @@ doc_events = {
     },
     "Task Detail": {
         "on_update": ["plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.equipment_task_details",
-                    "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.validate_before_workflow_action"]
+                    "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.validate_before_workflow_action"],
+
+        "before_save": ["plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.send_notification_to_users"]
     },
     "Equipment": {
         "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks",
@@ -219,11 +217,10 @@ doc_events = {
 #     ]
 # }
 
-
-# scheduler_events ={
+# scheduler_events = {
 #     "cron": {
-#     "*/1 * * * *": [
-#             "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_overdue_status"
+#         "1 * * * *": [
+#             "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_task_status"
 #         ]
 #     }
 # }

@@ -19,11 +19,14 @@ login.bind_events = function () {
         args.cmd = "login";
         args.usr = frappe.utils.xss_sanitise(($("#login_email").val() || "").trim());
         args.pwd = $("#login_password").val();
+
         if (!args.usr || !args.pwd) {
             {# striptags is used to remove newlines, e is used for escaping #}
             frappe.msgprint("{{ _('Both login and password required') | striptags | e }}");
             return false;
         }
+
+        logged_in_user = args.usr;
         login.call(args, null, "/login");
         return false;
     });
@@ -226,7 +229,13 @@ login.login_handlers = (function () {
             if (data.message == 'Logged In') {
                 login.set_status({{ _("Success") | tojson }}, 'green');
                 document.body.innerHTML = `{% include "templates/includes/splash_screen.html" %}`;
-                
+               
+                if (typeof window !== "undefined") {
+                    if (typeof window.OneSignal !== "undefined") {
+                        window.OneSignal.login(logged_in_user);
+                        window.OneSignal.User.addTag("PlantMaintenance", logged_in_user);
+                    }
+                }
                 // Retrieve the last visited URL and navigate to it
                 var lastVisited = localStorage.getItem("last_visited");
                 if (lastVisited) {
@@ -235,6 +244,7 @@ login.login_handlers = (function () {
                     window.location.href = frappe.utils.sanitise_redirect(frappe.utils.get_url_arg("redirect-to")) || data.home_page;
                 }
             } else if (data.message == 'Password Reset') {
+                
                 window.location.href = frappe.utils.sanitise_redirect(data.redirect_to);
             } else if (data.message == "No App") {
                 login.set_status({{ _("Success") | tojson }}, 'green');
