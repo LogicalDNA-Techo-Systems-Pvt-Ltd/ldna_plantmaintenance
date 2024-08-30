@@ -140,7 +140,7 @@ def validate_before_workflow_action(doc, method):
 
     if doc.workflow_state != "Open" and not doc.assigned_to:
         frappe.throw(_("The task cannot proceed without an assigned user. Please ensure the task is assigned before continuing."))
-    print("\n\n\n\n state",doc.workflow_state)
+    
     if doc.workflow_state == "Approval Pending":
         mandatory_fields = {
             'actual_value': doc.parameter_type == "Binary",
