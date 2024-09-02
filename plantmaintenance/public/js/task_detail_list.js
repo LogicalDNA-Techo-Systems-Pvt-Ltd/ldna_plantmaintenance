@@ -7,7 +7,6 @@
             'System Manager': '/app/system-workspace',
             'Process Manager': '/app/manager'
         };
-
         const role = frappe.user_roles.find(r => roleBreadcrumbs[r]);
         return role ? `<a href="${roleBreadcrumbs[role]}">${role}</a>` : 
                        `<a href="/app/activity-group">Activity Group</a>`;
@@ -220,3 +219,4 @@
         };
     });
 })();
+
