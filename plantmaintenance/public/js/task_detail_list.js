@@ -10,15 +10,6 @@ frappe.views.calendar["Task Detail"] = {
 	}
 };
 frappe.listview_settings['Task Detail'] = {
-    onload: function(listview) {
-        let today = frappe.datetime.get_today();
-        listview.filter_area.add([[listview.doctype, 'plan_start_date', '=', today]]);
-
-        listview.refresh();
-    }
-};
-
-frappe.listview_settings['Task Detail'] = {
     refresh: function (listview) {
         setTimeout(function() {
             $(".list-row-container .list-row").each(function (i, obj) {
@@ -35,5 +26,11 @@ frappe.listview_settings['Task Detail'] = {
                 }
             });
         }, 1); 
+    },
+    onload: function(listview) {
+        let today = frappe.datetime.get_today();
+        listview.filter_area.add([[listview.doctype, 'plan_start_date', '=', today]]);
+
+        listview.refresh();
     }
 };
