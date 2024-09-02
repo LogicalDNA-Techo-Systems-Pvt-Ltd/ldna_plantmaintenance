@@ -9,19 +9,20 @@ frappe.views.calendar["Task Detail"] = {
 		"allDay": "allDay",
 	}
 };
+
 frappe.listview_settings['Task Detail'] = {
     refresh: function (listview) {
         setTimeout(function() {
             $(".list-row-container .list-row").each(function (i, obj) {
                 var row = $(this);
-                
                 var statusField = listview.data[i] ? listview.data[i].status : '';
-                
-                
                 if (statusField === 'Overdue') {
-                    var workflowStateElement = row.find(".indicator-pill");
+                    var workflowStateElement = row.find(".indicator-pill:eq(0)");
                     if (workflowStateElement.length) {
-                        workflowStateElement.css('background-color', 'red'); 
+                        workflowStateElement.css({
+                            'background-color': 'red', 
+                            'color': 'white'
+                        });
                     }
                 }
             });
@@ -34,3 +35,4 @@ frappe.listview_settings['Task Detail'] = {
         listview.refresh();
     }
 };
+
