@@ -122,48 +122,23 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                         current_date += relativedelta(months=1)
                     dates = [current_date + relativedelta(months=i) for i in range((end_date.year - start_date.year) * 12 + end_date.month - start_date.month + 1) if start_date <= current_date + relativedelta(months=i) <= end_date]
 
-
-                # elif frequency == 'Yearly':
-                #     date_of_year = getdate(parameter.date_of_year)
-                #     year_start_date = start_date.replace(month=date_of_year.month, day=date_of_year.day)
-                #     year_end_date = end_date.replace(month=date_of_year.month, day=date_of_year.day)
-                    
-                #     # Handle the start year
-                #     if start_date <= year_start_date <= end_date:
-                #         dates.append(year_start_date)
-                    
-                #     # Handle subsequent years
-                #     current_year = start_date.year
-                #     while year_start_date <= end_date:
-                #         if start_date <= year_start_date <= end_date:
-                #             dates.append(year_start_date)
-                        
-                #         current_year += 1
-                #         year_start_date = year_start_date.replace(year=current_year)
-                #         year_end_date = year_end_date.replace(year=current_year)
-
-                #     dates = [date for date in dates if start_date <= date <= end_date]
                 
 
                 elif frequency == 'Yearly':
                     date_of_year = getdate(parameter.date_of_year)
                     year_start_date = start_date.replace(month=date_of_year.month, day=date_of_year.day)
                     
-                    # Initialize dates list
                     dates = []
 
-                    # Handle the start year
                     if start_date <= year_start_date <= end_date:
                         dates.append(year_start_date)
                     
-                    # Handle subsequent years
                     current_year = start_date.year
                     while year_start_date <= end_date:
                         if start_date <= year_start_date <= end_date:
                             if year_start_date.year != datetime.now().year:
                                 dates.append(year_start_date)
                             elif year_start_date.year == datetime.now().year:
-                                # Ensure only one task per year for the current year
                                 if not any(date.year == datetime.now().year for date in dates):
                                     dates.append(year_start_date)
                         
