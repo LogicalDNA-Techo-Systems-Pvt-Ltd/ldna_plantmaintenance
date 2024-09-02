@@ -1,0 +1,115 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-30 10:46:04.790327",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "plant",
+  "functional_location",
+  "work_center",
+  "column_break_vfsj",
+  "location",
+  "plant_section",
+  "section_break_zcve",
+  "start_date",
+  "button_container",
+  "column_break_wxbf",
+  "end_date",
+  "section_break_tkmp",
+  "task_allocation_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "label": "Plant",
+   "options": "Plant"
+  },
+  {
+   "fieldname": "functional_location",
+   "fieldtype": "Link",
+   "label": "Functional Location",
+   "options": "Functional Location"
+  },
+  {
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "label": "Work Center",
+   "options": "Work Center"
+  },
+  {
+   "fieldname": "column_break_vfsj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Link",
+   "label": "Plant Section",
+   "options": "Section"
+  },
+  {
+   "fieldname": "button_container",
+   "fieldtype": "HTML",
+   "label": "Button Container"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_break_zcve",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_wxbf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_tkmp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_allocation_details",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Task Allocation Details",
+   "options": "Task Allocation Details"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-08-30 11:12:30.684886",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Generate Tasks",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
