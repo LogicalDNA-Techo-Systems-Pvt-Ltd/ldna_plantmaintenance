@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 let fields = [
     'type', 'work_permit_number', 'work_center', 'equipment_code',
-    'status', 'equipment_name', 'approver', 'assigned_to',
+    'status', 'equipment_name', 'approver',
     'add_assignee', 'activity', 'parameter', 'parameter_type',
     'actual_value', 'parameter_dropdown', 'reading_1', 'reading_2',
     'reading_3', 'reading_4', 'reading_5', 'reading_6',
@@ -196,6 +196,7 @@ frappe.ui.form.on('Task Detail', {
             });
         }
     },
+    
     status: function(frm) {
         frm.trigger('toggle_send_for_approval_date');
     },
