@@ -10,6 +10,7 @@ from frappe import _
 from frappe.utils.background_jobs import enqueue 
 import time
 from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification
+from frappe.utils import get_url_to_form
 
 class TaskDetail(Document):
 
@@ -260,11 +261,10 @@ def send_notification_to_users(doc,method):
                 content = f"{doc.name} has been sent for approval. Please review and Approve"
                 send_onesignal_notification(content, [user_external_id])
             else:
-                frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.")
+                frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.") 
 
+ 
 
-# for task assign to the user 
-    
 @frappe.whitelist()
 def bulk_assign_tasks(task_names, assigned_users):
     if not isinstance(task_names, list):
@@ -275,6 +275,46 @@ def bulk_assign_tasks(task_names, assigned_users):
     
     for task_name in task_names:
         frappe.db.set_value('Task Detail', task_name, 'assigned_to', ', '.join(assigned_users))
+        task_detail = frappe.get_doc('Task Detail', task_name)
+        send_approval_email(task_detail, assigned_users)
     
     frappe.db.commit()
-    return "Tasks successfully assigned." 
+    return "Tasks successfully assigned."
+
+#send Email notification for bulk allocation
+
+def send_approval_email(task_detail, assigned_users):
+    url = get_url_to_form('Task Detail', task_detail.name)
+    subject = "Task Allocated {}".format(task_detail.name)
+    message_template = """
+        Hi Team,
+        <br><br>
+        I hope this message finds you well. I wanted to inform you that your task has been allocated to you by the maintenance manager.
+        <br><br>
+        Kindly review the details and proceed with the activity as outlined.
+        <br>
+        <a href="{url}">Click here to view the task</a>
+        <br><br>
+        Thanks,
+        <br><br>
+    """
+
+   
+    emails = []
+    for user_full_name in assigned_users:
+        user = frappe.get_all('User', filters={'full_name': user_full_name}, fields=['email'])
+        if user:
+            emails.append(user[0].email)
+            print("Fetched emails:", emails)
+
+   
+    for email in emails:
+        message = message_template.format(url=url)
+        frappe.sendmail(
+            recipients=email,
+            subject=subject,
+            message=message,
+            now=True
+        )
+        print(f"Email sent to {email}")
+
