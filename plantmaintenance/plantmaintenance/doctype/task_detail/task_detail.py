@@ -7,7 +7,7 @@ from frappe.utils import nowdate, getdate
 from datetime import datetime, timedelta
 from frappe.utils import nowdate, getdate
 from frappe import _
-from frappe.utils.background_jobs import enqueue
+from frappe.utils.background_jobs import enqueue 
 import time
 from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification
 
@@ -261,3 +261,20 @@ def send_notification_to_users(doc,method):
                 send_onesignal_notification(content, [user_external_id])
             else:
                 frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.")
+
+
+# for task assign to the user 
+    
+@frappe.whitelist()
+def bulk_assign_tasks(task_names, assigned_users):
+    if not isinstance(task_names, list):
+        task_names = json.loads(task_names)
+        
+    if not isinstance(assigned_users, list):
+        assigned_users = json.loads(assigned_users)
+    
+    for task_name in task_names:
+        frappe.db.set_value('Task Detail', task_name, 'assigned_to', ', '.join(assigned_users))
+    
+    frappe.db.commit()
+    return "Tasks successfully assigned." 
