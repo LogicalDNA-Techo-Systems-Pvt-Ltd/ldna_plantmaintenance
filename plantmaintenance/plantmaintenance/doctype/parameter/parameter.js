@@ -4,7 +4,7 @@
  
 frappe.ui.form.on('Parameter', {
     onload: function(frm) {
-        render_radio_buttons(frm); 
+        render_radio_buttons(frm);
         ConvertValuesInSelect(frm);
     },
     refresh: function(frm) {
@@ -24,8 +24,15 @@ frappe.ui.form.on('Parameter', {
                 });
             }, __("View"));
         } 
+        convertValuesInSelect(frm);
+    },
+    values: function(frm) {
+        convertValuesInSelect(frm);
+    },
+    parameter_type: function(frm) {
+        convertValuesInSelect(frm);
     }
-
+     
 });
 
 function render_radio_buttons(frm) {
@@ -107,9 +114,10 @@ function HandleParameters(frm) {
     
 }
 
-function ConvertValuesInSelect(frm) {
+function convertValuesInSelect(frm) {
     var value = frm.doc.values;
-    var parameterType = frm.doc.parameter_type;  
+    var parameterType = frm.doc.parameter_type;
+    
     if(parameterType === 'List' && value) {
         let options = value.split(',').map(option => option.trim());
         frm.set_df_property('acceptance_criteria_for_list', 'options', options.join('\n'));
