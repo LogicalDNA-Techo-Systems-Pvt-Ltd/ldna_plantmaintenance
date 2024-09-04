@@ -15,8 +15,8 @@
   "day",
   "column_break_tdtt",
   "frequency",
-  "priority",
   "task_status",
+  "priority",
   "date",
   "assign_to",
   "add_assignee"
@@ -130,7 +130,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-04 14:33:28.959050",
+ "modified": "2024-09-04 15:38:27.335025",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation Details",
