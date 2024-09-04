@@ -17,7 +17,9 @@
   "frequency",
   "priority",
   "task_status",
-  "date"
+  "date",
+  "assign_to",
+  "add_assignee"
  ],
  "fields": [
   {
@@ -113,12 +115,22 @@
    "label": "Activity Group",
    "options": "Activity Group",
    "read_only": 1
+  },
+  {
+   "fieldname": "assign_to",
+   "fieldtype": "Small Text",
+   "label": "Assign To"
+  },
+  {
+   "fieldname": "add_assignee",
+   "fieldtype": "Button",
+   "label": "Add Assignee"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-08-30 11:11:26.028454",
+ "modified": "2024-09-04 14:33:28.959050",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Allocation Details",
