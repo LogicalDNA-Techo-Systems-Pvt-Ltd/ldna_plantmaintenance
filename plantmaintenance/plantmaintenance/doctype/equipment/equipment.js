@@ -130,53 +130,19 @@ refresh: function(frm) {
             frappe.new_doc('Activity Group');
         }, __("Create"));
     }
-},
- 
-//for deleting task in task detail when equipment is on scrap. 
- 
-validate: function(frm) {
-            if (frm.doc.on_scrap) {
-                frappe.call({
-                    method: 'frappe.client.get_list',
-                    args: {
-                        doctype: 'Task Detail',
-                        filters: {
-                            'equipment_name': frm.doc.equipment_name,
-                            'status': 'Open'
-                        },
-                        fields: ['name']
-                    },
-                    callback: function(response) {
-                        var tasks = response.message;
-                        if (tasks && tasks.length > 0) {
-                            var task_names = tasks.map(task => task.name);
-                            task_names.forEach(task_name => {
-                                frappe.call({
-                                    method: 'frappe.client.delete',
-                                    args: {
-                                        doctype: 'Task Detail',
-                                        name: task_name
-                                    },
-                                    callback: function(delete_response) {
-                                        if (delete_response.exc) {
-                                            console.error(`Error deleting Task: ${task_name}`, delete_response.exc);
-                                        } else {
-                                            console.log(`Deleted Task: ${task_name}`);
-                                        }
-                                    }
-                                });
-                            });
-                        }
-                    }
-                });
-            }
-        } ,
-
-        activity_group_active: function(frm) {
-            if (!frm.doc.activity_group_active) {  // Check if activity_group_active is unchecked (false)
-                frm.set_value('activity_group', '');  // Clear activity_group field
-            }
-        },
+}, 
+activity_group_active: function(frm) {
+    if (!frm.doc.activity_group_active) {  // Check if activity_group_active is unchecked (false)
+        frm.set_value('activity_group', '');  // Clear activity_group field
+        }
+    },
+//task will delete when equipment is on scrap
+on_scrap:function(frm) {
+    if(frm.doc.on_scrap){
+        frm.set_value('activity_group_active',0);
+        frm.set_df_property('activity_group', 'read_only', 1)
+    }
+}
     
 });
 
