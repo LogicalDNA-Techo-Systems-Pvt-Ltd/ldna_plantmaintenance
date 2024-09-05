@@ -276,14 +276,14 @@ def bulk_assign_tasks(task_names, assigned_users):
     for task_name in task_names:
         frappe.db.set_value('Task Detail', task_name, 'assigned_to', ', '.join(assigned_users))
         task_detail = frappe.get_doc('Task Detail', task_name)
-        send_approval_email(task_detail, assigned_users)
+        send_allocation_email(task_detail, assigned_users)
     
     frappe.db.commit()
     return "Tasks successfully assigned."
 
 #send Email notification for bulk allocation
 
-def send_approval_email(task_detail, assigned_users):
+def send_allocation_email(task_detail, assigned_users):
     url = get_url_to_form('Task Detail', task_detail.name)
     subject = "Task Allocated {}".format(task_detail.name)
     message_template = """
