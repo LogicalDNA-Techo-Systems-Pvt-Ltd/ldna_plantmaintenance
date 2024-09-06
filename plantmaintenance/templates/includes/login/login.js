@@ -230,12 +230,7 @@ login.login_handlers = (function () {
                 login.set_status({{ _("Success") | tojson }}, 'green');
                 document.body.innerHTML = `{% include "templates/includes/splash_screen.html" %}`;
                
-                if (typeof window !== "undefined") {
-                    if (typeof window.OneSignal !== "undefined") {
-                        window.OneSignal.login(logged_in_user);
-                        window.OneSignal.User.addTag("PlantMaintenance", logged_in_user);
-                    }
-                }
+              
                 // Retrieve the last visited URL and navigate to it
                 var lastVisited = localStorage.getItem("last_visited");
                 if (lastVisited) {

@@ -11,7 +11,8 @@
   "column_break_qtgr",
   "section_break_tqya",
   "back_days_entry",
-  "column_break_puqw"
+  "column_break_puqw",
+  "subscribe_and_unsubscribe"
  ],
  "fields": [
   {
@@ -47,12 +48,17 @@
   {
    "fieldname": "column_break_puqw",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subscribe_and_unsubscribe",
+   "fieldtype": "HTML",
+   "label": "Subscribe And UnSubscribe"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-14 12:59:55.518613",
+ "modified": "2024-09-05 12:08:18.706140",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Settings",
