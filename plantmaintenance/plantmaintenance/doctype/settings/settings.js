@@ -9,4 +9,15 @@ frappe.ui.form.on("Settings", {
             frappe.validated = false;
         }
     },
+    onload: function(frm){
+        frappe.call({
+            method:"plantmaintenance.plantmaintenance.doctype.settings.settings.get_context",
+            callback: function(r){
+                console.log(frm)
+                    var data = r.message
+                    $(frm.fields_dict["subscribe_and_unsubscribe"].wrapper).html(data);
+                    refresh_field("subscribe_and_unsubscribe");
+            }
+        })
+    }
 });

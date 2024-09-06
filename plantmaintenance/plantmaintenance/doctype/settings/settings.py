@@ -7,3 +7,8 @@ from frappe.model.document import Document
 
 class Settings(Document):
 	pass
+
+@frappe.whitelist()
+def get_context():
+    return frappe.render_template('plantmaintenance/plantmaintenance/doctype/settings/settings.html')
+

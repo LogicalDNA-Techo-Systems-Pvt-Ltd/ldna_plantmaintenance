@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+    <script>
+        var useragentid = null;
+        var OneSignal = window.OneSignal || [];
+
+        OneSignal.push(["init", {
+            appId: "36e69d56-7847-41a0-bd6c-ea63020a2e19",
+            autoRegister: false,
+            notifyButton: {
+                enable: false 
+            },
+            allowLocalhostAsSecureOrigin: true,
+            persistNotification: false,
+        }]);
+
+      
+
+        OneSignal.push(function() {
+            OneSignal.getUserId().then(function(userId) {
+               
+                if (userId == null) {
+                    
+                    document.getElementById('unsubscribe').style.display = 'none';
+                } else {
+                    console.log("uiiiiiiiiiiiiiiii")
+                    useragentid = userId;
+                    console.log(useragentid)
+                    document.getElementById('unsubscribe').style.display = '';
+                    OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+                        console.log(isEnabled)
+                        if (isEnabled) {
+                            document.getElementById('unsubscribe').style.display = '';
+                            document.getElementById('subscribe').style.display = 'none';
+                            
+                        } else {
+                            document.getElementById('unsubscribe').style.display = 'none';
+                            document.getElementById('subscribe').style.display = '';
+                            
+                        }
+                    });
+                }
+            });
+        });
+
+        OneSignal.push(function() {
+            OneSignal.on('subscriptionChange', function(isSubscribed) {
+                OneSignal.getUserId().then(function(userId) {
+                    console.log(userId)
+                    useragentid = userId;
+
+                });
+
+                if (isSubscribed) {
+                    
+                    document.getElementById('unsubscribe').style.display = '';
+                    document.getElementById('subscribe').style.display = 'none';
+                    last_action_catch = "UnSubscribe"
+
+                } else {
+                    document.getElementById('unsubscribe').style.display = 'none';
+                    document.getElementById('subscribe').style.display = '';
+                    last_action_catch = "Subscribe"
+                }
+            });
+        });
+      
+        function subscribeOneSignal() {
+          console.log("Subscribe")
+          OneSignal.push(["registerForPushNotifications"]);
+          console.log("hellooooooooooooo")
+          event.preventDefault();
+        }
+        
+      
+        function unSubscribeOneSignal() {
+            OneSignal.setSubscription(false);
+        }
+
+        function updateExternalId(userId) {
+            OneSignal.push(function() {
+               
+        
+            });
+        }
+    </script>
+    <div id="home-top" class="clearfix">
+        <br>
+        <button id="subscribe" class="button" onclick="subscribeOneSignal()">Subscribe </button>
+        <button id="unsubscribe" class="button" onclick="unSubscribeOneSignal()">Unsubscribe </button>
+    </div>
+    <style>
+        .button {
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+</html>
