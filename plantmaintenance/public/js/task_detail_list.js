@@ -115,7 +115,7 @@
                         }
 
                         // Filter tasks with status 'Open'
-                        let openTasks = selectedItems.filter(item => item.status === "Open");
+                        let openTasks = selectedItems.filter(item => item.workflow_state === "Open");
 
                         if (openTasks.length === 0) {
                             frappe.msgprint(__('No tasks in "Open" status selected.'));
