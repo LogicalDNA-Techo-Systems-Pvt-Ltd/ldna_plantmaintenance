@@ -39,16 +39,16 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
         "work_center": work_center,
     }
 
-    equipment_list = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 0,'activity_group_active':1}, fields=['equipment_code', 'equipment_name', 'activity_group'])
+    equipment_list = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 0, 'activity_group_active': 1}, fields=['equipment_code', 'equipment_name', 'activity_group'])
     on_scrap_equipment = frappe.get_all('Equipment', filters={**filters, 'on_scrap': 1}, fields=['equipment_code'])
-    
-    #equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group'])
+
     settings_doc = frappe.get_single('Settings')
     start_date = getdate(settings_doc.start_date)
     today_date = getdate(nowdate())
-    end_date = getdate(end_date) if end_date else getdate(settings_doc.end_date)
+    # If end_date is not provided, fallback to the settings or set range based on frequency logic
+    end_date = getdate(end_date) if end_date else None
 
-    if not (start_date <= today_date <= end_date):
+    if not (start_date <= today_date <= (end_date if end_date else getdate(settings_doc.end_date))):
         return frappe.msgprint("Please ensure today's date is between the start date and end date.")
 
     tasks = []
@@ -80,67 +80,59 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                 dates = []
 
                 if frequency == 'Daily':
-                    dates = [add_days(today_date, i) for i in range(15) if today_date <= add_days(today_date, i) <= end_date]
-
+                    date_range = (end_date - today_date).days + 1 if end_date else 15
+                    dates = [add_days(today_date, i) for i in range(date_range) if today_date <= add_days(today_date, i) <= (end_date or today_date + timedelta(days=15))]
+                
                 elif frequency == 'Weekly':
                     selected_days = []
-                    if parameter.monday:
-                        selected_days.append('Monday')
-                    if parameter.tuesday:
-                        selected_days.append('Tuesday')
-                    if parameter.wednesday:
-                        selected_days.append('Wednesday')
-                    if parameter.thursday:
-                        selected_days.append('Thursday')
-                    if parameter.friday:
-                        selected_days.append('Friday')
-                    if parameter.saturday:
-                        selected_days.append('Saturday')
-                    if parameter.sunday:
-                        selected_days.append('Sunday')
+                    if parameter.monday: selected_days.append('Monday')
+                    if parameter.tuesday: selected_days.append('Tuesday')
+                    if parameter.wednesday: selected_days.append('Wednesday')
+                    if parameter.thursday: selected_days.append('Thursday')
+                    if parameter.friday: selected_days.append('Friday')
+                    if parameter.saturday: selected_days.append('Saturday')
+                    if parameter.sunday: selected_days.append('Sunday')
 
                     for day in selected_days:
                         current_date = today_date
+                        
                         while current_date.weekday() != list(calendar.day_name).index(day):
                             current_date += timedelta(days=1)
-                        if today_date <= current_date <= end_date:
-                            dates.append(current_date)
+                        
+                        if not end_date:
+                            range_limit = today_date + timedelta(days=90)
 
-                        while current_date <= (today_date + timedelta(days=90)) and (today_date <= current_date <= end_date):
+                        else:
+                            range_limit = end_date
+                        while current_date <= range_limit:
+                            dates.append(current_date)
                             current_date += timedelta(weeks=1)
-                            if today_date <= current_date <= end_date:
-                                dates.append(current_date)
 
                 elif frequency == 'Monthly':
                     day_of_month = parameter.day_of_month or 1
-                    current_date = today_date.replace(day=day_of_month)
-                    if current_date < today_date:
+                    current_date = today_date
+
+                    for _ in range(6):
+                        if day_of_month > calendar.monthrange(current_date.year, current_date.month)[1]:
+                            current_date = current_date.replace(day=calendar.monthrange(current_date.year, current_date.month)[1])
+                        else:
+                            current_date = current_date.replace(day=day_of_month)
+                    
+                        if current_date >= today_date and (end_date is None or current_date <= end_date):
+                            dates.append(current_date)
+
                         current_date += relativedelta(months=1)
-                    dates = [current_date + relativedelta(months=i) for i in range(6) if today_date <= current_date + relativedelta(months=i) <= end_date]
+
 
                 elif frequency == 'Yearly':
                     date_of_year = getdate(parameter.date_of_year)
                     year_today_date = today_date.replace(month=date_of_year.month, day=date_of_year.day)
                     
-                    dates = []
-
-                    if today_date <= year_today_date <= end_date:
-                        dates.append(year_today_date)
-                    
-                    current_year = today_date.year
-                    while year_today_date <= end_date:
-                        if today_date <= year_today_date <= end_date:
-                            if year_today_date.year != datetime.now().year:
-                                dates.append(year_today_date)
-                            elif year_today_date.year == datetime.now().year:
-                                if not any(date.year == datetime.now().year for date in dates):
-                                    dates.append(year_today_date)
-                        
-                        current_year += 1
-                        year_today_date = year_today_date.replace(year=current_year)
-                    
-                    dates = [date for date in dates if today_date <= date <= end_date]
-
+                    range_limit = end_date or (today_date + relativedelta(years=1))
+                    while year_today_date <= range_limit:
+                        if year_today_date >= today_date:
+                            dates.append(year_today_date)
+                        year_today_date += relativedelta(years=1)
 
                 for date in dates:
                     date_obj = getdate(date)
@@ -158,7 +150,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     task = {
                         'equipment_code': equipment.equipment_code,
                         'equipment_name': equipment.equipment_name,
-                        'activity_group':equipment.activity_group,
+                        'activity_group': equipment.activity_group,
                         'activity': activity_details.activity_name,
                         'parameter': parameter.parameter,
                         'frequency': frequency,
@@ -181,15 +173,13 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                     )
 
                     if not task_exists:
-                        # tasks.append(task)
-
                         if not frappe.db.exists('Task Detail', {'unique_key': unique_key[:10]}):
                             task_detail = frappe.new_doc("Task Detail")
                             task_detail.update({
                                 "approver": frappe.session.user,
                                 "equipment_code": task['equipment_code'],
                                 "equipment_name": task['equipment_name'],
-                                "activity_group":task['activity_group'],
+                                "activity_group": task['activity_group'],
                                 "work_center": work_center,
                                 "plant_section": plant_section,
                                 "plan_start_date": task['date'],
@@ -199,7 +189,7 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
                                 "day": task['day'],
                                 "date": task['date'],
                                 "unique_key": task['unique_key'],
-                                "parameter_type": parameter_type 
+                                "parameter_type": parameter_type
                             })
                             task_detail.insert(ignore_permissions=True)
 
@@ -207,6 +197,8 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
         return frappe.msgprint("No tasks found for the provided filters.")
                             
     return tasks
+
+
 
 @frappe.whitelist()
 def download_tasks_excel_for_allocation(tasks):
