@@ -120,9 +120,27 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
                 elif frequency == 'Yearly':
                     date_of_year = getdate(parameter.date_of_year)
-                    if start_date <= date_of_year <= end_date:
-                        years_range = range(today_date.year, end_date.year + 1)
-                        dates = [date_of_year.replace(year=year) for year in years_range]
+                    year_today_date = today_date.replace(month=date_of_year.month, day=date_of_year.day)
+                    
+                    dates = []
+
+                    if today_date <= year_today_date <= end_date:
+                        dates.append(year_today_date)
+                    
+                    current_year = today_date.year
+                    while year_today_date <= end_date:
+                        if today_date <= year_today_date <= end_date:
+                            if year_today_date.year != datetime.now().year:
+                                dates.append(year_today_date)
+                            elif year_today_date.year == datetime.now().year:
+                                if not any(date.year == datetime.now().year for date in dates):
+                                    dates.append(year_today_date)
+                        
+                        current_year += 1
+                        year_today_date = year_today_date.replace(year=current_year)
+                    
+                    dates = [date for date in dates if today_date <= date <= end_date]
+
 
                 for date in dates:
                     date_obj = getdate(date)
