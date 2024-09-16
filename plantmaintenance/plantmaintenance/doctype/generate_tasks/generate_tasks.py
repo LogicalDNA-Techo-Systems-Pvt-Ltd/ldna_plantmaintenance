@@ -1,7 +1,7 @@
-# # Copyright (c) 2024, LogicalDNA and contributors
-# # For license information, please see license.txt
-# # class GenerateTasks(Document):
-# # 	pass
+# Copyright (c) 2024, LogicalDNA and contributors
+# For license information, please see license.txt
+# class GenerateTasks(Document):
+# 	pass
 
 import frappe
 import uuid
@@ -26,6 +26,8 @@ generated_unique_keys = set()
 @frappe.whitelist()
 def load_tasks(plant, location, functional_location, plant_section, work_center, start_date=None, end_date=None):
     global generated_unique_keys
+    if not start_date or not end_date:
+        return frappe.msgprint("Please provide both start date and end date.")
 
     current_user = frappe.session.user
 
@@ -52,11 +54,11 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
     end_date = getdate(end_date)
 
     if not (today_date <= start_date <= end_date):
-        return frappe.msgprint("Please ensure start date is between today's date and end date.")
+        return frappe.msgprint("Previous dates are not allowed.")
 
     tasks = []
     if not equipment_list:
-        return frappe.msgprint("No tasks found for the provided filters.")
+        return frappe.msgprint("Equipment not found for the provided filters.")
 
     for equipment in equipment_list:
 
@@ -212,3 +214,4 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
         return frappe.msgprint("No tasks found for the provided filters.")
                             
     return tasks
+
