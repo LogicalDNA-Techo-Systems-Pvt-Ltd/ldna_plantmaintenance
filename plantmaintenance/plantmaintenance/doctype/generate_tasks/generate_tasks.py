@@ -123,17 +123,21 @@ def load_tasks(plant, location, functional_location, plant_section, work_center,
 
                     while current_date <= end_date:
                         last_day_of_month = calendar.monthrange(current_date.year, current_date.month)[1]
+
                         if day_of_month > last_day_of_month:
                             task_date = current_date.replace(day=last_day_of_month)
                         else:
                             task_date = current_date.replace(day=day_of_month)
-                        
+
                         if start_date <= task_date <= end_date:
                             dates.append(task_date)
 
                         current_date += relativedelta(months=1)
 
-                
+                    next_month_first_day = end_date.replace(day=day_of_month) if day_of_month <= calendar.monthrange(end_date.year, end_date.month)[1] else end_date.replace(day=calendar.monthrange(end_date.year, end_date.month)[1])
+                    if start_date <= next_month_first_day <= end_date:
+                        dates.append(next_month_first_day)
+                                            
 
                 elif frequency == 'Yearly':
                     date_of_year = getdate(parameter.date_of_year)
