@@ -1,96 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneSignal Subscription</title>
+
+    <!-- OneSignal SDK -->
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
-    <script>
-        var useragentid = null;
-        var OneSignal = window.OneSignal || [];
 
-        OneSignal.push(["init", {
-            appId: "53a209a0-ad8d-4072-ad67-e1c1919ca14f",
-            autoRegister: false,
-            notifyButton: {
-                enable: false 
-            },
-            allowLocalhostAsSecureOrigin: true,
-            persistNotification: false,
-        }]);
-
-      
-
-        OneSignal.push(function() {
-            OneSignal.getUserId().then(function(userId) {
-               
-                if (userId == null) {
-                    
-                    document.getElementById('unsubscribe').style.display = 'none';
-                } else {
-                    console.log("uiiiiiiiiiiiiiiii")
-                    useragentid = userId;
-                    console.log(useragentid)
-                    document.getElementById('unsubscribe').style.display = '';
-                    OneSignal.isPushNotificationsEnabled(function(isEnabled) {
-                        console.log(isEnabled)
-                        if (isEnabled) {
-                            document.getElementById('unsubscribe').style.display = '';
-                            document.getElementById('subscribe').style.display = 'none';
-                            
-                        } else {
-                            document.getElementById('unsubscribe').style.display = 'none';
-                            document.getElementById('subscribe').style.display = '';
-                            
-                        }
-                    });
-                }
-            });
-        });
-
-        OneSignal.push(function() {
-            OneSignal.on('subscriptionChange', function(isSubscribed) {
-                OneSignal.getUserId().then(function(userId) {
-                    console.log(userId)
-                    useragentid = userId;
-
-                });
-
-                if (isSubscribed) {
-                    
-                    document.getElementById('unsubscribe').style.display = '';
-                    document.getElementById('subscribe').style.display = 'none';
-                    last_action_catch = "UnSubscribe"
-
-                } else {
-                    document.getElementById('unsubscribe').style.display = 'none';
-                    document.getElementById('subscribe').style.display = '';
-                    last_action_catch = "Subscribe"
-                }
-            });
-        });
-      
-        function subscribeOneSignal() {
-          console.log("Subscribe")
-          OneSignal.push(["registerForPushNotifications"]);
-          console.log("hellooooooooooooo")
-          event.preventDefault();
-        }
-        
-      
-        function unSubscribeOneSignal() {
-            OneSignal.setSubscription(false);
-        }
-
-        function updateExternalId(userId) {
-            OneSignal.push(function() {
-               
-        
-            });
-        }
-    </script>
-    <div id="home-top" class="clearfix">
-        <br>
-        <button id="subscribe" class="button" onclick="subscribeOneSignal()">Subscribe </button>
-        <button id="unsubscribe" class="button" onclick="unSubscribeOneSignal()">Unsubscribe </button>
-    </div>
     <style>
         .button {
             background-color: #008CBA;
@@ -105,4 +22,34 @@
         }
     </style>
 </head>
+
+<body>
+    <div id="home-top" class="clearfix">
+        <br>
+     
+        <div id="subscribe_and_unsubscribe">
+            <button id="subscribe" class="button" style="display:none;">Subscribe</button>
+            <button id="unsubscribe" class="button" style="display:none;">Unsubscribe</button>
+        </div>
+    </div>
+
+    <script>
+
+        var OneSignal = window.OneSignal || [];
+
+        OneSignal.push(["init", {
+            appId: "6b1ea8ee-7831-4e25-9f25-afdb1fff7ac0",
+            autoRegister: false,
+            notifyButton: {
+                enable: false
+            },
+            allowLocalhostAsSecureOrigin: true,
+            persistNotification: false,
+        }]);
+
+        function getUserId() {
+            return typeof frappe !== 'undefined' ? frappe.session.user : null;
+        }
+    </script>
+</body>
 </html>
