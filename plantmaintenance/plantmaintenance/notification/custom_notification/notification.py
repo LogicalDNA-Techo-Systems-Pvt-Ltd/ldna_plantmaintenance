@@ -8,7 +8,7 @@ def send_onesignal_notification(email):
     url = "https://api.onesignal.com/notifications?c=push"
 
     payload = {
-        "app_id": "9b2f794c-30a2-4cde-8cde-595677f346b5",
+        "app_id": "53a209a0-ad8d-4072-ad67-e1c1919ca14f",
         "contents": {
             "en": "Task has been allocated to you !"
     },
@@ -20,7 +20,7 @@ def send_onesignal_notification(email):
     headers = {
         "accept": "application/json",
         "content-type": "application/json",
-        "Authorization": "Basic N2I3MmJhYzYtZDZmNi00ZTEwLWExYWMtZDY4MGU1YTkwYTNh"
+        "Authorization": "Basic ZmFiYjJlZjgtOGRiZS00MWUzLWE1ZDktYjMxOWVlZGQ3OTNm"
     }
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
