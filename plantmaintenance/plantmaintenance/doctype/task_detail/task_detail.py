@@ -252,19 +252,6 @@ def equipment_task_details(doc, method=None):
                     
         equipment_doc.save()
 
-def send_notification_to_users(doc,method):
-    if doc.workflow_state == "Work in Progress":
-        approver = doc.approver
-        if approver:
-            user_external_id = approver
-            if user_external_id:
-                content = f"{doc.name} has been sent for approval. Please review and Approve"
-                send_onesignal_notification(content, [user_external_id])
-            else:
-                frappe.throw(f"Approver {approver} does not have a valid OneSignal subscription.") 
-
- 
-
 @frappe.whitelist()
 def bulk_assign_tasks(task_names, assigned_users):
     if not isinstance(task_names, list):
@@ -281,7 +268,7 @@ def bulk_assign_tasks(task_names, assigned_users):
     frappe.db.commit()
     return "Tasks successfully assigned."
 
-#send Email notification for bulk allocation
+#send Email notification for bulk allocation and push notification
 
 def send_allocation_email(task_detail, assigned_users):
     url = get_url_to_form('Task Detail', task_detail.name)
@@ -305,10 +292,10 @@ def send_allocation_email(task_detail, assigned_users):
         user = frappe.get_all('User', filters={'full_name': user_full_name}, fields=['email'])
         if user:
             emails.append(user[0].email)
-            print("Fetched emails:", emails)
-
+            
    
     for email in emails:
+        send_onesignal_notification(email)
         message = message_template.format(url=url)
         frappe.sendmail(
             recipients=email,
@@ -316,5 +303,3 @@ def send_allocation_email(task_detail, assigned_users):
             message=message,
             now=True
         )
-        print(f"Email sent to {email}")
-
