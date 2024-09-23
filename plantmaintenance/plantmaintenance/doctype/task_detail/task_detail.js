@@ -417,6 +417,15 @@ function toggle_result_field(frm) {
     }
 }
 
+// function toggle_add_assignee_button(frm) {
+  
+//     if (!frm.doc.assigned_to) {
+//         frm.set_df_property('add_assignee', 'hidden', 0);
+//     } else {
+//         frm.set_df_property('add_assignee', 'hidden', 1);
+//     }
+// }
+
 function disable_workflow_actions(frm) {
     if (frm.page) {
         frm.page.clear_actions_menu();
@@ -424,6 +433,7 @@ function disable_workflow_actions(frm) {
         frm.page.btn_primary.prop('disabled', true);
     }
 }
+
 
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {
@@ -451,7 +461,7 @@ frappe.ui.form.on('Task Detail', {
                             label: __("Select Users"),
                             fieldtype: "MultiSelectList",
                             fieldname: "users",
-                            placeholder:"Add User",
+                            placeholder: "Add User",
                             options: options,
                             reqd: 1,
                             get_data: function () {
@@ -476,20 +486,23 @@ frappe.ui.form.on('Task Detail', {
                         }
 
                         dialog.hide();
-                        $('body').removeClass('modal-open'); 
+                        $('body').removeClass('modal-open');
                     }
                 });
 
                 dialog.show();
 
-                $('body').addClass('modal-open'); 
+                $('body').addClass('modal-open');
 
-               
-                let dynamicHeight = Math.min(userCount * 50, 400); 
+                let dynamicHeight = userCount * 100;
+                if (userCount > 10) {
+                    dynamicHeight = 500; 
+                }
 
                 dialog.$wrapper.find('.modal-body').css({
                     "overflow-y": "auto",
-                    "height": dynamicHeight + "%"
+                    "height": dynamicHeight + "px", 
+                    "max-height": "90vh"  
                 });
             }
         });
