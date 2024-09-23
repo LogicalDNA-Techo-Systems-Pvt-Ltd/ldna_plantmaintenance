@@ -417,15 +417,6 @@ function toggle_result_field(frm) {
     }
 }
 
-// function toggle_add_assignee_button(frm) {
-  
-//     if (!frm.doc.assigned_to) {
-//         frm.set_df_property('add_assignee', 'hidden', 0);
-//     } else {
-//         frm.set_df_property('add_assignee', 'hidden', 1);
-//     }
-// }
-
 function disable_workflow_actions(frm) {
     if (frm.page) {
         frm.page.clear_actions_menu();
@@ -451,6 +442,7 @@ frappe.ui.form.on('Task Detail', {
             },
             callback: function (response) {
                 let options = response.message.map(user => user.full_name).filter(Boolean);
+                const userCount = options.length;
 
                 const dialog = new frappe.ui.Dialog({
                     title: __('Select Users'),
@@ -459,7 +451,7 @@ frappe.ui.form.on('Task Detail', {
                             label: __("Select Users"),
                             fieldtype: "MultiSelectList",
                             fieldname: "users",
-                            placeholder: "Add User",
+                            placeholder:"Add User",
                             options: options,
                             reqd: 1,
                             get_data: function () {
@@ -489,12 +481,18 @@ frappe.ui.form.on('Task Detail', {
                 });
 
                 dialog.show();
-                const multiselect = dialog.$wrapper.find('.form-control');
-                multiselect.css({
-                    "max-height": "10vh",
-                    "overflow-y": "auto"
+
+                $('body').addClass('modal-open'); 
+
+               
+                let dynamicHeight = Math.min(userCount * 50, 400); 
+
+                dialog.$wrapper.find('.modal-body').css({
+                    "overflow-y": "auto",
+                    "height": dynamicHeight + "%"
                 });
             }
         });
     }
 });
+

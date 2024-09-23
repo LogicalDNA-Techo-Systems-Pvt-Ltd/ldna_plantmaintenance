@@ -135,6 +135,7 @@
                             },
                             callback: function(response) {
                                 let options = response.message.map(user => user.full_name).filter(Boolean);
+                                const userCount = options.length;
 
                                 const dialog = new frappe.ui.Dialog({
                                     title: __('Select Users'),
@@ -182,14 +183,19 @@
                                 });
 
                                 dialog.show();
-                                $('body').addClass('modal-open');
-                                const multiselect = dialog.$wrapper.find('.form-control');
-                                multiselect.css({
-                                    "max-height": "10vh",
-                                    "overflow-y": "auto"
-                                });
+
+                // Dynamically set the modal height based on the number of users
+                let dynamicHeight = Math.min(userCount * 50, 400); // 50px per user, up to a max of 400px
+
+                dialog.$wrapper.find('.modal-body').css({
+                    "overflow-y": "auto",
+                    "height": dynamicHeight + "%"
+                });
                             }
                         });
+
+
+
                     }).addClass("btn-primary").hide();
 
                     listview.assignToButton = assignToButton;
