@@ -417,6 +417,15 @@ function toggle_result_field(frm) {
     }
 }
 
+// function toggle_add_assignee_button(frm) {
+  
+//     if (!frm.doc.assigned_to) {
+//         frm.set_df_property('add_assignee', 'hidden', 0);
+//     } else {
+//         frm.set_df_property('add_assignee', 'hidden', 1);
+//     }
+// }
+
 function disable_workflow_actions(frm) {
     if (frm.page) {
         frm.page.clear_actions_menu();
@@ -424,6 +433,139 @@ function disable_workflow_actions(frm) {
         frm.page.btn_primary.prop('disabled', true);
     }
 }
+
+// frappe.ui.form.on('Task Detail', {
+//     add_assignee: function (frm) {
+//         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
+
+//         frappe.call({
+//             method: 'frappe.client.get_list',
+//             args: {
+//                 doctype: 'User',
+//                 fields: ['full_name'],
+//                 filters: [
+//                     ['User', 'enabled', '=', 1],
+//                     ['Has Role', 'role', '=', 'Maintenance User']
+//                 ],
+//                 limit_page_length: 0,
+//             },
+//             callback: function (response) {
+//                 let options = response.message.map(user => user.full_name).filter(Boolean);
+
+//                 const dialog = new frappe.ui.Dialog({
+//                     title: __('Select Users'),
+//                     fields: [
+//                         {
+//                             label: __("Select Users"),
+//                             fieldtype: "MultiSelectList",
+//                             fieldname: "users",
+//                             placeholder: "Add User",
+//                             options: options,
+//                             reqd: 1,
+//                             get_data: function () {
+//                                 return response.message.map(user => ({
+//                                     value: user.full_name,
+//                                     description: ""
+//                                 }));
+//                             }
+//                         }
+//                     ],
+//                     primary_action_label: __('Submit'),
+//                     primary_action: function (values) {
+//                         let newAssignees = values['users'] || [];
+//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+//                         if (duplicates.length > 0) {
+//                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
+//                         } else {
+//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+//                             frm.set_value("assigned_to", selectedAssignees.join(', '));
+//                             frm.refresh_field('assigned_to');
+//                         }
+
+//                         dialog.hide();
+//                         $('body').removeClass('modal-open'); 
+//                     }
+//                 });
+
+//                 dialog.show();
+//                 const multiselect = dialog.$wrapper.find('.form-control');
+//                 multiselect.css({
+//                     "max-height": "10vh",
+//                     "overflow-y": "auto"
+//                 });
+//             }
+//         });
+//     }
+// });
+
+// frappe.ui.form.on('Task Detail', {
+//     add_assignee: function (frm) {
+//         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
+
+//         frappe.call({
+//             method: 'frappe.client.get_list',
+//             args: {
+//                 doctype: 'User',
+//                 fields: ['full_name'],
+//                 filters: [
+//                     ['User', 'enabled', '=', 1],
+//                     ['Has Role', 'role', '=', 'Maintenance User']
+//                 ],
+//                 limit_page_length: 0,
+//             },
+//             callback: function (response) {
+//                 let options = response.message.map(user => user.full_name).filter(Boolean);
+
+//                 const dialog = new frappe.ui.Dialog({
+//                     title: __('Select Users'),
+//                     fields: [
+//                         {
+//                             label: __("Select Users"),
+//                             fieldtype: "MultiSelectList",
+//                             fieldname: "users",
+//                             placeholder:"Add User",
+//                             options: options,
+//                             reqd: 1,
+//                             get_data: function () {
+//                                 return response.message.map(user => ({
+//                                     value: user.full_name,
+//                                     description: ""
+//                                 }));
+//                             }
+//                         }
+//                     ],
+//                     primary_action_label: __('Submit'),
+//                     primary_action: function (values) {
+//                         let newAssignees = values['users'] || [];
+//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+//                         if (duplicates.length > 0) {
+//                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
+//                         } else {
+//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+//                             frm.set_value("assigned_to", selectedAssignees.join(', '));
+//                             frm.refresh_field('assigned_to');
+//                         }
+
+//                         dialog.hide();
+//                         $('body').removeClass('modal-open'); 
+//                     }
+//                 });
+
+//                 dialog.show();
+
+//                 $('body').addClass('modal-open'); 
+
+//                 dialog.$wrapper.find('.modal-body').css({
+//                     "overflow-y": "auto",
+//                     "height": "50vh"
+//                 });
+//             }
+//         });
+//     }
+// });
+
 
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {
@@ -451,7 +593,7 @@ frappe.ui.form.on('Task Detail', {
                             label: __("Select Users"),
                             fieldtype: "MultiSelectList",
                             fieldname: "users",
-                            placeholder:"Add User",
+                            placeholder: "Add User",
                             options: options,
                             reqd: 1,
                             get_data: function () {
@@ -476,20 +618,23 @@ frappe.ui.form.on('Task Detail', {
                         }
 
                         dialog.hide();
-                        $('body').removeClass('modal-open'); 
+                        $('body').removeClass('modal-open');
                     }
                 });
 
                 dialog.show();
 
-                $('body').addClass('modal-open'); 
+                $('body').addClass('modal-open');
 
-               
-                let dynamicHeight = Math.min(userCount * 50, 400); 
+                let dynamicHeight = userCount * 100;
+                if (userCount > 10) {
+                    dynamicHeight = 500; 
+                }
 
                 dialog.$wrapper.find('.modal-body').css({
                     "overflow-y": "auto",
-                    "height": dynamicHeight + "%"
+                    "height": dynamicHeight + "px", 
+                    "max-height": "90vh"  
                 });
             }
         });

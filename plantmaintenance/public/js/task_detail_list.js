@@ -184,13 +184,16 @@
 
                                 dialog.show();
 
-                // Dynamically set the modal height based on the number of users
-                let dynamicHeight = Math.min(userCount * 50, 400); // 50px per user, up to a max of 400px
-
-                dialog.$wrapper.find('.modal-body').css({
-                    "overflow-y": "auto",
-                    "height": dynamicHeight + "%"
-                });
+                                let dynamicHeight = userCount * 100;
+                                if (userCount > 10) {
+                                    dynamicHeight = 500; 
+                                }
+                
+                                dialog.$wrapper.find('.modal-body').css({
+                                    "overflow-y": "auto",
+                                    "height": dynamicHeight + "px", 
+                                    "max-height": "90vh"  
+                                });
                             }
                         });
 
