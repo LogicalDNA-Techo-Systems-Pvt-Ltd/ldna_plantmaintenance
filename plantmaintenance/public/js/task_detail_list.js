@@ -183,10 +183,10 @@
 
                                 dialog.show();
                                 $('body').addClass('modal-open');
-
-                                dialog.$wrapper.find('.modal-body').css({
-                                    "overflow-y": "auto",
-                                    "height": "16vh"
+                                const multiselect = dialog.$wrapper.find('.form-control');
+                                multiselect.css({
+                                    "max-height": "10vh",
+                                    "overflow-y": "auto"
                                 });
                             }
                         });

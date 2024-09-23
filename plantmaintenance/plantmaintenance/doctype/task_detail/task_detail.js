@@ -434,7 +434,6 @@ function disable_workflow_actions(frm) {
     }
 }
 
-
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {
         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
@@ -460,7 +459,7 @@ frappe.ui.form.on('Task Detail', {
                             label: __("Select Users"),
                             fieldtype: "MultiSelectList",
                             fieldname: "users",
-                            placeholder:"Add User",
+                            placeholder: "Add User",
                             options: options,
                             reqd: 1,
                             get_data: function () {
@@ -490,54 +489,12 @@ frappe.ui.form.on('Task Detail', {
                 });
 
                 dialog.show();
-
-                $('body').addClass('modal-open'); 
-
-                dialog.$wrapper.find('.modal-body').css({
-                    "overflow-y": "auto",
-                    "height": "16vh"
+                const multiselect = dialog.$wrapper.find('.form-control');
+                multiselect.css({
+                    "max-height": "10vh",
+                    "overflow-y": "auto"
                 });
             }
         });
     }
 });
-
-
-
-
-// frappe.breadcrumbs.update = function() {
-//     frappe.call({
-//         method: 'frappe.client.get',
-//         args: {
-//             doctype: 'User',
-//             name: frappe.session.user
-//         },
-//         callback: function(r) {
-//             if (r.message) {
-//                 let roles = r.message.roles.map(role => role.role);
-                
-//                 if (roles.includes('Manager')) {
-//                     frappe.breadcrumbs.clear();
-//                     frappe.breadcrumbs.add('Manager', '/app/manager');
-//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
-//                 }
-//                 else if (roles.includes('System User')) {
-//                     frappe.breadcrumbs.clear();
-//                     frappe.breadcrumbs.add('System User', '/app/system-user');
-//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
-//                 }
-//                 else if  (roles.includes('Maintenance Manager')) {
-//                     frappe.breadcrumbs.clear();
-//                     frappe.breadcrumbs.add('Maintenance Manager', '/app/Maintenance Manager');
-//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
-//                 }
-//                 else {
-//                     frappe.breadcrumbs.clear();
-//                     frappe.breadcrumbs.add('Other Role', '/app/other-role');
-//                     frappe.breadcrumbs.add('Task Detail', '/app/task-detail');
-//                 }
-//             }
-//         }
-//     });
-// };
-
