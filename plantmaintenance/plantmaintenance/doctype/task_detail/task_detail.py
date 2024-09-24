@@ -297,8 +297,9 @@ def send_allocation_email(task_detail, assigned_users):
             
    
     for email in emails:
-        contents = "Task has been allocated to you !"
-        send_onesignal_notification(email,contents)
+        contents = 'Task has been allocated to you !'
+        url = get_url_to_form('Task Detail', task_detail.name)
+        send_onesignal_notification(email,contents,url)
         message = message_template.format(url=url)
         frappe.sendmail(
             recipients=email,
@@ -312,5 +313,6 @@ def send_allocation_email(task_detail, assigned_users):
 def task_for_approval(task_detail):
     if task_detail.status == "Pending Approval":
         email = frappe.get_value("User", task_detail.approver, "email")
-        contents = "Task sent for approval !"
-        send_onesignal_notification(email,contents)
+        url = get_url_to_form('Task Detail', task_detail.name)
+        contents ="Task sent for approval !"
+        send_onesignal_notification(email, contents, url)

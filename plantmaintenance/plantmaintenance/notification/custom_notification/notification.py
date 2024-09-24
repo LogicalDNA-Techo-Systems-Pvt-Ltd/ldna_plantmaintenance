@@ -4,13 +4,15 @@ import json
 
 
 @frappe.whitelist()
-def send_onesignal_notification(email,contents):
+def send_onesignal_notification(email,contents,urlm):
     url = "https://api.onesignal.com/notifications?c=push"
+    formatted_contents = f"{contents} Click here to view: {urlm}"
+
 
     payload = {
-        "app_id": "53a209a0-ad8d-4072-ad67-e1c1919ca14f",
+        "app_id": "9b2f794c-30a2-4cde-8cde-595677f346b5",
          "contents": {
-            "en": contents 
+            "en": formatted_contents
     },
    
     "include_external_user_ids": [email],
@@ -20,7 +22,7 @@ def send_onesignal_notification(email,contents):
     headers = {
         "accept": "application/json",
         "content-type": "application/json",
-        "Authorization": "Basic ZmFiYjJlZjgtOGRiZS00MWUzLWE1ZDktYjMxOWVlZGQ3OTNm"
+        "Authorization": "Basic N2I3MmJhYzYtZDZmNi00ZTEwLWExYWMtZDY4MGU1YTkwYTNh"
     }
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
@@ -31,4 +33,4 @@ def send_onesignal_notification(email,contents):
     else:
         frappe.throw("Failed to send notification.")
         
-
+   
