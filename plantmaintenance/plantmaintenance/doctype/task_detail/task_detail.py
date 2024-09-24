@@ -10,6 +10,7 @@ from frappe import _
 from frappe.utils.background_jobs import enqueue 
 import time
 from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification
+# from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification_for_approval
 from frappe.utils import get_url_to_form
 
 class TaskDetail(Document):
@@ -37,6 +38,7 @@ class TaskDetail(Document):
                 self.result = 'Pass'
         
         if self.status == "Pending Approval":
+            task_for_approval(self)
             self.send_for_approval_date = nowdate()
         elif self.status == "Approved":
             self.approved_date = nowdate()
@@ -295,7 +297,9 @@ def send_allocation_email(task_detail, assigned_users):
             
    
     for email in emails:
-        send_onesignal_notification(email)
+        contents = 'Task has been allocated to you !'
+        url = get_url_to_form('Task Detail', task_detail.name)
+        send_onesignal_notification(email,contents,url)
         message = message_template.format(url=url)
         frappe.sendmail(
             recipients=email,
@@ -303,3 +307,12 @@ def send_allocation_email(task_detail, assigned_users):
             message=message,
             now=True
         )
+        
+# Push Notification for approval will be sent from here
+
+def task_for_approval(task_detail):
+    if task_detail.status == "Pending Approval":
+        email = frappe.get_value("User", task_detail.approver, "email")
+        url = get_url_to_form('Task Detail', task_detail.name)
+        contents ="Task sent for approval !"
+        send_onesignal_notification(email, contents, url)
