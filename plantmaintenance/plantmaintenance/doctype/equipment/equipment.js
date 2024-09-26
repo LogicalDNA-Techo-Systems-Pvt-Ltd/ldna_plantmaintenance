@@ -111,14 +111,6 @@ frappe.ui.form.on('Equipment', {
             frm.set_value('work_center','')
         }
     },
-    name: function(frm){
-        if (!frm.doc.name1) {
-            frm.set_value('location', '');
-            frm.set_value('functional_location', '');
-            frm.set_value('section', '');
-            frm.set_value('work_center', '');
-        }
-    }, 
     onload: function(frm) { 
 
         frm.get_field('equipment_task_details').grid.cannot_add_rows = true;

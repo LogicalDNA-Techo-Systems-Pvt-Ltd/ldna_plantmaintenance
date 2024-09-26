@@ -148,7 +148,7 @@
    "fieldname": "functional_location",
    "fieldtype": "Link",
    "label": "Functional Location",
-   "mandatory_depends_on": "eval:doc.name1",
+   "mandatory_depends_on": "eval:doc.plant",
    "options": "Functional Location"
   },
   {
@@ -156,7 +156,7 @@
    "fieldname": "work_center",
    "fieldtype": "Link",
    "label": "Work center",
-   "mandatory_depends_on": "eval:doc.name1",
+   "mandatory_depends_on": "eval:doc.plant",
    "options": "Work Center"
   },
   {
@@ -168,7 +168,7 @@
    "fieldname": "location",
    "fieldtype": "Link",
    "label": "Location",
-   "mandatory_depends_on": "eval:doc.name1",
+   "mandatory_depends_on": "eval:doc.plant",
    "options": "Location"
   },
   {
@@ -176,7 +176,7 @@
    "fieldname": "section",
    "fieldtype": "Link",
    "label": "Section",
-   "mandatory_depends_on": "eval:doc.name1",
+   "mandatory_depends_on": "eval:doc.plant",
    "options": "Section"
   },
   {
@@ -254,7 +254,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-26 16:00:09.980292",
+ "modified": "2024-09-24 10:42:42.437779",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
