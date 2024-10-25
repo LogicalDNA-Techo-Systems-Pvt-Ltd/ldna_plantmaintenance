@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{material_name}",
+ "creation": "2024-05-30 12:38:30.693809",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "material_code",
+  "material_name",
+  "column_break_olpv",
+  "available_quantity",
+  "required_quantity",
+  "shortage"
+ ],
+ "fields": [
+  {
+   "fetch_from": "material_code.material_name",
+   "fieldname": "material_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Material Name"
+  },
+  {
+   "fieldname": "material_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Material Code",
+   "options": "Material"
+  },
+  {
+   "fieldname": "column_break_olpv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "available_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Available Quantity"
+  },
+  {
+   "fieldname": "required_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Required Quantity"
+  },
+  {
+   "fieldname": "shortage",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Shortage"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-19 10:21:44.535743",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Material Issue CT",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

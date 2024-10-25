@@ -1,0 +1,150 @@
+{
+ "charts": [
+  {
+   "chart_name": "Task Breakdown",
+   "label": "Task Breakdown"
+  }
+ ],
+ "content": "[{\"id\":\"MxGxLWPLrl\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Manager</span>\",\"col\":12}},{\"id\":\"nJZrIyLv73\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Task Breakdown\",\"col\":12}},{\"id\":\"uRVjVUQv0G\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Task\",\"col\":3}},{\"id\":\"olgjvSH9yF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Open Task\",\"col\":3}},{\"id\":\"gCan81xZc9\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Approved Tasks\",\"col\":3}},{\"id\":\"rnCL_KtCEW\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending for Approval\",\"col\":3}},{\"id\":\"-hSljPXEqH\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Completed Task\",\"col\":3}},{\"id\":\"qtT9hSVw1B\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Pending For Completion\",\"col\":3}},{\"id\":\"RbdYNKUTHL\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"UnAssigned Task\",\"col\":3}},{\"id\":\"wPqA1Y3VBE\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Assigned Task\",\"col\":3}},{\"id\":\"rDhIOoskfH\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Rejected Task\",\"col\":3}},{\"id\":\"zzWBs9eiyd\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Overdue Tasks\",\"col\":3}},{\"id\":\"g5FfVR30Eh\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Pending\",\"col\":3}},{\"id\":\"3YCTyirqjn\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Material Issued\",\"col\":3}},{\"id\":\"rOOXUn1QVQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Transactions\",\"col\":3}},{\"id\":\"_3wyWPHous\",\"type\":\"card\",\"data\":{\"card_name\":\"Report\",\"col\":3}},{\"id\":\"eoANhQE2Ps\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create Task Detail\",\"col\":3}}]",
+ "creation": "2024-08-12 23:09:08.206050",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "assign",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Manager",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Transactions",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Allocation",
+   "link_count": 0,
+   "link_to": "Allocation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Detail",
+   "link_count": 0,
+   "link_to": "Task Detail",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Report",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Task Detail",
+   "link_count": 0,
+   "link_to": "Task Detail",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-08-19 16:21:59.771742",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Manager",
+ "number_cards": [
+  {
+   "label": "Completed Task",
+   "number_card_name": "Completed Task-1"
+  },
+  {
+   "label": "Total Task",
+   "number_card_name": "Total Task"
+  },
+  {
+   "label": "Material Pending",
+   "number_card_name": "Material Pending"
+  },
+  {
+   "label": "Material Issued",
+   "number_card_name": "Material Approved"
+  },
+  {
+   "label": "Pending For Completion",
+   "number_card_name": "Pending For Completion"
+  },
+  {
+   "label": "Open Task",
+   "number_card_name": "Open Task"
+  },
+  {
+   "label": "Approved Tasks",
+   "number_card_name": "Approved Tasks"
+  },
+  {
+   "label": "Pending for Approval",
+   "number_card_name": "Pending for Approval"
+  },
+  {
+   "label": "UnAssigned Task",
+   "number_card_name": "UnAssigned Task"
+  },
+  {
+   "label": "Assigned Task",
+   "number_card_name": "Assigned Task"
+  },
+  {
+   "label": "Rejected Task",
+   "number_card_name": "Rejected Task"
+  },
+  {
+   "label": "Overdue Tasks",
+   "number_card_name": "Overdue Tasks"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Administrator"
+  },
+  {
+   "role": "Maintenance Manager"
+  },
+  {
+   "role": "Process Manager"
+  }
+ ],
+ "sequence_id": 30.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Create Task Detail",
+   "type": "URL",
+   "url": "http:task-detail/new-task-detail"
+  }
+ ],
+ "title": "Manager"
+}

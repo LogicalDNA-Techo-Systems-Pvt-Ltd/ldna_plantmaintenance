@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneSignal Subscription</title>
+
+   
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+
+    <style>
+        .button {
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="home-top" class="clearfix">
+        <br>
+     
+        <div id="subscribe_and_unsubscribe">
+            <button id="subscribe" class="button" style="display:none;">Subscribe</button>
+            <button id="unsubscribe" class="button" style="display:none;">Unsubscribe</button>
+        </div>
+    </div>
+
+    <script>
+
+        var OneSignal = window.OneSignal || [];
+
+        OneSignal.push(["init", {
+            appId: "53a209a0-ad8d-4072-ad67-e1c1919ca14f",
+            autoRegister: false,
+            notifyButton: {
+                enable: false
+            },
+            allowLocalhostAsSecureOrigin: false,
+            persistNotification: false,
+        }]);
+
+        function getUserId() {
+            return typeof frappe !== 'undefined' ? frappe.session.user : null;
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-10 10:53:21.021621",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "material_code",
+  "material_name",
+  "issue_quantity",
+  "return_quantity",
+  "column_break_qurg",
+  "approval_date",
+  "issued_date",
+  "scrap",
+  "reusable"
+ ],
+ "fields": [
+  {
+   "fieldname": "issue_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Issue Quantity"
+  },
+  {
+   "fieldname": "return_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Return Quantity"
+  },
+  {
+   "fieldname": "column_break_qurg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "material_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Material Code",
+   "options": "Material"
+  },
+  {
+   "fetch_from": "material_code.material_name",
+   "fieldname": "material_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Material Name",
+   "options": "Material"
+  },
+  {
+   "fieldname": "approval_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Approval Date"
+  },
+  {
+   "fieldname": "issued_date",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Issued Date"
+  },
+  {
+   "fieldname": "scrap",
+   "fieldtype": "Int",
+   "label": "Scrap"
+  },
+  {
+   "fieldname": "reusable",
+   "fieldtype": "Int",
+   "label": "Reusable"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-08-08 12:10:23.063592",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Material Returned CT",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

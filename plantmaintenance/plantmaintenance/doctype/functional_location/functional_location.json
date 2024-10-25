@@ -1,0 +1,57 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:functional_location",
+ "creation": "2024-07-01 12:37:17.994637",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "functional_location",
+  "functional_location_name",
+  "section_ct"
+ ],
+ "fields": [
+  {
+   "fieldname": "functional_location",
+   "fieldtype": "Data",
+   "label": "Functional Location",
+   "unique": 1
+  },
+  {
+   "fieldname": "section_ct",
+   "fieldtype": "Table",
+   "options": "Section CT"
+  },
+  {
+   "fieldname": "functional_location_name",
+   "fieldtype": "Data",
+   "label": "Functional Location Name"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-23 11:09:27.908930",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Functional Location",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

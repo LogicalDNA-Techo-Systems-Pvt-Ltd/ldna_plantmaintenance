@@ -1,0 +1,81 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-06-26 11:57:32.718390",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "start_date",
+  "column_break_rytb",
+  "end_date",
+  "column_break_qtgr",
+  "section_break_tqya",
+  "back_days_entry",
+  "column_break_puqw",
+  "subscribe_and_unsubscribe"
+ ],
+ "fields": [
+  {
+   "description": "Tasks are loaded into the task allocation starting from this date.",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "column_break_rytb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Tasks are loaded into the task allocation up to this date.",
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "column_break_qtgr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Allows users to enter data for past dates.",
+   "fieldname": "back_days_entry",
+   "fieldtype": "Int",
+   "label": "Allowance Period"
+  },
+  {
+   "fieldname": "section_break_tqya",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_puqw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subscribe_and_unsubscribe",
+   "fieldtype": "HTML",
+   "label": "Subscribe And UnSubscribe"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-09-05 12:08:18.706140",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
