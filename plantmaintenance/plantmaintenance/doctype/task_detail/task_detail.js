@@ -10,6 +10,12 @@ let fields = [
     'damage', 'cause', 'remark', 'breakdown_reason',
     'service_call', 'material_issued', 'material_returned', 'attachment'
 ];
+let editableFields = [
+    'damage', 'cause', 'actual_value', 'work_permit_number', 'parameter_dropdown', 'reading_1', 'reading_2',
+    'reading_3', 'reading_4', 'reading_5', 'reading_6',
+    'reading_7', 'reading_8', 'reading_9', 'reading_10'
+];
+
 
 frappe.ui.form.on('Task Detail', {
     refresh: function (frm) {
@@ -40,6 +46,20 @@ frappe.ui.form.on('Task Detail', {
                 frm.fields_dict[fieldname].df.read_only = 1;
                 frm.refresh_field(fieldname);
             });
+        }
+        else if (frm.doc.workflow_state === "Work in Progress") {
+            fields.forEach(fieldname => {
+                frm.fields_dict[fieldname].df.read_only = 1;
+                frm.refresh_field(fieldname);
+            });
+            
+            editableFields.forEach(fieldname => {
+                frm.fields_dict[fieldname].df.read_only = 0;
+                frm.refresh_field(fieldname);
+                
+            });
+            frm.set_df_property('material_issued', 'read_only', 0);
+            frm.set_df_property('material_returned', 'read_only', 0);
         }
         toggle_add_assignee_button(frm);
         
@@ -187,6 +207,10 @@ frappe.ui.form.on('Task Detail', {
 
         set_existing_rows_read_only(frm);
         frm.trigger('toggle_send_for_approval_date');
+        disable_link_click(frm, ['parameter']);
+        disable_link_click(frm, ['work_center']);
+        disable_link_click(frm, ['equipment_code']);
+        disable_link_click(frm, ['approver']);
 
     },
     after_workflow_action: function (frm) {
@@ -335,6 +359,13 @@ frappe.ui.form.on('Material Issue', {
         set_new_row_editable(frm, cdt, cdn);
     }
 });
+
+function disable_link_click(frm, fields_to_disable) {
+    fields_to_disable.forEach(fieldname => {
+        let link_field = frm.fields_dict[fieldname].$input_wrapper.find('a');
+        link_field.css('pointer-events', 'none');  
+    });
+}
 
 function calculate_shortage(frm, cdt, cdn) {
     let row = locals[cdt][cdn];
