@@ -3,11 +3,9 @@ import frappe
 def task_detail_permission(user):
     user = frappe.session.user
     print(user)
-
-    user_doc = frappe.get_doc("User", user)
     
+    user_doc = frappe.get_doc("User", user)
     user_full_name = user_doc.full_name
-
     user_roles = [role.role for role in user_doc.roles]
 
     if frappe.db.exists("User Work Center", user):
@@ -16,7 +14,10 @@ def task_detail_permission(user):
     else:
         user_work_centers = []
 
-    if 'Maintenance Manager' in user_roles:
+    if user == 'Administrator':
+        return "1=1"
+
+    elif 'Maintenance Manager' in user_roles:
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
             return """
@@ -27,6 +28,7 @@ def task_detail_permission(user):
             """.format(user=user, work_centers_condition=work_centers_condition)
         else:
             return "1=0"   
+
     elif 'Maintenance User' in user_roles:
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
@@ -59,6 +61,7 @@ def task_detail_permission(user):
             """.format(work_centers_condition=work_centers_condition)
         else:
             return "1=0"   
+
     elif 'Process Manager' in user_roles:
         if user_work_centers:
             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
@@ -69,9 +72,9 @@ def task_detail_permission(user):
             )
             """.format(work_centers_condition=work_centers_condition)
         else:
-            return "1=0"   
-
-        
+            return "1=0"
 
             
+
+                
 
