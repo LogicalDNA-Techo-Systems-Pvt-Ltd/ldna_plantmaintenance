@@ -13,6 +13,8 @@ let fields = [
 
 frappe.ui.form.on('Task Detail', {
     refresh: function (frm) {
+
+        
         frappe.db.get_single_value('Settings', 'back_days_entry').then(back_days_entry => {
             if (back_days_entry) {
                 let start_date = frm.doc.plan_start_date;
@@ -39,7 +41,8 @@ frappe.ui.form.on('Task Detail', {
                 frm.refresh_field(fieldname);
             });
         }
-
+        toggle_add_assignee_button(frm);
+        
         let selectedRows = [];
 
         frm.fields_dict['material_issued'].grid.wrapper.on('click', '.grid-row', function (e) {
@@ -230,9 +233,10 @@ frappe.ui.form.on('Task Detail', {
     },
 
     onload: function (frm) {
-        frm.trigger('readings');
 
-        // Fetch parameter details if parameter field is set
+        toggle_add_assignee_button(frm);
+
+        frm.trigger('readings');
         if (frm.doc.parameter) {
             fetch_parameter_details(frm);
         };
@@ -248,6 +252,10 @@ frappe.ui.form.on('Task Detail', {
         if (frm.doc.type === 'Breakdown') {
             frm.set_value('parameter_type', '');
         }
+    },
+
+    assigned_to: function(frm) {
+        toggle_add_assignee_button(frm);
     },
 
     validate: function (frm) {
@@ -409,22 +417,30 @@ function set_new_row_editable(frm, cdt, cdn) {
     frm.fields_dict['material_issued'].grid.toggle_enable('material_code', true, row.name);
 }
 
-function toggle_result_field(frm) {
-    if (frm.doc.attachment && frm.doc.attachment.length > 0) {
-        frm.set_df_property('result', 'hidden', 0);
-    } else {
-        frm.set_df_property('result', 'hidden', 1);
-    }
+function toggle_add_assignee_button(frm) {
+    const user = frappe.session.user;
+
+    
+    frappe.call({
+        method: 'plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_user_roles',  
+        args: {
+            user: user
+        },
+        callback: function(response) {
+            const user_roles = response.message || [];
+            const isMaintenanceManager = user_roles.includes('Maintenance Manager');
+
+          
+            if (isMaintenanceManager) {
+                frm.set_df_property('add_assignee', 'hidden', 0); 
+            } else {
+                frm.set_df_property('add_assignee', 'hidden', 1); 
+            }
+        }
+    });
 }
 
-// function toggle_add_assignee_button(frm) {
-  
-//     if (!frm.doc.assigned_to) {
-//         frm.set_df_property('add_assignee', 'hidden', 0);
-//     } else {
-//         frm.set_df_property('add_assignee', 'hidden', 1);
-//     }
-// }
+
 
 function disable_workflow_actions(frm) {
     if (frm.page) {
