@@ -372,7 +372,7 @@ frappe.ui.form.on('Task Allocation Details', {
 
                 let dynamicHeight = userCount * 100;
                 if (userCount > 10) {
-                    dynamicHeight = 500; 
+                    dynamicHeight = 300; 
                 }
                 dialog.$wrapper.find('.modal-body').css({
                     "overflow-y": "auto",
