@@ -316,3 +316,9 @@ def task_for_approval(task_detail):
         url = get_url_to_form('Task Detail', task_detail.name)
         contents ="Task sent for approval !"
         send_onesignal_notification(email, contents, url)
+
+
+@frappe.whitelist()
+def get_user_roles(user):
+    user_doc = frappe.get_doc("User", user)
+    return [role.role for role in user_doc.roles]
