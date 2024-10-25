@@ -330,6 +330,7 @@ frappe.ui.form.on('Task Allocation Details', {
             },
             callback: function(response) {
                 let options = response.message.map(user => user.full_name).filter(Boolean);
+                const userCount = options.length;
 
                 const dialog = new frappe.ui.Dialog({
                     title: __('Select Users'),
@@ -369,11 +370,16 @@ frappe.ui.form.on('Task Allocation Details', {
 
                 $('body').addClass('modal-open');
 
-
+                let dynamicHeight = userCount * 100;
+                if (userCount > 10) {
+                    dynamicHeight = 500; 
+                }
                 dialog.$wrapper.find('.modal-body').css({
                     "overflow-y": "auto",
-                    "height": "15vh"
+                    "height": dynamicHeight + "px", 
+                    "max-height": "90vh"  
                 });
+
                 function updateAssignees() {
                     let userList = selectedAssignees.join(', ');
                     frappe.model.set_value(child.doctype, child.name, "assign_to", userList);
