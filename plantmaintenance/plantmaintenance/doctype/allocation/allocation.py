@@ -164,25 +164,37 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
 
                     tasks.append(task)
 
-                    if not frappe.db.exists('Task Detail', {'unique_key': unique_key[:10]}):
-                        task_detail = frappe.new_doc("Task Detail")
-                        task_detail.update({
-                            "approver": frappe.session.user,
-                            "equipment_code": task['equipment_code'],
-                            "equipment_name": task['equipment_name'],
-                            "activity_group": task['activity_group'],
-                            "work_center": work_center,
-                            "plant_section": plant_section,
-                            "plan_start_date": task['date'],
-                            "activity": task['activity'],
-                            "parameter": task['parameter'],
-                            "frequency": task['frequency'],
-                            "day": task['day'],
-                            "date": task['date'],
-                            "unique_key": task['unique_key'],
-                            "parameter_type": parameter_type
-                        })
-                        task_detail.insert(ignore_permissions=True)
+                    task_exists = frappe.db.exists(
+                        'Task Detail',
+                        {
+                            'equipment_code': task['equipment_code'],
+                            'activity': task['activity'],
+                            'parameter': task['parameter'],
+                            'frequency': task['frequency'],
+                            'plan_start_date': task['date']
+                        }
+                    )
+
+                    if not task_exists:
+                        if not frappe.db.exists('Task Detail', {'unique_key': unique_key[:10]}):
+                            task_detail = frappe.new_doc("Task Detail")
+                            task_detail.update({
+                                "approver": frappe.session.user,
+                                "equipment_code": task['equipment_code'],
+                                "equipment_name": task['equipment_name'],
+                                "activity_group": task['activity_group'],
+                                "work_center": work_center,
+                                "plant_section": plant_section,
+                                "plan_start_date": task['date'],
+                                "activity": task['activity'],
+                                "parameter": task['parameter'],
+                                "frequency": task['frequency'],
+                                "day": task['day'],
+                                "date": task['date'],
+                                "unique_key": task['unique_key'],
+                                "parameter_type": parameter_type
+                            })
+                            task_detail.insert(ignore_permissions=True)
 
     if not tasks:
         return frappe.msgprint("No tasks found for the provided filters.")
