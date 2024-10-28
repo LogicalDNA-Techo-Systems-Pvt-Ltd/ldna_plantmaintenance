@@ -25,11 +25,10 @@
   "plant_tab",
   "plant_details_section",
   "plant",
-  "functional_location",
-  "work_center",
+  "section",
   "column_break_zbco",
   "location",
-  "section",
+  "work_center",
   "damage_and_causes_tab",
   "damage",
   "column_break_ikhp",
@@ -144,14 +143,6 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.plant",
-   "fieldname": "functional_location",
-   "fieldtype": "Link",
-   "label": "Functional Location",
-   "mandatory_depends_on": "eval:doc.plant",
-   "options": "Functional Location"
-  },
-  {
    "depends_on": "eval: doc.plant",
    "fieldname": "work_center",
    "fieldtype": "Link",
@@ -254,7 +245,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-24 10:42:42.437779",
+ "modified": "2024-10-25 14:53:12.738158",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",

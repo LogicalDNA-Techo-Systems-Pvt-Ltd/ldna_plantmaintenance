@@ -29,47 +29,17 @@ frappe.ui.form.on('Equipment', {
     },
     location: function(frm){
         if (frm.doc.location){
-            frm.set_value('functional_location', '');
             frm.set_value('section', '');
             frm.set_value('work_center', '');
             frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_functional_location_list_based_on_location',
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_location',
                 args: {
                     location: frm.doc.location,
                 },
                 callback: function(response){
                     if (response.message){
                         console.log(response.message)
-                        var FunctionalLocation = response.message
-                        frm.set_query('functional_location', () => {
-                            return {
-                                filters: {
-                                    functional_location: ['in', FunctionalLocation]
-                                }
-                            }
-                        })
-                    }
-                }
-            })
-        } else {
-            frm.set_value('functional_location', '');
-            frm.set_value('section', '');
-            frm.set_value('work_center', '');
-        }
-    },
-    functional_location: function(frm){
-        if (frm.doc.functional_location){
-            frm.set_value('section', '')
-            frm.set_value('work_center', '')
-            frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_func_location',
-                args: {
-                    func_loc: frm.doc.functional_location,
-                },
-                callback: function(response){
-                    if (response.message){
                         var Section = response.message
-                        console.log(Section)
                         frm.set_query('section', () => {
                             return {
                                 filters: {
@@ -81,8 +51,8 @@ frappe.ui.form.on('Equipment', {
                 }
             })
         } else {
-            frm.set_value('section', '')
-            frm.set_value('work_center', '')
+            frm.set_value('section', '');
+            frm.set_value('work_center', '');
         }
     },
     section: function(frm){
