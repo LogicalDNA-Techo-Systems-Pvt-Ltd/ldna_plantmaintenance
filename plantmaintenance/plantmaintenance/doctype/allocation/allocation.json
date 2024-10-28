@@ -6,12 +6,15 @@
  "engine": "InnoDB",
  "field_order": [
   "plant",
-  "functional_location",
-  "work_center",
-  "button_container",
+  "plant_section",
+  "equipment",
   "column_break_zymn",
   "location",
-  "plant_section",
+  "work_center",
+  "section_break_sotc",
+  "start_date",
+  "button_container",
+  "column_break_scjt",
   "end_date",
   "section_break_uxsx",
   "task_allocation_details"
@@ -23,12 +26,6 @@
    "in_list_view": 1,
    "label": "Plant",
    "options": "Plant"
-  },
-  {
-   "fieldname": "functional_location",
-   "fieldtype": "Link",
-   "label": "Functional Location",
-   "options": "Functional Location"
   },
   {
    "fieldname": "work_center",
@@ -72,12 +69,31 @@
    "hidden": 1,
    "label": "Task Allocation Details",
    "options": "Task Allocation Details"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "section_break_sotc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_scjt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "label": "Equipment",
+   "options": "Equipment"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-08-14 12:58:58.261064",
+ "modified": "2024-10-28 11:37:55.131479",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Allocation",

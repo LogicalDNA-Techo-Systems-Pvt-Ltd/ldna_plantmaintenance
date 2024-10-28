@@ -49,7 +49,6 @@ frappe.ui.form.on('Allocation', {
     plant: function (frm) {
         if (frm.doc.plant) {
             frm.set_value('location', '');
-            frm.set_value('functional_location', '');
             frm.set_value('plant_section', '');
             frm.set_value('work_center', '');
             frappe.call({
@@ -73,54 +72,25 @@ frappe.ui.form.on('Allocation', {
             });
         } else {
             frm.set_value('location', '');
-            frm.set_value('functional_location', '');
             frm.set_value('plant_section', '');
             frm.set_value('work_center', '');
+            frm.set_value('equipment', '');
         }
     },
     location: function (frm) {
         if (frm.doc.location) {
-            frm.set_value('functional_location', '');
             frm.set_value('plant_section', '');
             frm.set_value('work_center', '');
+            frm.set_value('equipment', '');
             frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_functional_location_list_based_on_location',
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_location',
                 args: {
                     location: frm.doc.location
                 },
                 callback: function (response) {
                     if (response.message) {
                         console.log(response.message);
-                        var FunctionalLocation = response.message;
-                        frm.set_query('functional_location', () => {
-                            return {
-                                filters: {
-                                    name: ['in', FunctionalLocation]
-                                }
-                            };
-                        });
-                    }
-                }
-            });
-        } else {
-            frm.set_value('functional_location', '');
-            frm.set_value('plant_section', '');
-            frm.set_value('work_center', '');
-        }
-    },
-    functional_location: function (frm) {
-        if (frm.doc.functional_location) {
-            frm.set_value('plant_section', '');
-            frm.set_value('work_center', '');
-            frappe.call({
-                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_section_based_on_func_location',
-                args: {
-                    func_loc: frm.doc.functional_location
-                },
-                callback: function (response) {
-                    if (response.message) {
                         var Section = response.message;
-                        console.log(Section);
                         frm.set_query('plant_section', () => {
                             return {
                                 filters: {
@@ -134,11 +104,13 @@ frappe.ui.form.on('Allocation', {
         } else {
             frm.set_value('plant_section', '');
             frm.set_value('work_center', '');
+            frm.set_value('equipment', '');
         }
     },
     plant_section: function (frm) {
         if (frm.doc.plant_section) {
             frm.set_value('work_center', '');
+            frm.set_value('equipment', '');
             frappe.call({
                 method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_work_center_based_on_section',
                 args: {
@@ -160,15 +132,43 @@ frappe.ui.form.on('Allocation', {
             });
         } else {
             frm.set_value('work_center', '');
+            frm.set_value('equipment', '');
         }
-    }
+    },
+    work_center: function (frm) {
+        if (frm.doc.work_center) {
+            frm.set_value('equipment', '');
+            
+            frappe.call({
+                method: 'plantmaintenance.plantmaintenance.doctype.equipment.equipment.get_equipment_based_on_work_center',
+                args: {
+                    work_center: frm.doc.work_center
+                },
+                callback: function (response) {
+                    if (response.message) {
+                        console.log(response.message);
+                        var equipmentList = response.message;
+                        frm.set_query('equipment', () => {
+                            return {
+                                filters: {
+                                    name: ['in', equipmentList]
+                                }
+                            };
+                        });
+                    }
+                }
+            });
+        } else {
+            frm.set_value('equipment', '');
+        }
+    }    
+    
 });
 
-
 function load_tasks(frm) {
-    if (!frm.doc.plant || !frm.doc.location || !frm.doc.functional_location || 
+    if (!frm.doc.plant || !frm.doc.location || 
         !frm.doc.plant_section || !frm.doc.work_center) {
-        frappe.msgprint(__('Please fill all the required fields (Plant, Location, Functional Location, Plant Section, Work Center) before loading tasks.'));
+        frappe.msgprint(__('Please fill all the required fields (Plant, Location, Plant Section, Work Center) before loading tasks.'));
         return;
     }
 
@@ -177,10 +177,11 @@ function load_tasks(frm) {
         args: {
             plant: frm.doc.plant,
             location: frm.doc.location,
-            functional_location: frm.doc.functional_location,
             plant_section: frm.doc.plant_section,
             work_center: frm.doc.work_center,
-            end_date: frm.doc.end_date
+            start_date: frm.doc.start_date,
+            end_date: frm.doc.end_date,
+            equipment: frm.doc.equipment || null
         },
         callback: function (response) {
             if (response.message) {
@@ -210,6 +211,7 @@ function load_tasks(frm) {
         }
     });
 }
+
 
 function download_tasks_excel(tasks) {
     frappe.call({

@@ -26,20 +26,20 @@ def get_location_list_based_on_plant(plant):
         return plant_location
     return []
 
-@frappe.whitelist()
-def get_functional_location_list_based_on_location(location):
-    if location:
-        functional_location_list = frappe.get_all("Functional Location CT", filters={"parent": location}, fields=["functional_location"])
+# @frappe.whitelist()
+# def get_functional_location_list_based_on_location(location):
+#     if location:
+#         functional_location_list = frappe.get_all("Functional Location CT", filters={"parent": location}, fields=["functional_location"])
         
-        functional_location =  [func_loc['functional_location'] for func_loc in functional_location_list]
+#         functional_location =  [func_loc['functional_location'] for func_loc in functional_location_list]
 
-        return functional_location
-    return []
+#         return functional_location
+#     return []
 
 @frappe.whitelist()
-def get_section_based_on_func_location(func_loc):
-    if func_loc:
-        section_list = frappe.get_all("Section CT", filters={"parent": func_loc}, fields=["section"])
+def get_section_based_on_location(location):
+    if location:
+        section_list = frappe.get_all("Section CT", filters={"parent": location}, fields=["section"])
         
         section =  [sec['section'] for sec in section_list]
        
@@ -56,6 +56,15 @@ def get_work_center_based_on_section(section):
 
         return work_center
     return []
+
+@frappe.whitelist()
+def get_equipment_based_on_work_center(work_center):
+    equipment_list = frappe.get_all('Equipment', 
+        filters={'work_center': work_center}, 
+        fields=['name']
+    )
+    return [eq.name for eq in equipment_list]
+
 
 
 
