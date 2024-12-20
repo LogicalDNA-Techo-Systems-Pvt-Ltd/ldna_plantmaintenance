@@ -110,6 +110,26 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             dates.append(current_date)
                             current_date += timedelta(weeks=1)
 
+                elif frequency == 'By Weekly':  
+                    selected_days = []
+                    if parameter.monday: selected_days.append('Monday')
+                    if parameter.tuesday: selected_days.append('Tuesday')
+                    if parameter.wednesday: selected_days.append('Wednesday')
+                    if parameter.thursday: selected_days.append('Thursday')
+                    if parameter.friday: selected_days.append('Friday')
+                    if parameter.saturday: selected_days.append('Saturday')
+                    if parameter.sunday: selected_days.append('Sunday')
+
+                    for day in selected_days:
+                        current_date = start_date
+                        while current_date.weekday() != list(calendar.day_name).index(day):
+                            current_date += timedelta(days=1)
+                        while current_date <= end_date:
+                            dates.append(current_date)
+                            current_date += timedelta(weeks=2)
+
+
+
                 elif frequency == 'Monthly':
                     day_of_month = parameter.day_of_month or 1
                     current_date = start_date
@@ -127,6 +147,42 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             dates.append(current_date)
 
                         current_date += relativedelta(months=1)
+
+                elif frequency == 'Quarterly':
+                    day_of_month = parameter.day_of_month or 1
+                    current_date = start_date
+
+                    if current_date.day > day_of_month:
+                        current_date = (current_date + relativedelta(months=1)).replace(day=1)
+                    
+                    while current_date <= end_date:
+                        if day_of_month <= calendar.monthrange(current_date.year, current_date.month)[1]:
+                            current_date = current_date.replace(day=day_of_month)
+                        else:
+                            current_date = current_date.replace(day=calendar.monthrange(current_date.year, current_date.month)[1])
+
+                        if current_date >= start_date and current_date <= end_date:
+                            dates.append(current_date)
+
+                        current_date += relativedelta(months=3)
+
+                elif frequency == 'Half-Yearly':
+                    day_of_month = parameter.day_of_month or 1
+                    current_date = start_date
+
+                    if current_date.day > day_of_month:
+                        current_date = (current_date + relativedelta(months=1)).replace(day=1)
+                    
+                    while current_date <= end_date:
+                        if day_of_month <= calendar.monthrange(current_date.year, current_date.month)[1]:
+                            current_date = current_date.replace(day=day_of_month)
+                        else:
+                            current_date = current_date.replace(day=calendar.monthrange(current_date.year, current_date.month)[1])
+
+                        if current_date >= start_date and current_date <= end_date:
+                            dates.append(current_date)
+
+                        current_date += relativedelta(months=6)
 
                 elif frequency == 'Yearly':
                     date_of_year = getdate(parameter.date_of_year)
@@ -185,6 +241,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                                 "activity_group": task['activity_group'],
                                 "work_center": work_center,
                                 "plant_section": plant_section,
+                                "location": location,
                                 "plan_start_date": task['date'],
                                 "activity": task['activity'],
                                 "parameter": task['parameter'],
