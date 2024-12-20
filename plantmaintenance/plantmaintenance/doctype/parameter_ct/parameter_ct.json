@@ -52,7 +52,7 @@
    "length": 50
   },
   {
-   "depends_on": "eval:doc.frequency==\"Monthly\"",
+   "depends_on": "eval:doc.frequency==\"Monthly\"||doc.frequency==\"Quarterly\"||doc.frequency==\"Half-Yearly\"",
    "fetch_from": "parameter.day_of_month",
    "fieldname": "day_of_month",
    "fieldtype": "Int",
@@ -60,7 +60,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.frequency==\"Weekly\" && doc.monday==1",
+   "depends_on": "eval:doc.frequency==\"Weekly\" && doc.monday==1||doc.frequency==\"By Weekly\" && doc.monday==1",
    "fetch_from": "parameter.monday",
    "fieldname": "monday",
    "fieldtype": "Check",
@@ -69,7 +69,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.tuesday==1 && doc.frequency==\"Weekly\"",
+   "depends_on": "eval:doc.tuesday==1 && doc.frequency==\"Weekly\" ||doc.frequency==\"By Weekly\" && doc.tuesday==1",
    "fetch_from": "parameter.tuesday",
    "fieldname": "tuesday",
    "fieldtype": "Check",
@@ -77,7 +77,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.wednesday==1 && doc.frequency==\"Weekly\"",
+   "depends_on": "eval:doc.wednesday==1 && doc.frequency==\"Weekly\" ||doc.frequency==\"By Weekly\" && doc.wednesday==1",
    "fetch_from": "parameter.wednesday",
    "fieldname": "wednesday",
    "fieldtype": "Check",
@@ -85,7 +85,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.thursday==1 && doc.frequency==\"Weekly\"",
+   "depends_on": "eval:doc.thursday==1 && doc.frequency==\"Weekly\"||doc.frequency==\"By Weekly\" && doc.thursday==1",
    "fetch_from": "parameter.thursday",
    "fieldname": "thursday",
    "fieldtype": "Check",
@@ -93,7 +93,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.friday==1 && doc.frequency==\"Weekly\"",
+   "depends_on": "eval:doc.friday==1 && doc.frequency==\"Weekly\" ||doc.frequency==\"By Weekly\" && doc.friday==1",
    "fetch_from": "parameter.friday",
    "fieldname": "friday",
    "fieldtype": "Check",
@@ -101,7 +101,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.saturnday==1 && doc.frequency==\"Weekly\"",
+   "depends_on": "eval:doc.saturnday==1 && doc.frequency==\"Weekly\"||doc.frequency==\"By Weekly\" && doc.saturday==1",
    "fetch_from": "parameter.saturday",
    "fieldname": "saturday",
    "fieldtype": "Check",
@@ -109,7 +109,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.sunday==1 && doc.frequency==\"Weekly\"",
+   "depends_on": "eval:doc.sunday==1 && doc.frequency==\"Weekly\" ||doc.frequency==\"By Weekly\" && doc.sunday==1",
    "fetch_from": "parameter.sunday",
    "fieldname": "sunday",
    "fieldtype": "Check",
@@ -128,7 +128,7 @@
    "fieldname": "frequency",
    "fieldtype": "Select",
    "label": "Frequency",
-   "options": "\nDaily\nWeekly\nMonthly\nYearly"
+   "options": "\nDaily\nWeekly\nBy Weekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly"
   },
   {
    "depends_on": "eval:doc.parameter != \"\" && doc.parameter_type != \"\"",
@@ -164,7 +164,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-04 10:03:44.535146",
+ "modified": "2024-12-18 14:35:37.044441",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter CT",

@@ -16,7 +16,6 @@
   "location",
   "work_center",
   "column_break_ukaq",
-  "functional_location",
   "equipment_section",
   "equipment_code",
   "equipment_name",
@@ -124,14 +123,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "functional_location",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "in_standard_filter": 1,
-   "label": "Functional Location",
-   "options": "Functional Location"
-  },
-  {
    "depends_on": "eval:doc.type!= \"General\"",
    "fieldname": "equipment_code",
    "fieldtype": "Link",
@@ -216,7 +207,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Frequency",
-   "options": "Daily\nWeekly\nMonthly\nYearly"
+   "options": "Daily\nWeekly\nBy Weekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly"
   },
   {
    "depends_on": "eval:doc.parameter_type===\"List\"",
@@ -512,7 +503,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-29 16:47:07.619383",
+ "modified": "2024-12-18 13:02:33.962242",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
