@@ -8,26 +8,28 @@ from frappe.model.document import Document
 
 class Activity(Document):
     def validate(self):
-        self.remove_duplicate_parameters()
+        pass
+    #     self.remove_duplicate_parameters()
 
-    def remove_duplicate_parameters(self):
-        unique_parameters = {}
-        duplicates = []
+    # def remove_duplicate_parameters(self):
+    #     unique_parameters = {}
+    #     duplicates = []
 
-        for param in self.get('parameter'):
-            key = param.parameter
-            if key in unique_parameters:
-                duplicates.append(param)
-            else:
-                unique_parameters[key] = param
+    #     for param in self.get('parameter'):
+    #         key = param.parameter
+    #         if key in unique_parameters:
+    #             duplicates.append(param)
+    #         else:
+    #             unique_parameters[key] = param
 
-        for duplicate in duplicates:
-            self.remove(duplicate)
+    #     for duplicate in duplicates:
+    #         self.remove(duplicate)
 
-    def remove(self, param):
-        self.get('parameter').remove(param)
+    # def remove(self, param):
+    #     self.get('parameter').remove(param)
 
 # If delete the parameter from activity, then delete all the task from task detail for that activity.
+
 
 @frappe.whitelist()
 def delete_task_depends_activity(doc,method):
