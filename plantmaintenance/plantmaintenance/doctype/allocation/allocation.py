@@ -18,12 +18,162 @@ class Allocation(Document):
 
 generated_unique_keys = set()
 
+# @frappe.whitelist()
+# def load_tasks(plant, location, plant_section, work_center, start_date=None, end_date=None, equipment=None):
+#     global generated_unique_keys
+
+#     today = getdate()
+#     if start_date and end_date and getdate(start_date) > getdate(end_date):
+#         frappe.throw("Start Date must be less than or equal to End Date.")
+
+#     if start_date and getdate(start_date) < today:
+#         frappe.throw("Start Date cannot be before today's date.")
+
+#     settings_doc = frappe.get_single('Settings')
+#     start_date = getdate(start_date) if start_date else max(today, getdate(settings_doc.start_date))
+#     end_date = getdate(end_date) if end_date else getdate(settings_doc.end_date)
+
+#     current_user = frappe.session.user
+#     user_work_center = frappe.get_value('User Work Center', {'user': current_user}, 'name')
+#     assigned_work_centers = frappe.get_all('Work Center CT', filters={'parent': user_work_center}, pluck='work_center')
+    
+#     if work_center not in assigned_work_centers or not assigned_work_centers or not user_work_center:
+#         return frappe.msgprint(f"You are not assigned to {work_center} work center")
+
+#     filters = {
+#         "plant": plant,
+#         "location": location,
+#         "section": plant_section,
+#         "work_center": work_center,
+#         "on_scrap": 0, 
+#         "activity_group_active": 1 
+#     }
+#     if equipment:
+#         filters["equipment_code"] = equipment
+
+#     equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group'])
+#     if not equipment_list:
+#         return frappe.msgprint("No equipment found for the provided filters.")
+
+#     tasks = []
+    
+#     for equipment_item in equipment_list:
+#         if not equipment_item.activity_group:
+#             continue
+
+#         activities = frappe.get_all('Activity CT', filters={'parent': equipment_item.activity_group}, fields=['activity'])
+#         if not activities:
+#             continue
+
+#         for activity in activities:
+#             activity_details = frappe.get_doc('Activity', activity.activity)
+#             parameters = frappe.get_all('Parameter CT', filters={'parent': activity.activity}, fields=['parameter', 'frequency'])
+#             if not parameters:
+#                 continue
+
+#             for parameter in parameters:
+#                 frequency = parameter.frequency
+#                 dates = []
+                
+#                 if frequency == 'Daily':
+#                     dates = [add_days(start_date, i) for i in range((end_date - start_date).days + 1)]
+                
+#                 elif frequency == 'Weekly':
+#                     current_date = start_date
+#                     while current_date <= end_date:
+#                         dates.append(current_date)
+#                         current_date += timedelta(weeks=1)
+                
+#                 elif frequency == 'By Weekly':
+#                     current_date = start_date
+#                     while current_date <= end_date:
+#                         dates.append(current_date)
+#                         current_date += timedelta(weeks=2)
+                
+#                 elif frequency == 'Monthly':
+#                     current_date = start_date
+#                     while current_date <= end_date:
+#                         dates.append(current_date)
+#                         current_date += relativedelta(months=1)
+                
+#                 elif frequency == 'Quarterly':
+#                     current_date = start_date
+#                     while current_date <= end_date:
+#                         dates.append(current_date)
+#                         current_date += relativedelta(months=3)
+                
+#                 elif frequency == 'Half-Yearly':
+#                     current_date = start_date
+#                     while current_date <= end_date:
+#                         dates.append(current_date)
+#                         current_date += relativedelta(months=6)
+                
+#                 elif frequency == 'Yearly':
+#                     current_date = start_date
+#                     while current_date <= end_date:
+#                         dates.append(current_date)
+#                         current_date += relativedelta(years=1)
+                
+#                 for date in dates:
+#                     date_obj = getdate(date)
+#                     unique_key = 'lbvrq8' + str(uuid.uuid4())[:8]
+                    
+#                     task = {
+#                         'equipment_code': equipment_item.equipment_code,
+#                         'equipment_name': equipment_item.equipment_name,
+#                         'activity_group': equipment_item.activity_group,
+#                         'activity': activity_details.activity_name,
+#                         'parameter': parameter.parameter,
+#                         'frequency': frequency,
+#                         'date': date,
+#                         'day': calendar.day_name[date_obj.weekday()],
+#                         'unique_key': unique_key[:10]
+#                     }
+                    
+#                     tasks.append(task)
+                    
+#                     if not frappe.db.exists('Task Detail', {
+#                         'equipment_code': task['equipment_code'],
+#                         'activity': task['activity'],
+#                         'parameter': task['parameter'],
+#                         'frequency': task['frequency'],
+#                         'plan_start_date': task['date']
+#                     }):
+#                         task_detail = frappe.new_doc("Task Detail")
+#                         task_detail.update({
+#                             "approver": frappe.session.user,
+#                             "equipment_code": task['equipment_code'],
+#                             "equipment_name": task['equipment_name'],
+#                             "activity_group": task['activity_group'],
+#                             "work_center": work_center,
+#                             "plant_section": plant_section,
+#                             "location": location,
+#                             "plan_start_date": task['date'],
+#                             "activity": task['activity'],
+#                             "parameter": task['parameter'],
+#                             "frequency": task['frequency'],
+#                             "day": task['day'],
+#                             "date": task['date'],
+#                             "unique_key": task['unique_key']
+#                         })
+#                         task_detail.insert(ignore_permissions=True)
+    
+#     if not tasks:
+#         return frappe.msgprint("No tasks found for the provided filters.")
+    
+#     return tasks
+
+import frappe
+import uuid
+import calendar
+from datetime import timedelta
+from frappe.utils import getdate, add_days
+from dateutil.relativedelta import relativedelta
 
 @frappe.whitelist()
 def load_tasks(plant, location, plant_section, work_center, start_date=None, end_date=None, equipment=None):
-    global generated_unique_keys
-
     today = getdate()
+
     if start_date and end_date and getdate(start_date) > getdate(end_date):
         frappe.throw("Start Date must be less than or equal to End Date.")
 
@@ -34,52 +184,71 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
     start_date = getdate(start_date) if start_date else max(today, getdate(settings_doc.start_date))
     end_date = getdate(end_date) if end_date else getdate(settings_doc.end_date)
 
-
     current_user = frappe.session.user
-    user_work_center = frappe.get_value('User Work Center', {'user': current_user}, 'name')
     
-    assigned_work_centers = frappe.get_all('Work Center CT', filters={'parent': user_work_center}, pluck='work_center')
+    user_work_center_doc = frappe.get_all(
+        "User Work Center",
+        filters={"user": current_user},
+        fields=["name", "equipment_group"]
+    )
+
+    if not user_work_center_doc:
+        return frappe.msgprint("You are not assigned to any Work Center or Equipment Group.")
+
+    assigned_equipment_group = user_work_center_doc[0].get("equipment_group")
     
-    if work_center not in assigned_work_centers or not assigned_work_centers or not user_work_center:
-        return frappe.msgprint(f"You are not assigned to {work_center} work center")
+    work_centers = frappe.get_all(
+        "Work Center CT",
+        filters={"parent": user_work_center_doc[0]["name"]},
+        pluck="work_center"
+    )
+
+    if not assigned_equipment_group and not work_centers:
+        return frappe.msgprint("You are not assigned to any Work Center and Equipment Group.")
+
+    if not assigned_equipment_group:
+        return frappe.msgprint("You are not assigned to any Equipment Group.")
+
+    if not work_centers:
+        return frappe.msgprint("You are not assigned to any Work Center.")
+
+    if work_center not in work_centers:
+        return frappe.msgprint(f"You are assigned to Equipment Group {assigned_equipment_group}, but not to the {work_center} Work Center.")
 
     filters = {
         "plant": plant,
         "location": location,
         "section": plant_section,
         "work_center": work_center,
-        "on_scrap": 0, 
-        "activity_group_active": 1 
+        "on_scrap": 0,
+        "activity_group_active": 1
     }
 
     if equipment:
         filters["equipment_code"] = equipment
 
-    equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group'])
-
+    equipment_list = frappe.get_all('Equipment', filters=filters, fields=['equipment_code', 'equipment_name', 'activity_group', 'equipment_group'])
+    
     if not equipment_list:
         return frappe.msgprint("No equipment found for the provided filters.")
-
-    settings_doc = frappe.get_single('Settings')
-    start_date = getdate(start_date) if start_date else getdate(settings_doc.start_date)
-    end_date = getdate(end_date) if end_date else getdate(settings_doc.end_date)
 
     tasks = []
 
     for equipment_item in equipment_list:
+        if equipment_item.equipment_group != assigned_equipment_group:
+            frappe.throw(f"Equipment Group mismatch: You are assigned to Equipment Group '{assigned_equipment_group}', but equipment '{equipment_item.equipment_code}' belongs to '{equipment_item.equipment_group}'.")
+
         if not equipment_item.activity_group:
             continue
 
         activities = frappe.get_all('Activity CT', filters={'parent': equipment_item.activity_group}, fields=['activity'])
+
         if not activities:
             continue
 
         for activity in activities:
             activity_details = frappe.get_doc('Activity', activity.activity)
-            parameters = frappe.get_all('Parameter CT', filters={'parent': activity.activity}, fields=[
-                'parameter', 'frequency', 'day_of_month', 'monday', 'tuesday', 'wednesday',
-                'thursday', 'friday', 'saturday', 'sunday', 'date_of_year'
-            ])
+            parameters = frappe.get_all('Parameter CT', filters={'parent': activity.activity}, fields=['parameter', 'frequency'])
 
             if not parameters:
                 continue
@@ -89,122 +258,41 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                 dates = []
 
                 if frequency == 'Daily':
-                    date_range = (end_date - start_date).days + 1
-                    dates = [add_days(start_date, i) for i in range(date_range) if start_date <= add_days(start_date, i) <= end_date]
-
+                    dates = [add_days(start_date, i) for i in range((end_date - start_date).days + 1)]
                 elif frequency == 'Weekly':
-                    selected_days = []
-                    if parameter.monday: selected_days.append('Monday')
-                    if parameter.tuesday: selected_days.append('Tuesday')
-                    if parameter.wednesday: selected_days.append('Wednesday')
-                    if parameter.thursday: selected_days.append('Thursday')
-                    if parameter.friday: selected_days.append('Friday')
-                    if parameter.saturday: selected_days.append('Saturday')
-                    if parameter.sunday: selected_days.append('Sunday')
-
-                    for day in selected_days:
-                        current_date = start_date
-                        while current_date.weekday() != list(calendar.day_name).index(day):
-                            current_date += timedelta(days=1)
-                        while current_date <= end_date:
-                            dates.append(current_date)
-                            current_date += timedelta(weeks=1)
-
-                elif frequency == 'By Weekly':  
-                    selected_days = []
-                    if parameter.monday: selected_days.append('Monday')
-                    if parameter.tuesday: selected_days.append('Tuesday')
-                    if parameter.wednesday: selected_days.append('Wednesday')
-                    if parameter.thursday: selected_days.append('Thursday')
-                    if parameter.friday: selected_days.append('Friday')
-                    if parameter.saturday: selected_days.append('Saturday')
-                    if parameter.sunday: selected_days.append('Sunday')
-
-                    for day in selected_days:
-                        current_date = start_date
-                        while current_date.weekday() != list(calendar.day_name).index(day):
-                            current_date += timedelta(days=1)
-                        while current_date <= end_date:
-                            dates.append(current_date)
-                            current_date += timedelta(weeks=2)
-
-
-
+                    current_date = start_date
+                    while current_date <= end_date:
+                        dates.append(current_date)
+                        current_date += timedelta(weeks=1)
+                elif frequency == 'By Weekly':
+                    current_date = start_date
+                    while current_date <= end_date:
+                        dates.append(current_date)
+                        current_date += timedelta(weeks=2)
                 elif frequency == 'Monthly':
-                    day_of_month = parameter.day_of_month or 1
                     current_date = start_date
-
-                    if current_date.day > day_of_month:
-                        current_date = (current_date + relativedelta(months=1)).replace(day=1)
-                    
                     while current_date <= end_date:
-                        if day_of_month <= calendar.monthrange(current_date.year, current_date.month)[1]:
-                            current_date = current_date.replace(day=day_of_month)
-                        else:
-                            current_date = current_date.replace(day=calendar.monthrange(current_date.year, current_date.month)[1])
-
-                        if current_date >= start_date and current_date <= end_date:
-                            dates.append(current_date)
-
+                        dates.append(current_date)
                         current_date += relativedelta(months=1)
-
                 elif frequency == 'Quarterly':
-                    day_of_month = parameter.day_of_month or 1
                     current_date = start_date
-
-                    if current_date.day > day_of_month:
-                        current_date = (current_date + relativedelta(months=1)).replace(day=1)
-                    
                     while current_date <= end_date:
-                        if day_of_month <= calendar.monthrange(current_date.year, current_date.month)[1]:
-                            current_date = current_date.replace(day=day_of_month)
-                        else:
-                            current_date = current_date.replace(day=calendar.monthrange(current_date.year, current_date.month)[1])
-
-                        if current_date >= start_date and current_date <= end_date:
-                            dates.append(current_date)
-
+                        dates.append(current_date)
                         current_date += relativedelta(months=3)
-
                 elif frequency == 'Half-Yearly':
-                    day_of_month = parameter.day_of_month or 1
                     current_date = start_date
-
-                    if current_date.day > day_of_month:
-                        current_date = (current_date + relativedelta(months=1)).replace(day=1)
-                    
                     while current_date <= end_date:
-                        if day_of_month <= calendar.monthrange(current_date.year, current_date.month)[1]:
-                            current_date = current_date.replace(day=day_of_month)
-                        else:
-                            current_date = current_date.replace(day=calendar.monthrange(current_date.year, current_date.month)[1])
-
-                        if current_date >= start_date and current_date <= end_date:
-                            dates.append(current_date)
-
+                        dates.append(current_date)
                         current_date += relativedelta(months=6)
-
                 elif frequency == 'Yearly':
-                    date_of_year = getdate(parameter.date_of_year)
-                    year_date = start_date.replace(month=date_of_year.month, day=date_of_year.day)
-                    while year_date <= end_date:
-                        if year_date >= start_date:
-                            dates.append(year_date)
-                        year_date += relativedelta(years=1)
+                    current_date = start_date
+                    while current_date <= end_date:
+                        dates.append(current_date)
+                        current_date += relativedelta(years=1)
 
                 for date in dates:
                     date_obj = getdate(date)
-                    key_context = (equipment_item.equipment_code, activity_details.activity_name, parameter.parameter, parameter.frequency, date)
-                    existing_key = next((key for key, context in generated_unique_keys if context == key_context), None)
-
-                    if existing_key is None:
-                        unique_key = 'lbvrq8' + str(uuid.uuid4())[:8]
-                        generated_unique_keys.add((unique_key, key_context))
-                    else:
-                        unique_key = existing_key
-
-                    parameter_doc = frappe.get_doc("Parameter", parameter.parameter)
-                    parameter_type = parameter_doc.parameter_type
+                    unique_key = 'lbvrq8' + str(uuid.uuid4())[:8]
 
                     task = {
                         'equipment_code': equipment_item.equipment_code,
@@ -220,42 +308,35 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
 
                     tasks.append(task)
 
-                    task_exists = frappe.db.exists(
-                        'Task Detail',
-                        {
-                            'equipment_code': task['equipment_code'],
-                            'activity': task['activity'],
-                            'parameter': task['parameter'],
-                            'frequency': task['frequency'],
-                            'plan_start_date': task['date']
-                        }
-                    )
-
-                    if not task_exists:
-                        if not frappe.db.exists('Task Detail', {'unique_key': unique_key[:10]}):
-                            task_detail = frappe.new_doc("Task Detail")
-                            task_detail.update({
-                                "approver": frappe.session.user,
-                                "equipment_code": task['equipment_code'],
-                                "equipment_name": task['equipment_name'],
-                                "activity_group": task['activity_group'],
-                                "work_center": work_center,
-                                "plant_section": plant_section,
-                                "location": location,
-                                "plan_start_date": task['date'],
-                                "activity": task['activity'],
-                                "parameter": task['parameter'],
-                                "frequency": task['frequency'],
-                                "day": task['day'],
-                                "date": task['date'],
-                                "unique_key": task['unique_key'],
-                                "parameter_type": parameter_type
-                            })
-                            task_detail.insert(ignore_permissions=True)
+                    if not frappe.db.exists('Task Detail', {
+                        'equipment_code': task['equipment_code'],
+                        'activity': task['activity'],
+                        'parameter': task['parameter'],
+                        'frequency': task['frequency'],
+                        'plan_start_date': task['date']
+                    }):
+                        task_detail = frappe.new_doc("Task Detail")
+                        task_detail.update({
+                            "approver": frappe.session.user,
+                            "equipment_code": task['equipment_code'],
+                            "equipment_name": task['equipment_name'],
+                            "activity_group": task['activity_group'],
+                            "work_center": work_center,
+                            "plant_section": plant_section,
+                            "location": location,
+                            "plan_start_date": task['date'],
+                            "activity": task['activity'],
+                            "parameter": task['parameter'],
+                            "frequency": task['frequency'],
+                            "day": task['day'],
+                            "date": task['date'],
+                            "unique_key": task['unique_key']
+                        })
+                        task_detail.insert(ignore_permissions=True)
 
     if not tasks:
         return frappe.msgprint("No tasks found for the provided filters.")
-
+    
     return tasks
 
 
