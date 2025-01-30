@@ -8,7 +8,8 @@
  "engine": "InnoDB",
  "field_order": [
   "user",
-  "work_center"
+  "work_center",
+  "equipment_group"
  ],
  "fields": [
   {
@@ -22,11 +23,17 @@
    "fieldtype": "Table MultiSelect",
    "label": "Work Center",
    "options": "Work Center CT"
+  },
+  {
+   "fieldname": "equipment_group",
+   "fieldtype": "Link",
+   "label": "Equipment Group",
+   "options": "Equipment  Group"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-24 20:17:54.605702",
+ "modified": "2025-01-29 14:31:26.831713",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "User Work Center",
