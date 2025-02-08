@@ -26,14 +26,14 @@
   },
   {
    "fieldname": "equipment_group",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Equipment Group",
-   "options": "Equipment  Group"
+   "options": "Equipment Group CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 14:31:26.831713",
+ "modified": "2025-02-08 20:20:49.981903",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "User Work Center",

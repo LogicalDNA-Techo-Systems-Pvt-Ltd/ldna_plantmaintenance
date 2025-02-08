@@ -186,34 +186,61 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
 
     current_user = frappe.session.user
     
+    # user_work_center_doc = frappe.get_all(
+    #     "User Work Center",
+    #     filters={"user": current_user},
+    #     fields=["name", "equipment_group"]
+    # )
     user_work_center_doc = frappe.get_all(
         "User Work Center",
         filters={"user": current_user},
-        fields=["name", "equipment_group"]
+        fields=["name"]
     )
 
     if not user_work_center_doc:
         return frappe.msgprint("You are not assigned to any Work Center or Equipment Group.")
 
-    assigned_equipment_group = user_work_center_doc[0].get("equipment_group")
+    user_work_center_name = user_work_center_doc[0]["name"]
+    # assigned_equipment_group = user_work_center_doc[0].get("equipment_group")
     
-    work_centers = frappe.get_all(
+    # work_centers = frappe.get_all(
+    #     "Work Center CT",
+    #     filters={"parent": user_work_center_doc[0]["name"]},
+    #     pluck="work_center"
+    # )
+
+    # if not assigned_equipment_group and not work_centers:
+    #     return frappe.msgprint("You are not assigned to any Work Center and Equipment Group.")
+
+    # if not assigned_equipment_group:
+    #     return frappe.msgprint("You are not assigned to any Equipment Group.")
+
+    # if not work_centers:
+    #     return frappe.msgprint("You are not assigned to any Work Center.")
+
+    # if work_center not in work_centers:
+    #     return frappe.msgprint(f"You are assigned to Equipment Group {assigned_equipment_group}, but not to the {work_center} Work Center.")
+
+    assigned_work_centers = frappe.get_all(
         "Work Center CT",
-        filters={"parent": user_work_center_doc[0]["name"]},
+        filters={"parent": user_work_center_name},
         pluck="work_center"
     )
 
-    if not assigned_equipment_group and not work_centers:
-        return frappe.msgprint("You are not assigned to any Work Center and Equipment Group.")
+    assigned_equipment_groups = frappe.get_all(
+        "Equipment Group CT",
+        filters={"parent": user_work_center_name},
+        pluck="equipment_group"
+    )
 
-    if not assigned_equipment_group:
-        return frappe.msgprint("You are not assigned to any Equipment Group.")
-
-    if not work_centers:
+    if not assigned_work_centers:
         return frappe.msgprint("You are not assigned to any Work Center.")
 
-    if work_center not in work_centers:
-        return frappe.msgprint(f"You are assigned to Equipment Group {assigned_equipment_group}, but not to the {work_center} Work Center.")
+    if not assigned_equipment_groups:
+        return frappe.msgprint("You are not assigned to any Equipment Group.")
+
+    if work_center not in assigned_work_centers:
+        return frappe.msgprint(f"You are assigned to Work Centers {', '.join(assigned_work_centers)}, but not to {work_center}.")
 
     filters = {
         "plant": plant,
@@ -221,7 +248,8 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
         "section": plant_section,
         "work_center": work_center,
         "on_scrap": 0,
-        "activity_group_active": 1
+        "activity_group_active": 1,
+        "equipment_group": ["in", assigned_equipment_groups]
     }
 
     if equipment:
@@ -235,8 +263,8 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
     tasks = []
 
     for equipment_item in equipment_list:
-        if equipment_item.equipment_group != assigned_equipment_group:
-            frappe.throw(f"Equipment Group mismatch: You are assigned to Equipment Group '{assigned_equipment_group}', but equipment '{equipment_item.equipment_code}' belongs to '{equipment_item.equipment_group}'.")
+        # if equipment_item.equipment_group != assigned_equipment_group:
+        #     frappe.throw(f"Equipment Group mismatch: You are assigned to Equipment Group '{assigned_equipment_group}', but equipment '{equipment_item.equipment_code}' belongs to '{equipment_item.equipment_group}'.")
 
         if not equipment_item.activity_group:
             continue
