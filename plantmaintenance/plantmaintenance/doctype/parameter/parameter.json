@@ -43,7 +43,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Parameter",
-   "length": 50,
+   "length": 100,
    "reqd": 1,
    "width": "2"
   },
@@ -225,7 +225,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-18 14:34:22.355669",
+ "modified": "2025-02-10 19:58:01.496648",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",
