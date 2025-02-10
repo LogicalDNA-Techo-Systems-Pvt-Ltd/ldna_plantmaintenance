@@ -336,6 +336,9 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
 
                     tasks.append(task)
 
+                    parameter_doc = frappe.get_doc("Parameter", parameter.parameter)
+                    parameter_type = parameter_doc.parameter_type
+
                     if not frappe.db.exists('Task Detail', {
                         'equipment_code': task['equipment_code'],
                         'activity': task['activity'],
@@ -358,7 +361,8 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             "frequency": task['frequency'],
                             "day": task['day'],
                             "date": task['date'],
-                            "unique_key": task['unique_key']
+                            "unique_key": task['unique_key'],
+                            "parameter_type": parameter_type
                         })
                         task_detail.insert(ignore_permissions=True)
 

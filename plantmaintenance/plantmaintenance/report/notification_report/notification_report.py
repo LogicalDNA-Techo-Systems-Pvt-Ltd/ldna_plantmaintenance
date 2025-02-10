@@ -29,8 +29,10 @@ def get_data(filters):
            
         FROM
             `tabTask Detail` AS td
+        WHERE
+            td.plan_start_date BETWEEN %(from_date)s AND %(to_date)s
     """
-    raw_data = frappe.db.sql(query, as_dict=True)
+    raw_data = frappe.db.sql(query, filters, as_dict=True)
 
     data = []
 
@@ -155,20 +157,20 @@ def get_columns():
             "width": 250
         },
         {
-            "label": "Work completion by",
+            "label": "Completion by Maintenance Manager",
             "fieldname": "approver",
             "fieldtype": "Link",
             "options": "Task Detail",
             "width": 200
         },
         {
-            "label": "Work completion date",
+            "label": "Maintenance Manager completion date",
             "fieldname": "approved_date",
             "fieldtype": "Date",
             "width": 200
         },
         {
-            "label": "Time Taken by Work Completion Team",
+            "label": "Time Taken by Maintenance Manager Team",
             "fieldname": "time_taken_by_work_completion_team",
             "fieldtype": "Data",  
             "width": 250
