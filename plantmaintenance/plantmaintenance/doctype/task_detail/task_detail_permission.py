@@ -86,7 +86,6 @@ def task_detail_permission(user):
     user_full_name = user_doc.full_name
     user_roles = [role.role for role in user_doc.roles]
 
-    # Fetch assigned work centers for the user
     if frappe.db.exists("User Work Center", user):
         user_work_center = frappe.get_doc("User Work Center", user)
         user_work_centers = [wc.work_center for wc in user_work_center.work_center] if hasattr(user_work_center, 'work_center') else []
@@ -103,12 +102,10 @@ def task_detail_permission(user):
             (
                 (`tabTask Detail`.`work_center` IN ({work_centers_condition}) AND 
                 `tabTask Detail`.`approver` = '{user}')
-                OR 
-                (`tabTask Detail`.`approver` = '{user}' AND `tabTask Detail`.`work_center` IS NULL)
             )
             """.format(user=user, work_centers_condition=work_centers_condition)
         else:
-            return "`tabTask Detail`.`approver` = '{user}'".format(user=user)  
+            return "1=0" 
 
     elif 'Maintenance User' in user_roles:
         if user_work_centers:
@@ -141,7 +138,7 @@ def task_detail_permission(user):
             )
             """.format(work_centers_condition=work_centers_condition)
         else:
-            return "1=1"  # System Manager should have full access
+            return "1=1" 
 
     elif 'Process Manager' in user_roles:
         if user_work_centers:
