@@ -164,11 +164,27 @@ def validate_before_workflow_action(doc, method):
             'service_call': doc.type == "Breakdown"
         }
 
+        if doc.parameter_type == "Numeric" and doc.parameter:
+            parameter = frappe.get_doc("Parameter", doc.parameter) 
+            num_readings = parameter.number_of_readings 
+
+            for i in range(1, num_readings + 1): 
+                fieldname = f"reading_{i}"
+                reading_value = getattr(doc, fieldname, None)
+
+                if not reading_value: 
+                    field_label = frappe.get_meta(doc.doctype).get_field(fieldname).label
+                    frappe.throw(_("{0} is a mandatory field.").format(field_label))
+
+
         for fieldname, condition in mandatory_fields.items():
             if condition and not getattr(doc, fieldname, None):
                field_label = frappe.get_meta(doc.doctype).get_field(fieldname).label
                error_message = _("{0} is a mandatory field.").format(field_label)
                frappe.throw(error_message)
+
+        
+        
 
 def update_overdue_status():
     try:
