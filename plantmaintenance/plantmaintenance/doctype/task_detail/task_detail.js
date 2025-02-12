@@ -59,7 +59,7 @@ frappe.ui.form.on('Task Detail', {
             frm.set_df_property('material_issued', 'read_only', 0);
             frm.set_df_property('material_returned', 'read_only', 0);
         }
-        toggle_add_assignee_button(frm);
+        // toggle_add_assignee_button(frm);
         
         let selectedRows = [];
 
@@ -258,7 +258,7 @@ frappe.ui.form.on('Task Detail', {
 
     onload: function (frm) {
 
-        toggle_add_assignee_button(frm);
+        // toggle_add_assignee_button(frm);
 
         frm.trigger('readings');
         if (frm.doc.parameter) {
@@ -279,9 +279,9 @@ frappe.ui.form.on('Task Detail', {
         set_status_read_only(frm);
     },
 
-    assigned_to: function(frm) {
-        toggle_add_assignee_button(frm);
-    },
+    // assigned_to: function(frm) {
+    //     toggle_add_assignee_button(frm);
+    // },
 
     validate: function (frm) {
         if (frm.doc.actual_end_date < frm.doc.actual_start_date) {
@@ -449,28 +449,28 @@ function set_new_row_editable(frm, cdt, cdn) {
     frm.fields_dict['material_issued'].grid.toggle_enable('material_code', true, row.name);
 }
 
-function toggle_add_assignee_button(frm) {
-    const user = frappe.session.user;
+// function toggle_add_assignee_button(frm) {
+//     const user = frappe.session.user;
 
     
-    frappe.call({
-        method: 'plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_user_roles',  
-        args: {
-            user: user
-        },
-        callback: function(response) {
-            const user_roles = response.message || [];
-            const isMaintenanceManager = user_roles.includes('Maintenance Manager');
+//     frappe.call({
+//         method: 'plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_user_roles',  
+//         args: {
+//             user: user
+//         },
+//         callback: function(response) {
+//             const user_roles = response.message || [];
+//             const isMaintenanceManager = user_roles.includes('Maintenance Manager');
 
           
-            if (isMaintenanceManager) {
-                frm.set_df_property('add_assignee', 'hidden', 0); 
-            } else {
-                frm.set_df_property('add_assignee', 'hidden', 1); 
-            }
-        }
-    });
-}
+//             if (isMaintenanceManager) {
+//                 frm.set_df_property('add_assignee', 'hidden', 0); 
+//             } else {
+//                 frm.set_df_property('add_assignee', 'hidden', 1); 
+//             }
+//         }
+//     });
+// }
 
 
 function disable_workflow_actions(frm) {
@@ -564,75 +564,86 @@ function set_status_read_only(frm) {
 // });
 
 
-
-
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {
         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
-
         frappe.call({
-            method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_assigned_maintenance_users",
+            method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_users_for_maintenance_user",
             callback: function(response) {
-                let assignedUsers = response.message || [];
-                const userCount = assignedUsers.length;
+                let data = response.message;
 
-                if (!assignedUsers.length) {
-                    frappe.msgprint(__('No Maintenance Users assigned to you.'));
-                    return;
-                }
+                if (data.is_maintenance_user) {
+                    let assignedUsers = data.users.map(name => ({ value: name, label: name }));
+                    showUserSelectionDialog(frm, assignedUsers, selectedAssignees);
+                } else {
+                    frappe.call({
+                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_assigned_maintenance_users",
+                        callback: function(response) {
+                            let assignedUsers = response.message || [];
 
-                console.log("Assigned Users: ", assignedUsers);
-
-                const dialog = new frappe.ui.Dialog({
-                    title: __('Select Users'),
-                    fields: [
-                        {
-                            label: __("Select Users"),
-                            fieldtype: "MultiSelectList",
-                            fieldname: "users",
-                            placeholder: "Add User",
-                            options: assignedUsers,
-                            reqd: 1,
-                            get_data: function () {
-                                return assignedUsers.map(user => ({
-                                    value: user, 
-                                    description: ""
-                                }));
+                            if (!assignedUsers.length) {
+                                frappe.msgprint(__('No Maintenance Users assigned to you.'));
+                                return;
                             }
+
+                            assignedUsers = assignedUsers.map(user => ({ value: user, label: user }));                            
+                            showUserSelectionDialog(frm, assignedUsers, selectedAssignees);
                         }
-                    ],
-                    primary_action_label: __('Submit'),
-                    primary_action: function (values) {
-                        let newAssignees = values['users'] || [];
-                        let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
-
-                        if (duplicates.length > 0) {
-                            frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
-                        } else {
-                            selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-                            frm.set_value("assigned_to", selectedAssignees.join(', '));
-                            frm.refresh_field('assigned_to');
-                        }
-
-                        dialog.hide();
-                        $('body').removeClass('modal-open');
-                    }
-                });
-
-                dialog.show();
-                $('body').addClass('modal-open');
-
-                let dynamicHeight = userCount * 100;
-                if (userCount > 10) {
-                    dynamicHeight = 300; 
+                    });
                 }
-
-                dialog.$wrapper.find('.modal-body').css({
-                    "overflow-y": "auto",
-                    "height": dynamicHeight + "px", 
-                    "max-height": "90vh"
-                });
             }
         });
     }
 });
+
+function showUserSelectionDialog(frm, assignedUsers, selectedAssignees) {
+    const dialog = new frappe.ui.Dialog({
+        title: __('Select Users'),
+        fields: [
+            {
+                label: __("Select Users"),
+                fieldtype: "MultiSelectList",
+                fieldname: "users",
+                placeholder: "Add User",
+                options: assignedUsers,
+                reqd: 1,
+                get_data: function () {
+                    return assignedUsers.map(user => ({
+                        value: user.label, 
+                        description: ""
+                    }));
+                }
+            }
+        ],
+        primary_action_label: __('Submit'),
+        primary_action: function (values) {
+            let newAssignees = values['users'] || [];
+            let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
+
+            if (duplicates.length > 0) {
+                frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
+            } else {
+                selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
+                frm.set_value("assigned_to", selectedAssignees.join(', '));
+                frm.refresh_field('assigned_to');
+            }
+
+            dialog.hide();
+            $('body').removeClass('modal-open');
+        }
+    });
+
+    dialog.show();
+    $('body').addClass('modal-open');
+
+    let dynamicHeight = assignedUsers.length * 100;
+    if (assignedUsers.length > 10) {
+        dynamicHeight = 300; 
+    }
+
+    dialog.$wrapper.find('.modal-body').css({
+        "overflow-y": "auto",
+        "height": dynamicHeight + "px", 
+        "max-height": "90vh"
+    });
+}

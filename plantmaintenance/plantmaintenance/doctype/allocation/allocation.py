@@ -325,6 +325,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                     task = {
                         'equipment_code': equipment_item.equipment_code,
                         'equipment_name': equipment_item.equipment_name,
+                        'equipment_group': equipment_item.equipment_group,
                         'activity_group': equipment_item.activity_group,
                         'activity': activity_details.activity_name,
                         'parameter': parameter.parameter,
@@ -351,6 +352,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             "approver": frappe.session.user,
                             "equipment_code": task['equipment_code'],
                             "equipment_name": task['equipment_name'],
+                            "equipment_group": task['equipment_group'],
                             "activity_group": task['activity_group'],
                             "work_center": work_center,
                             "plant_section": plant_section,

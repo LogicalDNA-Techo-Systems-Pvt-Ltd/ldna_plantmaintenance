@@ -328,10 +328,10 @@ def task_for_approval(task_detail):
         send_onesignal_notification(email, contents, url)
 
 
-@frappe.whitelist()
-def get_user_roles(user):
-    user_doc = frappe.get_doc("User", user)
-    return [role.role for role in user_doc.roles]
+# @frappe.whitelist()
+# def get_user_roles(user):
+#     user_doc = frappe.get_doc("User", user)
+#     return [role.role for role in user_doc.roles]
 
 
 
@@ -365,4 +365,26 @@ def get_assigned_maintenance_users():
 
 
 
+@frappe.whitelist()
+def get_users_for_maintenance_user():
+    user = frappe.session.user
+    user_roles = frappe.get_roles(user)
+
+    if "Maintenance User" in user_roles:
+        maintenance_managers = frappe.db.sql("""
+            SELECT full_name 
+            FROM `tabUser`
+            WHERE name IN (
+                SELECT parent FROM `tabHas Role`
+                WHERE role = 'Maintenance Manager'
+            ) 
+            AND name != 'Administrator' 
+            AND enabled = 1
+        """, as_list=True)
+
+        maintenance_managers = [manager[0] for manager in maintenance_managers]
+
+        return {"is_maintenance_user": True, "users": maintenance_managers}
+
+    return {"is_maintenance_user": False}
 
