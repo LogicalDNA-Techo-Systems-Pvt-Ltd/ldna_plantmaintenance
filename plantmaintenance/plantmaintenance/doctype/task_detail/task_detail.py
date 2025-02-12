@@ -12,6 +12,7 @@ import time
 from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification
 # from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification_for_approval
 from frappe.utils import get_url_to_form
+from frappe.utils import today
 
 class TaskDetail(Document):
 
@@ -140,7 +141,18 @@ def validate_before_workflow_action(doc, method):
     if doc.material_issued:
         pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
         if pending_approval_exists and (doc.workflow_state == "Approval Pending"):
-            frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue."))
+            frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue.")) 
+    
+    # current_date = getdate(today())  
+    # plan_start_date = getdate(doc.plan_start_date)  
+
+    # if plan_start_date:
+    #     if plan_start_date > current_date:
+    #         frappe.throw(_("You cannot proceed to 'Work in Progress' because the Plan Start Date ({}) is in the future.").format(plan_start_date))
+
+    #     elif plan_start_date == current_date and doc.workflow_state != "Work In Progress":
+    #         doc.workflow_state = "Work In Progress"
+    #         frappe.msgprint(_("Workflow state updated to 'Work in Progress' as Plan Start Date is today."))
 
 
     if doc.workflow_state == "Approval Pending":
@@ -320,3 +332,37 @@ def task_for_approval(task_detail):
 def get_user_roles(user):
     user_doc = frappe.get_doc("User", user)
     return [role.role for role in user_doc.roles]
+
+
+
+@frappe.whitelist()
+def get_assigned_maintenance_users():
+    if not frappe.session.user:
+        return []
+
+    user_details = frappe.get_all("User Details", filters={"user_name": frappe.session.user}, pluck="name")
+
+    if not user_details:
+        return []
+
+    assigned_users = frappe.get_all(
+        "User Details CT",
+        filters={"parent": user_details[0]},
+        pluck="maintenance_users",
+        ignore_permissions=True  
+    )
+
+    if not assigned_users:
+        return []
+
+    user_full_names = frappe.get_all(
+        "User",
+        filters={"name": ["in", assigned_users]},
+        pluck="full_name"
+    )
+
+    return user_full_names
+
+
+
+

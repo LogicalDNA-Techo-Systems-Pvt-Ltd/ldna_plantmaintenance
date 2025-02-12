@@ -1,0 +1,52 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:user_name",
+ "creation": "2025-02-11 11:11:39.294661",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user_name",
+  "maintenance_users"
+ ],
+ "fields": [
+  {
+   "fieldname": "user_name",
+   "fieldtype": "Link",
+   "label": "User Name",
+   "options": "User",
+   "unique": 1
+  },
+  {
+   "fieldname": "maintenance_users",
+   "fieldtype": "Table MultiSelect",
+   "label": "Maintenance Users",
+   "options": "User Details CT"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-11 11:47:51.290825",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "User Details",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

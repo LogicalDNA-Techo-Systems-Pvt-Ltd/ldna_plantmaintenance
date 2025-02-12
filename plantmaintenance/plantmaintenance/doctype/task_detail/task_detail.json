@@ -111,6 +111,7 @@
    "options": "Location"
   },
   {
+   "fetch_from": "equipment_code.work_center",
    "fieldname": "work_center",
    "fieldtype": "Link",
    "in_standard_filter": 1,
@@ -503,7 +504,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-12-18 13:02:33.962242",
+ "modified": "2025-02-11 16:49:56.931168",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
