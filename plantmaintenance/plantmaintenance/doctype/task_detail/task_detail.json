@@ -505,7 +505,7 @@
    "fetch_from": "equipment_code.equipment_group",
    "fieldname": "equipment_group",
    "fieldtype": "Link",
-   "hidden": 1,
+   "in_standard_filter": 1,
    "label": "Equipment Group",
    "options": "Equipment  Group"
   }
@@ -513,7 +513,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-12 16:15:48.657068",
+ "modified": "2025-02-12 17:50:44.059885",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
