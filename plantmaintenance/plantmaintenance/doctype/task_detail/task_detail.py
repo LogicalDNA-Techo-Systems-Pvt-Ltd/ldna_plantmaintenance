@@ -142,19 +142,12 @@ def validate_before_workflow_action(doc, method):
         pending_approval_exists = any(row.status == "Pending Approval" for row in doc.material_issued)
         if pending_approval_exists and (doc.workflow_state == "Approval Pending"):
             frappe.throw(_("The Material Issued status is Pending Approval, so you cannot continue.")) 
+
+    plan_start_date = getdate(doc.plan_start_date)
+    today_date = getdate(today())
+    if doc.workflow_state == "Work in Progress" and plan_start_date > today_date:
+        frappe.throw(_("You cannot proceed to 'Work in Progress' because the Plan Start Date ({}) is in the future.").format(plan_start_date))
     
-    # current_date = getdate(today())  
-    # plan_start_date = getdate(doc.plan_start_date)  
-
-    # if plan_start_date:
-    #     if plan_start_date > current_date:
-    #         frappe.throw(_("You cannot proceed to 'Work in Progress' because the Plan Start Date ({}) is in the future.").format(plan_start_date))
-
-    #     elif plan_start_date == current_date and doc.workflow_state != "Work In Progress":
-    #         doc.workflow_state = "Work In Progress"
-    #         frappe.msgprint(_("Workflow state updated to 'Work in Progress' as Plan Start Date is today."))
-
-
     if doc.workflow_state == "Approval Pending":
         mandatory_fields = {
             'actual_value': doc.parameter_type == "Binary",
