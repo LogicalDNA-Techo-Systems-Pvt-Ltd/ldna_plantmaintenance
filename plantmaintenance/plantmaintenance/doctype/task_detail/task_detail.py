@@ -176,7 +176,11 @@ def validate_before_workflow_action(doc, method):
                error_message = _("{0} is a mandatory field.").format(field_label)
                frappe.throw(error_message)
 
-        
+    if doc.workflow_state == "Approved" and not doc.process_manager:
+        field_label = frappe.get_meta(doc.doctype).get_field("process_manager").label
+        frappe.throw(_("{0} is a mandatory field.").format(field_label))
+
+
         
 
 def update_overdue_status():
@@ -373,27 +377,47 @@ def get_assigned_maintenance_users():
     return user_full_names
 
 
+@frappe.whitelist()
+def get_assigned_process_manager():
+    if not frappe.session.user:
+        return []
+
+    user_details = frappe.get_all("User Details", filters={"user_name": frappe.session.user}, pluck="name")
+
+    if not user_details:
+        return []
+    assigned_users = frappe.get_all(
+        "Process Manager CT",
+        filters={"parent": user_details[0]},
+        pluck="process_manager",
+        ignore_permissions=True  
+    )
+
+    if not assigned_users:
+        return []
+
+    user_full_names = frappe.get_all(
+        "User",
+        filters={"name": ["in", assigned_users]},
+        pluck="full_name"
+    )
+
+    return user_full_names or []
+
+
 
 @frappe.whitelist()
-def get_users_for_maintenance_user():
-    user = frappe.session.user
-    user_roles = frappe.get_roles(user)
+def get_all_maintenance_managers():
+    maintenance_managers = frappe.db.sql("""
+        SELECT full_name 
+        FROM `tabUser`
+        WHERE name IN (
+            SELECT parent FROM `tabHas Role`
+            WHERE role = 'Maintenance Manager'
+        ) 
+        AND name != 'Administrator' 
+        AND enabled = 1
+    """, as_list=True)
 
-    if "Maintenance User" in user_roles:
-        maintenance_managers = frappe.db.sql("""
-            SELECT full_name 
-            FROM `tabUser`
-            WHERE name IN (
-                SELECT parent FROM `tabHas Role`
-                WHERE role = 'Maintenance Manager'
-            ) 
-            AND name != 'Administrator' 
-            AND enabled = 1
-        """, as_list=True)
-
-        maintenance_managers = [manager[0] for manager in maintenance_managers]
-
-        return {"is_maintenance_user": True, "users": maintenance_managers}
-
-    return {"is_maintenance_user": False}
+    return [manager[0] for manager in maintenance_managers]
 

@@ -211,6 +211,7 @@ frappe.ui.form.on('Task Detail', {
         disable_link_click(frm, ['approver']);
 
         set_status_read_only(frm);
+        toggle_add_assignee_button(frm);
 
     },
     after_workflow_action: function (frm) {
@@ -277,6 +278,7 @@ frappe.ui.form.on('Task Detail', {
             frm.set_value('parameter_type', '');
         }
         set_status_read_only(frm);
+        toggle_add_assignee_button(frm);
     },
 
     // assigned_to: function(frm) {
@@ -488,113 +490,37 @@ function set_status_read_only(frm) {
 }
 
 
-
-// frappe.ui.form.on('Task Detail', {
-//     add_assignee: function (frm) {
-//         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
-
-//         frappe.call({
-//             method: 'frappe.client.get_list',
-//             args: {
-//                 doctype: 'User',
-//                 fields: ['full_name'],
-//                 filters: [
-//                     ['User', 'enabled', '=', 1],
-//                     ['Has Role', 'role', '=', 'Maintenance User']
-//                 ],
-//                 limit_page_length: 0,
-//             },
-//             callback: function (response) {
-//                 let options = response.message.map(user => user.full_name).filter(Boolean);
-//                 const userCount = options.length;
-
-//                 const dialog = new frappe.ui.Dialog({
-//                     title: __('Select Users'),
-//                     fields: [
-//                         {
-//                             label: __("Select Users"),
-//                             fieldtype: "MultiSelectList",
-//                             fieldname: "users",
-//                             placeholder: "Add User",
-//                             options: options,
-//                             reqd: 1,
-//                             get_data: function () {
-//                                 return response.message.map(user => ({
-//                                     value: user.full_name,
-//                                     description: ""
-//                                 }));
-//                             }
-//                         }
-//                     ],
-//                     primary_action_label: __('Submit'),
-//                     primary_action: function (values) {
-//                         let newAssignees = values['users'] || [];
-//                         let duplicates = newAssignees.filter(user => selectedAssignees.includes(user));
-
-//                         if (duplicates.length > 0) {
-//                             frappe.msgprint(__("The following users are already selected: {0}.", [duplicates.join(', ')]));
-//                         } else {
-//                             selectedAssignees = [...new Set([...selectedAssignees, ...newAssignees])];
-//                             frm.set_value("assigned_to", selectedAssignees.join(', '));
-//                             frm.refresh_field('assigned_to');
-//                         }
-
-//                         dialog.hide();
-//                         $('body').removeClass('modal-open');
-//                     }
-//                 });
-
-//                 dialog.show();
-
-//                 $('body').addClass('modal-open');
-
-//                 let dynamicHeight = userCount * 100;
-//                 if (userCount > 10) {
-//                     dynamicHeight = 300; 
-//                 }
-
-//                 dialog.$wrapper.find('.modal-body').css({
-//                     "overflow-y": "auto",
-//                     "height": dynamicHeight + "px", 
-//                     "max-height": "90vh"  
-//                 });
-//             }
-//         });
-//     }
-// });
-
-
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {
         let selectedAssignees = frm.doc.assigned_to ? frm.doc.assigned_to.split(',').map(a => a.trim()).filter(Boolean) : [];
-        frappe.call({
-            method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_users_for_maintenance_user",
-            callback: function(response) {
-                let data = response.message;
-
-                if (data.is_maintenance_user) {
-                    let assignedUsers = data.users.map(name => ({ value: name, label: name }));
+        let userRoles = frappe.user_roles;
+        
+        if (userRoles.includes("Maintenance User") || userRoles.includes("Process Manager")) {
+            frappe.call({
+                method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_all_maintenance_managers",
+                callback: function (response) {
+                    let maintenanceManagers = response.message || [];
+                    let assignedUsers = maintenanceManagers.map(name => ({ value: name, label: name }));
                     showUserSelectionDialog(frm, assignedUsers, selectedAssignees);
-                } else {
-                    frappe.call({
-                        method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_assigned_maintenance_users",
-                        callback: function(response) {
-                            let assignedUsers = response.message || [];
-
-                            if (!assignedUsers.length) {
-                                frappe.msgprint(__('No Maintenance Users assigned to you.'));
-                                return;
-                            }
-
-                            assignedUsers = assignedUsers.map(user => ({ value: user, label: user }));                            
-                            showUserSelectionDialog(frm, assignedUsers, selectedAssignees);
-                        }
-                    });
                 }
-            }
-        });
+            });
+        } else {
+            frappe.call({
+                method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_assigned_maintenance_users",
+                callback: function (response) {
+                    let assignedUsers = response.message || [];
+                    if (!assignedUsers.length) {
+                        frappe.msgprint(__('No Maintenance Users assigned to you.'));
+                        return;
+                    }
+                    assignedUsers = assignedUsers.map(user => ({ value: user, label: user }));
+                    showUserSelectionDialog(frm, assignedUsers, selectedAssignees);
+                }
+            });
+        }
     }
 });
+
 
 function showUserSelectionDialog(frm, assignedUsers, selectedAssignees) {
     const dialog = new frappe.ui.Dialog({
@@ -647,3 +573,71 @@ function showUserSelectionDialog(frm, assignedUsers, selectedAssignees) {
         "max-height": "90vh"
     });
 }
+
+
+
+
+
+
+
+
+frappe.ui.form.on('Task Detail', {
+    onload: function(frm) {
+        frappe.call({
+            method: 'plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_assigned_process_manager',
+            callback: function(r) {
+                if (r.message && r.message.length > 0) {
+                    frm.process_managers = r.message;  
+                    frm.set_query('process_manager', function() {
+                        return {
+                            filters: {
+                                'full_name': ['in', r.message]  
+                            }
+                        };
+                    });
+                } else {
+                    frm.process_managers = [];  
+                }
+            }
+        });
+    },
+    refresh: function(frm) {
+        frm.fields_dict.process_manager.$wrapper.on('click', function() {
+            if (!frm.process_managers || frm.process_managers.length === 0) {
+                frappe.msgprint(__('No process manager has been assigned to you.'));
+                frappe.model.set_value(frm.doctype, frm.docname, 'process_manager', '');  
+            }
+        });
+    }
+});
+
+
+
+function toggle_add_assignee_button(frm) {
+    if (!frm.doc.type) return;
+
+    const restricted_types = ["General", "Breakdown", "Shutdown", "Predictive"];
+    const restricted_roles = ["Maintenance User", "Process Manager"];
+
+    if (restricted_types.includes(frm.doc.type) && user_has_restricted_role(restricted_roles)) {
+        hide_add_assignee_button(frm);
+    } else {
+        show_add_assignee_button(frm);
+    }
+}
+
+function user_has_restricted_role(roles) {
+    return roles.some(role => frappe.user.has_role(role));
+}
+
+function hide_add_assignee_button(frm) {
+    frm.remove_custom_button("Add Assignee");
+    frm.set_df_property('add_assignee', 'hidden', 1); 
+}
+
+function show_add_assignee_button(frm) {
+    frm.set_df_property('add_assignee', 'hidden', 0);
+}
+
+
+

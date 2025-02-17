@@ -335,7 +335,7 @@
                             }
 
                             // Filter tasks with status 'Open'
-                            let openTasks = selectedItems.filter(item => item.workflow_state === "Open");
+                            let openTasks = selectedItems.filter(item => item.workflow_state === "Open"  || item.status === "Overdue");
 
                             if (openTasks.length === 0) {
                                 frappe.msgprint(__('No tasks in "Open" status selected.'));
@@ -428,7 +428,7 @@
 
                         function toggleAssignToButton() {
                             let selectedItems = listview.get_checked_items();
-                            let openTasks = selectedItems.filter(item => item.status === "Open");
+                            let openTasks = selectedItems.filter(item => item.status === "Open" || item.status === "Overdue");
 
                             if (openTasks.length > 0) {
                                 assignToButton.show();

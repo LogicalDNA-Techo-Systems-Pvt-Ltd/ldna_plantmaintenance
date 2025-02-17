@@ -28,6 +28,7 @@
   "approved_date",
   "section_break_aaju",
   "approver",
+  "process_manager",
   "column_break_rewz",
   "assigned_to",
   "add_assignee",
@@ -155,6 +156,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "description": "This field is for selecting the Maintenance Manager.",
    "fieldname": "approver",
    "fieldtype": "Link",
    "label": "Approver",
@@ -508,12 +510,19 @@
    "in_standard_filter": 1,
    "label": "Equipment Group",
    "options": "Equipment  Group"
+  },
+  {
+   "depends_on": "eval:doc.workflow_state === \"Approval Pending\"|| doc.workflow_state === \"Approved\"",
+   "fieldname": "process_manager",
+   "fieldtype": "Link",
+   "label": "Process Manager",
+   "options": "User"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-12 17:50:44.059885",
+ "modified": "2025-02-17 11:29:05.577177",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

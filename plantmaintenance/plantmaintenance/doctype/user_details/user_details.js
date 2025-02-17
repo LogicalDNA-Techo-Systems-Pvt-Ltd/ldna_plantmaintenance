@@ -14,5 +14,10 @@ frappe.ui.form.on('User Details', {
                 query: "plantmaintenance.plantmaintenance.doctype.user_details.user_details.get_maintenance_users"
             };
         };
+        frm.fields_dict['process_manager'].get_query = function() {
+            return {
+                query: "plantmaintenance.plantmaintenance.doctype.user_details.user_details.get_process_managers"
+            };
+        };
     }
 });

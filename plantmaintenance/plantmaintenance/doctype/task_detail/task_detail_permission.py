@@ -75,7 +75,7 @@
 #             return "1=0"
 
             
-
+#Show task detail both work center and equipment group assign
 
 import frappe
 
@@ -131,3 +131,79 @@ def task_detail_permission(user):
             return "1=1"
 
     return "1=0"
+
+
+
+
+# import frappe
+
+# def task_detail_permission(user):
+#     user = frappe.session.user
+#     print(user)
+
+#     user_doc = frappe.get_doc("User", user)
+#     user_roles = {role.role for role in user_doc.roles}  
+#     user_full_name = user_doc.full_name  
+
+#     user_work_centers = []
+#     user_equipment_groups = []
+
+#     if frappe.db.exists("User Work Center", user):
+#         user_work_center_doc = frappe.get_doc("User Work Center", user)
+        
+#         if hasattr(user_work_center_doc, 'work_center'):
+#             user_work_centers = [wc.work_center for wc in user_work_center_doc.work_center]
+        
+#         if hasattr(user_work_center_doc, 'equipment_group'):
+#             user_equipment_groups = [eg.equipment_group for eg in user_work_center_doc.equipment_group]
+
+#     if user == 'Administrator':
+#         return "1=1"
+
+#     relevant_roles = {'Maintenance Manager', 'Maintenance User', 'Process Manager'}
+
+#     if user_roles & relevant_roles:
+#         work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers]) if user_work_centers else "''"
+#         equipment_groups_condition = ", ".join(["'{0}'".format(eg) for eg in user_equipment_groups]) if user_equipment_groups else "''"
+
+#         # Case when type = "General"
+#         # general_condition = """
+#         #     (`tabTask Detail`.`type` = 'General' 
+#         #     AND (FIND_IN_SET('{user_full_name}', `tabTask Detail`.`assigned_to`) > 0 OR `tabTask Detail`.`assigned_to` = '{user_full_name}'))
+#         # """.format(user_full_name=user_full_name)
+
+#         general_condition = """
+#             (`tabTask Detail`.`type` = 'General' 
+#             AND (FIND_IN_SET('{user_full_name}', `tabTask Detail`.`assigned_to`) > 0 
+#             OR `tabTask Detail`.`assigned_to` = '{user_full_name}' 
+#             OR `tabTask Detail`.`owner` = '{user}'))
+#         """.format(user_full_name=user_full_name, user=user)
+
+#         # Case when type != "General"
+#         specific_condition = """
+#             (`tabTask Detail`.`type` != 'General' 
+#             AND `tabTask Detail`.`work_center` IN ({work_centers_condition})
+#             AND `tabTask Detail`.`equipment_group` IN ({equipment_groups_condition}))
+#         """.format(work_centers_condition=work_centers_condition, 
+#                    equipment_groups_condition=equipment_groups_condition)
+
+#         final_query = "({general_condition}) OR ({specific_condition})".format(
+#             general_condition=general_condition, specific_condition=specific_condition
+#         )
+#         return final_query
+
+#     if 'System Manager' in user_roles:
+#         if user_work_centers and user_equipment_groups:
+#             work_centers_condition = ", ".join(["'{0}'".format(wc) for wc in user_work_centers])
+#             equipment_groups_condition = ", ".join(["'{0}'".format(eg) for eg in user_equipment_groups])
+
+#             return """
+#             (`tabTask Detail`.`work_center` IN ({work_centers_condition}) 
+#             AND `tabTask Detail`.`equipment_group` IN ({equipment_groups_condition})
+#             OR `tabTask Detail`.`work_center` IS NULL)
+#             """.format(work_centers_condition=work_centers_condition,
+#                        equipment_groups_condition=equipment_groups_condition)
+#         else:
+#             return "1=1"
+
+#     return "1=0"

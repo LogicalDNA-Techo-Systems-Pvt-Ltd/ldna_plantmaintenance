@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "user_name",
+  "process_manager",
   "maintenance_users"
  ],
  "fields": [
@@ -22,11 +23,17 @@
    "fieldtype": "Table MultiSelect",
    "label": "Maintenance Users",
    "options": "User Details CT"
+  },
+  {
+   "fieldname": "process_manager",
+   "fieldtype": "Table MultiSelect",
+   "label": "Process Manager",
+   "options": "Process Manager CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-11 11:47:51.290825",
+ "modified": "2025-02-13 15:17:21.963095",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "User Details",

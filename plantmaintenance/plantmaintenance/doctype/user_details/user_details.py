@@ -32,3 +32,16 @@ def get_maintenance_users(doctype, txt, searchfield, start, page_len, filters):
         AND name != 'Administrator'
         ORDER BY full_name
     """)
+
+
+@frappe.whitelist()
+def get_process_managers(doctype, txt, searchfield, start, page_len, filters):
+    return frappe.db.sql("""
+        SELECT name, full_name FROM `tabUser`
+        WHERE name IN (
+            SELECT parent FROM `tabHas Role`
+            WHERE role = 'Process Manager'
+        ) AND enabled = 1
+        AND name != 'Administrator'
+        ORDER BY full_name
+    """)
