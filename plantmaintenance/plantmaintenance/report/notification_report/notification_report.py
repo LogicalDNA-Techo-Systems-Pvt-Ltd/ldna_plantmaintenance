@@ -105,6 +105,7 @@ def get_data(filters):
             time_taken_by_process_manager = ""
         
         approver_name = frappe.db.get_value("User", row['approver'], "first_name") if row['approver'] else ""
+        assigned_to_name = frappe.db.get_value("User", {"name": row['assigned_to']}, "first_name") or row['assigned_to']
 
         process_manager_name = (
             frappe.db.get_value("User", row['process_manager'], "first_name") 
@@ -128,7 +129,7 @@ def get_data(filters):
             'actual_value': row['actual_value'],
             'acceptance_criteria_for_list': row['acceptance_criteria_for_list'],
 			'approver': approver_name,
-            'assigned_to': row['assigned_to'],
+            'assigned_to': assigned_to_name,
             'send_for_approval_date': row['send_for_approval_date'],
             'approved_date': row['approved_date'],
             'completion_date': row['completion_date'],

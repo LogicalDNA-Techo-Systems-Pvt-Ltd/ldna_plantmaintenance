@@ -76,6 +76,7 @@ def get_data(filters):
 
     for row in raw_data:
         approver_name = frappe.db.get_value("User", row['approver'], "first_name") if row['approver'] else ""
+        assigned_to_name = frappe.db.get_value("User", {"name": row['assigned_to']}, "first_name") or row['assigned_to']
 
         data.append({
             'task_detail': row['task_detail'],
@@ -90,7 +91,7 @@ def get_data(filters):
 			'parameter': row['parameter'],
             'parameter_type': row['parameter_type'],
 			'approver':  approver_name,
-            'assigned_to': row['assigned_to'],
+            'assigned_to': assigned_to_name,
             'work_center': row['work_center'],
             'status': row['status'],
         })
