@@ -60,6 +60,18 @@ frappe.ui.form.on('Task Detail', {
             frm.set_df_property('material_returned', 'read_only', 0);
         }
         // toggle_add_assignee_button(frm);
+
+        // Hide fields for 'Maintenance User' role
+        if (frappe.user.has_role('Maintenance User')) {
+            frm.set_df_property('minimum_value', 'hidden', 1);
+            frm.set_df_property('maximum_value', 'hidden', 1);
+            frm.set_df_property('standard_value', 'hidden', 1);
+        } else {
+            frm.set_df_property('minimum_value', 'hidden', 0);
+            frm.set_df_property('maximum_value', 'hidden', 0);
+            frm.set_df_property('standard_value', 'hidden', 0);
+        }
+
         
         let selectedRows = [];
 
@@ -575,12 +587,6 @@ function showUserSelectionDialog(frm, assignedUsers, selectedAssignees) {
 }
 
 
-
-
-
-
-
-
 frappe.ui.form.on('Task Detail', {
     onload: function(frm) {
         frappe.call({
@@ -638,6 +644,3 @@ function hide_add_assignee_button(frm) {
 function show_add_assignee_button(frm) {
     frm.set_df_property('add_assignee', 'hidden', 0);
 }
-
-
-

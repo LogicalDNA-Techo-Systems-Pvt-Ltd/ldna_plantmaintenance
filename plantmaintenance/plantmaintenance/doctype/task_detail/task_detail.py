@@ -176,9 +176,9 @@ def validate_before_workflow_action(doc, method):
                error_message = _("{0} is a mandatory field.").format(field_label)
                frappe.throw(error_message)
 
-    if doc.workflow_state == "Approved" and not doc.process_manager:
-        field_label = frappe.get_meta(doc.doctype).get_field("process_manager").label
-        frappe.throw(_("{0} is a mandatory field.").format(field_label))
+    # if doc.workflow_state == "Approved" and not doc.process_manager:
+    #     field_label = frappe.get_meta(doc.doctype).get_field("process_manager").label
+    #     frappe.throw(_("{0} is a mandatory field.").format(field_label))
 
 
         

@@ -133,7 +133,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Frequency",
-   "options": "\nDaily\nWeekly\nBy Weekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly"
+   "options": "\nDaily\nWeekly\nBy Weekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly\nTwo-Yearly\nFive-Yearly"
   },
   {
    "depends_on": "eval:doc.parameter != \"\" && doc.parameter_type != \"\"",
@@ -161,7 +161,7 @@
    "label": "Values"
   },
   {
-   "depends_on": "eval:doc.frequency==\"Yearly\"",
+   "depends_on": "eval:doc.frequency==\"Yearly\" ||doc.frequency==\"Two-Yearly\" || doc.frequency == \"Five-Yearly\"",
    "fetch_from": "parameter.date_of_year",
    "fieldname": "date_of_year",
    "fieldtype": "Date",
@@ -179,7 +179,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-05 12:56:06.275532",
+ "modified": "2025-02-17 16:51:43.308871",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter CT",

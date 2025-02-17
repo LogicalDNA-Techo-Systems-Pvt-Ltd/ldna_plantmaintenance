@@ -41,7 +41,6 @@ def get_data(filters):
         where_conditions.append("td.status = %(status)s")
         filters_dict["status"] = filters.get("status")
 
-    # Join conditions properly
     where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
     query = f"""
         SELECT
@@ -53,7 +52,9 @@ def get_data(filters):
             td.equipment_group,
             eq.section,
 			td.type,
+            td.activity,
 			td.parameter,
+            td.parameter_type,
 			td.approver,
             td.assigned_to,
             td.send_for_approval_date,
@@ -74,32 +75,7 @@ def get_data(filters):
     data = []
 
     for row in raw_data:
-        overdue_days = max(date_diff(today(), row['plan_start_date']), 0) if row['plan_start_date'] else 0
-
-        if row['plan_start_date'] and row['send_for_approval_date']:
-            days_diff = max(date_diff(row['send_for_approval_date'], row['plan_start_date']), 0)
-            time_taken_by_technical_team = f"{days_diff} days"
-        else:
-            time_taken_by_technical_team = ""  
-        
-        if row['send_for_approval_date'] and row['approved_date']:
-            work_days_diff = max(date_diff(row['approved_date'], row['send_for_approval_date']), 0)
-            time_taken_by_work_completion_team = f"{work_days_diff} days"
-        else:
-            time_taken_by_work_completion_team = ""
-
-        if row['approved_date'] and row['completion_date']:
-            process_days_diff = max(date_diff(row['completion_date'], row['approved_date']), 0)
-            time_taken_by_process_manager = f"{process_days_diff} days"
-        else:
-            time_taken_by_process_manager = ""
-        
-        approver_name = frappe.db.get_value("User", row['approver'], "full_name") if row['approver'] else ""
-
-        process_manager_name = (
-            frappe.db.get_value("User", row['process_manager'], "full_name") 
-            if row['status'] == "Completed" else ""
-        )
+        approver_name = frappe.db.get_value("User", row['approver'], "first_name") if row['approver'] else ""
 
         data.append({
             'task_detail': row['task_detail'],
@@ -110,19 +86,13 @@ def get_data(filters):
             'equipment_group': row['equipment_group'],
             'section': row['section'],
 			'type': row['type'],
+            'activity': row['activity'],
 			'parameter': row['parameter'],
-			'approver': approver_name,
+            'parameter_type': row['parameter_type'],
+			'approver':  approver_name,
             'assigned_to': row['assigned_to'],
-            'send_for_approval_date': row['send_for_approval_date'],
-            'approved_date': row['approved_date'],
-            'completion_date': row['completion_date'],
             'work_center': row['work_center'],
             'status': row['status'],
-            'overdue_days': overdue_days,
-            'time_taken_by_technical_team': time_taken_by_technical_team,
-            'time_taken_by_work_completion_team': time_taken_by_work_completion_team,
-            'time_taken_by_process_manager': time_taken_by_process_manager,
-            'process_manager_name': process_manager_name
         })
 
     return data
@@ -186,6 +156,27 @@ def get_columns():
             "width": 200
         },
         {
+            "label": "Activity",
+            "fieldname": "activity",
+            "fieldtype": "Link",
+            "options": "Activity",
+            "width": 200
+        },
+        {
+            "label": "Parameter",
+            "fieldname": "parameter",
+            "fieldtype": "Link",
+            "options": "Task Detail",
+            "width": 200
+        },
+        {
+            "label": "Parameter Type",
+            "fieldname": "parameter_type",
+            "fieldtype": "Link",
+            "options": "Task Detail",
+            "width": 200
+        },
+        {
             "label": "Status",
             "fieldname": "status",
             "fieldtype": "Select",
@@ -198,22 +189,8 @@ def get_columns():
             "options": "Task Detail",
             "width": 200
         },
-        {
-            "label": "Overdue Days",
-            "fieldname": "overdue_days",
-            "fieldtype": "Data",
-            "width": 200
-        },
-
 		{
-            "label": "Notification Description",
-            "fieldname": "parameter",
-            "fieldtype": "Link",
-            "options": "Task Detail",
-            "width": 200
-        },
-		{
-            "label": "Notification Raised by (Person)",
+            "label": "Approver",
             "fieldname": "approver",
             "fieldtype": "Link",
             "options": "Task Detail",
@@ -221,58 +198,10 @@ def get_columns():
         },
         
         {
-            "label": "Technical completion by",
+            "label": "Assigned To",
             "fieldname": "assigned_to",
             "fieldtype": "Small Text",
             "width": 250
         },
-        {
-            "label": "Technical completion Date",
-            "fieldname": "send_for_approval_date",
-            "fieldtype": "Date",
-            "width": 200
-        },
-        {
-            "label": "Time taken by Technical Team",
-            "fieldname": "time_taken_by_technical_team",
-            "fieldtype": "Data",
-            "width": 250
-        },
-        {
-            "label": "Completion by Maintenance Manager",
-            "fieldname": "approver",
-            "fieldtype": "Link",
-            "options": "Task Detail",
-            "width": 200
-        },
-        {
-            "label": "Maintenance Manager completion date",
-            "fieldname": "approved_date",
-            "fieldtype": "Date",
-            "width": 200
-        },
-        {
-            "label": "Time Taken by Maintenance Manager Team",
-            "fieldname": "time_taken_by_work_completion_team",
-            "fieldtype": "Data",  
-            "width": 250
-        },
-        {
-            "label": "Process Manager Name",
-            "fieldname": "process_manager_name",
-            "fieldtype": "Data",
-            "width": 200
-        },
-        {
-            "label": "Process Manager Date",
-            "fieldname": "completion_date",
-            "fieldtype": "Date",
-            "width": 200
-        },
-        {
-            "label": "Time Taken by Process Manager",
-            "fieldname": "time_taken_by_process_manager",
-            "fieldtype": "Data",
-            "width": 200
-        },
+       
     ]

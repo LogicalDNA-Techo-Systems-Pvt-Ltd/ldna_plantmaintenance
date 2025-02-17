@@ -176,7 +176,7 @@
    "fieldname": "frequency",
    "fieldtype": "Select",
    "label": "Frequency",
-   "options": "\nDaily\nWeekly\nBy Weekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly",
+   "options": "\nDaily\nWeekly\nBy Weekly\nMonthly\nQuarterly\nHalf-Yearly\nYearly\nTwo-Yearly\nFive-Yearly",
    "reqd": 1
   },
   {
@@ -195,7 +195,7 @@
    "read_only_depends_on": " "
   },
   {
-   "depends_on": "eval:doc.frequency==\"Yearly\"",
+   "depends_on": "eval:doc.frequency==\"Yearly\" || doc.frequency==\"Two-Yearly\" || doc.frequency ==\"Five-Yearly\"",
    "fieldname": "date_of_year",
    "fieldtype": "Date",
    "label": "Date Of Year",
@@ -225,7 +225,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-17 10:48:37.463877",
+ "modified": "2025-02-17 16:47:04.892344",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Parameter",

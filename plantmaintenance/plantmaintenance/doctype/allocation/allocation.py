@@ -317,6 +317,16 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                     while current_date <= end_date:
                         dates.append(current_date)
                         current_date += relativedelta(years=1)
+                elif frequency == 'Two-Yearly':
+                    current_date = start_date
+                    while current_date <= end_date:
+                        dates.append(current_date)
+                        current_date += relativedelta(years=2)
+                elif frequency == 'Five-Yearly':
+                    current_date = start_date
+                    while current_date <= end_date:
+                        dates.append(current_date)
+                        current_date += relativedelta(years=5)
 
                 for date in dates:
                     date_obj = getdate(date)
@@ -337,8 +347,12 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
 
                     tasks.append(task)
 
+                    sub_section = frappe.db.get_value("Equipment", task['equipment_code'], "sub_section")
                     parameter_doc = frappe.get_doc("Parameter", parameter.parameter)
                     parameter_type = parameter_doc.parameter_type
+                    minimum_value = parameter_doc.minimum_value
+                    maximum_value = parameter_doc.maximum_value
+                    standard_value = parameter_doc.standard_value
 
                     if not frappe.db.exists('Task Detail', {
                         'equipment_code': task['equipment_code'],
@@ -355,7 +369,8 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             "equipment_group": task['equipment_group'],
                             "activity_group": task['activity_group'],
                             "work_center": work_center,
-                            "plant_section": plant_section,
+                            "section": plant_section,
+                            "sub_section": sub_section, 
                             "location": location,
                             "plan_start_date": task['date'],
                             "activity": task['activity'],
@@ -364,7 +379,10 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             "day": task['day'],
                             "date": task['date'],
                             "unique_key": task['unique_key'],
-                            "parameter_type": parameter_type
+                            "parameter_type": parameter_type,
+                            "minimum_value": minimum_value,  
+                            "maximum_value": maximum_value,
+                            "standard_value": standard_value 
                         })
                         task_detail.insert(ignore_permissions=True)
 

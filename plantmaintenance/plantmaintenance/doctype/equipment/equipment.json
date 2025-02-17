@@ -26,6 +26,7 @@
   "plant_details_section",
   "plant",
   "section",
+  "sub_section",
   "column_break_zbco",
   "location",
   "work_center",
@@ -241,11 +242,16 @@
    "fieldname": "activity_group_active",
    "fieldtype": "Check",
    "label": "Activity Group Active"
+  },
+  {
+   "fieldname": "sub_section",
+   "fieldtype": "Data",
+   "label": "Sub Section"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-29 11:18:58.007922",
+ "modified": "2025-02-17 16:29:29.415534",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
