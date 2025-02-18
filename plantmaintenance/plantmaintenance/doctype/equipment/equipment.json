@@ -11,6 +11,7 @@
   "equipment_code",
   "equipment_name",
   "description",
+  "old_tag_dcs",
   "column_break_bfyn",
   "equipment_group",
   "activity_group_active",
@@ -247,11 +248,16 @@
    "fieldname": "sub_section",
    "fieldtype": "Data",
    "label": "Sub Section"
+  },
+  {
+   "fieldname": "old_tag_dcs",
+   "fieldtype": "Data",
+   "label": "OLD TAG (DCS)"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-17 16:29:29.415534",
+ "modified": "2025-02-18 11:14:40.346719",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",

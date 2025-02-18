@@ -348,6 +348,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                     tasks.append(task)
 
                     sub_section = frappe.db.get_value("Equipment", task['equipment_code'], "sub_section")
+                    old_tag_dcs = frappe.db.get_value("Equipment", task['equipment_code'], "old_tag_dcs")
                     parameter_doc = frappe.get_doc("Parameter", parameter.parameter)
                     parameter_type = parameter_doc.parameter_type
                     minimum_value = parameter_doc.minimum_value
@@ -370,6 +371,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             "activity_group": task['activity_group'],
                             "work_center": work_center,
                             "section": plant_section,
+                            "old_tag_dcs": old_tag_dcs,
                             "sub_section": sub_section, 
                             "location": location,
                             "plan_start_date": task['date'],

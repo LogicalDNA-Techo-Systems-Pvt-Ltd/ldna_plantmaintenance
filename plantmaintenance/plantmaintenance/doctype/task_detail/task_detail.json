@@ -15,6 +15,8 @@
   "section_break_hcgq",
   "location",
   "work_center",
+  "equipment_group",
+  "old_tag_dcs",
   "column_break_ukaq",
   "section",
   "sub_section",
@@ -53,7 +55,6 @@
   "standard_value",
   "acceptance_criteria",
   "readings",
-  "equipment_group",
   "section_break_bkit",
   "reading_1",
   "reading_3",
@@ -537,12 +538,20 @@
    "fieldname": "sub_section",
    "fieldtype": "Data",
    "label": "Sub Section"
+  },
+  {
+   "fetch_from": "equipment_code.old_tag_dcs",
+   "fieldname": "old_tag_dcs",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "OLD TAG (DCS)",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-17 17:31:47.417207",
+ "modified": "2025-02-18 11:24:59.339076",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
