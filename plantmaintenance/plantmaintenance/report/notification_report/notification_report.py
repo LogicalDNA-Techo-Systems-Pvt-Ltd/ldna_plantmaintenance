@@ -51,7 +51,7 @@ def get_data(filters):
 			td.equipment_code,
             td.equipment_group,
             eq.section,
-            eq.custom_subsection,
+            eq.sub_section,
 			td.type,
 			td.parameter,
             td.parameter_type,
@@ -119,7 +119,7 @@ def get_data(filters):
 			'equipment_code': row['equipment_code'],
             'equipment_group': row['equipment_group'],
             'section': row['section'],
-            'custom_subsection': row['custom_subsection'],
+            'sub_section': row['sub_section'],
 			'type': row['type'],
 			'parameter': row['parameter'],
             'parameter_type': row['parameter_type'],
@@ -191,7 +191,7 @@ def get_columns():
         },
         {
             "label": "Sub-Section",
-            "fieldname": "custom_subsection",
+            "fieldname": "sub_section",
             "fieldtype": "Data",
             "width": 150
         },
