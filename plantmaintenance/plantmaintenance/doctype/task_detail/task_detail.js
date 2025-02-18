@@ -71,7 +71,6 @@ frappe.ui.form.on('Task Detail', {
             frm.set_df_property('maximum_value', 'hidden', 0);
             frm.set_df_property('standard_value', 'hidden', 0);
         }
-
         
         let selectedRows = [];
 
@@ -224,6 +223,12 @@ frappe.ui.form.on('Task Detail', {
 
         set_status_read_only(frm);
         toggle_add_assignee_button(frm);
+
+        frm.set_query("approver", function() {
+            return {
+                query: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_maintenance_managers"
+            };
+        });
 
     },
     after_workflow_action: function (frm) {

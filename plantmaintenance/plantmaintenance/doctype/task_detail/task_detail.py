@@ -421,3 +421,23 @@ def get_all_maintenance_managers():
 
     return [manager[0] for manager in maintenance_managers]
 
+
+
+@frappe.whitelist()
+def get_maintenance_managers(doctype, txt, searchfield, start, page_len, filters):
+    return frappe.db.sql("""
+        SELECT name, full_name
+        FROM `tabUser`
+        WHERE name IN (
+            SELECT parent FROM `tabHas Role`
+            WHERE role = 'Maintenance Manager'
+        ) 
+        AND name != 'Administrator' 
+        AND enabled = 1
+        AND ({search_field} LIKE %(txt)s OR full_name LIKE %(txt)s)
+        LIMIT %(start)s, %(page_len)s
+    """.format(search_field=searchfield), {
+        "txt": f"%{txt}%",
+        "start": start,
+        "page_len": page_len
+    })
