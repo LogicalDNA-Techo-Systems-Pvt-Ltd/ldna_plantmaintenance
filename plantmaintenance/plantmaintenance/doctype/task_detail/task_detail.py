@@ -443,12 +443,30 @@ def get_maintenance_managers(doctype, txt, searchfield, start, page_len, filters
     })
 
 
+# @frappe.whitelist()
+# def get_total_tasks_till_today():
+#     total_tasks = frappe.db.count("Task Detail", filters={"plan_start_date": ["<=", today()]})
+    
+#     return {
+#         "value": total_tasks,
+#         "fieldtype": "Int",  
+#         "route": ["List", "Task Detail"],  
+#         "route_options": {
+#             "plan_start_date": ["<=", today()] 
+#         }
+#     }
+
 @frappe.whitelist()
 def get_total_tasks_till_today():
-    total_tasks = frappe.db.count("Task Detail", filters={"plan_start_date": ["<=", today()]})
+    total_tasks = frappe.get_list(
+        "Task Detail",
+        filters={"plan_start_date": ["<=", today()]},
+        fields=["name"],  
+        ignore_permissions=False  
+    )
     
     return {
-        "value": total_tasks,
+        "value": len(total_tasks), 
         "fieldtype": "Int",  
         "route": ["List", "Task Detail"],  
         "route_options": {
@@ -457,18 +475,15 @@ def get_total_tasks_till_today():
     }
 
 
-
 @frappe.whitelist()
 def get_assigned_tasks():
-    user = frappe.session.user  # Get the logged-in user's email/username
-    user_full_name = frappe.db.get_value("User", user, "full_name")  # Get full name
+    user = frappe.session.user  
+    user_full_name = frappe.db.get_value("User", user, "full_name")  
 
     if user == "Administrator":
-        # Administrator should see all assigned tasks
         total_assigned = frappe.db.count("Task Detail", filters={"assigned_to": ["!=", ""]})
-        route_options = {}  # No filtering for Administrator
+        route_options = {} 
     else:
-        # Use raw SQL to find tasks where the user's name is present in assigned_to
         total_assigned = frappe.db.sql("""
             SELECT COUNT(*) 
             FROM `tabTask Detail`
@@ -481,8 +496,8 @@ def get_assigned_tasks():
     return {
         "value": total_assigned,
         "fieldtype": "Int",
-        "route": ["List", "Task Detail", "List"],  # Open Task Detail list view
-        "route_options": route_options  # Apply filtering only for regular users
+        "route": ["List", "Task Detail", "List"],  
+        "route_options": route_options  
     }
 
 
