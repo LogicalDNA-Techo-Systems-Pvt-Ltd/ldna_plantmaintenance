@@ -154,7 +154,8 @@ def validate_before_workflow_action(doc, method):
             'parameter_dropdown': doc.parameter_type == "List",
             'remark': doc.type != "Preventive",
             'breakdown_reason': doc.type == "Breakdown",
-            'service_call': doc.type == "Breakdown"
+            'service_call': doc.type == "Breakdown",
+            'work_permit_number': True
         }
 
         if doc.parameter_type == "Numeric" and doc.parameter:
@@ -173,8 +174,7 @@ def validate_before_workflow_action(doc, method):
         for fieldname, condition in mandatory_fields.items():
             if condition and not getattr(doc, fieldname, None):
                field_label = frappe.get_meta(doc.doctype).get_field(fieldname).label
-               error_message = _("{0} is a mandatory field.").format(field_label)
-               frappe.throw(error_message)
+               frappe.throw(_("{0} is a mandatory field.").format(field_label))
 
     # if doc.workflow_state == "Approved" and not doc.process_manager:
     #     field_label = frappe.get_meta(doc.doctype).get_field("process_manager").label

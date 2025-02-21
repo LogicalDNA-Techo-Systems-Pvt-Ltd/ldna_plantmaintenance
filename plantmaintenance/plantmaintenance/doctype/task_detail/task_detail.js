@@ -645,6 +645,11 @@ function toggle_add_assignee_button(frm) {
     } else {
         show_add_assignee_button(frm);
     }
+    if (restricted_types.includes(frm.doc.type) && user_has_restricted_role(restricted_roles)) {
+        frm.set_df_property('assigned_to', 'read_only', 1);
+    } else {
+        frm.set_df_property('assigned_to', 'read_only', 0);
+    }
 }
 
 function user_has_restricted_role(roles) {

@@ -152,6 +152,7 @@
    "depends_on": "eval:doc.type!= \"General\"",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "Open\nHold\nIn Progress\nPending Approval\nRejected\nApproved\nCompleted\nCancelled\nOverdue"
   },
@@ -174,8 +175,7 @@
   {
    "fieldname": "assigned_to",
    "fieldtype": "Small Text",
-   "label": "Assigned To",
-   "read_only": 1
+   "label": "Assigned To"
   },
   {
    "depends_on": "eval:doc.workflow_state === \"Open\"",
@@ -551,7 +551,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-18 11:24:59.339076",
+ "modified": "2025-02-21 11:07:55.331580",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
