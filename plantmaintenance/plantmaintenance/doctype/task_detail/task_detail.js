@@ -221,7 +221,6 @@ frappe.ui.form.on('Task Detail', {
         disable_link_click(frm, ['equipment_code']);
         disable_link_click(frm, ['approver']);
 
-        set_status_read_only(frm);
         toggle_add_assignee_button(frm);
 
         frm.set_query("approver", function() {
@@ -304,7 +303,6 @@ frappe.ui.form.on('Task Detail', {
         if (frm.doc.type === 'Breakdown') {
             frm.set_value('parameter_type', '');
         }
-        set_status_read_only(frm);
         toggle_add_assignee_button(frm);
     },
 
@@ -509,13 +507,6 @@ function disable_workflow_actions(frm) {
         frm.page.btn_primary.prop('disabled', true);
     }
 }
-
-function set_status_read_only(frm) {
-    let read_only_types = ["Breakdown", "Shutdown", "Predictive"];
-    let is_read_only = read_only_types.includes(frm.doc.type);
-    frm.set_df_property('status', 'read_only', is_read_only ? 1 : 0);
-}
-
 
 frappe.ui.form.on('Task Detail', {
     add_assignee: function (frm) {

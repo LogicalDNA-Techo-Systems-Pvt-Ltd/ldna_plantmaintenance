@@ -155,7 +155,8 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nHold\nIn Progress\nPending Approval\nRejected\nApproved\nCompleted\nCancelled\nOverdue"
+   "options": "Open\nHold\nIn Progress\nPending Approval\nRejected\nApproved\nCompleted\nCancelled\nOverdue",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_aaju",
@@ -559,7 +560,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-24 10:54:26.718458",
+ "modified": "2025-02-24 15:05:21.212233",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
