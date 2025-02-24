@@ -50,6 +50,7 @@ def get_data(filters):
             td.equipment_name,
             td.equipment_group,
 			td.type,
+            td.work_permit_number,
             td.activity,
 			td.parameter,
             td.assigned_to,
@@ -80,6 +81,7 @@ def get_data(filters):
             'equipment_name': row['equipment_name'],
             'equipment_group': row['equipment_group'],
 			'type': row['type'],
+            'work_permit_number': row['work_permit_number'],
             'activity': row['activity'],
 			'parameter': row['parameter'],
             'assigned_to': assigned_to_name,
@@ -163,6 +165,12 @@ def get_columns():
             "fieldname": "parameter",
             "fieldtype": "Link",
             "options": "Task Detail",
+            "width": 200
+        },
+        {
+            "label": "Work Permit Number",
+            "fieldname": "work_permit_number",
+            "fieldtype": "Data",
             "width": 200
         },
         {
