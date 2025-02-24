@@ -301,6 +301,7 @@
                 // Hide 'Assign To' from sidebar for all doctypes
                 setTimeout(function() {
                     $('a[data-fieldname="assigned_to"]').closest('li').hide();
+                    $('a:contains("Assign To")').hide();
                 }, 0);
 
                 updateBreadcrumbs(doctype, null, false);

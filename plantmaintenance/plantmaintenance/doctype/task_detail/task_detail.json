@@ -20,6 +20,7 @@
   "column_break_ukaq",
   "section",
   "sub_section",
+  "description",
   "equipment_section",
   "equipment_code",
   "equipment_name",
@@ -546,12 +547,19 @@
    "in_list_view": 1,
    "label": "OLD TAG (DCS)",
    "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.type!= \"General\"",
+   "fetch_from": "equipment_code.description",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Equipment Description "
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-21 11:07:55.331580",
+ "modified": "2025-02-24 10:54:26.718458",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
