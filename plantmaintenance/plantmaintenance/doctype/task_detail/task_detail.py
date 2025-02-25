@@ -501,3 +501,9 @@ def get_assigned_tasks():
     }
 
 
+
+def set_plan_start_date(doc, method):
+   if doc.type in ["Breakdown", "Shutdown", "General", "Predictive"]:
+       if not doc.plan_start_date:
+           doc.plan_start_date = doc.creation 
+

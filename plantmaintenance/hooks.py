@@ -171,7 +171,8 @@ doc_events = {
     },
     "Task Detail": {
         "on_update": ["plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.equipment_task_details",
-                    "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.validate_before_workflow_action"]
+                    "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.validate_before_workflow_action"],
+        "before_insert": "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.set_plan_start_date"
     },
     "Equipment": {
         "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks",
