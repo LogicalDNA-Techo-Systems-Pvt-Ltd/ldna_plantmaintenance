@@ -308,10 +308,11 @@
 
                 function toggleAssignToButton() {
                     let selectedItems = listview.get_checked_items();
-                    let openTasks = selectedItems.filter(item => item.status === "Open");
+                    let openTasks = selectedItems.filter(item => item.status === "Open"  || item.status === "Overdue");
 
                     if (openTasks.length > 0) {
                         listview.assignToButton.show();
+                        applyMobileStyles(); 
                     } else {
                         listview.assignToButton.hide();
                     }
@@ -327,7 +328,8 @@
 
                    
                     if (frappe.user_roles.includes("Maintenance Manager")) {
-                        let assignToButton = listview.page.add_inner_button(__('Assign To'), function() {
+                        // let assignToButton = listview.page.add_inner_button(__('Assign To'), function() {
+                            let assignToButton = listview.page.add_button(__('Assign To'), function() {
                             let selectedItems = listview.get_checked_items();
 
                             if (selectedItems.length === 0) {
@@ -433,6 +435,7 @@
 
                             if (openTasks.length > 0) {
                                 assignToButton.show();
+                                applyMobileStyles(); 
                             } else {
                                 assignToButton.hide();
                             }
@@ -444,4 +447,21 @@
             }
         };
     });
+    function applyMobileStyles() {
+        if (!document.getElementById("custom-mobile-style")) {
+            const style = document.createElement('style');
+            style.id = "custom-mobile-style";
+            style.innerHTML = `
+                @media (max-width: 768px) { 
+                    .custom-actions {
+                        display: flex !important;
+                    }
+                    .custom-actions button {
+                        display: block !important;
+                    }
+                }`;
+            document.head.appendChild(style);
+        }
+    }
+    
 })();

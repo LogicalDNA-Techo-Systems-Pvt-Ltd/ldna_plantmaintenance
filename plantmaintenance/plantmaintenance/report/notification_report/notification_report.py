@@ -62,6 +62,7 @@ def get_data(filters):
             td.acceptance_criteria_for_list,
 			td.approver,
             td.assigned_to,
+            td.remark,
             td.send_for_approval_date,
             td.approved_date,
             td.completion_date,
@@ -135,6 +136,7 @@ def get_data(filters):
             'completion_date': row['completion_date'],
             'work_center': row['work_center'],
             'status': row['status'],
+            'remark': row['remark'],
             'overdue_days': overdue_days,
             'time_taken_by_technical_team': time_taken_by_technical_team,
             'time_taken_by_work_completion_team': time_taken_by_work_completion_team,
@@ -259,6 +261,12 @@ def get_columns():
             "fieldname": "type",
             "fieldtype": "Select",
             "options": "Task Detail",
+            "width": 200
+        },
+        {
+            "label": "Remark",
+            "fieldname": "remark",
+            "fieldtype": "Text",
             "width": 200
         },
         
