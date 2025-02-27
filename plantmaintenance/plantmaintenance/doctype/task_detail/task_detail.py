@@ -474,6 +474,29 @@ def get_total_tasks_till_today():
         }
     }
 
+@frappe.whitelist()
+def get_open_tasks_till_today():
+    total_tasks = frappe.get_list(
+        "Task Detail",
+        filters={
+            "status": "Open",
+            "plan_start_date": ["<=", today()]
+        },
+        fields=["name"],  
+        ignore_permissions=False  
+    )
+    
+    return {
+        "value": len(total_tasks), 
+        "fieldtype": "Int",  
+        "route": ["List", "Task Detail"],  
+        "route_options": {
+            "status": "Open",
+            "plan_start_date": ["<=", today()] 
+        }
+    }
+
+
 
 @frappe.whitelist()
 def get_assigned_tasks():
