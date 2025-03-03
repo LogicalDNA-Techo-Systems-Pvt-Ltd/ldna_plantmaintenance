@@ -151,6 +151,11 @@ override_doctype_class = {
 	"Role": "plantmaintenance.plantmaintenance.custom.role.Role"
 }
 
+override_whitelisted_methods = {
+    "frappe.desk.reportview.get": "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_filtered_tasks"
+}
+
+
 # Document Events
 # ---------------
 # Hook on document methods and events

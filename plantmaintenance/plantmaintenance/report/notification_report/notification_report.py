@@ -55,6 +55,7 @@ def get_data(filters):
 			td.type,
 			td.parameter,
             td.parameter_type,
+            td.reading_1,
             td.minimum_value,
             td.maximum_value,
             td.standard_value,
@@ -81,6 +82,8 @@ def get_data(filters):
     data = []
 
     for row in raw_data:
+        assigned_status = "Assigned" if row['assigned_to'] else "UnAssigned"
+
         if row['plan_start_date'] and row['completion_date']:
             overdue_days = max(date_diff(row['completion_date'], row['plan_start_date']), 0)
         elif row['plan_start_date']:
@@ -124,6 +127,7 @@ def get_data(filters):
 			'type': row['type'],
 			'parameter': row['parameter'],
             'parameter_type': row['parameter_type'],
+            'reading_1': row['reading_1'],
             'minimum_value': row['minimum_value'],
             'maximum_value': row['maximum_value'],
             'standard_value': row['standard_value'],
@@ -131,6 +135,7 @@ def get_data(filters):
             'acceptance_criteria_for_list': row['acceptance_criteria_for_list'],
 			'approver': approver_name,
             'assigned_to': assigned_to_name,
+            'assigned_status': assigned_status,
             'send_for_approval_date': row['send_for_approval_date'],
             'approved_date': row['approved_date'],
             'completion_date': row['completion_date'],
@@ -162,6 +167,25 @@ def get_columns():
             "fieldname": "plan_start_date",
             "fieldtype": "Date",
             "width": 150
+        },
+        {
+            "label": "Maintenance Type",
+            "fieldname": "type",
+            "fieldtype": "Select",
+            "options": "Task Detail",
+            "width": 200
+        },
+         {
+            "label": "Status",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "width": 200
+        },
+         {
+            "label": "Assigned/UnAssigned ",
+            "fieldname": "assigned_status",
+            "fieldtype": "Data",
+            "width": 200
         },
 		{
             "label": "Equipment",
@@ -227,6 +251,13 @@ def get_columns():
             "width": 200
         },
         {
+            "label": "Reading",
+            "fieldname": "reading_1",
+            "fieldtype": "Float",
+            "width": 200
+        },
+
+        {
             "label": "Minimum Value",
             "fieldname": "minimum_value",
             "fieldtype": "Float",
@@ -250,19 +281,8 @@ def get_columns():
             "fieldtype": "Data",
             "width": 200
         },
-        {
-            "label": "Status",
-            "fieldname": "status",
-            "fieldtype": "Select",
-            "width": 200
-        },
-		{
-            "label": "Maintenance Type",
-            "fieldname": "type",
-            "fieldtype": "Select",
-            "options": "Task Detail",
-            "width": 200
-        },
+       
+		
         {
             "label": "Remark",
             "fieldname": "remark",
@@ -338,5 +358,11 @@ def get_columns():
             "fieldname": "overdue_days",
             "fieldtype": "Data",
             "width": 200
+        },
+        {
+            "label": "Assigned To",
+            "fieldname": "assigned_to",
+            "fieldtype": "Small Text",
+            "width": 250
         },
     ]

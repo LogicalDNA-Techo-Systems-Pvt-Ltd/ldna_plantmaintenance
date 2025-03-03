@@ -60,17 +60,6 @@ frappe.ui.form.on('Task Detail', {
             frm.set_df_property('material_returned', 'read_only', 0);
         }
         // toggle_add_assignee_button(frm);
-
-        // Hide fields for 'Maintenance User' role
-        if (frappe.user.has_role('Maintenance User')) {
-            frm.set_df_property('minimum_value', 'hidden', 1);
-            frm.set_df_property('maximum_value', 'hidden', 1);
-            frm.set_df_property('standard_value', 'hidden', 1);
-        } else {
-            frm.set_df_property('minimum_value', 'hidden', 0);
-            frm.set_df_property('maximum_value', 'hidden', 0);
-            frm.set_df_property('standard_value', 'hidden', 0);
-        }
         
         let selectedRows = [];
 
@@ -656,3 +645,30 @@ function show_add_assignee_button(frm) {
     frm.set_df_property('add_assignee', 'hidden', 0);
 }
 
+
+
+
+
+frappe.ui.form.on('Task Detail', {
+    parameter_type: function(frm) {
+        if (frm.doc.parameter_type === "Numeric") {
+            if (frappe.user.has_role('Maintenance User') && !frappe.user.has_role('Maintenance Manager')) {
+                frm.set_df_property('minimum_value', 'hidden', 1);
+                frm.set_df_property('maximum_value', 'hidden', 1);
+                frm.set_df_property('standard_value', 'hidden', 1);
+            } else {
+                frm.set_df_property('minimum_value', 'hidden', 0);
+                frm.set_df_property('maximum_value', 'hidden', 0);
+                frm.set_df_property('standard_value', 'hidden', 0);
+            }
+        } else {
+            frm.set_df_property('minimum_value', 'hidden', 1);
+            frm.set_df_property('maximum_value', 'hidden', 1);
+            frm.set_df_property('standard_value', 'hidden', 1);
+        }
+    },
+
+    refresh: function(frm) {
+        frm.trigger('parameter_type');
+    }
+});

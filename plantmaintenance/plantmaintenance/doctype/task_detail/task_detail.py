@@ -530,3 +530,26 @@ def set_plan_start_date(doc, method):
        if not doc.plan_start_date:
            doc.plan_start_date = doc.creation 
 
+@frappe.whitelist()
+def get_filtered_tasks():
+    doctype = frappe.local.form_dict.get("doctype")
+
+    if doctype != "Task Detail":
+        return frappe.call("frappe.desk.reportview.get")  
+
+    user_filters = frappe.local.form_dict.get("filters")
+
+    if isinstance(user_filters, str):
+        user_filters = json.loads(user_filters)
+
+    if not isinstance(user_filters, list):
+        user_filters = []
+
+    user_filters.append(["Task Detail", "plan_start_date", "<=", today()])
+
+    return frappe.get_list(
+        "Task Detail",
+        filters=user_filters,
+        fields=["name", "status", "type", "plan_start_date", "equipment_name", "old_tag_dcs", "parameter", "work_center", "result", "assigned_to", "work_permit_number"],
+        order_by="plan_start_date desc"
+    )
