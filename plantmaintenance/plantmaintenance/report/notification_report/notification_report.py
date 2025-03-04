@@ -49,7 +49,9 @@ def get_data(filters):
             td.plan_start_date,
             td.location,
 			td.equipment_code,
+            td.equipment_name,
             td.equipment_group,
+            td.description,
             eq.section,
             eq.sub_section,
 			td.type,
@@ -121,7 +123,9 @@ def get_data(filters):
             'plan_start_date': row['plan_start_date'],
             'location': row['location'],
 			'equipment_code': row['equipment_code'],
+            'equipment_name': row['equipment_name'],
             'equipment_group': row['equipment_group'],
+            'description': row['description'],
             'section': row['section'],
             'sub_section': row['sub_section'],
 			'type': row['type'],
@@ -195,10 +199,22 @@ def get_columns():
             "width": 150
         },
         {
+            "label": "Equipment Name",
+            "fieldname": "equipment_name",
+            "fieldtype": "Data",
+            "width": 150
+        },
+        {
             "label": "Equipment Group",
             "fieldname": "equipment_group",
             "fieldtype": "Link",
             "options": "Task Detail",
+            "width": 150
+        },
+         {
+            "label": "Equipment Description",
+            "fieldname": "description",
+            "fieldtype": "Text",
             "width": 150
         },
         {
