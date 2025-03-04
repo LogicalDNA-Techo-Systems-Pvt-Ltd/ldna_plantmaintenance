@@ -281,6 +281,7 @@
         });
 
         frappe.listview_settings[doctype] = {
+            hide_report: false,
             refresh: function(listview) {
                 setTimeout(function() {
                     $(".list-row-container .list-row").each(function (i, obj) {
@@ -300,8 +301,10 @@
 
                 // Hide 'Assign To' from sidebar for all doctypes
                 setTimeout(function() {
-                    $('a[data-fieldname="assigned_to"]').closest('li').hide();
-                    $('a:contains("Assign To")').hide();
+                    if (frappe.get_route()[2] !== "Report") {
+                        $('a[data-fieldname="assigned_to"]').closest('li').hide();
+                        $('a:contains("Assign To")').hide();
+                    }
                 }, 0);
 
                 updateBreadcrumbs(doctype, null, false);
@@ -322,7 +325,7 @@
             },
 
             onload: function(listview) {
-                if (listview.doctype === 'Task Detail') {
+                if (listview.doctype === 'Task Detail' && frappe.get_route()[2] !== "Report") {
                     let today = frappe.datetime.get_today();
                     listview.filter_area.add([[listview.doctype, 'plan_start_date', '=', today]]);
 
