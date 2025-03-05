@@ -219,13 +219,19 @@ frappe.ui.form.on('Task Detail', {
         });
 
         // Hide 'Breakdown'and 'Shutdown' type for Maintenance User
-        if (frappe.user_roles.includes('Maintenance User')) {
+        if (
+            frappe.user.has_role('Maintenance User') &&
+            !frappe.user.has_role('Maintenance Manager') &&
+            !frappe.user.has_role('Process Manager')
+        ) {
             let restricted_options = ['Breakdown', 'Shutdown'];
-            let type_field = frm.fields_dict.type.df.options.split('\n');
+            let type_field = frm.fields_dict.type.df.options ? frm.fields_dict.type.df.options.split('\n') : [];
 
-            let allowed_options = type_field.filter(option => !restricted_options.includes(option));
-
-            frm.set_df_property('type', 'options', allowed_options.join('\n'));
+            if (frm.doc.__islocal) {
+                let allowed_options = type_field.filter(option => !restricted_options.includes(option));
+                frm.set_df_property('type', 'options', allowed_options.join('\n'));
+            }
+           
         }
 
     },
@@ -672,3 +678,4 @@ frappe.ui.form.on('Task Detail', {
         frm.trigger('parameter_type');
     }
 });
+
