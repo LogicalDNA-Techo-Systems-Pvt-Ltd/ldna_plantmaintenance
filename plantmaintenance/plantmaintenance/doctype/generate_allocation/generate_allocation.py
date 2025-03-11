@@ -23,6 +23,7 @@ from frappe.exceptions import TimestampMismatchError
 from datetime import timedelta
 from frappe.utils import getdate, add_days
 from dateutil.relativedelta import relativedelta
+
 @frappe.whitelist()
 def load_tasks(plant, location, plant_section, work_center, end_date=None, equipment_list=None):
     today = getdate()
@@ -60,8 +61,11 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
         )
 
         for task in existing_tasks:
-            # Skip tasks that are not Preventive
             if task.get("type") and task["type"] != "Preventive":
+                continue
+            
+            if not task.get("parameter"):
+                frappe.logger().warning(f"Skipping task for {task['equipment_code']} - Parameter is missing.")
                 continue
 
             frequency = task["frequency"]
@@ -85,11 +89,11 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
                 equipment_fields = ["equipment_name", "sub_section", "old_tag_dcs", "description"]
                 equipment_name, sub_section, old_tag_dcs, description = frappe.db.get_value("Equipment", task['equipment_code'], equipment_fields)
 
-                parameter_doc = frappe.get_doc("Parameter", task['parameter'])
-                parameter_type = parameter_doc.parameter_type
-                minimum_value = parameter_doc.minimum_value
-                maximum_value = parameter_doc.maximum_value
-                standard_value = parameter_doc.standard_value
+                parameter_doc = frappe.get_doc("Parameter", task['parameter']) if task["parameter"] else None
+                parameter_type = parameter_doc.parameter_type if parameter_doc else None
+                minimum_value = parameter_doc.minimum_value if parameter_doc else None
+                maximum_value = parameter_doc.maximum_value if parameter_doc else None
+                standard_value = parameter_doc.standard_value if parameter_doc else None
 
                 new_task = {
                     'equipment_code': task['equipment_code'],
