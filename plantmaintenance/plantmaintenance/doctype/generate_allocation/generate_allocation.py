@@ -56,10 +56,14 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
         existing_tasks = frappe.get_all(
             "Task Detail",
             filters={"equipment_code": equipment_code},
-            fields=["equipment_code", "activity", "activity_group", "parameter", "frequency", "plan_start_date"]
+            fields=["equipment_code", "activity", "activity_group", "parameter", "frequency", "plan_start_date", "type"]
         )
 
         for task in existing_tasks:
+            # Skip tasks that are not Preventive
+            if task.get("type") and task["type"] != "Preventive":
+                continue
+
             frequency = task["frequency"]
             plan_start_date = getdate(task["plan_start_date"])
             next_due_date = plan_start_date
@@ -162,6 +166,8 @@ def calculate_next_due_date(current_date, frequency):
         return current_date + relativedelta(years=5)
     
     return current_date
+
+
 
 @frappe.whitelist()
 def download_tasks_excel_for_allocation(tasks):
