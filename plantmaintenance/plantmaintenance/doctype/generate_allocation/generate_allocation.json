@@ -1,0 +1,115 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-11 10:47:59.100368",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "plant",
+  "plant_section",
+  "equipment",
+  "column_break_uclw",
+  "location",
+  "work_center",
+  "section_break_uwet",
+  "start_date",
+  "button_container",
+  "column_break_epin",
+  "end_date",
+  "section_break_jdvh",
+  "task_allocation_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "plant",
+   "fieldtype": "Link",
+   "label": "Plant",
+   "options": "Plant"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Link",
+   "label": "Plant Section",
+   "options": "Section"
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Table MultiSelect",
+   "label": "Equipment",
+   "options": "Equipment CT"
+  },
+  {
+   "fieldname": "column_break_uclw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "work_center",
+   "fieldtype": "Link",
+   "label": "Work Center",
+   "options": "Work Center"
+  },
+  {
+   "fieldname": "section_break_uwet",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "button_container",
+   "fieldtype": "HTML",
+   "label": "Button Container"
+  },
+  {
+   "fieldname": "column_break_epin",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_break_jdvh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_allocation_details",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Task Allocation Details",
+   "options": "Task Allocation Details"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-03-11 13:18:36.337389",
+ "modified_by": "Administrator",
+ "module": "Plantmaintenance",
+ "name": "Generate Allocation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
