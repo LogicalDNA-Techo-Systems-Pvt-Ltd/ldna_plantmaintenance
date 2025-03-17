@@ -479,22 +479,23 @@ def get_open_tasks_till_today():
     total_tasks = frappe.get_list(
         "Task Detail",
         filters={
-            "status": "Open",
+            "status": ["in", ["Open", "In Progress"]],
             "plan_start_date": ["<=", today()]
         },
         fields=["name"],  
         ignore_permissions=False  
     )
-    
+
     return {
         "value": len(total_tasks), 
         "fieldtype": "Int",  
         "route": ["List", "Task Detail"],  
         "route_options": {
-            "status": "Open",
-            "plan_start_date": ["<=", today()] 
+            "status": ["in", ["Open", "In Progress"]],
+            "plan_start_date": ["<=", today()]
         }
     }
+
 
 
 
@@ -552,14 +553,40 @@ def set_plan_start_date(doc, method):
        if not doc.plan_start_date:
            doc.plan_start_date = doc.creation 
 
-# Hide future task from list view
+
+# # Hide future task from list view
+# @frappe.whitelist()
+# def get_filtered_tasks():
+#     doctype = frappe.local.form_dict.get("doctype")
+
+#     if doctype != "Task Detail":
+#         return frappe.call("frappe.desk.reportview.get")  
+
+#     user_filters = frappe.local.form_dict.get("filters")
+
+#     if isinstance(user_filters, str):
+#         user_filters = json.loads(user_filters)
+
+#     if not isinstance(user_filters, list):
+#         user_filters = []
+
+#     user_filters.append(["Task Detail", "plan_start_date", "<=", today()])
+
+#     frappe.local.form_dict["filters"] = json.dumps(user_filters)
+
+#     return frappe.call("frappe.desk.reportview.get")
+
+
+
 @frappe.whitelist()
 def get_filtered_tasks():
     doctype = frappe.local.form_dict.get("doctype")
 
     if doctype != "Task Detail":
-        return frappe.call("frappe.desk.reportview.get")  
+        return frappe.call("frappe.desk.reportview.get")
 
+    user = frappe.session.user 
+    is_admin_or_manager = frappe.get_roles(user)
     user_filters = frappe.local.form_dict.get("filters")
 
     if isinstance(user_filters, str):
@@ -568,7 +595,8 @@ def get_filtered_tasks():
     if not isinstance(user_filters, list):
         user_filters = []
 
-    user_filters.append(["Task Detail", "plan_start_date", "<=", today()])
+    if "Administrator" not in user and "System Manager" not in is_admin_or_manager:
+        user_filters.append(["Task Detail", "plan_start_date", "<=", today()])
 
     frappe.local.form_dict["filters"] = json.dumps(user_filters)
 
