@@ -27,6 +27,7 @@ from dateutil.relativedelta import relativedelta
 @frappe.whitelist()
 def load_tasks(plant, location, plant_section, work_center, end_date=None, equipment_list=None):
     today = getdate()
+    start_date = getdate("2025-02-11")
 
     if not end_date:
         frappe.throw("Please provide an End Date.")
@@ -56,21 +57,24 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
     for equipment_code in equipment_list:
         existing_tasks = frappe.get_all(
             "Task Detail",
-            filters={"equipment_code": equipment_code},
+            filters={
+                "equipment_code": equipment_code,
+                "plan_start_date": [">=", start_date]
+            },
             fields=["equipment_code", "activity", "activity_group", "parameter", "frequency", "plan_start_date", "type"]
         )
 
         for task in existing_tasks:
             if task.get("type") and task["type"] != "Preventive":
                 continue
-            
+
             if not task.get("parameter"):
                 frappe.logger().warning(f"Skipping task for {task['equipment_code']} - Parameter is missing.")
                 continue
 
             frequency = task["frequency"]
             plan_start_date = getdate(task["plan_start_date"])
-            next_due_date = plan_start_date
+            next_due_date = max(plan_start_date, start_date)
 
             while next_due_date <= end_date:
                 date_obj = getdate(next_due_date)
@@ -147,9 +151,7 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
     
     return new_tasks
 
-
 def calculate_next_due_date(current_date, frequency):
-    """Helper function to calculate the next due date based on frequency."""
     if frequency == 'Daily':
         return add_days(current_date, 1)
     elif frequency == 'Weekly':
@@ -168,7 +170,6 @@ def calculate_next_due_date(current_date, frequency):
         return current_date + relativedelta(years=2)
     elif frequency == 'Five-Yearly': 
         return current_date + relativedelta(years=5)
-    
     return current_date
 
 
