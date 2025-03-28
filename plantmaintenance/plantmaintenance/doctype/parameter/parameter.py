@@ -30,24 +30,24 @@ def update_activity_parameter(doc, method):
             activity_doc.save()
 
 
-
-
 def delete_tasks_on_frequency_change(doc, method):
-     if doc.get_db_value('frequency'):
-        previous_frequency = frappe.get_value(doc.doctype, doc.name, 'frequency')
-        
-        if previous_frequency and previous_frequency != doc.frequency:
-            tasks_to_delete = frappe.get_all('Task Detail',
-                filters={
-                    'parameter': doc.name,
-                    'frequency': previous_frequency,
-                    'status': "Open"
-                },
-                fields=['name']
-            )
+    previous_frequency = doc.get_db_value('frequency')
 
+    if previous_frequency and previous_frequency != doc.frequency:
+        tasks_to_delete = frappe.get_all(
+            'Task Detail',
+            filters={
+                'parameter': doc.name,
+                'frequency': previous_frequency,
+                'status': ('in', ["Open", "In Progress", "Overdue", "Pending Approval", 
+                                  "Rejected", "Approved", "Completed", "Cancelled"])
+            },
+            fields=['name']
+        )
+
+        if tasks_to_delete:
             for task in tasks_to_delete:
-                frappe.delete_doc('Task Detail', task['name'])
-
-
+                frappe.delete_doc('Task Detail', task['name'], force=True)
             
+            frappe.db.commit()  
+
