@@ -466,12 +466,13 @@ def get_total_tasks_till_today():
     )
     
     return {
-        "value": len(total_tasks), 
+        "value": int(len(total_tasks)), 
         "fieldtype": "Int",  
         "route": ["List", "Task Detail"],  
         "route_options": {
             "plan_start_date": ["<=", today()] 
-        }
+        },
+        "format": False 
     }
 
 @frappe.whitelist()
@@ -487,17 +488,15 @@ def get_open_tasks_till_today():
     )
 
     return {
-        "value": len(total_tasks), 
+        "value": int(len(total_tasks)), 
         "fieldtype": "Int",  
         "route": ["List", "Task Detail"],  
         "route_options": {
             "status": ["in", ["Open", "In Progress"]],
             "plan_start_date": ["<=", today()]
-        }
+        },
+        "format": False
     }
-
-
-
 
 @frappe.whitelist()
 def get_assigned_tasks():
@@ -518,10 +517,11 @@ def get_assigned_tasks():
         }
 
     return {
-        "value": total_assigned,
+        "value": int(total_assigned),
         "fieldtype": "Int",
         "route": ["List", "Task Detail", "List"],  
-        "route_options": route_options  
+        "route_options": route_options,
+        "format": False  
     }
 
 @frappe.whitelist()
@@ -537,13 +537,14 @@ def get_unassigned_tasks():
     )
 
     return {
-        "value": len(total_unassigned_tasks),
+        "value": int(len(total_unassigned_tasks)),
         "fieldtype": "Int",
         "route": ["List", "Task Detail"],
         "route_options": {
             "plan_start_date": ["<=", today()],
             "assigned_to": ["in", ["", None]]
-        }
+        },
+        "format": False
     }
 
 
