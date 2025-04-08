@@ -32,13 +32,23 @@ class Activity(Document):
 
 
 @frappe.whitelist()
-def delete_task_depends_activity(doc,method):
-    existing_tasks = frappe.get_all('Task Detail', filters={'activity': doc.activity_name, 'status':'Open'}, fields=['name', 'parameter'])
+def delete_task_depends_activity(doc, method):
+    allowed_statuses = [
+        "Open", "In Progress", "Overdue", "Pending Approval", 
+        "Rejected", "Approved", "Completed", "Cancelled"
+    ]
+
+    existing_tasks = frappe.get_all(
+        'Task Detail',
+        filters={
+            'activity': doc.activity_name,
+            'status': ['in', allowed_statuses]
+        },
+        fields=['name', 'parameter']
+    )
     
     current_parameters = {row.parameter for row in doc.parameter}
     
     for task in existing_tasks:
         if task['parameter'] not in current_parameters:
             frappe.delete_doc('Task Detail', task['name'])
-
-
