@@ -108,5 +108,24 @@ on_scrap:function(frm) {
     
 });
 
+// frappe.ui.form.on('Equipment', {
+//     validate(frm) {
+//         let error_rows = [];
 
- 
+//         (frm.doc.equipment_barcode || []).forEach(row => {
+//             if (row.barcode_type === 'EAN') {
+//                 let barcode_value = row.barcode ? row.barcode.trim() : "";
+//                 if (!/^\d{13}$/.test(barcode_value)) {
+//                     error_rows.push(`Row ${row.idx}: Invalid barcode ➝ "${row.barcode}"`);
+//                 }
+//             }
+//         });
+
+//         if (error_rows.length > 0) {
+//             frappe.throw(`
+//                 ${error_rows.join("<br>")}
+//                 <br><br>Please enter 13-digit numeric barcode(s).
+//             `);
+//         }
+//     }
+// });

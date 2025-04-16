@@ -23,6 +23,8 @@
   "column_break_zgul",
   "equipment_model_number",
   "equipment_serial_no",
+  "section_break_yzdr",
+  "equipment_barcode",
   "plant_tab",
   "plant_details_section",
   "plant",
@@ -253,11 +255,22 @@
    "fieldname": "old_tag_dcs",
    "fieldtype": "Data",
    "label": "OLD TAG (DCS)"
+  },
+  {
+   "fieldname": "section_break_yzdr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equipment_barcode",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Equipment Barcode",
+   "options": "Equipment Barcode"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-18 11:14:40.346719",
+ "modified": "2025-04-16 20:07:14.496750",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
@@ -277,6 +290,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

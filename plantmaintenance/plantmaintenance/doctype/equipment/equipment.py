@@ -91,3 +91,22 @@ def update_activity_group_and_delete_tasks(doc, method):
 
 
 
+# import frappe
+# from frappe import _
+
+# @frappe.whitelist()
+# def get_equipment_by_barcode(barcode):
+#     if not barcode:
+#         return {"error": "No barcode provided."}
+
+#     result = frappe.db.get_value(
+#         "Equipment Barcode",
+#         {"barcode": barcode},
+#         "parent",
+#         order_by="creation desc"
+#     )
+
+#     if not result:
+#         return {"error": "No Equipment found with this barcode."}
+
+#     return {"equipment": result}
