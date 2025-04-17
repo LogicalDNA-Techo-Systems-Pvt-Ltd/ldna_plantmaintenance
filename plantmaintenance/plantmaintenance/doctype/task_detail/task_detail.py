@@ -468,6 +468,7 @@ def get_total_tasks_till_today():
     return {
         "value": int(len(total_tasks)), 
         "fieldtype": "Int",  
+        "number_formatter": False,
         "route": ["List", "Task Detail"],  
         "route_options": {
             "plan_start_date": ["<=", today()] 
