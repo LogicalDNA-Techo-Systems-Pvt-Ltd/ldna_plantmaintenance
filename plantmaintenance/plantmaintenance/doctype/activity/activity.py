@@ -31,6 +31,29 @@ class Activity(Document):
 # If delete the parameter from activity, then delete all the task from task detail for that activity.
 
 
+# @frappe.whitelist()
+# def delete_task_depends_activity(doc, method):
+#     allowed_statuses = [
+#         "Open", "In Progress", "Overdue", "Pending Approval", 
+#         "Rejected", "Approved", "Completed", "Cancelled"
+#     ]
+
+#     existing_tasks = frappe.get_all(
+#         'Task Detail',
+#         filters={
+#             'activity': doc.activity_name,
+#             'status': ['in', allowed_statuses]
+#         },
+#         fields=['name', 'parameter']
+#     )
+    
+#     current_parameters = {row.parameter for row in doc.parameter}
+    
+#     for task in existing_tasks:
+#         if task['parameter'] not in current_parameters:
+#             frappe.delete_doc('Task Detail', task['name'])
+
+
 @frappe.whitelist()
 def delete_task_depends_activity(doc, method):
     allowed_statuses = [
@@ -48,7 +71,29 @@ def delete_task_depends_activity(doc, method):
     )
     
     current_parameters = {row.parameter for row in doc.parameter}
-    
+
     for task in existing_tasks:
         if task['parameter'] not in current_parameters:
-            frappe.delete_doc('Task Detail', task['name'])
+            try:
+                task_doc = frappe.get_doc('Task Detail', task['name'])
+
+                if task_doc.docstatus == 1:
+                    task_doc.cancel()
+
+                linked_equipments = frappe.get_all(
+                    'Equipment',
+                    filters=[['Equipment Task Details CT', 'task', '=', task['name']]],
+                    fields=['name']
+                )
+
+                for equipment in linked_equipments:
+                    equipment_doc = frappe.get_doc('Equipment', equipment.name)
+                    equipment_doc.set("equipment_task_details", [
+                        row for row in equipment_doc.equipment_task_details if row.task != task['name']
+                    ])
+                    equipment_doc.save()
+
+                frappe.delete_doc('Task Detail', task['name'], force=1)
+
+            except Exception as e:
+                frappe.log_error(frappe.get_traceback(), f"Error deleting Task Detail: {task['name']}")
