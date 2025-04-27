@@ -234,6 +234,14 @@ scheduler_events = {
     ]
 }
 
+scheduler_events = {
+    "cron": {
+        "*/10 * * * *": [
+            "plantmaintenance.public.py.task.generate_future_tasks"
+        ]
+    }
+}
+
 # Testing
 # -------
 
