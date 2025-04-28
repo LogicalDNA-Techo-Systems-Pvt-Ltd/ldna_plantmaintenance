@@ -3,12 +3,11 @@ from frappe.utils import getdate, add_days
 from dateutil.relativedelta import relativedelta
 import calendar
 
-
 @frappe.whitelist()
 def generate_future_tasks():
     start_date = getdate("2025-02-11")
     today = getdate()
-    end_date = getdate("2028-12-31")
+    end_date = add_days(today, 90)
 
     equipment_list = frappe.db.get_list(
         "Task Detail",
@@ -41,17 +40,18 @@ def generate_future_tasks():
 
             frequency = task["frequency"]
             plan_start_date = getdate(task["plan_start_date"])
-            next_due_date = plan_start_date
             # next_due_date = max(plan_start_date, today)
+            next_due_date = plan_start_date
 
             while next_due_date <= end_date:
-                if frappe.db.exists("Task Detail", {
-                    "equipment_code": task['equipment_code'],
-                    "activity": task['activity'],
-                    "parameter": task['parameter'],
-                    "frequency": task['frequency'],
+                task_exists = frappe.db.exists("Task Detail", {
+                    "equipment_code": task["equipment_code"],
+                    "activity": task["activity"],
+                    "parameter": task["parameter"],
                     "plan_start_date": next_due_date
-                }):
+                })
+
+                if task_exists:
                     next_due_date = calculate_next_due_date(next_due_date, frequency)
                     continue
 
@@ -76,9 +76,9 @@ def generate_future_tasks():
                     "plan_start_date": next_due_date,
                     "day": calendar.day_name[next_due_date.weekday()],
                     "date": next_due_date,
-                    "unique_key": f"{task['equipment_code'][:3]}_{next_due_date}",
-                    "location": "", 
-                    "section": "", 
+                    "unique_key": f"{task['equipment_code'][:3]}_{next_due_date}_{frappe.generate_hash(length=5)}",
+                    "location": "",
+                    "section": "",
                     "old_tag_dcs": old_tag_dcs,
                     "sub_section": sub_section,
                     "description": description,
