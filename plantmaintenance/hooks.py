@@ -234,22 +234,6 @@ scheduler_events = {
     ]
 }
 
-# scheduler_events = {
-#     "cron": {
-#         "*/4 * * * *": [
-#             "plantmaintenance.public.py.task.generate_future_tasks"
-#         ]
-#     }
-# }
-
-scheduler_events = {
-    "cron": {
-        "0 */2 * * *": [  
-            "plantmaintenance.public.py.task.generate_future_tasks"
-        ]
-    }
-}
-
 
 # Testing
 # -------
