@@ -56,6 +56,7 @@ def get_data(filters):
             eq.sub_section,
 			td.type,
 			td.parameter,
+            td.frequency,
             td.parameter_type,
             td.reading_1,
             td.minimum_value,
@@ -130,6 +131,7 @@ def get_data(filters):
             'sub_section': row['sub_section'],
 			'type': row['type'],
 			'parameter': row['parameter'],
+            'frequency': row['frequency'],
             'parameter_type': row['parameter_type'],
             'reading_1': row['reading_1'],
             'minimum_value': row['minimum_value'],
@@ -248,6 +250,13 @@ def get_columns():
             "label": "Parameter",
             "fieldname": "parameter",
             "fieldtype": "Link",
+            "options": "Task Detail",
+            "width": 200
+        },
+        {
+            "label": "Frequency",
+            "fieldname": "frequency",
+            "fieldtype": "Select",
             "options": "Task Detail",
             "width": 200
         },
