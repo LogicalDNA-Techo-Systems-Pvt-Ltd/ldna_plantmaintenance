@@ -88,34 +88,51 @@ def get_equipment_based_on_work_center(work_center):
 #         frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
 
 
-
 @frappe.whitelist()
 def update_activity_group_and_delete_tasks(doc, method):
     old_activity_group = frappe.get_value('Equipment', doc.name, 'activity_group')
     new_activity_group = doc.activity_group
 
     if old_activity_group != new_activity_group:
-        task_details = frappe.get_all('Task Detail',
-                                      filters={'equipment_code': doc.name,
-                                               'activity_group': old_activity_group,
-                                               'status': ['in', [
-                                                   'Open',
-                                                   'Hold',
-                                                   'In Progress',
-                                                   'Pending Approval',
-                                                   'Rejected',
-                                                   'Approved',
-                                                   'Completed',
-                                                   'Cancelled',
-                                                   'Overdue'
-                                               ]]},
-                                      fields=['name'])
-        
-        for task_detail in task_details:
+        task_details = frappe.get_all(
+            'Task Detail',
+            filters={
+                'equipment_code': doc.name,
+                'activity_group': old_activity_group,
+                'status': ['in', [
+                    'Open',
+                    'Hold',
+                    'In Progress',
+                    'Pending Approval',
+                    'Rejected',
+                    'Approved',
+                    'Completed',
+                    'Cancelled',
+                    'Overdue'
+                ]]
+            },
+            fields=['name']
+        )
+
+        task_names = [td['name'] for td in task_details]
+
+        equipment_doc = frappe.get_doc('Equipment', doc.name)
+        equipment_doc.equipment_task_details = [
+            row for row in equipment_doc.equipment_task_details if row.task not in task_names
+        ]
+        equipment_doc.save(ignore_permissions=True)
+
+        for task_name in task_names:
             try:
-                frappe.delete_doc('Task Detail', task_detail['name'], force=1)
-            except frappe.LinkExistsError:
-                frappe.set_value('Task Detail', task_detail['name'], 'status', 'Cancelled')
-                frappe.delete_doc('Task Detail', task_detail['name'], force=1)
+                task_doc = frappe.get_doc('Task Detail', task_name)
+
+                if task_doc.docstatus == 1:
+                    task_doc.flags.ignore_validate = True
+                    task_doc.cancel()
+
+                task_doc.delete(ignore_permissions=True)
+
+            except Exception as e:
+                frappe.log_error(f"Error deleting Task Detail {task_name}: {str(e)}")
 
         frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
