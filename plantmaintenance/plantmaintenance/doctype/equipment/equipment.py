@@ -70,6 +70,23 @@ def get_equipment_based_on_work_center(work_center):
 
 # If change the activity group from equipment then delete the task of that activity group for that equipment.
 
+# @frappe.whitelist()
+# def update_activity_group_and_delete_tasks(doc, method):
+#     old_activity_group = frappe.get_value('Equipment', doc.name, 'activity_group')
+#     new_activity_group = doc.activity_group
+
+#     if old_activity_group != new_activity_group:
+#         task_details = frappe.get_all('Task Detail',
+#                                       filters={'equipment_code': doc.name,
+#                                                'activity_group': old_activity_group,
+#                                                'status': 'Open'},
+#                                       fields=['name'])
+        
+#         for task_detail in task_details:
+#             frappe.delete_doc('Task Detail', task_detail['name'])
+
+#         frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
+
 
 
 @frappe.whitelist()
@@ -81,32 +98,24 @@ def update_activity_group_and_delete_tasks(doc, method):
         task_details = frappe.get_all('Task Detail',
                                       filters={'equipment_code': doc.name,
                                                'activity_group': old_activity_group,
-                                               'status': 'Open'},
+                                               'status': ['in', [
+                                                   'Open',
+                                                   'Hold',
+                                                   'In Progress',
+                                                   'Pending Approval',
+                                                   'Rejected',
+                                                   'Approved',
+                                                   'Completed',
+                                                   'Cancelled',
+                                                   'Overdue'
+                                               ]]},
                                       fields=['name'])
         
         for task_detail in task_details:
-            frappe.delete_doc('Task Detail', task_detail['name'])
+            try:
+                frappe.delete_doc('Task Detail', task_detail['name'], force=1)
+            except frappe.LinkExistsError:
+                frappe.set_value('Task Detail', task_detail['name'], 'status', 'Cancelled')
+                frappe.delete_doc('Task Detail', task_detail['name'], force=1)
 
         frappe.db.set_value('Equipment', doc.name, 'activity_group', new_activity_group)
-
-
-
-# import frappe
-# from frappe import _
-
-# @frappe.whitelist()
-# def get_equipment_by_barcode(barcode):
-#     if not barcode:
-#         return {"error": "No barcode provided."}
-
-#     result = frappe.db.get_value(
-#         "Equipment Barcode",
-#         {"barcode": barcode},
-#         "parent",
-#         order_by="creation desc"
-#     )
-
-#     if not result:
-#         return {"error": "No Equipment found with this barcode."}
-
-#     return {"equipment": result}
