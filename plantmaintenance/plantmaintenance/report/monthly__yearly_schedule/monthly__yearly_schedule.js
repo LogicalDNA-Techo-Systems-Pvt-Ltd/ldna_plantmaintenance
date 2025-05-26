@@ -1,20 +1,17 @@
-// Copyright (c) 2024, LogicalDNA and contributors
+// Copyright (c) 2025, LogicalDNA and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Notification Report"] = {
+frappe.query_reports["Monthly- Yearly Schedule"] = {
 	"filters": [
-		{
-            "fieldname":"from_date",
-            "label": __("From Date"),
+        {
+            "fieldname": "start_date",
+            "label": __("Start Date"),
             "fieldtype": "Date",
-            "default": frappe.datetime.add_months(frappe.datetime.get_today(), -1)
-           
         },
         {
             "fieldname": "to_date",
             "label": __("To Date"),
             "fieldtype": "Date",
-            "default": frappe.datetime.get_today()
         },
         {
             "fieldname": "task_detail",
@@ -24,11 +21,31 @@ frappe.query_reports["Notification Report"] = {
             "width": 200
         },
         {
-            "label": "Maintenance Type",
-            "fieldname": "type",
-            "fieldtype": "Select",
-            "options": "\nPreventive\nBreakdown\nShutdown\nGeneral\nPredictive",
+            "label": "OLD TAG (DCS)",
+            "fieldname": "old_tag_dcs",
+            "fieldtype": "Data",
             "width": 200
+        },
+        {
+            "label": "ABC Indicator",
+            "fieldname": "custom_abc_indicator",
+            "fieldtype": "Select",
+            "options": "\nA\nB\nC\nD",
+            "width": 120
+        },
+        {
+            "label": "Equipment",
+            "fieldname": "equipment_code",
+            "fieldtype": "Link",
+            "options": "Equipment",
+            "width": 200
+        },
+        {
+            "label": "Equipment Name",
+            "fieldname": "equipment_name",
+            "fieldtype": "Data",
+            "width": 200,
+           
         },
         {
             "label": "Equipment Group",
@@ -37,6 +54,7 @@ frappe.query_reports["Notification Report"] = {
             "options": "Equipment  Group",
             "width": 150
         },
+       
         {
             "label": __("Work Center"),
             "fieldname": "work_center",
@@ -44,13 +62,6 @@ frappe.query_reports["Notification Report"] = {
             "options": "Work Center",
             "width": 200
         },
-        {
-            "label": "Status",
-            "fieldname": "status",
-            "fieldtype": "Select",
-            "options":"\nOpen\nIn Progress\nPending Approval\nRejected\nApproved\nCompleted\nCancelled\nOverdue",
-            "width": 200,
-           
-        },
+        
 	]
 };

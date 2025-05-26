@@ -1,6 +1,7 @@
 # Copyright (c) 2025, LogicalDNA and contributors
 # For license information, please see license.txt
 
+
 import frappe
 from frappe.utils import getdate
 from collections import defaultdict
@@ -65,6 +66,7 @@ def get_data(filters):
             td.equipment_name,
             td.description,
             td.parameter_type,
+            td.activity_group,
             td.activity,
             td.frequency,
             eq.section,
@@ -146,7 +148,6 @@ def get_columns():
             "fieldtype": "Data",
             "width": 150
         },
-        
         {
             "label": "Equipment Group",
             "fieldname": "equipment_group",
@@ -180,6 +181,13 @@ def get_columns():
             "fieldname": "sub_section",
             "fieldtype": "Data",
             "width": 150
+        },
+        {
+            "label": "Activity Group",
+            "fieldname": "activity_group",
+            "fieldtype": "Link",
+            "options": "Activity Group",
+            "width": 200
         },
         {
             "label": "Activity",
