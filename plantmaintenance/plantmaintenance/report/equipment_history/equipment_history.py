@@ -1,18 +1,16 @@
 # Copyright (c) 2025, LogicalDNA and contributors
 # For license information, please see license.txt
 
-
 import frappe
 from frappe.utils import getdate
-from collections import defaultdict
 
-def execute(filters):
+def execute(filters=None):
     columns = get_columns()
     data = get_data(filters)
     return columns, data
 
 def get_data(filters):
-    where_conditions = ["td.status = 'Completed'"]
+    where_conditions = []
     filters_dict = {}
 
     if filters.get("task_detail"):
@@ -38,7 +36,7 @@ def get_data(filters):
     if filters.get("old_tag_dcs"):
         where_conditions.append("td.old_tag_dcs = %(old_tag_dcs)s")
         filters_dict["old_tag_dcs"] = filters.get("old_tag_dcs")
-
+    
     if filters.get("start_date"):
         where_conditions.append("td.plan_start_date >= %(start_date)s")
         filters_dict["start_date"] = filters.get("start_date")
@@ -51,7 +49,7 @@ def get_data(filters):
         where_conditions.append("eq.custom_abc_indicator = %(custom_abc_indicator)s")
         filters_dict["custom_abc_indicator"] = filters.get("custom_abc_indicator")
 
-    where_clause = " AND ".join(where_conditions)
+    where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
 
     query = f"""
         SELECT
@@ -62,61 +60,47 @@ def get_data(filters):
             td.old_tag_dcs,
             td.equipment_name,
             td.description,
-            td.activity,
             td.frequency,
-            eq.section,
-            td.location,
             td.equipment_group,
             td.work_center,
             eq.custom_abc_indicator,
-			td.completion_date
+            TIME(td.creation) AS creation_time,
+            TIME(td.modified) AS completion_time,
+            td.modified_by AS process_manager,
+            td.status,
+            td.completion_date
         FROM
             `tabTask Detail` td
         LEFT JOIN
             `tabEquipment` eq ON td.equipment_code = eq.name
         WHERE
             {where_clause}
+        ORDER BY
+            td.parameter, td.plan_start_date
     """
 
-    task_data = frappe.db.sql(query, filters_dict, as_dict=True)
+    results = frappe.db.sql(query, filters_dict, as_dict=True)
 
-    for row in task_data:
-        # Try to get user who approved the 'Completed' workflow
-        completed_by = frappe.db.sql("""
-            SELECT owner
-            FROM `tabWorkflow Action`
-            WHERE reference_doctype = 'Task Detail'
-              AND reference_name = %s
-              AND status = 'Completed'
-            ORDER BY creation DESC
-            
-        """, (row["task_detail"],), as_dict=True)
-
-        if completed_by:
-            full_name = frappe.db.get_value("User", completed_by[0]["owner"], "full_name")
-            row["process_manager_name"] = full_name or completed_by[0]["owner"]
+    for row in results:
+        if row.get("status") == "Completed" and row.get("process_manager"):
+            full_name = (
+                frappe.db.get_value("User", row["process_manager"], "full_name") or
+                "{} {}".format(
+                    frappe.db.get_value("User", row["process_manager"], "first_name") or "",
+                    frappe.db.get_value("User", row["process_manager"], "last_name") or ""
+                ).strip()
+            )
+            row["completion_by"] = full_name if full_name else row["process_manager"]
         else:
-            row["process_manager_name"] = ""
+            row["completion_by"] = ""
 
-    return task_data
+
+    return results
 
 def get_columns():
     return [
         {
-            "label": "Task ID",
-            "fieldname": "task_detail",
-            "fieldtype": "Link",
-            "options": "Task Detail",
-            "width": 200
-        },
-        {
-            "label": "Next Plan Date",
-            "fieldname": "plan_start_date",
-            "fieldtype": "Date",
-            "width": 150
-        },
-        {
-            "label": "Equipment",
+            "label": "Equipment Code",
             "fieldname": "equipment_code",
             "fieldtype": "Link",
             "options": "Equipment",
@@ -131,8 +115,20 @@ def get_columns():
         {
             "label": "ABC Indicator",
             "fieldname": "custom_abc_indicator",
-            "fieldtype": "Select",
+            "fieldtype": "Data",
             "width": 120
+        },
+        {
+            "label": "Work Center",
+            "fieldname": "work_center",
+            "fieldtype": "Data",
+            "width": 200
+        },
+        {
+            "label": "Equipment Category",
+            "fieldname": "equipment_group",
+            "fieldtype": "Data",
+            "width": 150
         },
         {
             "label": "Equipment Name",
@@ -147,64 +143,58 @@ def get_columns():
             "width": 150
         },
         {
-            "label": "Equipment Group",
-            "fieldname": "equipment_group",
+            "label": "Task ID",
+            "fieldname": "task_detail",
             "fieldtype": "Link",
-            "options": "Equipment  Group",
-            "width": 150
-        },
-        {
-            "label": "Work Center",
-            "fieldname": "work_center",
-            "fieldtype": "Link",
-            "options": "Work Center",
+            "options": "Task Detail",
             "width": 200
         },
         {
-            "label": "Location",
-            "fieldname": "location",
-            "fieldtype": "Link",
-            "options": "Location",
+            "label": "Task Date",
+            "fieldname": "plan_start_date",
+            "fieldtype": "Date",
             "width": 150
-        },
-        {
-            "label": "Section",
-            "fieldname": "section",
-            "fieldtype": "Link",
-            "options": "Section",
-            "width": 150
-        },
-        {
-            "label": "Activity",
-            "fieldname": "activity",
-            "fieldtype": "Link",
-            "options": "Activity",
-            "width": 200
         },
         {
             "label": "Parameter",
             "fieldname": "parameter",
-            "fieldtype": "Link",
-            "options": "Parameter",
+            "fieldtype": "Data",
             "width": 200
         },
         {
             "label": "Frequency",
             "fieldname": "frequency",
-            "fieldtype": "Select",
-            "width": 200
-        },
-		{
-            "label": "Task Completion By",
-            "fieldname": "process_manager_name",
             "fieldtype": "Data",
             "width": 200
         },
-		{
-            "label": "Completion Date",
+        {
+            "label": "Task Opening Date",
+            "fieldname": "plan_start_date",
+            "fieldtype": "Date",
+            "width": 200
+        },
+        {
+            "label": "Task Opening Time",
+            "fieldname": "creation_time",
+            "fieldtype": "Time",
+            "width": 200
+        },
+        {
+            "label": "Task Completion Date",
             "fieldname": "completion_date",
             "fieldtype": "Date",
             "width": 200
         },
-		
+        {
+            "label": "Task Completion Time",
+            "fieldname": "completion_time",
+            "fieldtype": "Time",
+            "width": 200
+        },
+        {
+            "label": "Task Completed By",
+            "fieldname": "completion_by",
+            "fieldtype": "Data",
+            "width": 200
+        },
     ]

@@ -103,21 +103,8 @@ def get_data(filters):
 
 def get_columns():
     return [
-        {
-            "label": "Task ID",
-            "fieldname": "task_detail",
-            "fieldtype": "Link",
-            "options": "Task Detail",
-            "width": 200
-        },
-        {
-            "label": "Next Plan Date",
-            "fieldname": "plan_start_date",
-            "fieldtype": "Date",
-            "width": 150
-        },
 		{
-            "label": "Equipment",
+            "label": "Equipment Code",
             "fieldname": "equipment_code",
             "fieldtype": "Link",
             "options": "Task Detail",
@@ -130,18 +117,19 @@ def get_columns():
             "width": 150
         },
         {
+            "label": "Equipment Name",
+            "fieldname": "equipment_name",
+            "fieldtype": "Data",
+            "width": 150
+        },
+        {
             "label": "ABC Indicator",
             "fieldname": "custom_abc_indicator",
             "fieldtype": "Select",
             "options": "Equipment",
             "width": 120
         },
-        {
-            "label": "Equipment Name",
-            "fieldname": "equipment_name",
-            "fieldtype": "Data",
-            "width": 150
-        },
+        
         {
             "label": "Equipment Description",
             "fieldname": "description",
@@ -149,7 +137,7 @@ def get_columns():
             "width": 150
         },
         {
-            "label": "Equipment Group",
+            "label": "Equipment Category",
             "fieldname": "equipment_group",
             "fieldtype": "Link",
             "options": "Task Detail",
@@ -197,6 +185,13 @@ def get_columns():
             "width": 200
         },
         {
+            "label": "Task ID",
+            "fieldname": "task_detail",
+            "fieldtype": "Link",
+            "options": "Task Detail",
+            "width": 200
+        },
+        {
             "label": "Parameter",
             "fieldname": "parameter",
             "fieldtype": "Link",
@@ -209,6 +204,12 @@ def get_columns():
             "fieldtype": "Select",
             "options": "Task Detail",
             "width": 200
+        },
+        {
+            "label": "Next Plan Date",
+            "fieldname": "plan_start_date",
+            "fieldtype": "Date",
+            "width": 150
         },
         {
             "label": "Parameter Type",

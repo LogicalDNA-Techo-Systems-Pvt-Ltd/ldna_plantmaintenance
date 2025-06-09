@@ -1,8 +1,6 @@
 # Copyright (c) 2025, LogicalDNA and contributors
 # For license information, please see license.txt
 
-# Copyright (c) 2025, LogicalDNA and contributors
-# For license information, please see license.txt
 
 import frappe
 from frappe.utils import getdate
@@ -52,6 +50,7 @@ def get_data(filters):
         where_conditions.append("eq.custom_abc_indicator = %(custom_abc_indicator)s")
         filters_dict["custom_abc_indicator"] = filters.get("custom_abc_indicator")
 
+    where_conditions.append("td.plan_start_date > CURDATE()")
     where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
 
     query = f"""
@@ -62,12 +61,10 @@ def get_data(filters):
             td.old_tag_dcs,
             td.equipment_name,
             td.description,
-            td.activity,
             td.frequency,
-            eq.section,
-            td.location,
             td.equipment_group,
             td.work_center,
+            td.plan_start_date,
             eq.custom_abc_indicator
         FROM
             `tabTask Detail` td
@@ -80,43 +77,40 @@ def get_data(filters):
 
     raw_data = frappe.db.sql(query, filters_dict, as_dict=True)
 
-    # ✅ Frequency mapping with checkmarks
     for row in raw_data:
+        plan_date = row.get("plan_start_date")
+
         freq = row.get("frequency", "").strip().lower()
-        row["daily"] = "✔" if freq == "daily" else ""
-        row["weekly"] = "✔" if freq == "weekly" else ""
-        row["by_weekly"] = "✔" if freq in ["bi-weekly", "by weekly", "biweekly"] else ""
-        row["monthly"] = "✔" if freq == "monthly" else ""
-        row["quarterly"] = "✔" if freq == "quarterly" else ""
-        row["half_yearly"] = "✔" if freq in ["half yearly", "half-yearly", "halfyearly"] else ""
-        row["yearly"] = "✔" if freq == "yearly" else ""
-        row["two_yearly"] = "✔" if freq in ["two yearly", "two-yearly", "twoyearly"] else ""
-        row["five_yearly"] = "✔" if freq in ["five yearly", "five-yearly", "fiveyearly"] else ""
+        row["daily"] = plan_date if freq == "daily" else ""
+        row["weekly"] = plan_date if freq == "weekly" else ""
+        row["by_weekly"] = plan_date if freq in ["bi-weekly", "by weekly", "biweekly"] else ""
+        row["monthly"] = plan_date if freq == "monthly" else ""
+        row["quarterly"] = plan_date if freq == "quarterly" else ""
+        row["half_yearly"] = plan_date if freq in ["half yearly", "half-yearly", "halfyearly"] else ""
+        row["yearly"] = plan_date if freq == "yearly" else ""
+        row["two_yearly"] = plan_date if freq in ["two yearly", "two-yearly", "twoyearly"] else ""
+        row["five_yearly"] = plan_date if freq in ["five yearly", "five-yearly", "fiveyearly"] else ""
+
 
     return raw_data
 
 def get_columns():
     return [
-        {"label": "Task ID", "fieldname": "task_detail", "fieldtype": "Link", "options": "Task Detail", "width": 200},
-        {"label": "Equipment", "fieldname": "equipment_code", "fieldtype": "Link", "options": "Task Detail", "width": 150},
+        {"label": "Equipment Code", "fieldname": "equipment_code", "fieldtype": "Link", "options": "Task Detail", "width": 150},
         {"label": "OLD TAG (DCS)", "fieldname": "old_tag_dcs", "fieldtype": "Data", "width": 150},
-        {"label": "ABC Indicator", "fieldname": "custom_abc_indicator", "fieldtype": "Select", "options": "Equipment", "width": 120},
         {"label": "Equipment Name", "fieldname": "equipment_name", "fieldtype": "Data", "width": 150},
+        {"label": "ABC Indicator", "fieldname": "custom_abc_indicator", "fieldtype": "Select", "options": "Equipment", "width": 120},
         {"label": "Equipment Description", "fieldname": "description", "fieldtype": "Data", "width": 150},
         {"label": "Equipment Group", "fieldname": "equipment_group", "fieldtype": "Link", "options": "Task Detail", "width": 150},
         {"label": "Work Center", "fieldname": "work_center", "fieldtype": "Link", "options": "Task Detail", "width": 200},
-        {"label": "Location", "fieldname": "location", "fieldtype": "Link", "options": "Task Detail", "width": 150},
-        {"label": "Section", "fieldname": "section", "fieldtype": "Link", "options": "Section", "width": 150},
-        {"label": "Activity", "fieldname": "activity", "fieldtype": "Link", "options": "Activity", "width": 200},
         {"label": "Parameter", "fieldname": "parameter", "fieldtype": "Link", "options": "Task Detail", "width": 200},
-        {"label": "Frequency", "fieldname": "frequency", "fieldtype": "Select", "options": "Task Detail", "width": 150},
-        {"label": "Daily", "fieldname": "daily", "fieldtype": "Data", "width": 100},
-        {"label": "Weekly", "fieldname": "weekly", "fieldtype": "Data", "width": 100},
-        {"label": "By Weekly", "fieldname": "by_weekly", "fieldtype": "Data", "width": 100},
-        {"label": "Monthly", "fieldname": "monthly", "fieldtype": "Data", "width": 100},
-        {"label": "Quarterly", "fieldname": "quarterly", "fieldtype": "Data", "width": 100},
-        {"label": "Half Yearly", "fieldname": "half_yearly", "fieldtype": "Data", "width": 100},
-        {"label": "Yearly", "fieldname": "yearly", "fieldtype": "Data", "width": 100},
-        {"label": "Two-Yearly", "fieldname": "two_yearly", "fieldtype": "Data", "width": 100},
-        {"label": "Five-Yearly", "fieldname": "five_yearly", "fieldtype": "Data", "width": 100}
+        {"label": "Daily", "fieldname": "daily", "fieldtype": "Data", "width": 150},
+        {"label": "Weekly", "fieldname": "weekly", "fieldtype": "Data", "width": 150},
+        {"label": "By Weekly", "fieldname": "by_weekly", "fieldtype": "Data", "width": 150},
+        {"label": "Monthly", "fieldname": "monthly", "fieldtype": "Data", "width": 150},
+        {"label": "Quarterly", "fieldname": "quarterly", "fieldtype": "Data", "width": 150},
+        {"label": "Half Yearly", "fieldname": "half_yearly", "fieldtype": "Data", "width": 150},
+        {"label": "Yearly", "fieldname": "yearly", "fieldtype": "Data", "width": 150},
+        {"label": "Two-Yearly", "fieldname": "two_yearly", "fieldtype": "Data", "width": 150},
+        {"label": "Five-Yearly", "fieldname": "five_yearly", "fieldtype": "Data", "width": 150}
     ]
