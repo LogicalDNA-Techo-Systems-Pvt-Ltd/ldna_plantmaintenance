@@ -23,8 +23,6 @@
   "column_break_zgul",
   "equipment_model_number",
   "equipment_serial_no",
-  "section_break_yzdr",
-  "equipment_barcode",
   "plant_tab",
   "plant_details_section",
   "plant",
@@ -75,13 +73,6 @@
   {
    "fieldname": "column_break_bfyn",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "equipment_group",
-   "fieldtype": "Link",
-   "label": "Equipment Group",
-   "mandatory_depends_on": "eval:doc.equipment_code",
-   "options": "Equipment  Group"
   },
   {
    "depends_on": "eval:doc.activity_group_active",
@@ -257,20 +248,15 @@
    "label": "OLD TAG (DCS)"
   },
   {
-   "fieldname": "section_break_yzdr",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "equipment_barcode",
-   "fieldtype": "Table",
-   "hidden": 1,
-   "label": "Equipment Barcode",
-   "options": "Equipment Barcode"
+   "fieldname": "equipment_group",
+   "fieldtype": "Link",
+   "label": "Equipment Group",
+   "options": "Equipment  Group"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-17 12:07:19.215555",
+ "modified": "2025-06-11 15:16:16.445276",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
