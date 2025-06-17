@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 
+
 import frappe
 
 def execute(filters=None):
@@ -204,30 +205,24 @@ def get_columns():
             "fieldtype": "Data",
             "width": 250
         },
-		{
-			"label": "Number of PM Task Generated",
-			"fieldname": "task_count",
-			"fieldtype": "Int",
-			"width": 250
-		},
-		{
-			"label": "Number of PM Task Completed",
-			"fieldname": "completed_count",
-			"fieldtype": "Int",
-			"width": 250
-		},
-		{
-			"label": "Equipment wise PM Compliance",
-			"fieldname": "compliance_ratio",
-			"fieldtype": "Float",
-			"width": 250
-		},
-		{
-            "label": "Last PM done date",
-            "fieldname": "last_pm_done_date",
-            "fieldtype": "Date",
-            "width": 250
-        },
+		# {
+		# 	"label": "Number of PM Task Generated",
+		# 	"fieldname": "task_count",
+		# 	"fieldtype": "Int",
+		# 	"width": 250
+		# },
+		# {
+		# 	"label": "Number of PM Task Completed",
+		# 	"fieldname": "completed_count",
+		# 	"fieldtype": "Int",
+		# 	"width": 250
+		# },
+		# {
+		# 	"label": "Equipment wise PM Compliance",
+		# 	"fieldname": "compliance_ratio",
+		# 	"fieldtype": "Float",
+		# 	"width": 250
+		# },
 		{
 			"label": "Number of Breakdowns",
 			"fieldname": "breakdown_count",
@@ -275,5 +270,11 @@ def get_columns():
             "precision": 2,
             "width": 250
         },
+		{
+            "label": "Last PM done date",
+            "fieldname": "last_pm_done_date",
+            "fieldtype": "Date",
+            "width": 250
+        }
            
     ]

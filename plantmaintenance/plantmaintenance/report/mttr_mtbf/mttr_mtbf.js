@@ -1,7 +1,7 @@
 // Copyright (c) 2025, LogicalDNA and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Equipment Wise Compliance"] = {
+frappe.query_reports["MTTR-MTBF"] = {
 	"filters": [
 		{
             "fieldname": "start_date",
