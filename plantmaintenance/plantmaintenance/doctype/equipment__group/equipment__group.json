@@ -45,14 +45,14 @@
   },
   {
    "fieldname": "activity_group",
-   "fieldtype": "Table MultiSelect",
+   "fieldtype": "Table",
    "label": "Activity Group",
    "options": "Activity Group CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-19 12:06:05.794378",
+ "modified": "2025-06-19 15:57:20.677614",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment  Group",

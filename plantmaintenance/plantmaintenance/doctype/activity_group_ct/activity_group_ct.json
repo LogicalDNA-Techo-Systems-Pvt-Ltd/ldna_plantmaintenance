@@ -12,6 +12,7 @@
   {
    "fieldname": "activity_group",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Activity Group",
    "options": "Activity Group"
   }
@@ -20,7 +21,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-06-19 12:05:36.528702",
+ "modified": "2025-06-19 15:57:36.361225",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Activity Group CT",
