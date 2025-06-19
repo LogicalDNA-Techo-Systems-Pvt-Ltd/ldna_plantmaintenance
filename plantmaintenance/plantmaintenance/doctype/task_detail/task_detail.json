@@ -508,7 +508,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "equipment_code.equipment_group",
    "fieldname": "equipment_group",
    "fieldtype": "Link",
    "in_standard_filter": 1,
@@ -560,7 +559,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-24 15:05:21.212233",
+ "modified": "2025-06-19 14:29:55.516003",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
@@ -581,6 +580,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": []

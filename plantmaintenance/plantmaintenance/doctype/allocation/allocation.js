@@ -165,6 +165,56 @@ frappe.ui.form.on('Allocation', {
     
 });
 
+// function load_tasks(frm) {
+//     if (!frm.doc.plant || !frm.doc.location || 
+//         !frm.doc.plant_section || !frm.doc.work_center) {
+//         frappe.msgprint(__('Please fill all the required fields (Plant, Location, Plant Section, Work Center) before loading tasks.'));
+//         return;
+//     }
+
+//     frappe.call({
+//         method: 'plantmaintenance.plantmaintenance.doctype.allocation.allocation.load_tasks',
+//         args: {
+//             plant: frm.doc.plant,
+//             location: frm.doc.location,
+//             plant_section: frm.doc.plant_section,
+//             work_center: frm.doc.work_center,
+//             start_date: frm.doc.start_date,
+//             end_date: frm.doc.end_date,
+//             equipment: frm.doc.equipment || null
+//         },
+//         callback: function (response) {
+//             if (response.message) {
+//                 var tasks = response.message;
+//                 frm.clear_table('task_allocation_details');
+//                 response.message.sort(function (a, b) {
+//                     return new Date(a.date) - new Date(b.date);
+//                 });
+//                 $.each(tasks, function (index, task) {
+//                     var child = frm.add_child('task_allocation_details');
+//                     frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
+//                     frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
+//                     frappe.model.set_value(child.doctype, child.name, 'activity_group', task.activity_group);
+//                     frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
+//                     frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
+//                     frappe.model.set_value(child.doctype, child.name, 'frequency', task.frequency);
+//                     frappe.model.set_value(child.doctype, child.name, 'date', task.date);
+//                     frappe.model.set_value(child.doctype, child.name, 'day', task.day);
+//                     frappe.model.set_value(child.doctype, child.name, 'unique_key', task.unique_key);
+//                 });
+//                 frm.refresh_field('task_allocation_details');
+//                 frm.toggle_display('task_allocation_details', true);
+
+//                 document.getElementById('download-tasks-excel-btn').style.display = 'inline-block';
+//                 document.getElementById('upload-assignment-excel-btn').style.display = 'inline-block';
+//             }
+//         }
+//     });
+// }
+
+
+
+
 function load_tasks(frm) {
     if (!frm.doc.plant || !frm.doc.location || 
         !frm.doc.plant_section || !frm.doc.work_center) {
@@ -190,10 +240,12 @@ function load_tasks(frm) {
                 response.message.sort(function (a, b) {
                     return new Date(a.date) - new Date(b.date);
                 });
+
                 $.each(tasks, function (index, task) {
                     var child = frm.add_child('task_allocation_details');
                     frappe.model.set_value(child.doctype, child.name, 'equipment_code', task.equipment_code);
                     frappe.model.set_value(child.doctype, child.name, 'equipment_name', task.equipment_name);
+                    frappe.model.set_value(child.doctype, child.name, 'equipment_group', task.equipment_group);  // ✅ This line ensures equipment_group is saved
                     frappe.model.set_value(child.doctype, child.name, 'activity_group', task.activity_group);
                     frappe.model.set_value(child.doctype, child.name, 'activity', task.activity);
                     frappe.model.set_value(child.doctype, child.name, 'parameter', task.parameter);
@@ -202,6 +254,7 @@ function load_tasks(frm) {
                     frappe.model.set_value(child.doctype, child.name, 'day', task.day);
                     frappe.model.set_value(child.doctype, child.name, 'unique_key', task.unique_key);
                 });
+
                 frm.refresh_field('task_allocation_details');
                 frm.toggle_display('task_allocation_details', true);
 

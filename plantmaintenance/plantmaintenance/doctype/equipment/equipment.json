@@ -15,7 +15,6 @@
   "column_break_bfyn",
   "equipment_group",
   "activity_group_active",
-  "activity_group",
   "on_scrap",
   "manufacturer_data_section",
   "manufacturer_of_asset",
@@ -73,14 +72,6 @@
   {
    "fieldname": "column_break_bfyn",
    "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval:doc.activity_group_active",
-   "fieldname": "activity_group",
-   "fieldtype": "Link",
-   "label": "Activity Group",
-   "mandatory_depends_on": "eval:doc.activity_group_active",
-   "options": "Activity Group"
   },
   {
    "default": "0",
@@ -249,14 +240,14 @@
   },
   {
    "fieldname": "equipment_group",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Equipment Group",
-   "options": "Equipment  Group"
+   "options": "Equipment Group CT"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-11 15:16:16.445276",
+ "modified": "2025-06-19 12:04:44.960194",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
