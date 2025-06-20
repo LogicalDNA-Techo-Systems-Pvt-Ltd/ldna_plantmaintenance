@@ -16,6 +16,7 @@
   "equipment_group",
   "activity_group_active",
   "on_scrap",
+  "activity_group",
   "manufacturer_data_section",
   "manufacturer_of_asset",
   "country_of_manufacturer",
@@ -243,11 +244,17 @@
    "fieldtype": "Table MultiSelect",
    "label": "Equipment Group",
    "options": "Equipment Group CT"
+  },
+  {
+   "fieldname": "activity_group",
+   "fieldtype": "Link",
+   "label": "Activity Group",
+   "options": "Activity Group"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-19 12:04:44.960194",
+ "modified": "2025-06-20 17:39:44.328553",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
