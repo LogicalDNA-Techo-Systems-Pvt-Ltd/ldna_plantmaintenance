@@ -32,6 +32,12 @@
   "completion_date",
   "column_break_ujwn",
   "approved_date",
+  "section_break_aflg",
+  "task_creation_time",
+  "approved_time",
+  "column_break_yrdk",
+  "send_for_approval_time",
+  "completion_time",
   "section_break_aaju",
   "approver",
   "process_manager",
@@ -557,16 +563,52 @@
    "label": "Equipment Description "
   },
   {
+   "default": "Low",
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
    "options": "\nHigh\nLow\nMedium"
+  },
+  {
+   "fieldname": "section_break_aflg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_creation_time",
+   "fieldtype": "Time",
+   "label": "Task Creation Time",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.send_for_approval_date\n",
+   "fieldname": "send_for_approval_time",
+   "fieldtype": "Time",
+   "label": "Send for Approval Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_yrdk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.approved_date",
+   "fieldname": "approved_time",
+   "fieldtype": "Time",
+   "label": "Approved Time",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.completion_date",
+   "fieldname": "completion_time",
+   "fieldtype": "Time",
+   "label": "Completion Time",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-01 09:11:44.547574",
+ "modified": "2025-07-02 14:39:59.361874",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",

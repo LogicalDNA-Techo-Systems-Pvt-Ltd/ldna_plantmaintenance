@@ -13,6 +13,7 @@ from plantmaintenance.plantmaintenance.notification.custom_notification.notifica
 # from plantmaintenance.plantmaintenance.notification.custom_notification.notification import send_onesignal_notification_for_approval
 from frappe.utils import get_url_to_form
 from frappe.utils import today
+from frappe.utils import nowdate, nowtime
 
 class TaskDetail(Document):
 
@@ -41,10 +42,13 @@ class TaskDetail(Document):
         if self.status == "Pending Approval":
             task_for_approval(self)
             self.send_for_approval_date = nowdate()
+            self.send_for_approval_time = nowtime()
         elif self.status == "Approved":
             self.approved_date = nowdate()
+            self.approved_time = nowtime()
         elif self.status == "Completed":
             self.completion_date = nowdate()
+            self.completion_time = nowtime()
         
 
     
