@@ -642,7 +642,15 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
 
         for eq_group in matching_eq_groups:
             eq_group_doc = frappe.get_doc("Equipment  Group", eq_group)
-            activity_groups = [row.activity_group for row in eq_group_doc.activity_group]
+            # activity_groups = [row.activity_group for row in eq_group_doc.activity_group]
+
+            # ✅ NEW: Only select activity_groups for this equipment_code
+            activity_groups = [
+                row.activity_group
+                for row in eq_group_doc.activity_group
+                if row.equipment_code == eq_doc.name  # Match equipment_code
+            ]
+
 
             for activity_group in activity_groups:
                 activities = frappe.get_all(
@@ -775,4 +783,3 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
         return frappe.msgprint("No tasks found for the provided filters.")
 
     return tasks
-
