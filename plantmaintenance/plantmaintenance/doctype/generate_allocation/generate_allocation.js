@@ -298,6 +298,7 @@ function upload_assignment_excel(frm) {
                     response.message.allocation_details.forEach(detail => {
                         let child = frm.add_child('task_allocation_details');
                         frappe.model.set_value(child.doctype, child.name, 'equipment_code', detail.equipment_code);
+                        frappe.model.set_value(child.doctype, child.name, 'equipment_group', task.equipment_group); 
                         frappe.model.set_value(child.doctype, child.name, 'equipment_name', detail.equipment_name);
                         frappe.model.set_value(child.doctype, child.name, 'activity_group', detail.activity_group);
                         frappe.model.set_value(child.doctype, child.name, 'activity', detail.activity);

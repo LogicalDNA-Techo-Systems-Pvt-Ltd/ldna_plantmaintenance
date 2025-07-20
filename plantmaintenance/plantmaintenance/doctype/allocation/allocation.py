@@ -631,24 +631,22 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
     for equipment_item in equipment_list:
         eq_doc = frappe.get_doc("Equipment", equipment_item.equipment_code)
 
-        # Check if at least one equipment_group is assigned to current user
         matching_eq_groups = [
             row.equipment_group for row in eq_doc.equipment_group
             if row.equipment_group in assigned_equipment_groups
         ]
 
         if not matching_eq_groups:
-            continue  # Skip equipment not in user scope
+            continue  
 
         for eq_group in matching_eq_groups:
             eq_group_doc = frappe.get_doc("Equipment  Group", eq_group)
             # activity_groups = [row.activity_group for row in eq_group_doc.activity_group]
 
-            # ✅ NEW: Only select activity_groups for this equipment_code
             activity_groups = [
                 row.activity_group
                 for row in eq_group_doc.activity_group
-                if row.equipment_code == eq_doc.name  # Match equipment_code
+                if row.equipment_code == eq_doc.name  
             ]
 
 
@@ -741,7 +739,9 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                             parameter_doc = frappe.get_doc("Parameter", parameter.parameter)
                             task_detail_exists = frappe.db.exists('Task Detail', {
                                 'equipment_code': task['equipment_code'],
+                                'equipment_group': task['equipment_group'],
                                 'activity': task['activity'],
+                                'activity_group': task['activity_group'],
                                 'parameter': task['parameter'],
                                 'frequency': task['frequency'],
                                 'plan_start_date': task['date']
@@ -753,7 +753,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                                     "approver": frappe.session.user,
                                     "equipment_code": task['equipment_code'],
                                     "equipment_name": task['equipment_name'],
-                                    "equipment_group": task['equipment_group'],  # ✅ Ensure this is set
+                                    "equipment_group": task['equipment_group'], 
                                     "activity_group": task['activity_group'],
                                     "work_center": work_center,
                                     "section": plant_section,
@@ -774,7 +774,7 @@ def load_tasks(plant, location, plant_section, work_center, start_date=None, end
                                     "standard_value": parameter_doc.standard_value
                                 })
 
-                                # Debug print
+                                
                                 print(">>> Inserting Task Detail with equipment_group:", task_detail.equipment_group)
 
                                 task_detail.insert(ignore_permissions=True)

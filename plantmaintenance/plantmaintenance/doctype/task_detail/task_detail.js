@@ -652,9 +652,6 @@ function show_add_assignee_button(frm) {
 }
 
 
-
-
-
 frappe.ui.form.on('Task Detail', {
     parameter_type: function(frm) {
         if (frm.doc.parameter_type === "Numeric") {
@@ -679,3 +676,35 @@ frappe.ui.form.on('Task Detail', {
     }
 });
 
+frappe.ui.form.on('Task Detail', {
+    equipment_code: function (frm) {
+        if (frm.doc.equipment_code) {
+            frappe.call({
+                method: "frappe.client.get",
+                args: {
+                    doctype: "Equipment",
+                    name: frm.doc.equipment_code
+                },
+                callback: function (r) {
+                    if (r.message) {
+                        let group_list = [];
+
+                        let equipment_groups = r.message.equipment_group || [];
+
+                        for (let row of equipment_groups) {
+                            group_list.push(row.equipment_group); 
+                        }
+                        frm.set_query("equipment_group", function () {
+                            return {
+                                filters: [
+                                    ["name", "in", group_list]
+                                ]
+                            };
+                        });
+                        frm.set_value("equipment_group", null);
+                    }
+                }
+            });
+        }
+    }
+});

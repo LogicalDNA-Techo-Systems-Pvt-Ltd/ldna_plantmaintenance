@@ -61,7 +61,10 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
                 "equipment_code": equipment_code,
                 "plan_start_date": [">=", start_date]
             },
-            fields=["equipment_code", "activity", "activity_group", "parameter", "frequency", "plan_start_date", "type"]
+            fields=[
+                "equipment_code", "activity", "activity_group", "parameter", "frequency",
+                "plan_start_date", "type", "equipment_group"
+            ]
         )
 
         for task in existing_tasks:
@@ -82,27 +85,36 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
 
                 if frappe.db.exists("Task Detail", {
                     "equipment_code": task['equipment_code'],
+                    'equipment_group': task['equipment_group'],
                     "activity": task['activity'],
+                    'activity_group': task['activity_group'],
                     "parameter": task['parameter'],
                     "frequency": task['frequency'],
                     "plan_start_date": next_due_date
                 }):
                     next_due_date = calculate_next_due_date(next_due_date, frequency)
-                    continue 
+                    continue
 
-                equipment_fields = ["equipment_name", "sub_section", "old_tag_dcs", "description"]
-                equipment_name, sub_section, old_tag_dcs, description = frappe.db.get_value("Equipment", task['equipment_code'], equipment_fields)
+                # Fetch Equipment data
+                equipment_doc = frappe.get_doc("Equipment", task['equipment_code'])
+                equipment_name = equipment_doc.equipment_name
+                sub_section = equipment_doc.sub_section
+                old_tag_dcs = equipment_doc.old_tag_dcs
+                description = equipment_doc.description
 
+                # Get parameter details
                 parameter_doc = frappe.get_doc("Parameter", task['parameter']) if task["parameter"] else None
                 parameter_type = parameter_doc.parameter_type if parameter_doc else None
                 minimum_value = parameter_doc.minimum_value if parameter_doc else None
                 maximum_value = parameter_doc.maximum_value if parameter_doc else None
                 standard_value = parameter_doc.standard_value if parameter_doc else None
 
+                # Build new task dict
                 new_task = {
                     'equipment_code': task['equipment_code'],
-                    'equipment_name': equipment_name,  
-                    'activity_group': task['activity_group'], 
+                    'equipment_group': task.get('equipment_group'),  
+                    'equipment_name': equipment_name,
+                    'activity_group': task['activity_group'],
                     'activity': task['activity'],
                     'parameter': task['parameter'],
                     'frequency': frequency,
@@ -124,8 +136,9 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
                 task_detail.update({
                     "approver": frappe.session.user,
                     "equipment_code": new_task['equipment_code'],
-                    "equipment_name": new_task['equipment_name'],  
-                    "activity_group": new_task['activity_group'],  
+                    "equipment_name": new_task['equipment_name'],
+                    "equipment_group": new_task['equipment_group'],  
+                    "activity_group": new_task['activity_group'],
                     "activity": new_task['activity'],
                     "parameter": new_task['parameter'],
                     "frequency": new_task['frequency'],
@@ -148,7 +161,7 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
                 next_due_date = calculate_next_due_date(next_due_date, frequency)
 
     frappe.logger().info(f"Total New Tasks Generated: {len(new_tasks)}")
-    
+
     return new_tasks
 
 def calculate_next_due_date(current_date, frequency):
