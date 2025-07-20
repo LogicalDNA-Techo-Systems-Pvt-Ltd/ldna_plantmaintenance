@@ -1,7 +1,6 @@
 # Copyright (c) 2025, LogicalDNA and contributors
 # For license information, please see license.txt
 
-# import frappe
 
 import frappe
 
@@ -27,7 +26,8 @@ def get_data(filters):
 
     open_task_case = f"""
         COUNT(CASE 
-            WHEN {build_condition(["td.status = 'Open'"])}
+            WHEN td.status IN ('Open', 'Overdue')
+            {"AND td.plan_start_date <= '" + selected_date + "'" if selected_date else ""}
             THEN td.name 
         END)
     """
