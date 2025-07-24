@@ -45,6 +45,12 @@ def get_data(filters):
             THEN td.name 
         END)
     """
+    user_pending = f"""
+        COUNT(CASE 
+            WHEN {build_condition(["td.status = 'In Progress'"])}
+            THEN td.name 
+        END)
+    """
 
     completed_by_technical_case = f"""
         COUNT(CASE 
@@ -52,8 +58,7 @@ def get_data(filters):
             THEN td.name 
         END)
     """
-
-    open_by_process_case = f"""
+    process_manager_pending = f"""
         COUNT(CASE 
             WHEN {build_condition(["td.status = 'Approved'"])}
             THEN td.name 
@@ -75,8 +80,9 @@ def get_data(filters):
             {open_task_case} AS open_task,
             {generated_task_case} AS generated_task,
             {unassigned_task_case} AS unassigned_task,
+            {user_pending} AS user_pending,
             {completed_by_technical_case} AS completed_by_technical,
-            {open_by_process_case} AS open_by_process,
+            {process_manager_pending} AS process_manager_pending,
             {pending_jobs_case} AS pending_jobs
         FROM `tabWork Center` wc
         LEFT JOIN `tabTask Detail` td ON td.work_center = wc.name
@@ -90,7 +96,8 @@ def get_columns():
         {"label": "Open Task", "fieldname": "open_task", "fieldtype": "Int", "width": 150},
         {"label": "Generated Task", "fieldname": "generated_task", "fieldtype": "Int", "width": 150},
         {"label": "Unassigned Task", "fieldname": "unassigned_task", "fieldtype": "Int", "width": 150},
-        {"label": "Completed by Technical", "fieldname": "completed_by_technical", "fieldtype": "Int", "width": 200},
-        {"label": "Open by Process", "fieldname": "open_by_process", "fieldtype": "Int", "width": 150},
+        {"label": "User Pending", "fieldname": "user_pending", "fieldtype": "Int", "width": 200},
+        {"label": "Maintenance Manager Pending", "fieldname": "completed_by_technical", "fieldtype": "Int", "width": 200},
+        {"label": "Process Manager Pending", "fieldname": "process_manager_pending", "fieldtype": "Int", "width": 200},
         {"label": "Pending Jobs", "fieldname": "pending_jobs", "fieldtype": "Int", "width": 200},
     ]
