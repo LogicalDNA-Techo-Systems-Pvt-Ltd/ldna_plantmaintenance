@@ -232,7 +232,7 @@ doc_events = {
 scheduler_events = {
     "daily": [
         "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.update_overdue_status",
-        # "plantmaintenance.public.py.generate_daily_tasks.generate_tasks_daily"
+        "plantmaintenance.public.py.generate_daily_tasks.generate_tasks_daily"
     ]
 }
 
