@@ -27,7 +27,7 @@ from dateutil.relativedelta import relativedelta
 @frappe.whitelist()
 def load_tasks(plant, location, plant_section, work_center, end_date=None, equipment_list=None):
     today = getdate()
-    start_date = getdate("2025-02-11")
+    start_date = getdate("2025-08-01")
 
     if not end_date:
         frappe.throw("Please provide an End Date.")
