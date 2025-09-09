@@ -158,6 +158,9 @@ def load_tasks(plant, location, plant_section, work_center, end_date=None, equip
                 })
                 task_detail.insert(ignore_permissions=True)
 
+                if not frappe.flags.in_test:
+                    frappe.db.commit()
+
                 next_due_date = calculate_next_due_date(next_due_date, frequency)
 
     frappe.logger().info(f"Total New Tasks Generated: {len(new_tasks)}")
