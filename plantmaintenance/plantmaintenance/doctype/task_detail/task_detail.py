@@ -215,26 +215,25 @@ def update_overdue_status():
         today = nowdate()
 
         overdue_tasks = frappe.get_all('Task Detail', filters={
+            'plan_start_date': ['<', today],
             'status': ['in', ['Open', 'In Progress']]
-        }, fields=['name', 'plan_start_date', 'type'])  
+        })
 
         batch_size = 50
         for i in range(0, len(overdue_tasks), batch_size):
             tasks_batch = overdue_tasks[i:i + batch_size]
             for task in tasks_batch:
                 try:
-                    # check grace period based on type
-                    if task.type == "Preventive":
-                        overdue_date = add_days(task.plan_start_date, 5)
+                    doc = frappe.get_doc('Task Detail', task.name)
+                    if doc.type == 'Preventive':
+                        overdue_date = doc.plan_start_date + timedelta(days=5)
+                        if today >= str(overdue_date):
+                            doc.status = 'Overdue'
                     else:
-                        overdue_date = add_days(task.plan_start_date, 1)
-
-                    if today > overdue_date:
-                        doc = frappe.get_doc('Task Detail', task.name)
                         doc.status = 'Overdue'
-                        doc.save(ignore_permissions=True)
-                        frappe.db.commit()
 
+                    doc.save(ignore_permissions=True)
+                    frappe.db.commit()
                 except Exception as e:
                     frappe.log_error(f"Error updating task {task.name}: {str(e)}", "Update Overdue Status")
                     continue  
