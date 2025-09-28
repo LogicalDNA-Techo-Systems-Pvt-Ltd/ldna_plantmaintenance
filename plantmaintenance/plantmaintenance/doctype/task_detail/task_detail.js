@@ -623,7 +623,7 @@ frappe.ui.form.on('Task Detail', {
 function toggle_add_assignee_button(frm) {
     if (!frm.doc.type) return;
 
-    const restricted_types = ["General", "Breakdown", "Shutdown", "Predictive"];
+    const restricted_types = ["Breakdown", "Shutdown", "Predictive"];
     const restricted_roles = ["Maintenance User", "Process Manager"];
 
     if (restricted_types.includes(frm.doc.type) && user_has_restricted_role(restricted_roles)) {
@@ -631,11 +631,11 @@ function toggle_add_assignee_button(frm) {
     } else {
         show_add_assignee_button(frm);
     }
-    if (restricted_types.includes(frm.doc.type) && user_has_restricted_role(restricted_roles)) {
-        frm.set_df_property('assigned_to', 'read_only', 1);
-    } else {
-        frm.set_df_property('assigned_to', 'read_only', 0);
-    }
+    // if (restricted_types.includes(frm.doc.type) && user_has_restricted_role(restricted_roles)) {
+    //     frm.set_df_property('assigned_to', 'read_only', 1);
+    // } else {
+    //     frm.set_df_property('assigned_to', 'read_only', 0);
+    // }
 }
 
 function user_has_restricted_role(roles) {

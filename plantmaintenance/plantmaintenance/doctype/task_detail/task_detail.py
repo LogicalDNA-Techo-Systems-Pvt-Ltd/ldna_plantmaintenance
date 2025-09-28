@@ -183,35 +183,65 @@ def validate_before_workflow_action(doc, method):
     # if doc.workflow_state == "Approved" and not doc.process_manager:
     #     field_label = frappe.get_meta(doc.doctype).get_field("process_manager").label
     #     frappe.throw(_("{0} is a mandatory field.").format(field_label))
+  
 
+# def update_overdue_status():
+#     try:
+#         today = nowdate()
 
+#         overdue_tasks = frappe.get_all('Task Detail', filters={
+#             'plan_start_date': ['<', today],
+#             'status': ['in', ['Open', 'In Progress']]
+#         })
+
+#         batch_size = 50
+#         for i in range(0, len(overdue_tasks), batch_size):
+#             tasks_batch = overdue_tasks[i:i + batch_size]
+#             for task in tasks_batch:
+#                 try:
+#                     doc = frappe.get_doc('Task Detail', task.name)
+#                     doc.status = 'Overdue' 
+#                     doc.save(ignore_permissions=True)
+#                     frappe.db.commit()
+#                 except Exception as e:
+#                     frappe.log_error(f"Error updating task {task.name}: {str(e)}", "Update Overdue Status")
+#                     continue  
+
+#     except Exception as e:
+#         frappe.log_error(f"Scheduler event failed: {str(e)}", "Update Overdue Status")
         
-
 def update_overdue_status():
     try:
         today = nowdate()
 
         overdue_tasks = frappe.get_all('Task Detail', filters={
-            'plan_start_date': ['<', today],
             'status': ['in', ['Open', 'In Progress']]
-        })
+        }, fields=['name', 'plan_start_date', 'type'])  
 
         batch_size = 50
         for i in range(0, len(overdue_tasks), batch_size):
             tasks_batch = overdue_tasks[i:i + batch_size]
             for task in tasks_batch:
                 try:
-                    doc = frappe.get_doc('Task Detail', task.name)
-                    doc.status = 'Overdue' 
-                    doc.save(ignore_permissions=True)
-                    frappe.db.commit()
+                    # check grace period based on type
+                    if task.type == "Preventive":
+                        overdue_date = add_days(task.plan_start_date, 5)
+                    else:
+                        overdue_date = add_days(task.plan_start_date, 1)
+
+                    if today > overdue_date:
+                        doc = frappe.get_doc('Task Detail', task.name)
+                        doc.status = 'Overdue'
+                        doc.save(ignore_permissions=True)
+                        frappe.db.commit()
+
                 except Exception as e:
                     frappe.log_error(f"Error updating task {task.name}: {str(e)}", "Update Overdue Status")
                     continue  
 
     except Exception as e:
         frappe.log_error(f"Scheduler event failed: {str(e)}", "Update Overdue Status")
-        
+
         
 
 #Fetch the task detail in equipment's history tab if task is completed or rejected PD.
@@ -551,7 +581,7 @@ def get_unassigned_tasks():
 
 
 def set_plan_start_date(doc, method):
-   if doc.type in ["Breakdown", "Shutdown", "General", "Predictive"]:
+   if doc.type in ["Breakdown", "Shutdown", "Predictive"]:
        if not doc.plan_start_date:
            doc.plan_start_date = doc.creation 
 
