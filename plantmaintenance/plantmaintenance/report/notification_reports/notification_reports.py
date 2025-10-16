@@ -576,7 +576,10 @@ def get_data(filters):
             'time_taken_by_process_manager': time_taken_by_process_manager,
             'process_manager_name': process_manager_name,
             'creation_time': creation_time,
-            'modified_time': modified_time
+            'modified_time': modified_time,
+            'technical_completion_user_id': row['assigned_to'],    
+            'maintenance_manager_user_id': row['approver'],       
+            'process_manager_user_id': row['process_manager'] 
         })
 
     return data
@@ -768,6 +771,12 @@ def get_columns():
             "width": 250
         },
         {
+            "label": "Technical Completion User ID",
+            "fieldname": "technical_completion_user_id",
+            "fieldtype": "Data",
+            "width": 200
+        },
+        {
             "label": "Technical completion Date",
             "fieldname": "send_for_approval_date",
             "fieldtype": "Date",
@@ -787,6 +796,12 @@ def get_columns():
             "width": 200
         },
         {
+            "label": "Maintenance Manager User ID",
+            "fieldname": "maintenance_manager_user_id",
+            "fieldtype": "Data",
+            "width": 200
+        },
+        {
             "label": "Maintenance Manager completion date",
             "fieldname": "approved_date",
             "fieldtype": "Date",
@@ -801,6 +816,12 @@ def get_columns():
         {
             "label": "Process Manager Name",
             "fieldname": "process_manager_name",
+            "fieldtype": "Data",
+            "width": 200
+        },
+        {
+            "label": "Process Manager User ID",
+            "fieldname": "process_manager_user_id",
             "fieldtype": "Data",
             "width": 200
         },

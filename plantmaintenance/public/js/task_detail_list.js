@@ -330,7 +330,8 @@
                     listview.filter_area.add([[listview.doctype, 'plan_start_date', '=', today]]);
 
                    
-                    if (frappe.user_roles.includes("Maintenance Manager")) {
+                    // if (frappe.user_roles.includes("Maintenance Manager")) {
+                    if (frappe.user_roles.includes("Maintenance Manager") || frappe.user_roles.includes("Shift Engineer")) {
                         // let assignToButton = listview.page.add_inner_button(__('Assign To'), function() {
                             let assignToButton = listview.page.add_button(__('Assign To'), function() {
                             let selectedItems = listview.get_checked_items();
