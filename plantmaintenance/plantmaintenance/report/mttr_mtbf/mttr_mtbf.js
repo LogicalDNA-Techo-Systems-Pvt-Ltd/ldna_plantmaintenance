@@ -50,5 +50,23 @@ frappe.query_reports["MTTR-MTBF"] = {
 			"width": 200
 		},
 
-	]
+	],
+	"formatter": function(value, row, column, data, default_formatter) {
+		value = default_formatter(value, row, column, data);
+		
+		if (column.fieldname == "action" && data) {
+			value = `<button class="btn btn-xs btn-primary" 
+				onclick="frappe.query_reports['MTTR-MTBF'].show_details('${data.equipment_code}')">
+				Action
+			</button>`;
+		}
+		
+		return value;
+	},
+	"show_details": function(equipment_code) {
+		frappe.set_route("List", "Task Detail", {
+			"equipment_code": equipment_code,
+			"type": "Breakdown"
+		});
+	}
 };

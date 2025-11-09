@@ -89,7 +89,7 @@ def get_data(filters):
             `tabEquipment` AS e
         LEFT JOIN
             `tabEquipment Group CT` AS eg ON eg.parent = e.name
-        LEFT JOIN (
+        INNER JOIN (
             SELECT 
                 equipment_code,
                 COUNT(*) AS breakdown_count,
@@ -132,7 +132,8 @@ def get_data(filters):
             'mttr': row['mttr'],
             'mtbf': row['mtbf'],
             'mtbr': row['mtbr'],
-            'last_pm_done_date': row['last_pm_done_date']
+            'last_pm_done_date': row['last_pm_done_date'],
+            'action': 'Action'
         }
         for row in raw_data
     ]
@@ -153,4 +154,5 @@ def get_columns():
         {"label": "MTBF", "fieldname": "mtbf", "fieldtype": "Float", "precision": 2, "width": 250},
         {"label": "MTBR", "fieldname": "mtbr", "fieldtype": "Float", "precision": 2, "width": 250},
         {"label": "Last PM done date", "fieldname": "last_pm_done_date", "fieldtype": "Date", "width": 250},
+        {"label": "Action", "fieldname": "action", "fieldtype": "Button", "width": 100},
     ]

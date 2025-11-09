@@ -129,3 +129,92 @@ on_scrap:function(frm) {
 //         }
 //     }
 // });
+
+
+frappe.ui.form.on('Equipment', {
+    refresh: function(frm) {
+        setTimeout(() => {
+            set_field_visibility(frm);
+        }, 500);
+    },
+    
+    onload: function(frm) {
+        setTimeout(() => {
+            set_field_visibility(frm);
+        }, 500);
+    }
+});
+
+function set_field_visibility(frm) {
+    let is_maintenance_manager = frappe.user_roles.includes('Maintenance Manager');
+    let is_process_manager = frappe.user_roles.includes('Process Manager');
+    let is_maintenance_user = frappe.user_roles.includes('Maintenance User');
+    
+    console.log('User Roles:', frappe.user_roles);
+    console.log('Is Maintenance Manager:', is_maintenance_manager);
+    console.log('Is Process Manager:', is_process_manager);
+    console.log('Is Maintenance User:', is_maintenance_user);
+    
+    if (is_maintenance_user && !is_maintenance_manager && !is_process_manager) {
+        let visible_fields = [
+            'equipment_group',
+            'plant',
+            'location',
+            'section',
+            'sub_section',
+            'work_center',
+            'equipment_name',
+            'description'
+        ];
+        
+        let tabs_to_hide = [
+            'damage_and_causes_tab',
+            'guarantee_tab',
+            'warranty_tab',
+            'history_tab'
+        ];
+        
+        Object.keys(frm.fields_dict).forEach(function(fieldname) {
+            let field = frm.fields_dict[fieldname];
+            
+            if (field && field.df) {
+                let should_show = visible_fields.includes(fieldname);
+                let is_tab_to_hide = tabs_to_hide.includes(fieldname);
+                
+                if (should_show) {
+                    frm.set_df_property(fieldname, 'hidden', 0);
+                } else if (is_tab_to_hide) {
+                    frm.set_df_property(fieldname, 'hidden', 1);
+                } else if (field.df.fieldtype !== 'Tab Break' && 
+                           field.df.fieldtype !== 'Section Break' && 
+                           field.df.fieldtype !== 'Column Break') {
+                    frm.set_df_property(fieldname, 'hidden', 1);
+                }
+            }
+        });
+        
+        let sections_to_show = ['plant_tab', 'plant_details_section', 'item_details_section'];
+        sections_to_show.forEach(function(sec) {
+            if (frm.fields_dict[sec]) {
+                frm.set_df_property(sec, 'hidden', 0);
+            }
+        });
+        
+        tabs_to_hide.forEach(function(tab) {
+            if (frm.fields_dict[tab]) {
+                frm.set_df_property(tab, 'hidden', 1);
+            }
+        });
+        
+        frm.refresh_fields();
+        
+    } else if (is_maintenance_manager || is_process_manager) {
+        Object.keys(frm.fields_dict).forEach(function(fieldname) {
+            if (frm.fields_dict[fieldname]) {
+                frm.set_df_property(fieldname, 'hidden', 0);
+            }
+        });
+        
+        frm.refresh_fields();
+    }
+}
