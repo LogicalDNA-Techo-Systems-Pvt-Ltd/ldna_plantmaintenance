@@ -381,12 +381,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "service_call",
-   "fieldtype": "Phone",
-   "label": "Service Call",
-   "mandatory_depends_on": "eval:doc.type===\"Breakdown\""
-  },
-  {
    "depends_on": "eval:doc.type!==\"Preventive\"",
    "fieldname": "section_break_guze",
    "fieldtype": "Section Break"
@@ -602,12 +596,18 @@
    "fieldtype": "Time",
    "label": "Completion Time",
    "read_only": 1
+  },
+  {
+   "fieldname": "service_call",
+   "fieldtype": "Data",
+   "label": "Service Call",
+   "mandatory_depends_on": "eval:doc.type===\"Breakdown\""
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-09-28 19:33:05.331694",
+ "modified": "2025-11-24 11:35:52.485007",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Task Detail",
