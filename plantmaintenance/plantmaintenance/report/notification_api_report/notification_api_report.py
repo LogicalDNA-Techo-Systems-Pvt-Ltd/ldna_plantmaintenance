@@ -2,7 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.utils import date_diff, today
+from frappe.utils import date_diff, today, get_datetime
 
 def execute(filters):
     columns = get_columns()
@@ -14,12 +14,15 @@ def get_data(filters):
     filters_dict = {}
 
     if filters.get("from_date"):
-        where_conditions.append("td.plan_start_date >= %(from_date)s")
-        filters_dict["from_date"] = filters.get("from_date")
+        from_datetime = get_datetime(filters.get("from_date"))
+        where_conditions.append("td.creation >= %(from_date)s")
+        filters_dict["from_date"] = from_datetime
 
     if filters.get("to_date"):
-        where_conditions.append("td.plan_start_date <= %(to_date)s")
-        filters_dict["to_date"] = filters.get("to_date")
+        # Convert date to datetime (end of day - 23:59:59)
+        to_datetime = get_datetime(filters.get("to_date")).replace(hour=23, minute=59, second=59)
+        where_conditions.append("td.creation <= %(to_date)s")
+        filters_dict["to_date"] = to_datetime
 
     if filters.get("task_detail"):
         where_conditions.append("td.name = %(task_detail)s")
