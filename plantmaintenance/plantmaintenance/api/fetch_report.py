@@ -1,10 +1,14 @@
 import frappe
 from frappe.desk.query_report import run
+import json
 
 @frappe.whitelist(allow_guest=True)
 def get_notification_report_public(from_date, to_date):
+    """
+    Public API endpoint for Notification Reports
+    """
+    
     try:
-        frappe.set_user("Administrator")
         frappe.set_user("api@sbpl.com")
         
         filters = {
@@ -15,14 +19,23 @@ def get_notification_report_public(from_date, to_date):
         result = run(
             report_name="Notification Reports",
             filters=filters,
-            ignore_prepared_report=False
+            ignore_prepared_report=True, 
+            user="api@sbpl.com"
         )
         
-        return result
+        # Clean response
+        return {
+            "success": True,
+            "columns": result.get("columns", []),
+            "data": result.get("result", []),
+            "total_records": len(result.get("result", [])),
+            "execution_time": result.get("execution_time", 0)
+        }
         
     except Exception as e:
-        frappe.log_error(f"Notification Report Error: {str(e)}")
+        frappe.log_error(f"Notification Report Error: {str(e)}", "Public Report API")
         return {
-            "error": True,
-            "message": str(e)
+            "success": False,
+            "error": str(e),
+            "message": "Failed to fetch report data"
         }
