@@ -152,9 +152,9 @@ def validate_before_workflow_action(doc, method):
     if doc.workflow_state == "Work in Progress" and plan_start_date > today_date:
         frappe.throw(_("You cannot proceed to 'Work in Progress' because the Plan Start Date ({}) is in the future.").format(plan_start_date))
 
-    # if doc.workflow_state == "Completed":
-    #     if not doc.assigned_to:
-    #         frappe.throw(_("Assigned To field is mandatory to complete the workflow."))
+    if doc.workflow_state == "Approved":
+        if not doc.assigned_to:
+            frappe.throw(_("Assigned To field is mandatory to complete the workflow."))
     
     if doc.workflow_state == "Approval Pending":
         mandatory_fields = {
