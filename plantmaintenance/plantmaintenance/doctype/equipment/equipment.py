@@ -224,28 +224,28 @@ def update_activity_group_and_delete_tasks(doc, method):
             frappe.log_error(f"Error deleting Task Detail {task_name}: {str(e)}")
 
 
-def validate(doc, method):
-    if doc.workflow_state == "Approval Pending":
-        return
+# def validate(doc, method):
+#     if doc.workflow_state == "Approval Pending":
+#         return
 
-    if not doc.equipment_group or not doc.equipment_code:
-        return
+#     if not doc.equipment_group or not doc.equipment_code:
+#         return
 
-    for row in doc.equipment_group:
-        equipment_group = row.equipment_group
+#     for row in doc.equipment_group:
+#         equipment_group = row.equipment_group
 
-        activity_rows = frappe.get_all(
-            "Activity Group CT",
-            filters={
-                "parent": equipment_group,
-                "parenttype": "Equipment Group",
-                "equipment_code": doc.equipment_code
-            },
-            limit=1
-        )
+#         activity_rows = frappe.get_all(
+#             "Activity Group CT",
+#             filters={
+#                 "parent": equipment_group,
+#                 "parenttype": "Equipment Group",
+#                 "equipment_code": doc.equipment_code
+#             },
+#             limit=1
+#         )
 
-        if not activity_rows:
-            frappe.throw(
-                f"Equipment Code <b>{doc.equipment_code}</b> is not defined "
-                f"for Equipment Group <b>{equipment_group}</b>."
-            )
+#         if not activity_rows:
+#             frappe.throw(
+#                 f"Equipment Code <b>{doc.equipment_code}</b> is not defined "
+#                 f"for Equipment Group <b>{equipment_group}</b>."
+#             )
