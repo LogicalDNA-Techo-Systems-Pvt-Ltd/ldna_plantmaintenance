@@ -181,7 +181,7 @@ doc_events = {
     },
     "Equipment": {
         "before_save": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.update_activity_group_and_delete_tasks",
-        "validate": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.validate"
+        # "validate": "plantmaintenance.plantmaintenance.doctype.equipment.equipment.validate"
     },
     "Activity":{
         "on_update":"plantmaintenance.plantmaintenance.doctype.activity.activity.delete_task_depends_activity"
