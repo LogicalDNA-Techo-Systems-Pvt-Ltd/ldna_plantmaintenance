@@ -2,7 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.utils import date_diff, today, get_datetime
+from frappe.utils import date_diff, today
 
 def execute(filters):
     columns = get_columns()
@@ -11,18 +11,25 @@ def execute(filters):
 
 def get_data(filters):
     where_conditions = []
+    date_conditions = []
     filters_dict = {}
 
-    if filters.get("from_date"):
-        from_datetime = get_datetime(filters.get("from_date"))
-        where_conditions.append("td.creation >= %(from_date)s")
-        filters_dict["from_date"] = from_datetime
+    if filters.get("from_date") and filters.get("to_date"):
+        date_conditions.append("(td.plan_start_date >= %(from_date)s AND td.plan_start_date <= %(to_date)s)")
+        date_conditions.append("(DATE(td.modified) >= %(from_date)s AND DATE(td.modified) <= %(to_date)s)")
+        filters_dict["from_date"] = filters.get("from_date")
+        filters_dict["to_date"] = filters.get("to_date")
+    elif filters.get("from_date"):
+        date_conditions.append("td.plan_start_date >= %(from_date)s")
+        date_conditions.append("DATE(td.modified) >= %(from_date)s")
+        filters_dict["from_date"] = filters.get("from_date")
+    elif filters.get("to_date"):
+        date_conditions.append("td.plan_start_date <= %(to_date)s")
+        date_conditions.append("DATE(td.modified) <= %(to_date)s")
+        filters_dict["to_date"] = filters.get("to_date")
 
-    if filters.get("to_date"):
-        # Convert date to datetime (end of day - 23:59:59)
-        to_datetime = get_datetime(filters.get("to_date")).replace(hour=23, minute=59, second=59)
-        where_conditions.append("td.creation <= %(to_date)s")
-        filters_dict["to_date"] = to_datetime
+    if date_conditions:
+        where_conditions.append(f"({' OR '.join(date_conditions)})")
 
     if filters.get("task_detail"):
         where_conditions.append("td.name = %(task_detail)s")
@@ -44,7 +51,6 @@ def get_data(filters):
         where_conditions.append("td.status = %(status)s")
         filters_dict["status"] = filters.get("status")
 
-    # Join conditions properly
     where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
     query = f"""
         SELECT
@@ -91,7 +97,6 @@ def get_data(filters):
 
     data = []
 
-    # Get last_sync from Notification API once (outside the loop for performance)
     last_sync = frappe.db.get_single_value("Notification API", "last_sync")
 
     for row in raw_data:
@@ -130,17 +135,6 @@ def get_data(filters):
         )
         creation_time = row['creation'].strftime('%H:%M:%S') if row['creation'] else ""
         modified_time = row['modified'].strftime('%H:%M:%S') if row['modified'] else ""
-
-        # Determine record status based on comparison with last_sync from Notification API
-        if last_sync:
-            if row['creation'] and row['creation'] > last_sync:
-                record_status = "New Record"
-            elif row['modified'] and row['modified'] > last_sync:
-                record_status = "Modified Record"
-            else:
-                record_status = ""
-        else:
-            record_status = ""
 
         data.append({
             'task_detail': row['task_detail'],
@@ -182,7 +176,6 @@ def get_data(filters):
             'modified_time': modified_time,
             'creation': row['creation'],
             'modified': row['modified'],
-            'record_status': record_status,
             'technical_completion_user_id': row['assigned_to'],    
             'maintenance_manager_user_id': row['approver'],       
             'process_manager_user_id': row['process_manager'] 
@@ -468,21 +461,9 @@ def get_columns():
             "width": 250
         },
         {
-            "label": "Creation",
-            "fieldname": "creation",
-            "fieldtype": "Datetime",
-            "width": 180
-        },
-        {
             "label": "Modified",
             "fieldname": "modified",
             "fieldtype": "Datetime",
             "width": 180
-        },
-        {
-            "label": "Record Status",
-            "fieldname": "record_status",
-            "fieldtype": "Data",
-            "width": 150
         }
     ]
