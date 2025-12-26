@@ -17,7 +17,7 @@ def get_notification_report_public(from_date, to_date):
         }
         
         result = run(
-            report_name="Notification Reports",
+            report_name="Notification API Report",
             filters=filters,
             ignore_prepared_report=True, 
             user="api@sbpl.com"
