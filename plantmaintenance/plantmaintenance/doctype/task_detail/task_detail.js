@@ -218,6 +218,12 @@ frappe.ui.form.on('Task Detail', {
             };
         });
 
+        if (frm.doc.__islocal) {
+            let type_field = frm.fields_dict.type.df.options ? frm.fields_dict.type.df.options.split('\n') : [];
+            let allowed_options = type_field.filter(option => option !== 'Preventive');
+            frm.set_df_property('type', 'options', allowed_options.join('\n'));
+        }
+
         // Hide 'Breakdown'and 'Shutdown' type for Maintenance User
         if (
             frappe.user.has_role('Maintenance User') &&
@@ -523,7 +529,14 @@ frappe.ui.form.on('Task Detail', {
                 callback: function (response) {
                     let assignedUsers = response.message || [];
                     if (!assignedUsers.length) {
-                        frappe.msgprint(__('No Maintenance Users assigned to you.'));
+                        frappe.call({
+                            method: "plantmaintenance.plantmaintenance.doctype.task_detail.task_detail.get_all_maintenance_managers",
+                            callback: function (res) {
+                                let maintenanceManagers = res.message || [];
+                                let managerUsers = maintenanceManagers.map(name => ({ value: name, label: name }));
+                                showUserSelectionDialog(frm, managerUsers, selectedAssignees);
+                            }
+                        });
                         return;
                     }
                     assignedUsers = assignedUsers.map(user => ({ value: user, label: user }));
@@ -533,7 +546,6 @@ frappe.ui.form.on('Task Detail', {
         }
     }
 });
-
 
 function showUserSelectionDialog(frm, assignedUsers, selectedAssignees) {
     const dialog = new frappe.ui.Dialog({
