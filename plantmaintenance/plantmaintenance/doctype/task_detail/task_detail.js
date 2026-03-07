@@ -218,11 +218,11 @@ frappe.ui.form.on('Task Detail', {
             };
         });
 
-        // if (frm.doc.__islocal) {
-        //     let type_field = frm.fields_dict.type.df.options ? frm.fields_dict.type.df.options.split('\n') : [];
-        //     let allowed_options = type_field.filter(option => option !== 'Preventive');
-        //     frm.set_df_property('type', 'options', allowed_options.join('\n'));
-        // }
+        if (frm.doc.__islocal) {
+            let type_field = frm.fields_dict.type.df.options ? frm.fields_dict.type.df.options.split('\n') : [];
+            let allowed_options = type_field.filter(option => option !== 'Preventive');
+            frm.set_df_property('type', 'options', allowed_options.join('\n'));
+        }
 
         // Hide 'Breakdown'and 'Shutdown' type for Maintenance User
         if (
