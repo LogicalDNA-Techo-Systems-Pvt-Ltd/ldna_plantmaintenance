@@ -17,6 +17,7 @@
   "activity_group_active",
   "on_scrap",
   "activity_group",
+  "remark",
   "manufacturer_data_section",
   "manufacturer_of_asset",
   "country_of_manufacturer",
@@ -249,11 +250,16 @@
    "fieldtype": "Link",
    "label": "Activity Group",
    "options": "Activity Group"
+  },
+  {
+   "fieldname": "remark",
+   "fieldtype": "Small Text",
+   "label": "Remark"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-10-25 19:35:42.815444",
+ "modified": "2026-03-13 15:36:35.781690",
  "modified_by": "Administrator",
  "module": "Plantmaintenance",
  "name": "Equipment",
