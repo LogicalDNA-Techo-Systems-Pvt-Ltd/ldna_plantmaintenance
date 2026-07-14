@@ -54,6 +54,7 @@ def get_data(filters):
             td.description,
             eq.section,
             eq.sub_section,
+            eq.location AS equipment_location,
 			td.type,
             td.activity_group,
             td.activity,
@@ -76,7 +77,8 @@ def get_data(filters):
             td.status,
             td.creation,
             td.modified,
-            td.modified_by AS process_manager
+            td.modified_by AS process_manager,
+            td.owner
            
         FROM
             `tabTask Detail` AS td
@@ -93,6 +95,7 @@ def get_data(filters):
 
     for row in raw_data:
         assigned_status = "Assigned" if row['assigned_to'] else "UnAssigned"
+        final_location = row['location'] if row['location'] else row['equipment_location']
 
         if row['plan_start_date'] and row['completion_date']:
             overdue_days = max(date_diff(row['completion_date'], row['plan_start_date']), 0)
@@ -119,6 +122,7 @@ def get_data(filters):
             time_taken_by_process_manager = ""
         
         approver_name = frappe.db.get_value("User", row['approver'], "first_name") if row['approver'] else ""
+        owner_name = frappe.db.get_value("User", row['owner'], "full_name") if row['owner'] else ""
         assigned_to_name = frappe.db.get_value("User", {"name": row['assigned_to']}, "first_name") or row['assigned_to']
 
         process_manager_name = (
@@ -142,7 +146,7 @@ def get_data(filters):
         data.append({
             'task_detail': row['task_detail'],
             'plan_start_date': row['plan_start_date'],
-            'location': row['location'],
+            'location': final_location,
 			'equipment_code': row['equipment_code'],
             'equipment_name': row['equipment_name'],
             'equipment_group': row['equipment_group'],
@@ -162,6 +166,7 @@ def get_data(filters):
             'actual_value': row['actual_value'],
             'acceptance_criteria_for_list': row['acceptance_criteria_for_list'],
 			'approver': approver_name,
+            'notification_raised_by_name': owner_name,
             'assigned_to': assigned_to_name,
             'assigned_status': assigned_status,
             'send_for_approval_date': row['send_for_approval_date'],
@@ -361,9 +366,8 @@ def get_columns():
         
 		{
             "label": "Notification Raised by (Person)",
-            "fieldname": "approver",
-            "fieldtype": "Link",
-            "options": "Task Detail",
+            "fieldname": "notification_raised_by_name",
+            "fieldtype": "Data",
             "width": 250
         },
         
